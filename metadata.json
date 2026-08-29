@@ -1,0 +1,6 @@
+{
+  "name": "Cloverait - Habit Membaca, Vocabulary & SpeedMind Engine",
+  "description": "Platform habit harian Cloverait: Getah Sanubari (WPM & KEM), Ranting Kata (English Vocab), Lingkar Tahun (Mental Math), Quiz Kata Baku, dan Latihan Kalimat Bahasa Inggris.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

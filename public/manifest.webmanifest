@@ -1,0 +1,85 @@
+{
+  "name": "Cloverait - Habit Membaca, Vocabulary & SpeedMind Engine",
+  "short_name": "Cloverait",
+  "description": "Platform habit harian Cloverait: Getah Sanubari (WPM & KEM), Ranting Kata (English Vocab), Lingkar Tahun (Mental Math), Quiz Kata Baku KBBI, dan Latihan Kalimat.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#FDFBF7",
+  "theme_color": "#10B981",
+  "lang": "id",
+  "categories": [
+    "education",
+    "productivity",
+    "lifestyle"
+  ],
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/icon-192x192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512x512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-maskable-512x512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Getah Sanubari",
+      "short_name": "Literasi ID",
+      "description": "Latihan membaca cepat WPM & KEM artikel Indonesia",
+      "url": "/?tab=habit&track=getah-sanubari",
+      "icons": [{ "src": "/icons/icon-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Ranting Kata",
+      "short_name": "English Vocab",
+      "description": "Latihan membaca artikel & kosakata Bahasa Inggris",
+      "url": "/?tab=habit&track=ranting-kata",
+      "icons": [{ "src": "/icons/icon-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Lingkar Tahun",
+      "short_name": "Mental Math",
+      "description": "Latihan 10 tangga hitung cepat & logika numerik",
+      "url": "/?tab=habit&track=lingkar-tahun",
+      "icons": [{ "src": "/icons/icon-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Kata Baku KBBI",
+      "short_name": "Kata Baku",
+      "description": "Quiz drilling kata baku vs tidak baku resmi KBBI",
+      "url": "/?tab=kata-baku",
+      "icons": [{ "src": "/icons/icon-192x192.png", "sizes": "192x192" }]
+    }
+  ]
+}

@@ -1,0 +1,866 @@
+import React, { useState, useEffect } from 'react';
+import { Play, Check, ArrowLeft, ArrowRight, Clock, BookOpen, Sparkles, CheckCircle2, XCircle, Volume2, Globe, Download, Upload, Trash2 } from 'lucide-react';
+import { ENGLISH_ARTICLES, getDailyEnglishArticles } from '../data/englishArticles';
+import { EnglishArticle } from '../types';
+import { useHabit } from '../context/HabitContext';
+import { ExportModal } from './ExportModal';
+import { ImportArticleModal } from './ImportArticleModal';
+
+interface Props {
+  onBack: () => void;
+}
+
+type Step = 'select' | 'vocab-preview' | 'reading' | 'quiz' | 'result';
+
+export const EnglishArticleReader: React.FC<Props> = ({ onBack }) => {
+  const { recordSession, dailyEnglishProgress, recordArticleStep, allEnglishArticles, customEnglishArticles, deleteCustomArticle } = useHabit();
+  const [viewMode, setViewMode] = useState<'daily' | 'custom' | 'all'>('daily');
+  const [isExportOpen, setIsExportOpen] = useState(false);
+  const [isImportOpen, setIsImportOpen] = useState(false);
+
+  const todayStr = new Date().toISOString().split('T')[0];
+  const dailyArticles = getDailyEnglishArticles(todayStr);
+  const activeArticleList = viewMode === 'daily'
+    ? dailyArticles
+    : viewMode === 'custom'
+      ? customEnglishArticles
+      : allEnglishArticles;
+
+  // Default to first uncompleted daily article
+  const defaultArticle = dailyArticles.find(a => !dailyEnglishProgress.completedIds.includes(a.id)) || dailyArticles[0];
+  const [selectedArticle, setSelectedArticle] = useState<EnglishArticle>(defaultArticle);
+  const [step, setStep] = useState<Step>('select');
+
+  // Reading Timer
+  const [readingSeconds, setReadingSeconds] = useState(0);
+  const [isReadingActive, setIsReadingActive] = useState(false);
+  const [hasStartedReading, setHasStartedReading] = useState(false);
+
+  // Quiz Timer & Answers
+  const [quizSeconds, setQuizSeconds] = useState(0);
+  const [vocabAnswers, setVocabAnswers] = useState<{ [key: string]: boolean | null }>({});
+  const [comprehensionAnswers, setComprehensionAnswers] = useState<{ [key: string]: number | null }>({});
+  const [submittedQuiz, setSubmittedQuiz] = useState(false);
+
+  // Audio Pronunciation helper using SpeechSynthesis
+  const speakWord = (word: string) => {
+    try {
+      if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(word);
+        utterance.lang = 'en-US';
+        window.speechSynthesis.speak(utterance);
+      }
+    } catch {
+      // ignore if unsupported
+    }
+  };
+
+  // Timer interval
+  useEffect(() => {
+    let interval: NodeJS.Timeout | null = null;
+    if (isReadingActive) {
+      interval = setInterval(() => {
+        setReadingSeconds(prev => prev + 1);
+      }, 1000);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [isReadingActive]);
+
+  // Quiz timer
+  useEffect(() => {
+    let interval: NodeJS.Timeout | null = null;
+    if (step === 'quiz' && !submittedQuiz) {
+      interval = setInterval(() => {
+        setQuizSeconds(prev => prev + 1);
+      }, 1000);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [step, submittedQuiz]);
+
+  const handleStartReading = () => {
+    setReadingSeconds(0);
+    setIsReadingActive(true);
+    setHasStartedReading(true);
+  };
+
+  const handleFinishReading = () => {
+    setIsReadingActive(false);
+    setStep('quiz');
+    setQuizSeconds(0);
+  };
+
+  const evaluateResults = () => {
+    let vocabCorrect = 0;
+    let compCorrect = 0;
+
+    selectedArticle.vocabQuiz.forEach(q => {
+      if (vocabAnswers[q.id] === q.isTrue) vocabCorrect++;
+    });
+
+    selectedArticle.readingQuiz.forEach(q => {
+      if (comprehensionAnswers[q.id] === q.correctIndex) compCorrect++;
+    });
+
+    const totalQuestions = 15;
+    const totalCorrect = vocabCorrect + compCorrect;
+    const accuracy = Math.round((totalCorrect / totalQuestions) * 100);
+    const readSec = Math.max(readingSeconds, 1);
+    const wpm = Math.round((selectedArticle.wordCount / readSec) * 60);
+    const kem = Math.round((wpm * accuracy) / 100);
+
+    return {
+      vocabCorrect,
+      compCorrect,
+      totalCorrect,
+      totalQuestions,
+      accuracy,
+      wpm,
+      kem
+    };
+  };
+
+  const handleSubmitQuiz = () => {
+    setSubmittedQuiz(true);
+    const stats = evaluateResults();
+
+    recordArticleStep('balon-helium', selectedArticle.id);
+
+    recordSession({
+      habitId: 'balon-helium',
+      title: selectedArticle.title,
+      articleId: selectedArticle.id,
+      readingDurationSeconds: readingSeconds,
+      quizDurationSeconds: quizSeconds,
+      totalDurationSeconds: readingSeconds + quizSeconds,
+      wordCount: selectedArticle.wordCount,
+      wpm: stats.wpm,
+      accuracyPercentage: stats.accuracy,
+      kem: stats.kem,
+      totalQuestions: stats.totalQuestions,
+      correctAnswersCount: stats.totalCorrect
+    });
+
+    setStep('result');
+  };
+
+  const formatTime = (totalSec: number) => {
+    const mins = Math.floor(totalSec / 60);
+    const secs = totalSec % 60;
+    return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+  };
+
+  // Find next article in daily set
+  const currentDailyIndex = dailyArticles.findIndex(a => a.id === selectedArticle.id);
+  const nextDailyArticle = currentDailyIndex >= 0 && currentDailyIndex < dailyArticles.length - 1
+    ? dailyArticles[currentDailyIndex + 1]
+    : dailyArticles.find(a => !dailyEnglishProgress.completedIds.includes(a.id) && a.id !== selectedArticle.id);
+
+  const startNextArticle = (nextArt: EnglishArticle) => {
+    setSelectedArticle(nextArt);
+    setStep('vocab-preview');
+    setHasStartedReading(false);
+    setReadingSeconds(0);
+    setVocabAnswers({});
+    setComprehensionAnswers({});
+    setSubmittedQuiz(false);
+  };
+
+  // STEP 1: SELECT ENGLISH ARTICLE
+  if (step === 'select') {
+    return (
+      <div className="max-w-5xl mx-auto px-4 py-6 space-y-6">
+        <ExportModal isOpen={isExportOpen} onClose={() => setIsExportOpen(false)} />
+        <ImportArticleModal isOpen={isImportOpen} onClose={() => setIsImportOpen(false)} />
+
+        {/* Back and Action Bar */}
+        <div className="flex items-center justify-between flex-wrap gap-3">
+          <button
+            onClick={onBack}
+            className="flex items-center gap-1.5 text-xs font-black uppercase text-[#2D2319] bg-white px-4 py-2 rounded-xl border-2 border-[#2D2319] shadow-[3px_3px_0px_0px_#2D2319] hover:bg-stone-50 active:translate-y-0.5 cursor-pointer"
+          >
+            <ArrowLeft className="w-4 h-4 stroke-[2.5]" /> Kembali ke Habit
+          </button>
+
+          <div className="flex items-center gap-2 flex-wrap">
+            <button
+              type="button"
+              onClick={() => setIsImportOpen(true)}
+              className="flex items-center gap-1.5 text-xs font-black uppercase bg-[#ECFDF5] hover:bg-emerald-100 text-[#047857] px-3.5 py-2 rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319] cursor-pointer"
+            >
+              <Upload className="w-3.5 h-3.5" /> Impor PDF / Naskah
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setIsExportOpen(true)}
+              className="flex items-center gap-1.5 text-xs font-black uppercase bg-[#FEF3C7] hover:bg-amber-200 text-[#2D2319] px-3.5 py-2 rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319] cursor-pointer"
+            >
+              <Download className="w-3.5 h-3.5" /> Eksport PDF / Link
+            </button>
+
+            <span className="text-xs font-black uppercase bg-rose-100 text-rose-900 px-3.5 py-2 rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319]">
+              Progres: {dailyEnglishProgress.completedCount} / 5 Selesai
+            </span>
+          </div>
+        </div>
+
+        {/* Bento Header */}
+        <div className="bg-white rounded-2xl p-6 border-2 border-[#2D2319] shadow-[4px_4px_0px_0px_#2D2319] space-y-3">
+          <div className="flex items-center justify-between flex-wrap gap-3">
+            <div>
+              <div className="text-xs font-black text-rose-600 uppercase tracking-wider flex items-center gap-1">
+                <Sparkles className="w-3.5 h-3.5 fill-rose-400" /> Habit Ranting Kata (5 English Articles Berlanjut)
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-black text-[#2D2319] uppercase tracking-tight">
+                English Reading & Vocabulary Booster
+              </h2>
+            </div>
+
+            {/* View Mode Tabs */}
+            <div className="flex items-center bg-[#FDFBF7] p-1 rounded-xl border-2 border-[#2D2319] gap-1 flex-wrap">
+              <button
+                type="button"
+                onClick={() => setViewMode('daily')}
+                className={`px-3 py-1.5 rounded-lg text-xs font-black uppercase transition-all cursor-pointer ${
+                  viewMode === 'daily'
+                    ? 'bg-rose-500 text-white shadow-xs'
+                    : 'text-[#574332] hover:text-[#2D2319]'
+                }`}
+              >
+                Daily 5-Pack (5/5)
+              </button>
+              <button
+                type="button"
+                onClick={() => setViewMode('custom')}
+                className={`px-3 py-1.5 rounded-lg text-xs font-black uppercase transition-all cursor-pointer flex items-center gap-1 ${
+                  viewMode === 'custom'
+                    ? 'bg-rose-500 text-white shadow-xs'
+                    : 'text-[#574332] hover:text-[#2D2319]'
+                }`}
+              >
+                <span>🍀 My Imports</span>
+                <span className={`px-1.5 py-0.2 rounded-full text-[10px] font-mono ${viewMode === 'custom' ? 'bg-white text-rose-800' : 'bg-rose-100 text-rose-800'}`}>
+                  {customEnglishArticles.length}
+                </span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setViewMode('all')}
+                className={`px-3 py-1.5 rounded-lg text-xs font-black uppercase transition-all cursor-pointer ${
+                  viewMode === 'all'
+                    ? 'bg-rose-500 text-white shadow-xs'
+                    : 'text-[#574332] hover:text-[#2D2319]'
+                }`}
+              >
+                All ({allEnglishArticles.length})
+              </button>
+            </div>
+          </div>
+
+          {/* Progress Bar */}
+          <div className="space-y-1.5 pt-2">
+            <div className="flex items-center justify-between text-xs font-black">
+              <span className="text-[#574332]">Daily Target: 5 English Articles per Day</span>
+              <span className="text-rose-700">{dailyEnglishProgress.completedCount} of 5 Completed ({Math.min(100, Math.round((dailyEnglishProgress.completedCount / 5) * 100))}%)</span>
+            </div>
+            <div className="w-full bg-[#FDFBF7] h-3 rounded-full border-2 border-[#2D2319] overflow-hidden p-0.5">
+              <div
+                className="bg-rose-500 h-full transition-all duration-500"
+                style={{ width: `${Math.min(100, (dailyEnglishProgress.completedCount / 5) * 100)}%` }}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Empty State for Custom Articles */}
+        {viewMode === 'custom' && customEnglishArticles.length === 0 ? (
+          <div className="bg-white rounded-2xl p-10 border-2 border-[#2D2319] shadow-[4px_4px_0px_0px_#2D2319] text-center space-y-4 max-w-lg mx-auto">
+            <div className="w-16 h-16 bg-rose-50 border-2 border-[#2D2319] rounded-2xl flex items-center justify-center mx-auto shadow-[3px_3px_0px_0px_#2D2319] text-2xl">
+              📖
+            </div>
+            <div className="space-y-1.5">
+              <h3 className="text-lg font-black text-[#2D2319]">No English Imported Articles Yet</h3>
+              <p className="text-xs text-[#574332] font-semibold">
+                Upload English PDF passages, paste article URLs, or drop raw text. Cloverait will auto-generate vocabulary banks, synonyms, and 15 reading comprehension questions!
+              </p>
+            </div>
+            <button
+              onClick={() => setIsImportOpen(true)}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-rose-500 hover:bg-rose-600 text-white font-black text-xs uppercase tracking-wider border-2 border-[#2D2319] shadow-[3px_3px_0px_0px_#2D2319] cursor-pointer active:translate-y-0.5 transition-all"
+            >
+              <Upload className="w-4 h-4" />
+              Import English Articles Now
+            </button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {activeArticleList.map((art, idx) => {
+              const isCompleted = dailyEnglishProgress.completedIds.includes(art.id);
+              const isCustom = art.id.startsWith('custom-');
+
+              return (
+                <div
+                  key={art.id}
+                  onClick={() => {
+                    setSelectedArticle(art);
+                    setStep('vocab-preview');
+                    setHasStartedReading(false);
+                    setReadingSeconds(0);
+                    setVocabAnswers({});
+                    setComprehensionAnswers({});
+                    setSubmittedQuiz(false);
+                  }}
+                  className={`bg-white rounded-2xl p-6 border-2 border-[#2D2319] shadow-[4px_4px_0px_0px_#2D2319] hover:shadow-[6px_6px_0px_0px_#2D2319] hover:-translate-y-0.5 transition-all cursor-pointer flex flex-col justify-between group space-y-4 ${
+                    isCompleted ? 'ring-2 ring-emerald-500 bg-emerald-50/40' : ''
+                  }`}
+                >
+                  <div className="space-y-2.5">
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-black bg-[#2D2319] text-white w-6 h-6 rounded-md flex items-center justify-center">
+                          #{idx + 1}
+                        </span>
+                        <span className="text-[10px] font-black uppercase px-2.5 py-0.5 rounded-md bg-rose-100 text-rose-900 border border-[#2D2319]">
+                          {art.category}
+                        </span>
+                        {isCustom && (
+                          <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-md bg-amber-100 text-amber-900 border border-[#2D2319] flex items-center gap-1">
+                            🍀 My Import
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="flex items-center gap-1.5">
+                        {isCompleted ? (
+                          <span className="text-xs font-black text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-md border border-emerald-600 flex items-center gap-1">
+                            <CheckCircle2 className="w-3.5 h-3.5" /> Completed Today
+                          </span>
+                        ) : (
+                          <span className="text-xs font-black uppercase text-slate-500 flex items-center gap-1">
+                            <Globe className="w-3.5 h-3.5 stroke-[2.5]" /> English • ~{art.estimatedMinutes} Mins
+                          </span>
+                        )}
+
+                        {isCustom && (
+                          <button
+                            type="button"
+                            title="Delete this custom article"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if (window.confirm(`Delete article "${art.title}" from custom list?`)) {
+                                deleteCustomArticle('ranting-kata', art.id);
+                              }
+                            }}
+                            className="p-1 rounded-md text-red-500 hover:text-red-700 hover:bg-red-50 border border-transparent hover:border-red-300 transition-colors"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        )}
+                      </div>
+                    </div>
+
+                    <h3 className="text-lg font-black text-[#2D2319] group-hover:text-rose-600 transition-colors leading-snug">
+                      {art.title}
+                    </h3>
+
+                    <p className="text-xs font-medium text-[#574332] line-clamp-2 leading-relaxed">
+                      {art.content[0]}
+                    </p>
+                  </div>
+
+                  <div className="flex items-center justify-between pt-3 border-t-2 border-slate-100 text-xs font-black">
+                    <span className="text-slate-500 uppercase">{art.wordCount} Words • 10 Vocab + 15 Quiz</span>
+                    <span className="text-[#2D2319] bg-[#FEF3C7] px-3 py-1 rounded-lg border border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319] inline-flex items-center gap-1 group-hover:bg-[#FDE68A]">
+                      {isCompleted ? 'Re-read' : 'Preview Vocab'} <ArrowRight className="w-3.5 h-3.5 stroke-[3]" />
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // STEP 2: VOCABULARY PREVIEW
+  if (step === 'vocab-preview') {
+    return (
+      <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
+        <div className="bg-white rounded-2xl p-6 sm:p-8 border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] space-y-4">
+          <div className="flex items-center justify-between flex-wrap gap-2">
+            <button
+              onClick={() => setStep('select')}
+              className="text-xs font-black uppercase text-slate-900 bg-slate-100 hover:bg-slate-200 px-3.5 py-2 rounded-xl border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] cursor-pointer"
+            >
+              ← Pilih Artikel Lain
+            </button>
+            <span className="text-xs font-black uppercase bg-amber-300 text-slate-950 px-3 py-1 rounded-md border border-slate-900">
+              Langkah 1 dari 3: Pelajari Kosakata
+            </span>
+          </div>
+
+          <div>
+            <h2 className="text-xl sm:text-2xl font-black text-slate-900 uppercase tracking-tight">
+              10 Vocabulary Kunci: {selectedArticle.title}
+            </h2>
+            <p className="text-xs sm:text-sm font-bold text-slate-600 mt-1">
+              Pelajari arti 10 kata di bawah ini sebelum membaca artikel untuk mempermudah pemahaman konteks!
+            </p>
+          </div>
+
+          {/* 10 Vocab Cards Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+            {selectedArticle.vocabList.map((v, i) => (
+              <div
+                key={i}
+                className="bg-amber-50 rounded-xl p-4 border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] space-y-2"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-lg bg-amber-300 text-slate-950 font-mono font-black text-xs flex items-center justify-center border border-slate-900">
+                      {i + 1}
+                    </span>
+                    <strong className="text-sm font-black text-slate-900">{v.word}</strong>
+                  </div>
+                  <button
+                    onClick={() => speakWord(v.word)}
+                    title="Dengarkan pengucapan audio"
+                    className="p-1.5 rounded-lg bg-white border border-slate-900 hover:bg-amber-100 active:scale-95 transition-transform text-slate-900 cursor-pointer"
+                  >
+                    <Volume2 className="w-4 h-4 text-slate-900" />
+                  </button>
+                </div>
+
+                <div className="text-xs space-y-1">
+                  <p className="text-slate-600 italic">
+                    {v.partOfSpeech} • <span className="font-mono text-slate-700">{v.phonetic}</span>
+                  </p>
+                  <p className="font-bold text-slate-900">{v.definition}</p>
+                  <p className="text-amber-900 font-semibold bg-amber-200/60 px-2 py-0.5 rounded text-[11px]">
+                    🇮🇩 {v.indonesianMeaning}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="pt-4 flex items-center justify-end">
+            <button
+              onClick={() => {
+                setStep('reading');
+                handleStartReading();
+              }}
+              className="w-full sm:w-auto bg-rose-500 hover:bg-rose-600 text-white font-black py-3.5 px-8 rounded-2xl border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-sm uppercase transition-all flex items-center justify-center gap-2 cursor-pointer active:translate-y-0.5"
+            >
+              Mulai Membaca Teks Lengkap
+              <ArrowRight className="w-4 h-4 stroke-[3]" />
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // STEP 3: READING TEXT
+  if (step === 'reading') {
+    return (
+      <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
+        <div className="sticky top-20 z-30 bg-white p-4 rounded-2xl border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-between gap-3 flex-wrap">
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => {
+                setIsReadingActive(false);
+                setStep('select');
+              }}
+              className="text-xs font-black uppercase text-slate-900 bg-slate-100 hover:bg-slate-200 px-3.5 py-2 rounded-xl border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] cursor-pointer"
+            >
+              ← Ganti Artikel
+            </button>
+
+            <div className="flex items-center gap-2 bg-rose-100 border-2 border-slate-900 px-3.5 py-1.5 rounded-xl shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+              <Clock className={`w-4 h-4 text-rose-900 stroke-[2.5] ${isReadingActive ? 'animate-spin' : ''}`} />
+              <span className="font-mono font-black text-base text-slate-900">
+                {formatTime(readingSeconds)}
+              </span>
+              <span className="text-[10px] uppercase font-black text-rose-900">
+                {isReadingActive ? 'Reading' : 'Paused'}
+              </span>
+            </div>
+          </div>
+
+          <button
+            onClick={handleFinishReading}
+            className="bg-rose-500 hover:bg-rose-600 text-white font-black px-6 py-2.5 rounded-xl border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] text-xs uppercase transition-all flex items-center gap-2 cursor-pointer active:translate-y-0.5"
+          >
+            Selesai Baca & Lanjut Kuis (15 Soal)
+            <ArrowRight className="w-4 h-4 stroke-[3]" />
+          </button>
+        </div>
+
+        {/* Reading Body */}
+        <div className="bg-white rounded-2xl p-6 sm:p-10 border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] space-y-6">
+          <div className="border-b-2 border-slate-900 pb-4 space-y-2">
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-black uppercase bg-rose-100 text-rose-900 px-3 py-1 rounded-md border border-slate-900">
+                {selectedArticle.category}
+              </span>
+              <span className="text-xs font-bold text-slate-500">
+                {selectedArticle.wordCount} Kata • Sumber: {selectedArticle.source}
+              </span>
+            </div>
+            <h1 className="text-2xl sm:text-3xl font-black text-slate-900 leading-tight uppercase">
+              {selectedArticle.title}
+            </h1>
+          </div>
+
+          <div className="space-y-4 text-slate-900 text-lg leading-relaxed font-serif">
+            {selectedArticle.content.map((par, i) => (
+              <p key={i} className="text-justify leading-loose indent-8">
+                {par}
+              </p>
+            ))}
+          </div>
+
+          <div className="pt-6 border-t-2 border-slate-900 flex items-center justify-between flex-wrap gap-4">
+            <span className="text-xs font-bold text-slate-500 uppercase">
+              Pastikan kamu memahami pesan utama sebelum menekan tombol kuis
+            </span>
+            <button
+              onClick={handleFinishReading}
+              className="w-full sm:w-auto bg-rose-500 hover:bg-rose-600 text-white font-black px-8 py-3 rounded-2xl border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-sm uppercase transition-all flex items-center justify-center gap-2 cursor-pointer active:translate-y-0.5"
+            >
+              Selesai Membaca & Mulai Kuis (15 Soal)
+              <ArrowRight className="w-4 h-4 stroke-[3]" />
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // STEP 4: 15 QUESTIONS QUIZ (10 Vocab + 5 Comprehension)
+  if (step === 'quiz') {
+    return (
+      <div className="max-w-3xl mx-auto px-4 py-6 space-y-6">
+        <div className="bg-white rounded-2xl p-6 border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-between gap-4">
+          <div>
+            <h2 className="text-xl sm:text-2xl font-black text-slate-900 uppercase">
+              Kuis Pemahaman: 15 Soal
+            </h2>
+            <p className="text-xs sm:text-sm font-bold text-slate-600">
+              10 Soal Kosakata + 5 Soal Reading Comprehension
+            </p>
+          </div>
+          <div className="flex items-center gap-2 bg-amber-100 border-2 border-slate-900 px-3.5 py-1.5 rounded-xl shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+            <Clock className="w-4 h-4 text-amber-900 stroke-[2.5]" />
+            <span className="font-mono font-black text-base text-slate-900">
+              {formatTime(quizSeconds)}
+            </span>
+          </div>
+        </div>
+
+        {/* SECTION 1: 10 VOCABULARY QUESTIONS */}
+        <div className="space-y-4">
+          <div className="flex items-center gap-2 px-1">
+            <span className="w-7 h-7 rounded-lg bg-rose-500 text-white font-black text-xs flex items-center justify-center border border-slate-900">
+              A
+            </span>
+            <h3 className="text-base sm:text-lg font-black text-slate-900 uppercase tracking-tight">
+              Bagian 1: Uji Kosakata (10 Soal True/False)
+            </h3>
+          </div>
+
+          {selectedArticle.vocabQuiz.map((q, idx) => (
+            <div key={q.id} className="bg-white rounded-2xl p-5 border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] space-y-3">
+              <div className="flex items-start gap-3">
+                <span className="font-mono font-black text-slate-900 text-sm bg-rose-100 border border-slate-900 w-7 h-7 rounded-lg flex items-center justify-center shrink-0">
+                  {idx + 1}
+                </span>
+                <p className="text-sm sm:text-base font-black text-slate-900">
+                  {q.statement}
+                </p>
+              </div>
+
+              <div className="flex items-center gap-3 pl-10">
+                <button
+                  type="button"
+                  onClick={() => setVocabAnswers(prev => ({ ...prev, [q.id]: true }))}
+                  className={`px-5 py-2 rounded-xl border-2 border-slate-900 text-xs font-black uppercase transition-all ${
+                    vocabAnswers[q.id] === true
+                      ? 'bg-emerald-400 text-slate-950 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
+                      : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
+                  }`}
+                >
+                  BENAR (TRUE)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setVocabAnswers(prev => ({ ...prev, [q.id]: false }))}
+                  className={`px-5 py-2 rounded-xl border-2 border-slate-900 text-xs font-black uppercase transition-all ${
+                    vocabAnswers[q.id] === false
+                      ? 'bg-rose-400 text-slate-950 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
+                      : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
+                  }`}
+                >
+                  SALAH (FALSE)
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* SECTION 2: 5 COMPREHENSION QUESTIONS */}
+        <div className="space-y-4 pt-4">
+          <div className="flex items-center gap-2 px-1">
+            <span className="w-7 h-7 rounded-lg bg-blue-500 text-white font-black text-xs flex items-center justify-center border border-slate-900">
+              B
+            </span>
+            <h3 className="text-base sm:text-lg font-black text-slate-900 uppercase tracking-tight">
+              Bagian 2: Reading Comprehension (5 Soal Pilihan Ganda)
+            </h3>
+          </div>
+
+          {selectedArticle.readingQuiz.map((q, idx) => (
+            <div key={q.id} className="bg-white rounded-2xl p-5 border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] space-y-3">
+              <div className="flex items-start gap-3">
+                <span className="font-mono font-black text-slate-900 text-sm bg-blue-100 border border-slate-900 w-7 h-7 rounded-lg flex items-center justify-center shrink-0">
+                  {idx + 11}
+                </span>
+                <p className="text-sm sm:text-base font-black text-slate-900">
+                  {q.question}
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 gap-2 pl-10">
+                {q.options.map((opt, optIdx) => (
+                  <button
+                    key={optIdx}
+                    type="button"
+                    onClick={() => setComprehensionAnswers(prev => ({ ...prev, [q.id]: optIdx }))}
+                    className={`p-3 rounded-xl border-2 border-slate-900 text-xs font-black text-left transition-all flex items-start gap-2.5 ${
+                      comprehensionAnswers[q.id] === optIdx
+                        ? 'bg-amber-300 text-slate-950 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
+                        : 'bg-slate-50 hover:bg-slate-100 text-slate-800'
+                    }`}
+                  >
+                    <span className="w-5 h-5 rounded bg-white border border-slate-900 flex items-center justify-center shrink-0">
+                      {String.fromCharCode(65 + optIdx)}
+                    </span>
+                    <span>{opt}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="pt-4">
+          <button
+            onClick={handleSubmitQuiz}
+            className="w-full bg-rose-500 hover:bg-rose-600 text-white font-black py-3.5 px-6 rounded-2xl border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-base uppercase transition-all flex items-center justify-center gap-2 cursor-pointer active:translate-y-0.5"
+          >
+            Kirim Jawaban & Evaluasi Hasil
+            <Sparkles className="w-5 h-5 fill-white" />
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // STEP 5: RESULTS & DETAILED REVIEW
+  const stats = evaluateResults();
+
+  return (
+    <div className="max-w-3xl mx-auto px-4 py-6 space-y-6">
+      <div className="bg-rose-500 text-white rounded-2xl p-6 sm:p-8 border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-center space-y-4">
+        <div className="w-16 h-16 rounded-2xl bg-white border-2 border-slate-900 mx-auto flex items-center justify-center shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
+          <Globe className="w-9 h-9 text-slate-900 stroke-[2.5]" />
+        </div>
+
+        <div>
+          <div className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider bg-white text-slate-950 px-3 py-1 rounded-md border border-slate-900 shadow-sm">
+            <Sparkles className="w-3.5 h-3.5 text-rose-600" />
+            Progres Habit Harian: {dailyEnglishProgress.completedCount} / 5 English Articles Selesai
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-black uppercase tracking-tight mt-2">
+            {dailyEnglishProgress.completedCount >= 5
+              ? '🎉 Sempurna! Habit Balon Helium 5/5 Tuntas Hari Ini!'
+              : `Article #${currentDailyIndex >= 0 ? currentDailyIndex + 1 : 1} Completed!`}
+          </h2>
+          <p className="text-xs sm:text-sm font-bold opacity-90">
+            {selectedArticle.title}
+          </p>
+        </div>
+
+        {/* Continuous Action CTA */}
+        {nextDailyArticle && dailyEnglishProgress.completedCount < 5 && (
+          <div className="bg-white/95 backdrop-blur-sm p-4 rounded-xl border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] text-slate-900 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div className="text-left">
+              <div className="text-[10px] font-black uppercase text-rose-700">Next Article ({Math.min(5, dailyEnglishProgress.completedCount + 1)}/5):</div>
+              <div className="text-sm font-black line-clamp-1">{nextDailyArticle.title}</div>
+            </div>
+            <button
+              onClick={() => startNextArticle(nextDailyArticle)}
+              className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-rose-500 hover:bg-rose-600 text-white text-xs sm:text-sm font-black uppercase border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center gap-1.5 shrink-0 active:translate-y-0.5"
+            >
+              Continue to Article {Math.min(5, dailyEnglishProgress.completedCount + 1)}/5 <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+        )}
+
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+          <div className="bg-white rounded-xl p-3 text-slate-900 border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+            <span className="text-[10px] font-black uppercase text-slate-500 block">Speed</span>
+            <span className="text-2xl font-black font-mono text-slate-900">{stats.wpm}</span>
+            <span className="text-[10px] font-bold text-slate-600 block">WPM</span>
+          </div>
+
+          <div className="bg-white rounded-xl p-3 text-slate-900 border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+            <span className="text-[10px] font-black uppercase text-slate-500 block">KEM Score</span>
+            <span className="text-2xl font-black font-mono text-rose-600">{stats.kem}</span>
+            <span className="text-[10px] font-bold text-slate-600 block">Eff. Speed</span>
+          </div>
+
+          <div className="bg-white rounded-xl p-3 text-slate-900 border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+            <span className="text-[10px] font-black uppercase text-slate-500 block">Accuracy</span>
+            <span className="text-2xl font-black font-mono text-emerald-600">{stats.accuracy}%</span>
+            <span className="text-[10px] font-bold text-slate-600 block">{stats.totalCorrect}/15 Correct</span>
+          </div>
+
+          <div className="bg-white rounded-xl p-3 text-slate-900 border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+            <span className="text-[10px] font-black uppercase text-slate-500 block">Reading Time</span>
+            <span className="text-2xl font-black font-mono text-purple-600">{formatTime(readingSeconds)}</span>
+            <span className="text-[10px] font-bold text-slate-600 block">Duration</span>
+          </div>
+        </div>
+      </div>
+
+      {/* ANSWER KEYS & EXPLANATIONS */}
+      <div className="space-y-4">
+        <h3 className="text-lg font-black text-slate-900 px-1 uppercase tracking-tight">
+          Kunci Jawaban & Penjelasan:
+        </h3>
+
+        {/* Vocab Quiz Review */}
+        <div className="space-y-3">
+          <div className="text-xs font-black text-slate-600 uppercase tracking-wider">
+            Bagian 1: Kosakata (10 Soal)
+          </div>
+
+          {selectedArticle.vocabQuiz.map((q, idx) => {
+            const userAns = vocabAnswers[q.id];
+            const isCorrect = userAns === q.isTrue;
+
+            return (
+              <div key={q.id} className="bg-white rounded-2xl p-5 border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] space-y-2">
+                <div className="flex items-start justify-between gap-2">
+                  <div className="flex items-start gap-2.5">
+                    <span className="font-black text-xs bg-slate-100 text-slate-900 border border-slate-900 w-6 h-6 rounded-md flex items-center justify-center shrink-0">
+                      {idx + 1}
+                    </span>
+                    <div>
+                      <span className="text-sm font-black text-slate-900">{q.statement}</span>
+                    </div>
+                  </div>
+                  {isCorrect ? (
+                    <span className="text-xs font-black text-emerald-950 bg-emerald-300 border border-slate-900 px-2.5 py-0.5 rounded-md flex items-center gap-1 shrink-0">
+                      <CheckCircle2 className="w-3.5 h-3.5" /> Correct
+                    </span>
+                  ) : (
+                    <span className="text-xs font-black text-rose-950 bg-rose-300 border border-slate-900 px-2.5 py-0.5 rounded-md flex items-center gap-1 shrink-0">
+                      <XCircle className="w-3.5 h-3.5" /> Incorrect
+                    </span>
+                  )}
+                </div>
+
+                <div className="text-xs space-y-1.5 pl-8 font-medium">
+                  <p className="text-slate-600">
+                    Your choice: <strong className="text-slate-900">{userAns ? 'TRUE' : 'FALSE'}</strong> • Correct: <strong className="text-emerald-700">{q.isTrue ? 'TRUE' : 'FALSE'}</strong>
+                  </p>
+                  <p className="text-slate-600 text-[11px] bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                    💡 <strong>Explanation:</strong> {q.explanation}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* MCQs Review */}
+        <div className="space-y-3 pt-2">
+          <div className="text-xs font-black text-slate-600 uppercase tracking-wider">
+            Bagian 2: Reading Comprehension (5 Soal)
+          </div>
+
+          {selectedArticle.readingQuiz.map((q, idx) => {
+            const userAns = comprehensionAnswers[q.id];
+            const isCorrect = userAns === q.correctIndex;
+
+            return (
+              <div key={q.id} className="bg-white rounded-2xl p-5 border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] space-y-2">
+                <div className="flex items-start justify-between gap-2">
+                  <div className="flex items-start gap-2.5">
+                    <span className="font-black text-xs bg-slate-100 text-slate-900 border border-slate-900 w-6 h-6 rounded-md flex items-center justify-center shrink-0">
+                      {idx + 11}
+                    </span>
+                    <p className="text-sm font-black text-slate-900">{q.question}</p>
+                  </div>
+                  {isCorrect ? (
+                    <span className="text-xs font-black text-emerald-950 bg-emerald-300 border border-slate-900 px-2.5 py-0.5 rounded-md flex items-center gap-1 shrink-0">
+                      <CheckCircle2 className="w-3.5 h-3.5" /> Correct
+                    </span>
+                  ) : (
+                    <span className="text-xs font-black text-rose-950 bg-rose-300 border border-slate-900 px-2.5 py-0.5 rounded-md flex items-center gap-1 shrink-0">
+                      <XCircle className="w-3.5 h-3.5" /> Incorrect
+                    </span>
+                  )}
+                </div>
+
+                <div className="text-xs space-y-1.5 pl-8 font-medium">
+                  <p className="text-emerald-700 font-bold">
+                    Correct Option: ({String.fromCharCode(65 + q.correctIndex)}) {q.options[q.correctIndex]}
+                  </p>
+                  <p className="text-slate-600 text-[11px] bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                    💡 <strong>Explanation:</strong> {q.explanation}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="pt-4 flex items-center justify-between gap-3 flex-wrap">
+        <button
+          onClick={() => setStep('select')}
+          className="px-5 py-2.5 rounded-xl bg-white border-2 border-slate-900 text-xs sm:text-sm font-black uppercase text-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-slate-50 cursor-pointer active:translate-y-0.5"
+        >
+          Daftar 5 Artikel Hari Ini
+        </button>
+
+        <div className="flex items-center gap-2">
+          {nextDailyArticle && dailyEnglishProgress.completedCount < 5 && (
+            <button
+              onClick={() => startNextArticle(nextDailyArticle)}
+              className="px-5 py-2.5 rounded-xl bg-rose-500 hover:bg-rose-600 text-white text-xs sm:text-sm font-black uppercase border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] flex items-center gap-1.5 cursor-pointer active:translate-y-0.5"
+            >
+              Next Article #{Math.min(5, dailyEnglishProgress.completedCount + 1)} <ArrowRight className="w-4 h-4" />
+            </button>
+          )}
+
+          <button
+            onClick={onBack}
+            className="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs sm:text-sm font-black uppercase border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] cursor-pointer active:translate-y-0.5"
+          >
+            Selesai & Dashboard
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
