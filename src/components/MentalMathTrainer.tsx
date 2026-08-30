@@ -1,24 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { Brain, Play, Check, ArrowLeft, ArrowRight, Clock, Sparkles, CheckCircle2, XCircle, Lightbulb, Zap, HelpCircle, BookOpen, AlertCircle, RefreshCw } from 'lucide-react';
-import { MENTAL_MATH_QUESTION_SETS, getDailyMentalMathSet } from '../data/mentalMathData';
+import { Brain, Play, Check, ArrowLeft, ArrowRight, Clock, Sparkles, CheckCircle2, XCircle, Lightbulb, Zap, HelpCircle, BookOpen, AlertCircle, RefreshCw, Target } from 'lucide-react';
+import { MENTAL_MATH_QUESTION_SETS, getDailyMentalMathSet, MENTAL_MATH_GUIDES, getModuleDrillSet } from '../data/mentalMathData';
 import { MentalMathQuestion } from '../types';
 import { useHabit } from '../context/HabitContext';
 
 interface Props {
   onBack: () => void;
   onOpenGuide: () => void;
+  initialPackType?: string;
 }
 
 type Mode = 'setup' | 'quiz' | 'result';
 
-export const MentalMathTrainer: React.FC<Props> = ({ onBack, onOpenGuide }) => {
+export const MentalMathTrainer: React.FC<Props> = ({ onBack, onOpenGuide, initialPackType }) => {
   const { recordSession, dailyMentalMathProgress, recordMentalMathStep } = useHabit();
 
   const todayStr = new Date().toISOString().split('T')[0];
   const dailySet = getDailyMentalMathSet(todayStr);
 
   // Settings
-  const [selectedPackType, setSelectedPackType] = useState<'daily' | number>('daily');
+  const [selectedPackType, setSelectedPackType] = useState<string>(initialPackType || 'daily');
   const [useTimer, setUseTimer] = useState(true);
   const [secondsPerQuestion, setSecondsPerQuestion] = useState(15);
 
@@ -33,11 +34,23 @@ export const MentalMathTrainer: React.FC<Props> = ({ onBack, onOpenGuide }) => {
   const [totalQuizSeconds, setTotalQuizSeconds] = useState(0);
   const [isQuestionAnswered, setIsQuestionAnswered] = useState(false);
 
-  const currentQuestions = selectedPackType === 'daily'
-    ? dailySet
-    : (MENTAL_MATH_QUESTION_SETS[selectedPackType] || MENTAL_MATH_QUESTION_SETS[0]);
+  const getActiveQuestions = (): MentalMathQuestion[] => {
+    if (selectedPackType === 'daily') {
+      return dailySet;
+    }
+    if (selectedPackType.startsWith('drill-')) {
+      const moduleId = selectedPackType.replace('drill-', '');
+      return getModuleDrillSet(moduleId);
+    }
+    const idx = parseInt(selectedPackType, 10);
+    if (!isNaN(idx) && MENTAL_MATH_QUESTION_SETS[idx]) {
+      return MENTAL_MATH_QUESTION_SETS[idx];
+    }
+    return dailySet;
+  };
 
-  const activeQ = currentQuestions[currentIndex];
+  const currentQuestions = getActiveQuestions();
+  const activeQ = currentQuestions[currentIndex] || currentQuestions[0];
 
   // Overall session timer
   useEffect(() => {
@@ -135,16 +148,22 @@ export const MentalMathTrainer: React.FC<Props> = ({ onBack, onOpenGuide }) => {
   const finishQuiz = () => {
     const stats = evaluateStats();
 
+    const packLabel = selectedPackType === 'daily'
+      ? `Paket Harian Lingkar Tahun (${todayStr})`
+      : selectedPackType.startsWith('drill-')
+      ? `Drilling 15 Soal: ${MENTAL_MATH_GUIDES.find(g => g.id === selectedPackType.replace('drill-', ''))?.title || 'Modul Khusus'}`
+      : `Set Latihan #${selectedPackType}`;
+
     recordSession({
-      habitId: 'anak-tangga',
-      title: `Mental Math: ${selectedPackType === 'daily' ? `Paket Harian Anak Tangga (${todayStr})` : `Set #${(selectedPackType as number) + 1}`} (${useTimer ? 'Timer 15s' : 'No Timer'})`,
+      habitId: 'lingkar-tahun',
+      title: `Mental Math: ${packLabel} (${useTimer ? 'Timer 15s' : 'No Timer'})`,
       readingDurationSeconds: 0,
       quizDurationSeconds: totalQuizSeconds,
       totalDurationSeconds: totalQuizSeconds,
       wordCount: 0,
       wpm: 0,
       accuracyPercentage: stats.accuracy,
-      kem: stats.accuracy,
+      kem: 0,
       totalQuestions: stats.total,
       correctAnswersCount: stats.correctCount
     });
@@ -158,183 +177,144 @@ export const MentalMathTrainer: React.FC<Props> = ({ onBack, onOpenGuide }) => {
     return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
   };
 
-  // STEP 1: SETUP & OPTIONS
+  // STEP 1: SETUP SCREEN
   if (mode === 'setup') {
     return (
       <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
-        <div className="flex items-center justify-between flex-wrap gap-3">
+        {/* Back Button & Title */}
+        <div className="flex items-center justify-between">
           <button
             onClick={onBack}
-            className="flex items-center gap-1.5 text-xs font-black uppercase text-slate-900 bg-white px-4 py-2 rounded-xl border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:bg-slate-50 active:translate-y-0.5 cursor-pointer"
+            className="flex items-center gap-2 text-xs sm:text-sm font-black uppercase text-[#283618] hover:text-[#588157] transition-all cursor-pointer"
           >
-            <ArrowLeft className="w-4 h-4 stroke-[2.5]" /> Kembali ke Habit
+            <ArrowLeft className="w-4 h-4 stroke-[2.5]" />
+            Kembali ke Beranda
           </button>
 
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-black uppercase bg-purple-200 text-purple-950 px-3.5 py-1.5 rounded-xl border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-              Anak Tangga: {dailyMentalMathProgress.completedCount} / 10 Soal Hari Ini
-            </span>
-
-            <button
-              onClick={onOpenGuide}
-              className="flex items-center gap-1.5 text-xs font-black uppercase text-purple-950 bg-amber-300 hover:bg-amber-400 px-4 py-2 rounded-xl border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] active:translate-y-0.5 cursor-pointer"
-            >
-              <BookOpen className="w-4 h-4 stroke-[2.5]" /> Panduan Trik Mental Math
-            </button>
-          </div>
+          <button
+            onClick={onOpenGuide}
+            className="flex items-center gap-2 bg-[#CCD5AE] hover:bg-[#E9EDC9] text-[#283618] font-black text-xs sm:text-sm px-4 py-2 rounded-xl border-2 border-[#283618] shadow-[2px_2px_0px_0px_#283618] cursor-pointer active:translate-y-0.5"
+          >
+            <BookOpen className="w-4 h-4" />
+            Buka Panduan Trik
+          </button>
         </div>
 
-        {/* Banner with Bento Style */}
-        <div className="bg-purple-300 text-slate-950 rounded-2xl p-6 sm:p-8 border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] space-y-4">
-          <div className="flex items-center justify-between flex-wrap gap-2">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-white border border-slate-900 text-xs font-black tracking-widest uppercase shadow-sm">
-              <Brain className="w-3.5 h-3.5 text-purple-700 stroke-[2.5]" />
-              ANAK TANGGA: 10/10 SOAL HARIAN
-            </div>
-            <span className="text-xs font-black bg-purple-950 text-purple-100 px-2.5 py-1 rounded-md">
-              Tanggal: {todayStr} (Variasi Otomatis Berputar Harian)
-            </span>
+        {/* Banner */}
+        <div className="bg-[#CCD5AE] text-[#283618] rounded-2xl p-6 sm:p-8 border-2 border-[#283618] shadow-[4px_4px_0px_0px_#283618] space-y-3">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-white border border-[#283618] text-xs font-black tracking-widest uppercase text-[#3A5A40]">
+            <Brain className="w-3.5 h-3.5 text-[#588157] stroke-[2.5]" />
+            LINGKAR TAHUN: MENTAL MATH & DRILLING KHUSUS
           </div>
-
-          <h1 className="text-2xl sm:text-3xl font-black leading-snug uppercase tracking-tight text-slate-900">
+          <h1 className="text-2xl sm:text-3xl font-black leading-snug uppercase tracking-tight text-[#283618]">
             Latihan Berhitung Cepat di Luar Kepala
           </h1>
-          <p className="text-xs sm:text-sm font-bold text-slate-800 max-w-2xl leading-relaxed">
-            10 soal matematika interaktif dengan metode trik cerdas: penjumlahan kiri-ke-kanan, kuadrat berakhiran 5, perkalian 11, sifat komutatif persen, dan pembulatan kompensasi. Soal berubah setiap hari secara konsisten!
+          <p className="text-xs sm:text-sm text-[#3A5A40] font-bold leading-relaxed max-w-2xl">
+            Tersedia Paket Harian 10 Soal dan <strong>Drilling Khusus 15 Soal per Modul</strong> untuk mengasah trik penjumlahan kiri ke kanan, kompensasi, pengurangan maju, perkalian 5/9/11/25, persentase cepat, dan kuadrat angka 5.
           </p>
 
-          {/* Daily Progress Meter */}
-          <div className="bg-white/90 backdrop-blur-sm p-4 rounded-xl border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] space-y-1.5">
-            <div className="flex items-center justify-between text-xs font-black text-slate-900">
-              <span>Progres Anak Tangga Hari Ini:</span>
-              <span className="text-purple-800">{dailyMentalMathProgress.completedCount} / 10 Soal Tuntas ({Math.min(100, Math.round((dailyMentalMathProgress.completedCount / 10) * 100))}%)</span>
-            </div>
-            <div className="w-full bg-slate-200 h-3 rounded-full border-2 border-slate-900 overflow-hidden">
-              <div
-                className="bg-purple-600 h-full transition-all duration-500"
-                style={{ width: `${Math.min(100, (dailyMentalMathProgress.completedCount / 10) * 100)}%` }}
-              />
-            </div>
+          <div className="pt-2 flex items-center gap-3">
+            <span className="text-xs font-black bg-white px-3 py-1 rounded-lg border border-[#283618]">
+              Target Harian: {dailyMentalMathProgress.completedCount}/10 Soal Selesai
+            </span>
           </div>
         </div>
 
-        {/* Config Options */}
-        <div className="bg-white rounded-2xl p-6 border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] space-y-6">
-          <h3 className="text-base font-black text-slate-900 uppercase tracking-tight">
-            Pilih Paket Soal
+        {/* Configuration Card */}
+        <div className="bg-white rounded-2xl p-6 sm:p-8 border-2 border-[#283618] shadow-[4px_4px_0px_0px_#283618] space-y-6">
+          <h3 className="text-base sm:text-lg font-black text-[#283618] uppercase tracking-tight">
+            Pilih Paket Latihan & Pengaturan:
           </h3>
 
-          {/* Question Set Selection */}
+          {/* Pack Selection */}
           <div className="space-y-3">
-            {/* Daily Deterministic Set Option */}
-            <button
-              onClick={() => setSelectedPackType('daily')}
-              className={`w-full p-4 rounded-xl border-2 border-slate-900 text-left transition-all cursor-pointer space-y-1 active:translate-y-0.5 ${
-                selectedPackType === 'daily'
-                  ? 'bg-purple-200 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] ring-2 ring-purple-600'
-                  : 'bg-purple-50 hover:bg-purple-100'
-              }`}
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-purple-700" />
-                  <span className="font-black text-sm text-slate-900 uppercase">
-                    Paket Anak Tangga Harian (10 Soal Variasi Hari Ini)
-                  </span>
-                </div>
-                <span className="text-[10px] font-black uppercase text-purple-950 bg-white px-2.5 py-0.5 rounded-md border border-slate-900">
-                  Rekomendasi Habit
-                </span>
-              </div>
-              <p className="text-xs font-medium text-slate-600">
-                10 soal yang digenerate khusus untuk tanggal {todayStr} mencakup seluruh 5 kategori trik hitung cepat.
-              </p>
-            </button>
-
-            <div className="text-xs font-black uppercase tracking-wider text-slate-500 pt-2">
-              Atau Pilih Arsip Latihan Tambahan:
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {MENTAL_MATH_QUESTION_SETS.map((set, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setSelectedPackType(idx)}
-                  className={`p-4 rounded-xl border-2 border-slate-900 text-left transition-all cursor-pointer space-y-1 active:translate-y-0.5 ${
-                    selectedPackType === idx
-                      ? 'bg-purple-200 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]'
-                      : 'bg-slate-50 hover:bg-slate-100'
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="font-black text-sm text-slate-900">
-                      Bank Soal #{idx + 1}
-                    </span>
-                    <span className="text-[10px] font-black uppercase text-purple-950 bg-white px-2.5 py-0.5 rounded-md border border-slate-900">
-                      10 Soal
-                    </span>
-                  </div>
-                  <p className="text-xs font-medium text-slate-600">
-                    Perkalian 11, Kuadrat 5, Persentase & Penjumlahan
-                  </p>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Timer Mode Toggle */}
-          <div className="pt-4 border-t-2 border-slate-100 space-y-3">
-            <label className="text-xs font-black text-slate-700 uppercase tracking-wider block">
-              Mode Timer:
+            <label className="text-xs font-black text-[#283618] uppercase tracking-wider block">
+              1. Pilihan Soal & Modul Drilling:
             </label>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {/* Daily Pack */}
               <button
-                onClick={() => setUseTimer(true)}
-                className={`p-4 rounded-xl border-2 border-slate-900 text-left transition-all cursor-pointer flex items-center justify-between active:translate-y-0.5 ${
-                  useTimer
-                    ? 'bg-amber-300 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] text-slate-950 font-black'
-                    : 'bg-slate-50 text-slate-700 hover:bg-slate-100'
+                onClick={() => setSelectedPackType('daily')}
+                className={`p-4 rounded-xl border-2 border-[#283618] text-left transition-all cursor-pointer flex items-center justify-between ${
+                  selectedPackType === 'daily'
+                    ? 'bg-[#E9EDC9] text-[#283618] font-black shadow-[3px_3px_0px_0px_#283618]'
+                    : 'bg-white text-slate-700 hover:bg-slate-50'
                 }`}
               >
-                <div className="flex items-center gap-2">
-                  <Clock className="w-4 h-4 stroke-[2.5]" />
-                  <div>
-                    <div className="text-xs font-black uppercase">Mode Timer (15 Detik / Soal)</div>
-                    <div className="text-[11px] font-medium opacity-80">Melatih kecepatan refleks otak</div>
+                <div>
+                  <div className="text-xs sm:text-sm font-black uppercase">Paket Harian (10 Soal)</div>
+                  <div className="text-[11px] text-[#3A5A40] font-bold mt-0.5">
+                    Kombinasi acak trik mental math untuk target hari ini ({todayStr})
                   </div>
                 </div>
-                {useTimer && <Check className="w-5 h-5 stroke-[3]" />}
+                {selectedPackType === 'daily' && <CheckCircle2 className="w-5 h-5 text-[#588157] shrink-0" />}
               </button>
 
-              <button
-                onClick={() => setUseTimer(false)}
-                className={`p-4 rounded-xl border-2 border-slate-900 text-left transition-all cursor-pointer flex items-center justify-between active:translate-y-0.5 ${
-                  !useTimer
-                    ? 'bg-amber-300 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] text-slate-950 font-black'
-                    : 'bg-slate-50 text-slate-700 hover:bg-slate-100'
-                }`}
-              >
-                <div className="flex items-center gap-2">
-                  <Lightbulb className="w-4 h-4 stroke-[2.5]" />
-                  <div>
-                    <div className="text-xs font-black uppercase">Mode Santai (Tanpa Batas Waktu)</div>
-                    <div className="text-[11px] font-medium opacity-80">Bebas berhitung tanpa panik</div>
-                  </div>
-                </div>
-                {!useTimer && <Check className="w-5 h-5 stroke-[3]" />}
-              </button>
+              {/* 6 Dedicated 15-Question Module Drilling Sets */}
+              {MENTAL_MATH_GUIDES.map((guide, gIdx) => {
+                const drillKey = `drill-${guide.id}`;
+                const isSelected = selectedPackType === drillKey;
+                return (
+                  <button
+                    key={guide.id}
+                    onClick={() => setSelectedPackType(drillKey)}
+                    className={`p-4 rounded-xl border-2 border-[#283618] text-left transition-all cursor-pointer flex items-center justify-between ${
+                      isSelected
+                        ? 'bg-[#FAEDCD] text-[#283618] font-black shadow-[3px_3px_0px_0px_#283618]'
+                        : 'bg-white text-slate-700 hover:bg-slate-50'
+                    }`}
+                  >
+                    <div>
+                      <div className="inline-flex items-center gap-1 text-[10px] font-black bg-[#709752] text-white px-2 py-0.5 rounded uppercase mb-1">
+                        <Target className="w-3 h-3" /> Drilling 15 Soal
+                      </div>
+                      <div className="text-xs sm:text-sm font-black uppercase">{guide.title}</div>
+                      <div className="text-[11px] text-[#8C6B4F] font-bold mt-0.5">
+                        {guide.badge} - Fokus intensif 15 butir soal
+                      </div>
+                    </div>
+                    {isSelected && <CheckCircle2 className="w-5 h-5 text-[#709752] shrink-0" />}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
-          {/* Start CTA */}
-          <div className="pt-2">
+          {/* Timer Settings */}
+          <div className="space-y-3 pt-4 border-t-2 border-slate-100">
+            <label className="text-xs font-black text-[#283618] uppercase tracking-wider block">
+              2. Pengaturan Batas Waktu:
+            </label>
+
+            <div className="flex flex-wrap gap-4 items-center">
+              <label className="flex items-center gap-2 cursor-pointer text-xs sm:text-sm font-black text-[#283618]">
+                <input
+                  type="checkbox"
+                  checked={useTimer}
+                  onChange={e => setUseTimer(e.target.checked)}
+                  className="w-4 h-4 accent-[#709752] cursor-pointer"
+                />
+                Gunakan Timer per Soal (15 Detik)
+              </label>
+
+              {useTimer && (
+                <div className="flex items-center gap-2 text-xs font-black text-[#3A5A40] bg-[#E9EDC9] px-3 py-1.5 rounded-lg border border-[#A3B18A]">
+                  <Clock className="w-3.5 h-3.5 text-[#588157]" />
+                  15 detik per pertanyaan (otomatis pindah jika habis)
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Start Button */}
+          <div className="pt-4">
             <button
               onClick={handleStartSession}
-              className="w-full bg-purple-500 hover:bg-purple-600 text-white font-black py-4 px-6 rounded-2xl border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-base uppercase transition-all flex items-center justify-center gap-2 cursor-pointer active:translate-y-0.5"
+              className="w-full bg-[#709752] hover:bg-[#588157] text-white font-black text-sm sm:text-base py-4 rounded-xl border-2 border-[#283618] shadow-[4px_4px_0px_0px_#283618] uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer active:translate-y-0.5 transition-all"
             >
               <Play className="w-5 h-5 fill-white" />
-              Mulai 10 Soal Anak Tangga
+              Mulai Sesi Latihan ({currentQuestions.length} Soal)
             </button>
           </div>
         </div>
@@ -342,81 +322,74 @@ export const MentalMathTrainer: React.FC<Props> = ({ onBack, onOpenGuide }) => {
     );
   }
 
-  // STEP 2: ACTIVE QUIZ
+  // STEP 2: ACTIVE QUIZ SCREEN
   if (mode === 'quiz') {
-    const isTimeout = userAnswers[activeQ.id] === -999999;
-    const selectedAns = userAnswers[activeQ.id];
-    const isCorrect = selectedAns === activeQ.correctAnswer;
+    const isAnswered = isQuestionAnswered;
+    const chosenVal = userAnswers[activeQ.id];
+    const isCorrect = chosenVal === activeQ.correctAnswer;
+    const showHint = isShowingHint[activeQ.id];
 
     return (
       <div className="max-w-3xl mx-auto px-4 py-6 space-y-6">
-        {/* Top Header with Progress & Timer */}
-        <div className="bg-white rounded-2xl p-4 sm:p-5 border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <span className="text-xs font-black uppercase bg-purple-200 text-purple-950 px-3 py-1.5 rounded-xl border border-slate-900">
+        {/* Top bar: Question progress & Timer */}
+        <div className="bg-white rounded-2xl p-4 sm:p-5 border-2 border-[#283618] shadow-[4px_4px_0px_0px_#283618] flex items-center justify-between gap-4">
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-black uppercase text-[#3A5A40] bg-[#E9EDC9] px-3 py-1 rounded-md border border-[#A3B18A]">
               Soal {currentIndex + 1} dari {currentQuestions.length}
             </span>
-            <span className="text-[10px] font-black uppercase tracking-wider text-slate-500 bg-slate-100 px-2 py-1 rounded-md border border-slate-300">
+            <span className="text-xs font-bold text-[#574332] hidden sm:inline">
               {activeQ.category}
             </span>
           </div>
 
-          <div className="flex items-center gap-3">
-            {useTimer && (
-              <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] font-mono font-black text-sm ${
-                remainingTime <= 5 ? 'bg-rose-300 text-rose-950 animate-pulse' : 'bg-amber-200 text-amber-950'
-              }`}>
-                <Clock className="w-4 h-4 stroke-[2.5]" />
-                <span>{remainingTime}s</span>
-              </div>
-            )}
-
-            <button
-              onClick={() => {
-                if (confirm('Keluar dari sesi latihan?')) {
-                  setMode('setup');
-                }
-              }}
-              className="text-xs font-black uppercase text-slate-500 hover:text-slate-900"
-            >
-              Keluar
-            </button>
-          </div>
+          {/* Timer Display */}
+          {useTimer && (
+            <div className={`flex items-center gap-2 font-mono font-black text-sm px-3 py-1 rounded-lg border-2 border-[#283618] ${
+              remainingTime <= 5 ? 'bg-red-200 text-red-950 animate-pulse' : 'bg-[#FAEDCD] text-[#8C6B4F]'
+            }`}>
+              <Clock className="w-4 h-4" />
+              <span>{remainingTime}s</span>
+            </div>
+          )}
         </div>
 
-        {/* Question Bento Card */}
-        <div className="bg-white rounded-2xl p-6 sm:p-10 border-2 border-slate-900 shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] text-center space-y-6">
-          <div className="space-y-2">
-            <span className="text-xs font-black uppercase tracking-wider text-purple-700 bg-purple-50 px-3 py-1 rounded-md border border-purple-200 inline-block">
-              Hitung Cepat Di Luar Kepala
-            </span>
-            <h2 className="text-4xl sm:text-5xl font-black font-mono tracking-tight text-slate-900 py-2">
-              {activeQ.question}
-            </h2>
+        {/* Question Card */}
+        <div className="bg-white rounded-2xl p-6 sm:p-10 border-2 border-[#283618] shadow-[4px_4px_0px_0px_#283618] space-y-6 text-center">
+          {/* Prompt/Clue */}
+          <div className="inline-block bg-[#FAEDCD] text-[#8C6B4F] text-xs font-black px-4 py-1.5 rounded-full border border-[#DDA15E]">
+            💡 {activeQ.prompt}
           </div>
 
-          {/* 4 Answer Choice Buttons */}
-          <div className="grid grid-cols-2 gap-3.5 max-w-md mx-auto pt-2">
-            {activeQ.options.map((opt, optIdx) => {
-              const isThisChosen = selectedAns === opt;
-              let btnClass = 'bg-slate-50 hover:bg-purple-50 text-slate-900 border-slate-900';
+          {/* The Math Expression */}
+          <div className="py-4">
+            <div className="text-4xl sm:text-6xl font-mono font-black text-[#283618] tracking-tight">
+              {activeQ.question}
+            </div>
+          </div>
 
-              if (isQuestionAnswered) {
-                if (opt === activeQ.correctAnswer) {
-                  btnClass = 'bg-emerald-300 text-emerald-950 font-black border-slate-900 ring-2 ring-emerald-600';
-                } else if (isThisChosen && !isCorrect) {
-                  btnClass = 'bg-rose-300 text-rose-950 font-black border-slate-900 line-through';
+          {/* 4 Multiple Choice Options */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-lg mx-auto">
+            {activeQ.options.map((opt, oIdx) => {
+              const isSelected = chosenVal === opt;
+              const isThisCorrect = opt === activeQ.correctAnswer;
+
+              let btnStyle = 'bg-white text-[#283618] hover:bg-[#E9EDC9]/30';
+              if (isAnswered) {
+                if (isThisCorrect) {
+                  btnStyle = 'bg-[#709752] text-white border-[#283618] shadow-[3px_3px_0px_0px_#283618]';
+                } else if (isSelected && !isThisCorrect) {
+                  btnStyle = 'bg-red-400 text-white border-[#283618] shadow-[3px_3px_0px_0px_#283618]';
                 } else {
-                  btnClass = 'bg-slate-100 text-slate-400 opacity-60 border-slate-300';
+                  btnStyle = 'bg-slate-100 text-slate-400 border-slate-300 opacity-60';
                 }
               }
 
               return (
                 <button
-                  key={optIdx}
-                  disabled={isQuestionAnswered}
+                  key={oIdx}
                   onClick={() => handleSelectAnswer(opt)}
-                  className={`p-4 sm:p-5 rounded-2xl border-2 font-mono font-black text-xl sm:text-2xl shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-all cursor-pointer active:translate-y-0.5 ${btnClass}`}
+                  disabled={isAnswered}
+                  className={`p-4 sm:p-5 rounded-xl border-2 border-[#283618] font-mono text-xl sm:text-2xl font-black transition-all cursor-pointer active:translate-y-0.5 ${btnStyle}`}
                 >
                   {opt}
                 </button>
@@ -424,60 +397,40 @@ export const MentalMathTrainer: React.FC<Props> = ({ onBack, onOpenGuide }) => {
             })}
           </div>
 
-          {/* Feedback & Hint when Answered */}
-          {isQuestionAnswered && (
-            <div className="pt-4 space-y-4 animate-in fade-in">
-              <div className={`p-4 rounded-xl border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] text-left space-y-2 ${
-                isCorrect ? 'bg-emerald-100 text-emerald-950' : 'bg-rose-100 text-rose-950'
-              }`}>
-                <div className="flex items-center gap-2 font-black text-sm">
-                  {isCorrect ? (
-                    <>
-                      <CheckCircle2 className="w-5 h-5 text-emerald-700" />
-                      <span>Luar biasa! Jawabanmu Tepat ({activeQ.correctAnswer})</span>
-                    </>
-                  ) : (
-                    <>
-                      <XCircle className="w-5 h-5 text-rose-700" />
-                      <span>{isTimeout ? 'Waktu Habis!' : 'Kurang tepat!'} Jawaban yang benar: {activeQ.correctAnswer}</span>
-                    </>
-                  )}
-                </div>
-
-                <div className="text-xs bg-white/90 p-3 rounded-lg border border-slate-900 text-slate-800 space-y-1">
-                  <div className="font-black text-purple-900 flex items-center gap-1">
-                    <Zap className="w-3.5 h-3.5" /> Trik Cepat ({activeQ.trickName}):
-                  </div>
-                  <p className="leading-relaxed font-medium">{activeQ.trickExplanation}</p>
-                </div>
+          {/* Instant Feedback & Explanation */}
+          {isAnswered && (
+            <div className={`p-4 rounded-xl border-2 border-[#283618] text-left space-y-2 max-w-lg mx-auto ${
+              isCorrect ? 'bg-[#E9EDC9]' : 'bg-red-100'
+            }`}>
+              <div className="flex items-center gap-2 font-black text-sm uppercase">
+                {isCorrect ? (
+                  <>
+                    <CheckCircle2 className="w-5 h-5 text-[#709752]" />
+                    <span className="text-[#3A5A40]">Tepat Sekali!</span>
+                  </>
+                ) : (
+                  <>
+                    <XCircle className="w-5 h-5 text-red-600" />
+                    <span className="text-red-950">Jawaban Benar: {activeQ.correctAnswer}</span>
+                  </>
+                )}
               </div>
-
-              <button
-                onClick={handleNextQuestion}
-                className="w-full bg-purple-500 hover:bg-purple-600 text-white font-black py-3.5 px-6 rounded-2xl border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-sm uppercase transition-all flex items-center justify-center gap-2 cursor-pointer active:translate-y-0.5"
-              >
-                {currentIndex < currentQuestions.length - 1 ? 'Soal Berikutnya' : 'Selesai & Lihat Hasil'}
-                <ArrowRight className="w-4 h-4 stroke-[3]" />
-              </button>
+              <p className="text-xs text-[#283618] font-bold">
+                <strong>Cara Cepat:</strong> {activeQ.trickExplanation}
+              </p>
             </div>
           )}
 
-          {/* Hint Trigger while still thinking */}
-          {!isQuestionAnswered && (
-            <div className="pt-2">
-              {!isShowingHint[activeQ.id] ? (
-                <button
-                  type="button"
-                  onClick={() => setIsShowingHint(prev => ({ ...prev, [activeQ.id]: true }))}
-                  className="text-xs font-bold text-slate-500 hover:text-purple-700 underline inline-flex items-center gap-1 cursor-pointer"
-                >
-                  <Lightbulb className="w-3.5 h-3.5" /> Butuh Petunjuk Trik?
-                </button>
-              ) : (
-                <div className="p-3 bg-amber-50 rounded-xl border border-amber-300 text-xs text-slate-800 text-left max-w-md mx-auto">
-                  <strong className="text-amber-900">💡 Petunjuk:</strong> {activeQ.hint}
-                </div>
-              )}
+          {/* Next Button */}
+          {isAnswered && (
+            <div className="pt-4 max-w-lg mx-auto">
+              <button
+                onClick={handleNextQuestion}
+                className="w-full bg-[#709752] hover:bg-[#588157] text-white font-black text-sm sm:text-base py-3.5 rounded-xl border-2 border-[#283618] shadow-[3px_3px_0px_0px_#283618] uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer active:translate-y-0.5"
+              >
+                <span>{currentIndex < currentQuestions.length - 1 ? 'Soal Berikutnya' : 'Lihat Hasil Akhir'}</span>
+                <ArrowRight className="w-5 h-5" />
+              </button>
             </div>
           )}
         </div>
@@ -485,117 +438,58 @@ export const MentalMathTrainer: React.FC<Props> = ({ onBack, onOpenGuide }) => {
     );
   }
 
-  // STEP 3: RESULT VIEW
+  // STEP 3: RESULT SUMMARY
   const stats = evaluateStats();
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-6 space-y-6">
-      <div className="bg-purple-300 text-slate-950 rounded-2xl p-6 sm:p-8 border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-center space-y-4">
-        <div className="w-16 h-16 rounded-2xl bg-white border-2 border-slate-900 mx-auto flex items-center justify-center shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
-          <Brain className="w-9 h-9 text-slate-900 stroke-[2.5]" />
+    <div className="max-w-2xl mx-auto px-4 py-8 space-y-6">
+      <div className="bg-white rounded-3xl p-6 sm:p-8 border-2 border-[#283618] shadow-[6px_6px_0px_0px_#283618] text-center space-y-6">
+        <div className="w-16 h-16 bg-[#CCD5AE] rounded-2xl border-2 border-[#283618] shadow-[3px_3px_0px_0px_#283618] flex items-center justify-center mx-auto">
+          <Sparkles className="w-8 h-8 text-[#588157]" />
         </div>
 
-        <div>
-          <div className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider bg-white px-3 py-1 rounded-md border border-slate-900 shadow-sm">
-            <Sparkles className="w-3.5 h-3.5 text-purple-700" />
-            Anak Tangga Hari Ini: {dailyMentalMathProgress.completedCount} / 10 Soal Tuntas
-          </div>
-          <h2 className="text-2xl sm:text-3xl font-black mt-2 uppercase tracking-tight">
-            {dailyMentalMathProgress.completedCount >= 10
-              ? '🎉 Sempurna! Habit Anak Tangga 10/10 Tuntas Hari Ini!'
-              : 'Selesai 10 Soal Mental Math!'}
+        <div className="space-y-1">
+          <h2 className="text-2xl sm:text-3xl font-black text-[#283618] uppercase tracking-tight">
+            Sesi Latihan Selesai!
           </h2>
-          <p className="text-xs sm:text-sm font-bold text-slate-800">
-            {selectedPackType === 'daily' ? `Paket Harian Anak Tangga (${todayStr})` : `Bank Soal #${(selectedPackType as number) + 1}`} • {useTimer ? 'Mode Timer 15s' : 'Mode Santai'}
+          <p className="text-xs sm:text-sm text-[#574332] font-bold">
+            Progres berhitung di luar kepala Anda telah tersimpan secara otomatis.
           </p>
         </div>
 
-        <div className="grid grid-cols-3 gap-3 pt-2 text-slate-900 max-w-md mx-auto">
-          <div className="bg-white rounded-xl p-3 border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-            <span className="text-[10px] font-black uppercase text-slate-500 block">Akurasi</span>
-            <span className="text-2xl font-black font-mono text-purple-900">{stats.accuracy}%</span>
-            <span className="text-[10px] font-bold text-slate-600 block">{stats.correctCount}/10 Benar</span>
+        {/* Stats Grid */}
+        <div className="grid grid-cols-3 gap-3">
+          <div className="bg-[#E9EDC9] p-4 rounded-xl border-2 border-[#283618]">
+            <div className="text-[10px] font-black uppercase text-[#3A5A40]">Akurasi</div>
+            <div className="text-2xl sm:text-3xl font-mono font-black text-[#283618] mt-1">{stats.accuracy}%</div>
           </div>
-
-          <div className="bg-white rounded-xl p-3 border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-            <span className="text-[10px] font-black uppercase text-slate-500 block">Total Waktu</span>
-            <span className="text-2xl font-black font-mono text-slate-900">{formatTime(totalQuizSeconds)}</span>
-            <span className="text-[10px] font-bold text-slate-600 block">Durasi</span>
+          <div className="bg-[#FAEDCD] p-4 rounded-xl border-2 border-[#283618]">
+            <div className="text-[10px] font-black uppercase text-[#8C6B4F]">Benar / Total</div>
+            <div className="text-2xl sm:text-3xl font-mono font-black text-[#283618] mt-1">{stats.correctCount}/{stats.total}</div>
           </div>
-
-          <div className="bg-white rounded-xl p-3 border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-            <span className="text-[10px] font-black uppercase text-slate-500 block">Koin</span>
-            <span className="text-2xl font-black font-mono text-amber-700">+{stats.correctCount * 10}</span>
-            <span className="text-[10px] font-bold text-slate-600 block">Coins</span>
+          <div className="bg-[#CCD5AE] p-4 rounded-xl border-2 border-[#283618]">
+            <div className="text-[10px] font-black uppercase text-[#3A5A40]">Waktu</div>
+            <div className="text-2xl sm:text-3xl font-mono font-black text-[#283618] mt-1">{formatTime(totalQuizSeconds)}</div>
           </div>
         </div>
-      </div>
 
-      {/* Answer Key List & Breakdown */}
-      <div className="space-y-4">
-        <h3 className="text-lg font-black text-slate-900 px-1 uppercase tracking-tight">
-          Review Pembahasan Soal:
-        </h3>
-
-        <div className="space-y-3">
-          {currentQuestions.map((q, idx) => {
-            const userChoice = userAnswers[q.id];
-            const isCorrect = userChoice === q.correctAnswer;
-            const isTimeout = userChoice === -999999;
-
-            return (
-              <div key={q.id} className="bg-white rounded-2xl p-5 border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] space-y-2">
-                <div className="flex items-start justify-between gap-2">
-                  <div className="flex items-start gap-2.5">
-                    <span className="font-black text-xs bg-purple-200 text-purple-950 border border-slate-900 w-6 h-6 rounded-md flex items-center justify-center shrink-0">
-                      {idx + 1}
-                    </span>
-                    <div>
-                      <span className="text-[10px] font-black uppercase tracking-wider bg-slate-100 text-slate-700 px-2 py-0.5 rounded border border-slate-900 inline-block mb-1">
-                        {q.category}
-                      </span>
-                      <p className="text-base font-black font-mono text-slate-900">{q.question}</p>
-                    </div>
-                  </div>
-                  {isCorrect ? (
-                    <span className="text-xs font-black text-emerald-950 bg-emerald-300 border border-slate-900 px-2.5 py-0.5 rounded-md flex items-center gap-1 shrink-0">
-                      <CheckCircle2 className="w-3.5 h-3.5" /> Benar
-                    </span>
-                  ) : (
-                    <span className="text-xs font-black text-rose-950 bg-rose-300 border border-slate-900 px-2.5 py-0.5 rounded-md flex items-center gap-1 shrink-0">
-                      <XCircle className="w-3.5 h-3.5" /> {isTimeout ? 'Waktu Habis' : 'Salah'}
-                    </span>
-                  )}
-                </div>
-
-                <div className="text-xs space-y-1.5 pl-8 font-medium">
-                  <p className="text-slate-600">
-                    Jawabanmu: <strong className="font-mono text-slate-900">{userChoice !== null && userChoice !== undefined && !isTimeout ? userChoice : '(Tidak dijawab)'}</strong> • Kunci: <strong className="font-mono text-emerald-700">{q.correctAnswer}</strong>
-                  </p>
-                  <p className="text-slate-600 text-[11px] bg-slate-50 p-2.5 rounded-xl border border-slate-200">
-                    💡 <strong>Trik:</strong> {q.trickExplanation}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
+        {/* Action Buttons */}
+        <div className="flex flex-col sm:flex-row gap-3 pt-2">
+          <button
+            onClick={() => setMode('setup')}
+            className="flex-1 bg-[#FAEDCD] hover:bg-[#E9EDC9] text-[#283618] font-black text-xs sm:text-sm py-3.5 rounded-xl border-2 border-[#283618] shadow-[3px_3px_0px_0px_#283618] uppercase flex items-center justify-center gap-2 cursor-pointer active:translate-y-0.5"
+          >
+            <RefreshCw className="w-4 h-4" />
+            Latihan Modul Lain
+          </button>
+          <button
+            onClick={onBack}
+            className="flex-1 bg-[#709752] hover:bg-[#588157] text-white font-black text-xs sm:text-sm py-3.5 rounded-xl border-2 border-[#283618] shadow-[3px_3px_0px_0px_#283618] uppercase flex items-center justify-center gap-2 cursor-pointer active:translate-y-0.5"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Kembali ke Dashboard
+          </button>
         </div>
-      </div>
-
-      <div className="pt-4 flex items-center justify-between gap-3 flex-wrap">
-        <button
-          onClick={() => setMode('setup')}
-          className="px-5 py-2.5 rounded-xl bg-white border-2 border-slate-900 text-xs sm:text-sm font-black uppercase text-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-slate-50 cursor-pointer active:translate-y-0.5"
-        >
-          Coba Paket Lain
-        </button>
-
-        <button
-          onClick={onBack}
-          className="px-6 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-500 text-slate-950 text-xs sm:text-sm font-black uppercase border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] cursor-pointer active:translate-y-0.5"
-        >
-          Kembali ke Habit Dashboard
-        </button>
       </div>
     </div>
   );

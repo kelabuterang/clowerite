@@ -133,6 +133,43 @@ export interface KataBakuItem {
   exampleSentence?: string;
 }
 
+export interface SinonimAntonimItem {
+  id: string;
+  word: string;
+  partOfSpeech: string;
+  definition: string;
+  sinonim: string[];
+  antonim: string[];
+  exampleSentence: string;
+  category?: string;
+}
+
+export interface DictionaryEntry {
+  id: string;
+  word: string;
+  partOfSpeech: string;
+  level: 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | string;
+  phonetic?: string;
+  indonesianTranslation: string;
+  detailedDefinition: {
+    indonesian: string;
+    english: string;
+  };
+  similarWords: string[];
+  synonyms: string[];
+  antonyms: string[];
+  sentenceExample: string;
+  paragraphExample?: string;
+}
+
+export interface MyVocabItem {
+  wordId: string;
+  word: string;
+  addedAt: string;
+  notes?: string;
+  mastered?: boolean;
+}
+
 export interface SentenceDrillItem {
   id: string;
   indonesian: string;

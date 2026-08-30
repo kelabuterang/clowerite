@@ -14,6 +14,8 @@ import { MentalMathGuideView } from './components/MentalMathGuideView';
 import { MiniGamesCerpenView } from './components/MiniGamesCerpenView';
 import { CustomArticleCleaner } from './components/CustomArticleCleaner';
 import { KataBakuQuiz } from './components/KataBakuQuiz';
+import { SinonimAntonimQuiz } from './components/SinonimAntonimQuiz';
+import { EnglishIndonesianDictionary } from './components/EnglishIndonesianDictionary';
 import { SentenceDrillGame } from './components/SentenceDrillGame';
 import { HabitId } from './types';
 
@@ -51,6 +53,8 @@ export default function App() {
                   onStartHabit={handleStartHabit}
                   onNavigateTab={tab => {
                     if (tab === 'kata-baku') setActiveTab('kata-baku');
+                    else if (tab === 'sinonim-antonim') setActiveTab('sinonim-antonim');
+                    else if (tab === 'dictionary') setActiveTab('dictionary');
                     else if (tab === 'sentence-drill') setActiveTab('sentence-drill');
                     else if (tab === 'cerpen') setActiveTab('minigames');
                   }}
@@ -62,7 +66,13 @@ export default function App() {
               )}
 
               {(activeHabitTrack === 'ranting-kata' || activeHabitTrack === 'balon-helium') && (
-                <EnglishArticleReader onBack={handleBackToDashboard} />
+                <EnglishArticleReader
+                  onBack={handleBackToDashboard}
+                  onNavigateToDictionary={() => {
+                    setActiveTab('dictionary');
+                    setActiveHabitTrack(null);
+                  }}
+                />
               )}
 
               {(activeHabitTrack === 'lingkar-tahun' || activeHabitTrack === 'anak-tangga') && (
@@ -82,6 +92,16 @@ export default function App() {
             <div className="max-w-4xl mx-auto px-4 py-6">
               <KataBakuQuiz onBack={() => setActiveTab('habit')} />
             </div>
+          )}
+
+          {/* TAB: QUIZ SINONIM & ANTONIM */}
+          {activeTab === 'sinonim-antonim' && (
+            <SinonimAntonimQuiz onBack={() => setActiveTab('habit')} />
+          )}
+
+          {/* TAB: KAMUS INGGRIS - INDONESIA & MY VOCAB */}
+          {activeTab === 'dictionary' && (
+            <EnglishIndonesianDictionary />
           )}
 
           {/* TAB 3: SENTENCE DRILL ENGLISH MINI-GAME */}

@@ -1,8 +1,9 @@
 import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 import confetti from 'canvas-confetti';
-import { HabitId, SessionResult, UserHabitProgress, IndonesianArticle, EnglishArticle } from '../types';
+import { HabitId, SessionResult, UserHabitProgress, IndonesianArticle, EnglishArticle, CerpenItem } from '../types';
 import { INDONESIAN_ARTICLES, getDailyIndonesianArticles } from '../data/indonesianArticles';
 import { ENGLISH_ARTICLES, getDailyEnglishArticles } from '../data/englishArticles';
+import { CERPEN_COLLECTION } from '../data/cerpenData';
 
 interface HabitContextType {
   progress: UserHabitProgress;
@@ -28,18 +29,21 @@ interface HabitContextType {
   };
   customIndonesianArticles: IndonesianArticle[];
   customEnglishArticles: EnglishArticle[];
+  customCerpenArticles: CerpenItem[];
   allIndonesianArticles: IndonesianArticle[];
   allEnglishArticles: EnglishArticle[];
-  addCustomArticle: (type: 'getah-sanubari' | 'ranting-kata', article: IndonesianArticle | EnglishArticle) => void;
-  deleteCustomArticle: (type: 'getah-sanubari' | 'ranting-kata', articleId: string) => void;
+  allCerpenArticles: CerpenItem[];
+  addCustomArticle: (type: 'getah-sanubari' | 'ranting-kata' | 'cerpen', article: IndonesianArticle | EnglishArticle | CerpenItem) => void;
+  deleteCustomArticle: (type: 'getah-sanubari' | 'ranting-kata' | 'cerpen', articleId: string) => void;
   resetDailyHabitsForTesting: () => void;
   playSuccessSound: () => void;
   triggerCelebration: () => void;
 }
 
-const STORAGE_KEY = 'cloverait_habit_progress_v3';
-const CUSTOM_ID_KEY = 'cloverait_custom_id_articles_v3';
-const CUSTOM_EN_KEY = 'cloverait_custom_en_articles_v3';
+const STORAGE_KEY = 'cloverait_habit_progress_v4';
+const CUSTOM_ID_KEY = 'cloverait_custom_id_articles_v4';
+const CUSTOM_EN_KEY = 'cloverait_custom_en_articles_v4';
+const CUSTOM_CERPEN_KEY = 'cloverait_custom_cerpen_articles_v4';
 
 function getTodayString(): string {
   const now = new Date();
@@ -49,66 +53,16 @@ function getTodayString(): string {
   return `${year}-${month}-${day}`;
 }
 
+// Initial state with 0 values for all statistics as requested
 const initialProgress: UserHabitProgress = {
-  streak: 1,
+  streak: 0,
   lastActiveDate: getTodayString(),
   completedHabitsToday: [],
   dailyIndonesianCompletedIds: [],
   dailyEnglishCompletedIds: [],
   dailyMentalMathCompletedCount: 0,
-  history: [
-    {
-      id: 'init-1',
-      habitId: 'getah-sanubari',
-      title: 'Uang yang Turun ke Desa',
-      date: getTodayString(),
-      timestamp: Date.now() - 3600 * 1000 * 2,
-      readingDurationSeconds: 165,
-      quizDurationSeconds: 342,
-      totalDurationSeconds: 507,
-      wordCount: 382,
-      wpm: 139,
-      accuracyPercentage: 90,
-      kem: 125,
-      totalQuestions: 10,
-      correctAnswersCount: 9
-    },
-    {
-      id: 'init-2',
-      habitId: 'ranting-kata',
-      title: 'The Urban Forest Revolution',
-      date: getTodayString(),
-      timestamp: Date.now() - 3600 * 1000 * 3,
-      readingDurationSeconds: 210,
-      quizDurationSeconds: 633,
-      totalDurationSeconds: 843,
-      wordCount: 395,
-      wpm: 113,
-      accuracyPercentage: 80,
-      kem: 90,
-      totalQuestions: 15,
-      correctAnswersCount: 12
-    },
-    {
-      id: 'init-3',
-      habitId: 'lingkar-tahun',
-      title: 'Latihan Logika Lingkar Tahun',
-      date: getTodayString(),
-      timestamp: Date.now() - 3600 * 1000 * 4,
-      readingDurationSeconds: 0,
-      quizDurationSeconds: 579,
-      totalDurationSeconds: 579,
-      wordCount: 0,
-      wpm: 0,
-      accuracyPercentage: 95,
-      kem: 0,
-      totalQuestions: 10,
-      correctAnswersCount: 10
-    }
-  ],
-  completedDates: [
-    getTodayString()
-  ]
+  history: [],
+  completedDates: []
 };
 
 const HabitContext = createContext<HabitContextType | null>(null);
@@ -161,6 +115,15 @@ export const HabitProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   });
 
+  const [customCerpenArticles, setCustomCerpenArticles] = useState<CerpenItem[]>(() => {
+    try {
+      const saved = localStorage.getItem(CUSTOM_CERPEN_KEY);
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
   }, [progress]);
@@ -173,6 +136,10 @@ export const HabitProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     localStorage.setItem(CUSTOM_EN_KEY, JSON.stringify(customEnglishArticles));
   }, [customEnglishArticles]);
 
+  useEffect(() => {
+    localStorage.setItem(CUSTOM_CERPEN_KEY, JSON.stringify(customCerpenArticles));
+  }, [customCerpenArticles]);
+
   const allIndonesianArticles = useMemo(() => {
     return [...customIndonesianArticles, ...INDONESIAN_ARTICLES];
   }, [customIndonesianArticles]);
@@ -181,19 +148,27 @@ export const HabitProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     return [...customEnglishArticles, ...ENGLISH_ARTICLES];
   }, [customEnglishArticles]);
 
-  const addCustomArticle = (type: 'getah-sanubari' | 'ranting-kata', article: IndonesianArticle | EnglishArticle) => {
+  const allCerpenArticles = useMemo(() => {
+    return [...customCerpenArticles, ...CERPEN_COLLECTION];
+  }, [customCerpenArticles]);
+
+  const addCustomArticle = (type: 'getah-sanubari' | 'ranting-kata' | 'cerpen', article: IndonesianArticle | EnglishArticle | CerpenItem) => {
     if (type === 'getah-sanubari') {
       setCustomIndonesianArticles(prev => [article as IndonesianArticle, ...prev]);
-    } else {
+    } else if (type === 'ranting-kata') {
       setCustomEnglishArticles(prev => [article as EnglishArticle, ...prev]);
+    } else {
+      setCustomCerpenArticles(prev => [article as CerpenItem, ...prev]);
     }
   };
 
-  const deleteCustomArticle = (type: 'getah-sanubari' | 'ranting-kata', articleId: string) => {
+  const deleteCustomArticle = (type: 'getah-sanubari' | 'ranting-kata' | 'cerpen', articleId: string) => {
     if (type === 'getah-sanubari') {
       setCustomIndonesianArticles(prev => prev.filter(a => a.id !== articleId));
-    } else {
+    } else if (type === 'ranting-kata') {
       setCustomEnglishArticles(prev => prev.filter(a => a.id !== articleId));
+    } else {
+      setCustomCerpenArticles(prev => prev.filter(a => a.id !== articleId));
     }
   };
 
@@ -203,7 +178,7 @@ export const HabitProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         particleCount: 80,
         spread: 70,
         origin: { y: 0.6 },
-        colors: ['#10B981', '#F59E0B', '#B45309', '#047857', '#FBBF24']
+        colors: ['#709752', '#8FA882', '#A3B18A', '#3A5A40', '#DDA15E']
       });
     } catch {
       // ignore
@@ -334,7 +309,9 @@ export const HabitProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
       let updatedStreak = prev.streak;
       if (newCompletedHabits.length >= 3 && prev.completedHabitsToday.length < 3) {
-        updatedStreak = Math.max(1, prev.streak);
+        updatedStreak = Math.max(1, prev.streak + 1);
+      } else if (newCompletedHabits.length > 0 && prev.streak === 0) {
+        updatedStreak = 1;
       }
 
       return {
@@ -388,17 +365,17 @@ export const HabitProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const { overallAccuracy, totalArticlesRead, habitStats } = useMemo(() => {
     const history = progress.history;
-    if (history.length === 0) {
+    if (!history || history.length === 0) {
       return {
-        overallAccuracy: 85,
-        totalArticlesRead: 3,
+        overallAccuracy: 0,
+        totalArticlesRead: 0,
         habitStats: {
-          'getah-sanubari': { avgReadTimeSec: 165, avgQuizTimeSec: 342, accuracy: 90, count: 1, avgWpm: 139, avgKem: 125 },
-          'ranting-kata': { avgReadTimeSec: 210, avgQuizTimeSec: 633, accuracy: 80, count: 1, vocabAccuracy: 85 },
-          'lingkar-tahun': { avgSolvingTimeSec: 579, accuracy: 95, count: 1 },
-          'obat-fokus': { avgReadTimeSec: 165, avgQuizTimeSec: 342, accuracy: 90, count: 1 },
-          'balon-helium': { avgReadTimeSec: 210, avgQuizTimeSec: 633, accuracy: 80, count: 1, vocabAccuracy: 85 },
-          'anak-tangga': { avgSolvingTimeSec: 579, accuracy: 95, count: 1 }
+          'getah-sanubari': { avgReadTimeSec: 0, avgQuizTimeSec: 0, accuracy: 0, count: 0, avgWpm: 0, avgKem: 0 },
+          'ranting-kata': { avgReadTimeSec: 0, avgQuizTimeSec: 0, accuracy: 0, count: 0, vocabAccuracy: 0 },
+          'lingkar-tahun': { avgSolvingTimeSec: 0, accuracy: 0, count: 0 },
+          'obat-fokus': { avgReadTimeSec: 0, avgQuizTimeSec: 0, accuracy: 0, count: 0 },
+          'balon-helium': { avgReadTimeSec: 0, avgQuizTimeSec: 0, accuracy: 0, count: 0, vocabAccuracy: 0 },
+          'anak-tangga': { avgSolvingTimeSec: 0, accuracy: 0, count: 0 }
         }
       };
     }
@@ -418,33 +395,34 @@ export const HabitProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       totalCorrect += h.correctAnswersCount || 0;
     });
 
-    const overallAcc = totalQ > 0 ? Math.round((totalCorrect / totalQ) * 100) : 85;
+    const overallAcc = totalQ > 0 ? Math.round((totalCorrect / totalQ) * 100) : 0;
 
     // Getah Sanubari
-    const getahReadSec = getahList.length > 0 ? Math.round(getahList.reduce((acc, c) => acc + c.readingDurationSeconds, 0) / getahList.length) : 165;
-    const getahQuizSec = getahList.length > 0 ? Math.round(getahList.reduce((acc, c) => acc + c.quizDurationSeconds, 0) / getahList.length) : 342;
-    const getahAcc = getahList.length > 0 ? Math.round(getahList.reduce((acc, c) => acc + c.accuracyPercentage, 0) / getahList.length) : 88;
-    const getahWpm = getahList.length > 0 ? Math.round(getahList.reduce((acc, c) => acc + (c.wpm || 140), 0) / getahList.length) : 140;
-    const getahKem = getahList.length > 0 ? Math.round(getahList.reduce((acc, c) => acc + (c.kem || 120), 0) / getahList.length) : 120;
+    const getahReadSec = getahList.length > 0 ? Math.round(getahList.reduce((acc, c) => acc + (c.readingDurationSeconds || 0), 0) / getahList.length) : 0;
+    const getahQuizSec = getahList.length > 0 ? Math.round(getahList.reduce((acc, c) => acc + (c.quizDurationSeconds || 0), 0) / getahList.length) : 0;
+    const getahAcc = getahList.length > 0 ? Math.round(getahList.reduce((acc, c) => acc + (c.accuracyPercentage || 0), 0) / getahList.length) : 0;
+    const getahWpm = getahList.length > 0 ? Math.round(getahList.reduce((acc, c) => acc + (c.wpm || 0), 0) / getahList.length) : 0;
+    const getahKem = getahList.length > 0 ? Math.round(getahList.reduce((acc, c) => acc + (c.kem || 0), 0) / getahList.length) : 0;
 
     // Ranting Kata
-    const rantingReadSec = rantingList.length > 0 ? Math.round(rantingList.reduce((acc, c) => acc + c.readingDurationSeconds, 0) / rantingList.length) : 210;
-    const rantingQuizSec = rantingList.length > 0 ? Math.round(rantingList.reduce((acc, c) => acc + c.quizDurationSeconds, 0) / rantingList.length) : 633;
-    const rantingAcc = rantingList.length > 0 ? Math.round(rantingList.reduce((acc, c) => acc + c.accuracyPercentage, 0) / rantingList.length) : 82;
+    const rantingReadSec = rantingList.length > 0 ? Math.round(rantingList.reduce((acc, c) => acc + (c.readingDurationSeconds || 0), 0) / rantingList.length) : 0;
+    const rantingQuizSec = rantingList.length > 0 ? Math.round(rantingList.reduce((acc, c) => acc + (c.quizDurationSeconds || 0), 0) / rantingList.length) : 0;
+    const rantingAcc = rantingList.length > 0 ? Math.round(rantingList.reduce((acc, c) => acc + (c.accuracyPercentage || 0), 0) / rantingList.length) : 0;
+    const rantingVocabAcc = rantingList.length > 0 ? Math.round(rantingList.reduce((acc, c) => acc + (c.accuracyPercentage || 0), 0) / rantingList.length) : 0;
 
     // Lingkar Tahun
-    const lingkarSolveSec = lingkarList.length > 0 ? Math.round(lingkarList.reduce((acc, c) => acc + c.totalDurationSeconds, 0) / lingkarList.length) : 579;
-    const lingkarAcc = lingkarList.length > 0 ? Math.round(lingkarList.reduce((acc, c) => acc + c.accuracyPercentage, 0) / lingkarList.length) : 95;
+    const lingkarSolveSec = lingkarList.length > 0 ? Math.round(lingkarList.reduce((acc, c) => acc + (c.totalDurationSeconds || 0), 0) / lingkarList.length) : 0;
+    const lingkarAcc = lingkarList.length > 0 ? Math.round(lingkarList.reduce((acc, c) => acc + (c.accuracyPercentage || 0), 0) / lingkarList.length) : 0;
 
     return {
       overallAccuracy: overallAcc,
-      totalArticlesRead: Math.max(articlesCount, 3),
+      totalArticlesRead: articlesCount,
       habitStats: {
         'getah-sanubari': { avgReadTimeSec: getahReadSec, avgQuizTimeSec: getahQuizSec, accuracy: getahAcc, count: getahList.length, avgWpm: getahWpm, avgKem: getahKem },
-        'ranting-kata': { avgReadTimeSec: rantingReadSec, avgQuizTimeSec: rantingQuizSec, accuracy: rantingAcc, count: rantingList.length, vocabAccuracy: 84 },
+        'ranting-kata': { avgReadTimeSec: rantingReadSec, avgQuizTimeSec: rantingQuizSec, accuracy: rantingAcc, count: rantingList.length, vocabAccuracy: rantingVocabAcc },
         'lingkar-tahun': { avgSolvingTimeSec: lingkarSolveSec, accuracy: lingkarAcc, count: lingkarList.length },
         'obat-fokus': { avgReadTimeSec: getahReadSec, avgQuizTimeSec: getahQuizSec, accuracy: getahAcc, count: getahList.length },
-        'balon-helium': { avgReadTimeSec: rantingReadSec, avgQuizTimeSec: rantingQuizSec, accuracy: rantingAcc, count: rantingList.length, vocabAccuracy: 84 },
+        'balon-helium': { avgReadTimeSec: rantingReadSec, avgQuizTimeSec: rantingQuizSec, accuracy: rantingAcc, count: rantingList.length, vocabAccuracy: rantingVocabAcc },
         'anak-tangga': { avgSolvingTimeSec: lingkarSolveSec, accuracy: lingkarAcc, count: lingkarList.length }
       }
     };
@@ -478,8 +456,10 @@ export const HabitProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         habitStats,
         customIndonesianArticles,
         customEnglishArticles,
+        customCerpenArticles,
         allIndonesianArticles,
         allEnglishArticles,
+        allCerpenArticles,
         addCustomArticle,
         deleteCustomArticle,
         resetDailyHabitsForTesting,

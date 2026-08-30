@@ -1,11 +1,11 @@
 import { EnglishArticle, IndonesianArticle, IsianQuestion, MultipleChoiceQuestion, TrueFalseQuestion, VocabItem } from '../types';
 import * as pdfjsLib from 'pdfjs-dist';
-import pdfWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
 
-// Configure pdfjs worker using local Vite asset URL
+// Configure pdfjs worker safely for Vite / browser environment
 if (typeof window !== 'undefined') {
   try {
-    pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
+    // Prefer CDN worker matching version or relative URL to avoid Vite ?url bundle syntax issues
+    pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjsLib.version || '4.10.38'}/build/pdf.worker.min.mjs`;
   } catch {
     // fallback
   }

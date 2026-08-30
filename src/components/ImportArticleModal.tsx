@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Upload, Link2, FileText, Sparkles, CheckCircle2, ArrowRight, X, AlertCircle, Plus, BookOpen, Layers } from 'lucide-react';
+import { Upload, Link2, FileText, Sparkles, CheckCircle2, ArrowRight, X, AlertCircle, Plus, BookOpen, Layers, Target } from 'lucide-react';
 import { extractTextFromPdf, splitMultiArticleBundle, autoGenerateQuestions, autoGenerateVocabFromText } from '../utils/articleParser';
 import { useHabit } from '../context/HabitContext';
-import { EnglishArticle, IndonesianArticle } from '../types';
+import { EnglishArticle, IndonesianArticle, CerpenItem } from '../types';
 import confetti from 'canvas-confetti';
 
 interface ImportArticleModalProps {
@@ -16,7 +16,9 @@ export const ImportArticleModal: React.FC<ImportArticleModalProps> = ({ isOpen, 
   const [urlInput, setUrlInput] = useState('');
   const [pastedText, setPastedText] = useState('');
   const [customTitle, setCustomTitle] = useState('');
-  const [targetHabit, setTargetHabit] = useState<'getah-sanubari' | 'ranting-kata'>('getah-sanubari');
+  const [customAuthor, setCustomAuthor] = useState('');
+  const [targetHabit, setTargetHabit] = useState<'getah-sanubari' | 'ranting-kata' | 'cerpen'>('getah-sanubari');
+  const [cerpenLanguage, setCerpenLanguage] = useState<'id' | 'en'>('id');
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [parsedArticles, setParsedArticles] = useState<Array<{
@@ -52,7 +54,7 @@ export const ImportArticleModal: React.FC<ImportArticleModalProps> = ({ isOpen, 
       }));
 
       setParsedArticles(formatted);
-      if (formatted.length > 0) {
+      if (formatted.length > 0 && targetHabit !== 'cerpen') {
         setTargetHabit(formatted[0].language === 'en' ? 'ranting-kata' : 'getah-sanubari');
       }
     } catch (err) {
@@ -79,7 +81,7 @@ export const ImportArticleModal: React.FC<ImportArticleModalProps> = ({ isOpen, 
       }));
 
       setParsedArticles(formatted);
-      if (formatted.length > 0) {
+      if (formatted.length > 0 && targetHabit !== 'cerpen') {
         setTargetHabit(formatted[0].language === 'en' ? 'ranting-kata' : 'getah-sanubari');
       }
     } catch (err) {
@@ -97,13 +99,13 @@ export const ImportArticleModal: React.FC<ImportArticleModalProps> = ({ isOpen, 
 
     // Pre-populate article scaffold from URL
     const domainName = urlInput.replace(/^https?:\/\//, '').split('/')[0];
-    const generatedTitle = customTitle.trim() || `Artikel dari ${domainName}`;
+    const generatedTitle = customTitle.trim() || `Teks dari ${domainName}`;
     
     // Create preview article
     const scaffoldContent = [
-      `Artikel diimpor dari tautan resmi: ${urlInput}`,
-      `Naskah digital ini telah diverifikasi untuk melatih pemahaman membaca, WPM & KEM secara efektif di Cloverait.`,
-      `Setiap pembaca dianjurkan untuk menelaah gagasan utama, argumen pendukung, dan fakta kunci dalam artikel.`
+      `Naskah bacaan diimpor dari tautan resmi: ${urlInput}`,
+      `Teks digital ini telah dianalisis dan diformat untuk melatih pemahaman membaca dan literasi kritis secara efektif di Cloverait.`,
+      `Setiap pembaca dianjurkan untuk menelaah alur cerita, gagasan utama, argumen pendukung, dan kosakata kunci dalam bacaan ini.`
     ];
 
     setParsedArticles([
@@ -111,8 +113,8 @@ export const ImportArticleModal: React.FC<ImportArticleModalProps> = ({ isOpen, 
         title: generatedTitle,
         content: scaffoldContent,
         wordCount: scaffoldContent.join(' ').split(/\s+/).length,
-        language: targetHabit === 'ranting-kata' ? 'en' : 'id',
-        category: 'Artikel Online'
+        language: targetHabit === 'ranting-kata' || (targetHabit === 'cerpen' && cerpenLanguage === 'en') ? 'en' : 'id',
+        category: targetHabit === 'cerpen' ? 'Cerpen Sastra' : 'Artikel Online'
       }
     ]);
     setIsLoading(false);
@@ -125,11 +127,25 @@ export const ImportArticleModal: React.FC<ImportArticleModalProps> = ({ isOpen, 
       const { fillInQuestions, trueFalseQuestions, readingQuiz } = autoGenerateQuestions(
         art.title,
         art.content,
-        art.language
+        targetHabit === 'cerpen' ? cerpenLanguage : art.language
       );
-      const vocabList = autoGenerateVocabFromText(art.content.join(' '), art.language);
+      const vocabList = autoGenerateVocabFromText(art.content.join(' '), targetHabit === 'cerpen' ? cerpenLanguage : art.language);
 
-      if (targetHabit === 'getah-sanubari') {
+      if (targetHabit === 'cerpen') {
+        const cerpenItem: CerpenItem = {
+          id: `custom-cerpen-${Date.now()}-${idx}`,
+          title: art.title,
+          author: customAuthor.trim() || 'Penulis Karya Terpilih',
+          language: cerpenLanguage,
+          source: file ? file.name : (urlInput ? 'Tautan Web' : 'Impor Teks Sastra'),
+          sourceUrl: urlInput || undefined,
+          wordCount: art.wordCount,
+          synopsis: art.content[0] ? (art.content[0].slice(0, 160) + '...') : 'Kisah sastra yang menyentuh dan sarat makna.',
+          content: art.content,
+          quiz: readingQuiz.slice(0, 5)
+        };
+        addCustomArticle('cerpen', cerpenItem);
+      } else if (targetHabit === 'getah-sanubari') {
         const idArticle: IndonesianArticle = {
           id: `custom-id-${Date.now()}-${idx}`,
           title: art.title,
@@ -141,8 +157,7 @@ export const ImportArticleModal: React.FC<ImportArticleModalProps> = ({ isOpen, 
           content: art.content,
           fillInQuestions,
           trueFalseQuestions,
-          vocabulary: vocabList,
-          readingQuiz
+          vocabulary: vocabList.slice(0, 5)
         };
         addCustomArticle('getah-sanubari', idArticle);
       } else {
@@ -150,258 +165,309 @@ export const ImportArticleModal: React.FC<ImportArticleModalProps> = ({ isOpen, 
           id: `custom-en-${Date.now()}-${idx}`,
           title: art.title,
           category: art.category,
-          source: file ? file.name : (urlInput ? 'Online Source' : 'Text Import'),
+          source: file ? file.name : (urlInput ? 'Web Source' : 'Imported English Text'),
           sourceUrl: urlInput || undefined,
           wordCount: art.wordCount,
-          estimatedMinutes: Math.max(1, Math.round(art.wordCount / 180)),
+          estimatedMinutes: Math.max(1, Math.round(art.wordCount / 150)),
           content: art.content,
-          vocabList: vocabList,
-          vocabQuiz: trueFalseQuestions,
-          readingQuiz: readingQuiz
+          vocabList: vocabList.slice(0, 10),
+          vocabQuiz: trueFalseQuestions.slice(0, 10),
+          readingQuiz: readingQuiz.slice(0, 5)
         };
         addCustomArticle('ranting-kata', enArticle);
       }
     });
 
-    confetti({
-      particleCount: 60,
-      spread: 70,
-      origin: { y: 0.6 },
-      colors: ['#10B981', '#F59E0B', '#3B82F6']
-    });
+    try {
+      confetti({
+        particleCount: 70,
+        spread: 60,
+        origin: { y: 0.6 },
+        colors: ['#709752', '#CCD5AE', '#DDA15E']
+      });
+    } catch {
+      // ignore
+    }
 
     onClose();
   };
 
   return (
-    <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-xs">
-      <div className="bg-white border-2 border-[#2D2319] rounded-2xl max-w-3xl w-full p-6 shadow-[6px_6px_0px_0px_#2D2319] max-h-[90vh] overflow-y-auto space-y-6">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+      <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border-2 border-[#283618] shadow-[8px_8px_0px_0px_#283618] p-6 sm:p-8 space-y-6">
         {/* Header */}
-        <div className="flex items-center justify-between border-b-2 border-slate-100 pb-3">
-          <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-[#10B981] text-white flex items-center justify-center border-2 border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319]">
-              <Upload className="w-5 h-5" />
+        <div className="flex items-center justify-between border-b-2 border-slate-100 pb-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-[#E9EDC9] border-2 border-[#283618] flex items-center justify-center">
+              <Sparkles className="w-5 h-5 text-[#709752]" />
             </div>
             <div>
-              <h2 className="text-xl font-black text-[#2D2319]">
-                Impor Artikel & Generator Quiz Otomatis
+              <h2 className="text-xl font-black text-[#283618] tracking-tight">
+                Impor Artikel & Cerpen Baru
               </h2>
-              <p className="text-xs text-slate-500 font-semibold">
-                Unggah PDF multi-artikel, tempel link, atau teks naskah ke habit Cloverait
+              <p className="text-xs text-[#574332] font-semibold">
+                Unggah PDF, masukkan Link URL, atau paste naskah untuk quiz otomatis.
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-xl hover:bg-slate-100 text-slate-400 hover:text-slate-800 transition-colors cursor-pointer"
+            className="p-2 rounded-xl border-2 border-[#283618] hover:bg-slate-100 transition-all cursor-pointer"
           >
-            <X className="w-5 h-5" />
+            <X className="w-5 h-5 text-[#283618]" />
           </button>
         </div>
 
-        {/* Input Format Selector Tabs */}
-        <div className="flex items-center gap-2 p-1.5 bg-[#FAF6EE] rounded-xl border-2 border-[#2D2319]">
+        {/* Tab Selection: PDF vs Link vs Text */}
+        <div className="grid grid-cols-3 gap-2 bg-[#FAEDCD] p-1.5 rounded-2xl border-2 border-[#283618]">
           <button
             onClick={() => setActiveTab('pdf')}
-            className={`flex-1 py-2 px-3 rounded-lg text-xs font-black uppercase tracking-tight flex items-center justify-center gap-1.5 cursor-pointer transition-all ${
+            className={`py-2.5 rounded-xl font-black text-xs uppercase flex items-center justify-center gap-2 transition-all cursor-pointer ${
               activeTab === 'pdf'
-                ? 'bg-[#10B981] text-white border border-[#2D2319] shadow-[1px_1px_0px_0px_#2D2319]'
-                : 'text-slate-700 hover:text-slate-950'
+                ? 'bg-[#709752] text-white border-2 border-[#283618] shadow-[2px_2px_0px_0px_#283618]'
+                : 'text-[#283618] hover:bg-white/60'
             }`}
           >
-            <Upload className="w-3.5 h-3.5" /> File PDF Multi-Artikel
+            <Upload className="w-4 h-4" />
+            File PDF
           </button>
-
           <button
             onClick={() => setActiveTab('link')}
-            className={`flex-1 py-2 px-3 rounded-lg text-xs font-black uppercase tracking-tight flex items-center justify-center gap-1.5 cursor-pointer transition-all ${
+            className={`py-2.5 rounded-xl font-black text-xs uppercase flex items-center justify-center gap-2 transition-all cursor-pointer ${
               activeTab === 'link'
-                ? 'bg-[#10B981] text-white border border-[#2D2319] shadow-[1px_1px_0px_0px_#2D2319]'
-                : 'text-slate-700 hover:text-slate-950'
+                ? 'bg-[#709752] text-white border-2 border-[#283618] shadow-[2px_2px_0px_0px_#283618]'
+                : 'text-[#283618] hover:bg-white/60'
             }`}
           >
-            <Link2 className="w-3.5 h-3.5" /> Link URL Artikel
+            <Link2 className="w-4 h-4" />
+            Tautan Link
           </button>
-
           <button
             onClick={() => setActiveTab('text')}
-            className={`flex-1 py-2 px-3 rounded-lg text-xs font-black uppercase tracking-tight flex items-center justify-center gap-1.5 cursor-pointer transition-all ${
+            className={`py-2.5 rounded-xl font-black text-xs uppercase flex items-center justify-center gap-2 transition-all cursor-pointer ${
               activeTab === 'text'
-                ? 'bg-[#10B981] text-white border border-[#2D2319] shadow-[1px_1px_0px_0px_#2D2319]'
-                : 'text-slate-700 hover:text-slate-950'
+                ? 'bg-[#709752] text-white border-2 border-[#283618] shadow-[2px_2px_0px_0px_#283618]'
+                : 'text-[#283618] hover:bg-white/60'
             }`}
           >
-            <FileText className="w-3.5 h-3.5" /> Tempel Teks Bebas
+            <FileText className="w-4 h-4" />
+            Paste Teks
           </button>
         </div>
 
-        {/* Target Habit Destination Switch */}
-        <div className="flex items-center justify-between bg-[#FFFBEB] p-3 rounded-xl border-2 border-[#D97706]/40">
-          <span className="text-xs font-black uppercase text-[#92400E]">
-            Tambahkan ke Jalur Habit:
-          </span>
-          <div className="flex gap-2">
+        {/* Target Destination Choice: Getah Sanubari vs Ranting Kata vs Cerpen */}
+        <div className="space-y-2">
+          <label className="text-xs font-black text-[#283618] uppercase tracking-wider block">
+            Target Penyimpanan Naskah:
+          </label>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
             <button
+              type="button"
               onClick={() => setTargetHabit('getah-sanubari')}
-              className={`py-1 px-3 rounded-lg text-xs font-black uppercase border cursor-pointer transition-all ${
+              className={`p-3 rounded-xl border-2 border-[#283618] text-xs font-black uppercase text-left transition-all cursor-pointer ${
                 targetHabit === 'getah-sanubari'
-                  ? 'bg-[#047857] text-white border-[#2D2319]'
-                  : 'bg-white text-slate-700 border-slate-300'
+                  ? 'bg-[#E9EDC9] text-[#283618] shadow-[2px_2px_0px_0px_#283618]'
+                  : 'bg-white text-slate-600 hover:bg-slate-50'
               }`}
             >
-              Getah Sanubari (ID)
+              🌱 Getah Sanubari (ID)
             </button>
             <button
+              type="button"
               onClick={() => setTargetHabit('ranting-kata')}
-              className={`py-1 px-3 rounded-lg text-xs font-black uppercase border cursor-pointer transition-all ${
+              className={`p-3 rounded-xl border-2 border-[#283618] text-xs font-black uppercase text-left transition-all cursor-pointer ${
                 targetHabit === 'ranting-kata'
-                  ? 'bg-[#B45309] text-white border-[#2D2319]'
-                  : 'bg-white text-slate-700 border-slate-300'
+                  ? 'bg-[#FAEDCD] text-[#8C6B4F] shadow-[2px_2px_0px_0px_#283618]'
+                  : 'bg-white text-slate-600 hover:bg-slate-50'
               }`}
             >
-              Ranting Kata (EN)
+              🌿 Ranting Kata (EN)
+            </button>
+            <button
+              type="button"
+              onClick={() => setTargetHabit('cerpen')}
+              className={`p-3 rounded-xl border-2 border-[#283618] text-xs font-black uppercase text-left transition-all cursor-pointer ${
+                targetHabit === 'cerpen'
+                  ? 'bg-[#CCD5AE] text-[#283618] shadow-[2px_2px_0px_0px_#283618]'
+                  : 'bg-white text-slate-600 hover:bg-slate-50'
+              }`}
+            >
+              📖 Cerpen Sastra (Quiz 5 Soal)
             </button>
           </div>
         </div>
 
+        {/* Extra inputs for Cerpen */}
+        {targetHabit === 'cerpen' && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3.5 bg-[#CCD5AE]/30 rounded-2xl border-2 border-[#283618]">
+            <div>
+              <label className="text-[11px] font-black uppercase text-[#283618] block mb-1">
+                Bahasa Cerpen:
+              </label>
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => setCerpenLanguage('id')}
+                  className={`flex-1 py-1.5 rounded-lg border border-[#283618] text-xs font-black uppercase ${
+                    cerpenLanguage === 'id' ? 'bg-[#709752] text-white' : 'bg-white text-[#283618]'
+                  }`}
+                >
+                  🇮🇩 Indonesia
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setCerpenLanguage('en')}
+                  className={`flex-1 py-1.5 rounded-lg border border-[#283618] text-xs font-black uppercase ${
+                    cerpenLanguage === 'en' ? 'bg-[#709752] text-white' : 'bg-white text-[#283618]'
+                  }`}
+                >
+                  🇬🇧 English
+                </button>
+              </div>
+            </div>
+            <div>
+              <label className="text-[11px] font-black uppercase text-[#283618] block mb-1">
+                Nama Pengarang / Author:
+              </label>
+              <input
+                type="text"
+                value={customAuthor}
+                onChange={e => setCustomAuthor(e.target.value)}
+                placeholder="Contoh: Seno Gumira Ajidarma / O. Henry"
+                className="w-full p-2 bg-white rounded-lg border border-[#283618] text-xs font-medium"
+              />
+            </div>
+          </div>
+        )}
+
         {/* TAB 1: PDF UPLOAD */}
         {activeTab === 'pdf' && (
           <div className="space-y-4">
-            <div className="border-2 border-dashed border-[#2D2319] rounded-2xl p-8 text-center bg-[#FAF6EE] hover:bg-[#F5EEDC] transition-colors relative">
+            <div className="border-2 border-dashed border-[#283618] rounded-2xl p-8 text-center bg-[#FAF6EE] hover:bg-[#E9EDC9]/40 transition-all cursor-pointer relative">
               <input
                 type="file"
-                accept="application/pdf"
+                accept=".pdf"
                 onChange={handleFileUpload}
                 className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
               />
-              <div className="flex flex-col items-center justify-center space-y-2">
-                <div className="w-12 h-12 rounded-2xl bg-white border-2 border-[#2D2319] flex items-center justify-center shadow-[2px_2px_0px_0px_#2D2319]">
-                  <Upload className="w-6 h-6 text-[#10B981]" />
+              <div className="space-y-2 pointer-events-none">
+                <div className="w-12 h-12 rounded-2xl bg-white border-2 border-[#283618] shadow-[2px_2px_0px_0px_#283618] flex items-center justify-center mx-auto text-[#709752]">
+                  <Upload className="w-6 h-6" />
                 </div>
-                <p className="text-sm font-black text-[#2D2319]">
-                  {file ? file.name : 'Klik atau Tarik File PDF ke Sini'}
-                </p>
-                <p className="text-xs text-slate-500 font-semibold">
-                  Mendukung file PDF kumpulan artikel (akan otomatis dipisahkan per artikel, kuis, dan kosakata)
+                <div className="text-sm font-black text-[#283618]">
+                  {file ? file.name : 'Pilih atau Tarik File PDF Naskah ke Sini'}
+                </div>
+                <p className="text-xs text-[#574332] font-semibold">
+                  Mendukung PDF naskah artikel berita, essay, jurnal, maupun teks cerpen multi-halaman.
                 </p>
               </div>
             </div>
           </div>
         )}
 
-        {/* TAB 2: LINK IMPORT */}
+        {/* TAB 2: LINK URL */}
         {activeTab === 'link' && (
-          <div className="space-y-4">
+          <div className="space-y-3">
             <div>
-              <label className="block text-xs font-black uppercase text-[#2D2319] mb-1">
-                Tautan Artikel / Cerpen (URL):
+              <label className="text-xs font-black text-[#283618] uppercase tracking-wider block mb-1">
+                Judul Opsional:
+              </label>
+              <input
+                type="text"
+                value={customTitle}
+                onChange={e => setCustomTitle(e.target.value)}
+                placeholder="Masukkan judul jika ada..."
+                className="w-full p-3 rounded-xl border-2 border-[#283618] text-xs font-medium focus:outline-none focus:ring-2 focus:ring-[#709752]"
+              />
+            </div>
+            <div>
+              <label className="text-xs font-black text-[#283618] uppercase tracking-wider block mb-1">
+                Tautan URL (Artikel atau Cerpen):
               </label>
               <input
                 type="url"
                 value={urlInput}
                 onChange={e => setUrlInput(e.target.value)}
-                placeholder="https://theconversation.com/id/artikel..."
-                className="w-full p-3 rounded-xl border-2 border-[#2D2319] text-sm focus:outline-none focus:ring-2 focus:ring-[#10B981]"
+                placeholder="https://kompas.id/... atau https://reedsy.com/stories/..."
+                className="w-full p-3 rounded-xl border-2 border-[#283618] text-xs font-mono focus:outline-none focus:ring-2 focus:ring-[#709752]"
               />
             </div>
-
-            <div>
-              <label className="block text-xs font-black uppercase text-[#2D2319] mb-1">
-                Judul Artikel (Opsional):
-              </label>
-              <input
-                type="text"
-                value={customTitle}
-                onChange={e => setCustomTitle(e.target.value)}
-                placeholder="Masukkan judul artikel..."
-                className="w-full p-3 rounded-xl border-2 border-[#2D2319] text-sm focus:outline-none focus:ring-2 focus:ring-[#10B981]"
-              />
-            </div>
-
             <button
               onClick={handleProcessUrl}
-              disabled={!urlInput.trim()}
-              className="w-full py-2.5 bg-[#10B981] hover:bg-[#059669] disabled:bg-slate-200 text-white font-black uppercase text-xs rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319] cursor-pointer"
+              disabled={!urlInput.trim() || isLoading}
+              className="w-full bg-[#709752] hover:bg-[#588157] text-white font-black text-xs uppercase py-3 rounded-xl border-2 border-[#283618] shadow-[3px_3px_0px_0px_#283618] cursor-pointer transition-all disabled:opacity-50"
             >
-              Proses & Ambil Naskah
+              Proses Tautan & Generate Struktur Bacaan
             </button>
           </div>
         )}
 
-        {/* TAB 3: PASTE TEXT */}
+        {/* TAB 3: TEXT PASTE */}
         {activeTab === 'text' && (
-          <div className="space-y-4">
+          <div className="space-y-3">
             <div>
-              <label className="block text-xs font-black uppercase text-[#2D2319] mb-1">
-                Judul Artikel (Opsional):
+              <label className="text-xs font-black text-[#283618] uppercase tracking-wider block mb-1">
+                Judul Teks:
               </label>
               <input
                 type="text"
                 value={customTitle}
                 onChange={e => setCustomTitle(e.target.value)}
-                placeholder="Judul artikel utama..."
-                className="w-full p-2.5 rounded-xl border-2 border-[#2D2319] text-sm focus:outline-none focus:ring-2 focus:ring-[#10B981]"
+                placeholder="Masukkan judul naskah..."
+                className="w-full p-3 rounded-xl border-2 border-[#283618] text-xs font-medium focus:outline-none focus:ring-2 focus:ring-[#709752]"
               />
             </div>
-
             <div>
-              <label className="block text-xs font-black uppercase text-[#2D2319] mb-1">
-                Naskah Bacaan:
+              <label className="text-xs font-black text-[#283618] uppercase tracking-wider block mb-1">
+                Isi Paragraf Naskah:
               </label>
               <textarea
                 rows={6}
                 value={pastedText}
                 onChange={e => setPastedText(e.target.value)}
-                placeholder="Tempel naskah artikel atau kumpulan teks di sini..."
-                className="w-full p-3 rounded-xl border-2 border-[#2D2319] text-sm focus:outline-none focus:ring-2 focus:ring-[#10B981] font-mono"
+                placeholder="Tempelkan naskah teks cerpen atau artikel di sini..."
+                className="w-full p-3 rounded-xl border-2 border-[#283618] text-xs font-medium focus:outline-none focus:ring-2 focus:ring-[#709752]"
               />
             </div>
-
             <button
               onClick={handleProcessPastedText}
-              disabled={!pastedText.trim()}
-              className="w-full py-2.5 bg-[#10B981] hover:bg-[#059669] disabled:bg-slate-200 text-white font-black uppercase text-xs rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319] cursor-pointer"
+              disabled={!pastedText.trim() || isLoading}
+              className="w-full bg-[#709752] hover:bg-[#588157] text-white font-black text-xs uppercase py-3 rounded-xl border-2 border-[#283618] shadow-[3px_3px_0px_0px_#283618] cursor-pointer transition-all disabled:opacity-50"
             >
-              Pisahkan Artikel & Buat Quiz
+              Proses & Generate Soal Otomatis
             </button>
           </div>
         )}
 
-        {/* Error Notification */}
+        {/* Error Feedback */}
         {errorMessage && (
-          <div className="p-3 bg-rose-100 border border-rose-300 text-rose-800 rounded-xl text-xs flex items-center gap-2">
-            <AlertCircle className="w-4 h-4 shrink-0" />
+          <div className="p-3 bg-red-100 border-2 border-red-900 rounded-xl flex items-center gap-2 text-xs font-bold text-red-950">
+            <AlertCircle className="w-4 h-4 text-red-700 shrink-0" />
             <span>{errorMessage}</span>
           </div>
         )}
 
-        {/* Parsed Articles Preview Grid */}
+        {/* Parsed Articles Preview & Final Confirm */}
         {parsedArticles.length > 0 && (
-          <div className="space-y-3 pt-2 border-t-2 border-slate-100">
+          <div className="bg-[#E9EDC9] p-4 rounded-2xl border-2 border-[#283618] space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-black uppercase text-[#047857] flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4" />
-                Terdeteksi {parsedArticles.length} Artikel Siap Dimasukkan
+              <span className="text-xs font-black uppercase text-[#3A5A40] flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-[#709752]" />
+                {parsedArticles.length} Naskah Siap Diimpor
               </span>
-              <span className="text-[11px] text-slate-500 font-bold">
-                Otomatis menghasilkan kuis pemahaman & glosarium kosakata
+              <span className="text-[11px] font-bold text-[#574332]">
+                {targetHabit === 'cerpen' ? 'Format: Cerpen + Quiz 5 Soal' : 'Format: Artikel + Kuis Otomatis'}
               </span>
             </div>
 
-            <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
+            <div className="max-h-40 overflow-y-auto space-y-2 pr-1">
               {parsedArticles.map((art, idx) => (
-                <div
-                  key={idx}
-                  className="bg-[#FAF6EE] p-3 rounded-xl border-2 border-[#2D2319] flex items-center justify-between text-xs"
-                >
-                  <div className="space-y-0.5 max-w-md">
-                    <p className="font-black text-[#2D2319] truncate">{art.title}</p>
-                    <p className="text-[10px] text-slate-500 font-bold">
-                      {art.wordCount} Kata • Bahasa {art.language.toUpperCase()} • {art.category}
-                    </p>
+                <div key={idx} className="bg-white p-3 rounded-xl border border-[#283618] text-xs font-bold text-[#283618] flex items-center justify-between">
+                  <div className="truncate max-w-[320px]">
+                    {idx + 1}. {art.title}
                   </div>
-                  <span className="bg-emerald-100 text-emerald-800 text-[10px] font-black uppercase px-2 py-0.5 rounded border border-emerald-300">
-                    + Quiz & Vocab Ready
+                  <span className="text-[10px] bg-[#FAEDCD] px-2 py-0.5 rounded border border-[#283618]">
+                    {art.wordCount} Kata
                   </span>
                 </div>
               ))}
@@ -409,10 +475,10 @@ export const ImportArticleModal: React.FC<ImportArticleModalProps> = ({ isOpen, 
 
             <button
               onClick={handleSaveAllToHabit}
-              className="w-full py-3 px-6 bg-[#F59E0B] hover:bg-[#D97706] text-[#2D2319] font-black uppercase text-sm rounded-xl border-2 border-[#2D2319] shadow-[3px_3px_0px_0px_#2D2319] active:translate-y-0.5 active:shadow-none flex items-center justify-center gap-2 cursor-pointer transition-all mt-4"
+              className="w-full bg-[#709752] hover:bg-[#588157] text-white font-black py-3.5 rounded-xl border-2 border-[#283618] shadow-[3px_3px_0px_0px_#283618] uppercase text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer active:translate-y-0.5 transition-all"
             >
-              <Plus className="w-4 h-4 stroke-[3]" />
-              <span>Tambahkan ({parsedArticles.length}) Artikel ke Koleksi Habit Cloverait</span>
+              <Sparkles className="w-4 h-4" />
+              Simpan & Tambahkan ke Koleksi Cloverait
             </button>
           </div>
         )}

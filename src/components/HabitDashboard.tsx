@@ -9,7 +9,7 @@ import { HabitId } from '../types';
 
 interface HabitDashboardProps {
   onStartHabit: (habitId: HabitId) => void;
-  onNavigateTab?: (tab: 'dashboard' | 'obat-fokus' | 'balon-helium' | 'anak-tangga' | 'cerpen' | 'kata-baku' | 'sentence-drill') => void;
+  onNavigateTab?: (tab: 'dashboard' | 'obat-fokus' | 'balon-helium' | 'anak-tangga' | 'cerpen' | 'kata-baku' | 'sentence-drill' | 'sinonim-antonim' | 'dictionary') => void;
 }
 
 export const HabitDashboard: React.FC<HabitDashboardProps> = ({ onStartHabit, onNavigateTab }) => {
@@ -62,10 +62,10 @@ export const HabitDashboard: React.FC<HabitDashboardProps> = ({ onStartHabit, on
         </div>
 
         <div className="shrink-0 flex flex-col items-center">
-          <div className="relative p-2 bg-white rounded-2xl border-2 border-[#2D2319] shadow-[3px_3px_0px_0px_#2D2319]">
+          <div className="relative p-2 bg-white rounded-2xl border-2 border-[#2D2319] shadow-[3px_3px_0px_0px_#2D2319] mt-4 md:mt-2">
             <CloverMascot type="banner" size={105} />
-            <div className="absolute -top-2.5 -right-2.5 bg-[#F59E0B] border-2 border-[#2D2319] text-[#2D2319] font-black text-[10px] px-2.5 py-0.5 rounded-full shadow-[2px_2px_0px_0px_#2D2319] uppercase">
-              Lv. 3 Speed
+            <div className="absolute -top-7 -right-3 md:-right-6 bg-[#F59E0B] border-2 border-[#2D2319] text-[#2D2319] font-black text-[10.5px] leading-snug px-3 py-1 rounded-xl shadow-[2px_2px_0px_0px_#2D2319] max-w-[210px] text-center z-10">
+              mw semangat sekarang atau disemangatin dijam 3 sore nanti?
             </div>
           </div>
         </div>
@@ -338,7 +338,7 @@ export const HabitDashboard: React.FC<HabitDashboardProps> = ({ onStartHabit, on
             </div>
           </div>
 
-          {/* Mini-Games Launchers Banner Grid */}
+          {/* Mini-Games & Vocabulary Launchers Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* Kata Baku Mini-Game Banner */}
             <div className="bg-[#FEF3C7] border-2 border-[#2D2319] rounded-2xl p-5 shadow-[4px_4px_0px_0px_#2D2319] flex items-center justify-between gap-4">
@@ -360,6 +360,52 @@ export const HabitDashboard: React.FC<HabitDashboardProps> = ({ onStartHabit, on
               </div>
               <div className="shrink-0">
                 <CloverMascot type="kata-baku" size={64} />
+              </div>
+            </div>
+
+            {/* Sinonim & Antonim Quiz Banner */}
+            <div className="bg-[#E9EDC9] border-2 border-[#2D2319] rounded-2xl p-5 shadow-[4px_4px_0px_0px_#2D2319] flex items-center justify-between gap-4">
+              <div className="space-y-1">
+                <span className="text-[10px] font-black uppercase tracking-wider text-[#3A5A40] bg-white px-2 py-0.5 rounded border border-[#2D2319]">
+                  SEMANTIK BAHASA
+                </span>
+                <h4 className="text-base font-black text-[#2D2319]">Quiz Sinonim & Antonim</h4>
+                <p className="text-xs text-[#574332] font-semibold">
+                  Latihan acak persamaan & lawan kata dengan penjelasan semantik lengkap.
+                </p>
+                <button
+                  onClick={() => onNavigateTab && onNavigateTab('sinonim-antonim')}
+                  className="mt-2 py-1.5 px-4 bg-white hover:bg-[#FAEDCD] text-[#3A5A40] text-xs font-black uppercase rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319] cursor-pointer flex items-center gap-1.5"
+                >
+                  <span>Mulai Quiz</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+              <div className="shrink-0">
+                <CloverMascot type="kata-baku" size={64} />
+              </div>
+            </div>
+
+            {/* English-Indonesian Dictionary & My Vocab Banner */}
+            <div className="bg-[#CCD5AE] border-2 border-[#2D2319] rounded-2xl p-5 shadow-[4px_4px_0px_0px_#2D2319] flex items-center justify-between gap-4">
+              <div className="space-y-1">
+                <span className="text-[10px] font-black uppercase tracking-wider text-[#283618] bg-white px-2 py-0.5 rounded border border-[#2D2319]">
+                  DICTIONARY & VOCAB
+                </span>
+                <h4 className="text-base font-black text-[#2D2319]">Kamus Inggris - Indonesia & My Vocab</h4>
+                <p className="text-xs text-[#574332] font-semibold">
+                  Definisi mendalam, audio TTS, sinonim/antonim, dan koleksi kata pribadi.
+                </p>
+                <button
+                  onClick={() => onNavigateTab && onNavigateTab('dictionary')}
+                  className="mt-2 py-1.5 px-4 bg-white hover:bg-[#FAEDCD] text-[#283618] text-xs font-black uppercase rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319] cursor-pointer flex items-center gap-1.5"
+                >
+                  <span>Buka Kamus</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+              <div className="shrink-0">
+                <CloverMascot type="ranting-kata" size={64} />
               </div>
             </div>
 

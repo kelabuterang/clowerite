@@ -174,6 +174,845 @@ export const MENTAL_MATH_GUIDES: MentalMathGuideTopic[] = [
   }
 ];
 
+// ==================== DEDICATED 15-QUESTION DRILL SETS PER MODULE ====================
+export const MODULE_DRILL_SETS: Record<string, MentalMathQuestion[]> = {
+  'left-to-right': [
+    {
+      id: 'dr-ltr-1',
+      prompt: 'Jumlahkan ratusan dulu, lalu puluhan, lalu satuan.',
+      question: '430 + 250 = ?',
+      options: [680, 670, 690, 580],
+      correctAnswer: 680,
+      trickExplanation: '430 + 200 = 630 -> 630 + 50 = 680.',
+      category: 'Penjumlahan Kiri ke Kanan'
+    },
+    {
+      id: 'dr-ltr-2',
+      prompt: 'Jumlahkan ratusan dulu, lalu puluhan, lalu satuan.',
+      question: '564 + 325 = ?',
+      options: [889, 879, 899, 869],
+      correctAnswer: 889,
+      trickExplanation: '564 + 300 = 864 -> 864 + 20 = 884 -> + 5 = 889.',
+      category: 'Penjumlahan Kiri ke Kanan'
+    },
+    {
+      id: 'dr-ltr-3',
+      prompt: 'Jumlahkan dari kiri ke kanan secara bertahap.',
+      question: '648 + 271 = ?',
+      options: [919, 909, 929, 819],
+      correctAnswer: 919,
+      trickExplanation: '648 + 200 = 848 -> 848 + 70 = 918 -> + 1 = 919.',
+      category: 'Penjumlahan Kiri ke Kanan'
+    },
+    {
+      id: 'dr-ltr-4',
+      prompt: 'Jumlahkan ratusan: 700 + 400 = 1100.',
+      question: '735 + 452 = ?',
+      options: [1187, 1177, 1197, 1087],
+      correctAnswer: 1187,
+      trickExplanation: '735 + 400 = 1135 -> + 50 = 1185 -> + 2 = 1187.',
+      category: 'Penjumlahan Kiri ke Kanan'
+    },
+    {
+      id: 'dr-ltr-5',
+      prompt: 'Jumlahkan dari digit terbesar di sebelah kiri.',
+      question: '829 + 164 = ?',
+      options: [993, 983, 995, 1003],
+      correctAnswer: 993,
+      trickExplanation: '829 + 100 = 929 -> + 60 = 989 -> + 4 = 993.',
+      category: 'Penjumlahan Kiri ke Kanan'
+    },
+    {
+      id: 'dr-ltr-6',
+      prompt: 'Pecah 358 menjadi 300 + 50 + 8.',
+      question: '674 + 358 = ?',
+      options: [1032, 1022, 1042, 932],
+      correctAnswer: 1032,
+      trickExplanation: '674 + 300 = 974 -> + 50 = 1024 -> + 8 = 1032.',
+      category: 'Penjumlahan Kiri ke Kanan'
+    },
+    {
+      id: 'dr-ltr-7',
+      prompt: 'Jumlahkan dari kiri ke kanan: 450 + 380.',
+      question: '458 + 386 = ?',
+      options: [844, 834, 854, 744],
+      correctAnswer: 844,
+      trickExplanation: '458 + 300 = 758 -> + 80 = 838 -> + 6 = 844.',
+      category: 'Penjumlahan Kiri ke Kanan'
+    },
+    {
+      id: 'dr-ltr-8',
+      prompt: 'Tambahkan ratusan dulu: 845 + 500 = 1345.',
+      question: '845 + 537 = ?',
+      options: [1382, 1372, 1392, 1282],
+      correctAnswer: 1382,
+      trickExplanation: '845 + 500 = 1345 -> + 30 = 1375 -> + 7 = 1382.',
+      category: 'Penjumlahan Kiri ke Kanan'
+    },
+    {
+      id: 'dr-ltr-9',
+      prompt: 'Jumlahkan kiri ke kanan tanpa coretan.',
+      question: '294 + 618 = ?',
+      options: [912, 902, 922, 812],
+      correctAnswer: 912,
+      trickExplanation: '294 + 600 = 894 -> + 10 = 904 -> + 8 = 912.',
+      category: 'Penjumlahan Kiri ke Kanan'
+    },
+    {
+      id: 'dr-ltr-10',
+      prompt: 'Pecah 476 menjadi 400 + 70 + 6.',
+      question: '528 + 476 = ?',
+      options: [1004, 994, 1014, 1002],
+      correctAnswer: 1004,
+      trickExplanation: '528 + 400 = 928 -> + 70 = 998 -> + 6 = 1004.',
+      category: 'Penjumlahan Kiri ke Kanan'
+    },
+    {
+      id: 'dr-ltr-11',
+      prompt: 'Jumlahkan ratusan lalu puluhan dan satuan.',
+      question: '716 + 289 = ?',
+      options: [1005, 995, 1015, 985],
+      correctAnswer: 1005,
+      trickExplanation: '716 + 200 = 916 -> + 80 = 996 -> + 9 = 1005.',
+      category: 'Penjumlahan Kiri ke Kanan'
+    },
+    {
+      id: 'dr-ltr-12',
+      prompt: 'Pecah 380 menjadi 300 + 80.',
+      question: '637 + 384 = ?',
+      options: [1021, 1011, 1031, 921],
+      correctAnswer: 1021,
+      trickExplanation: '637 + 300 = 937 -> + 80 = 1017 -> + 4 = 1021.',
+      category: 'Penjumlahan Kiri ke Kanan'
+    },
+    {
+      id: 'dr-ltr-13',
+      prompt: 'Jumlahkan dari digit kiri: ribuan dan ratusan.',
+      question: '1250 + 870 = ?',
+      options: [2120, 2110, 2130, 2020],
+      correctAnswer: 2120,
+      trickExplanation: '1250 + 800 = 2050 -> + 70 = 2120.',
+      category: 'Penjumlahan Kiri ke Kanan'
+    },
+    {
+      id: 'dr-ltr-14',
+      prompt: 'Jumlahkan: 355 + 475.',
+      question: '355 + 475 = ?',
+      options: [830, 820, 840, 730],
+      correctAnswer: 830,
+      trickExplanation: '355 + 400 = 755 -> + 70 = 825 -> + 5 = 830.',
+      category: 'Penjumlahan Kiri ke Kanan'
+    },
+    {
+      id: 'dr-ltr-15',
+      prompt: 'Jumlahkan 948 + 365 dari kiri.',
+      question: '948 + 365 = ?',
+      options: [1313, 1303, 1323, 1213],
+      correctAnswer: 1313,
+      trickExplanation: '948 + 300 = 1248 -> + 60 = 1308 -> + 5 = 1313.',
+      category: 'Penjumlahan Kiri ke Kanan'
+    }
+  ],
+
+  'rounding-compensation': [
+    {
+      id: 'dr-rc-1',
+      prompt: 'Bulatkan 98 ke 100: tambah 100 lalu kurangi 2.',
+      question: '437 + 98 = ?',
+      options: [535, 525, 545, 537],
+      correctAnswer: 535,
+      trickExplanation: '437 + 100 = 537, lalu 537 - 2 = 535.',
+      category: 'Pembulatan & Kompensasi'
+    },
+    {
+      id: 'dr-rc-2',
+      prompt: 'Bulatkan 298 ke 300: tambah 300 lalu kurangi 2.',
+      question: '546 + 298 = ?',
+      options: [844, 834, 854, 846],
+      correctAnswer: 844,
+      trickExplanation: '546 + 300 = 846, lalu 846 - 2 = 844.',
+      category: 'Pembulatan & Kompensasi'
+    },
+    {
+      id: 'dr-rc-3',
+      prompt: 'Bulatkan 195 ke 200: kurangi 200 lalu kembalikan +5.',
+      question: '682 - 195 = ?',
+      options: [487, 477, 497, 482],
+      correctAnswer: 487,
+      trickExplanation: '682 - 200 = 482, lalu 482 + 5 = 487.',
+      category: 'Pembulatan & Kompensasi'
+    },
+    {
+      id: 'dr-rc-4',
+      prompt: 'Bulatkan 396 ke 400: tambah 400 lalu kurangi 4.',
+      question: '815 + 396 = ?',
+      options: [1211, 1201, 1221, 1111],
+      correctAnswer: 1211,
+      trickExplanation: '815 + 400 = 1215, lalu 1215 - 4 = 1211.',
+      category: 'Pembulatan & Kompensasi'
+    },
+    {
+      id: 'dr-rc-5',
+      prompt: 'Bulatkan 497 ke 500: tambah 500 lalu kurangi 3.',
+      question: '624 + 497 = ?',
+      options: [1121, 1111, 1131, 1021],
+      correctAnswer: 1121,
+      trickExplanation: '624 + 500 = 1124, lalu 1124 - 3 = 1121.',
+      category: 'Pembulatan & Kompensasi'
+    },
+    {
+      id: 'dr-rc-6',
+      prompt: 'Bulatkan 294 ke 300: kurangi 300 lalu tambah 6.',
+      question: '750 - 294 = ?',
+      options: [456, 446, 466, 450],
+      correctAnswer: 456,
+      trickExplanation: '750 - 300 = 450, lalu 450 + 6 = 456.',
+      category: 'Pembulatan & Kompensasi'
+    },
+    {
+      id: 'dr-rc-7',
+      prompt: 'Bulatkan 99 ke 100: tambah 100 lalu kurangi 1.',
+      question: '864 + 99 = ?',
+      options: [963, 953, 973, 965],
+      correctAnswer: 963,
+      trickExplanation: '864 + 100 = 964, lalu 964 - 1 = 963.',
+      category: 'Pembulatan & Kompensasi'
+    },
+    {
+      id: 'dr-rc-8',
+      prompt: 'Bulatkan 199 ke 200: tambah 200 lalu kurangi 1.',
+      question: '375 + 199 = ?',
+      options: [574, 564, 584, 575],
+      correctAnswer: 574,
+      trickExplanation: '375 + 200 = 575, lalu 575 - 1 = 574.',
+      category: 'Pembulatan & Kompensasi'
+    },
+    {
+      id: 'dr-rc-9',
+      prompt: 'Bulatkan 395 ke 400: kurangi 400 lalu tambah 5.',
+      question: '930 - 395 = ?',
+      options: [535, 525, 545, 530],
+      correctAnswer: 535,
+      trickExplanation: '930 - 400 = 530, lalu 530 + 5 = 535.',
+      category: 'Pembulatan & Kompensasi'
+    },
+    {
+      id: 'dr-rc-10',
+      prompt: 'Bulatkan 598 ke 600: tambah 600 lalu kurangi 2.',
+      question: '745 + 598 = ?',
+      options: [1343, 1333, 1353, 1243],
+      correctAnswer: 1343,
+      trickExplanation: '745 + 600 = 1345, lalu 1345 - 2 = 1343.',
+      category: 'Pembulatan & Kompensasi'
+    },
+    {
+      id: 'dr-rc-11',
+      prompt: 'Bulatkan 490 ke 500: tambah 500 lalu kurangi 10.',
+      question: '836 + 490 = ?',
+      options: [1326, 1316, 1336, 1226],
+      correctAnswer: 1326,
+      trickExplanation: '836 + 500 = 1336, lalu 1336 - 10 = 1326.',
+      category: 'Pembulatan & Kompensasi'
+    },
+    {
+      id: 'dr-rc-12',
+      prompt: 'Bulatkan 496 ke 500: kurangi 500 lalu tambah 4.',
+      question: '820 - 496 = ?',
+      options: [324, 314, 334, 320],
+      correctAnswer: 324,
+      trickExplanation: '820 - 500 = 320, lalu 320 + 4 = 324.',
+      category: 'Pembulatan & Kompensasi'
+    },
+    {
+      id: 'dr-rc-13',
+      prompt: 'Bulatkan 198 ke 200: tambah 200 lalu kurangi 2.',
+      question: '657 + 198 = ?',
+      options: [855, 845, 865, 857],
+      correctAnswer: 855,
+      trickExplanation: '657 + 200 = 857, lalu 857 - 2 = 855.',
+      category: 'Pembulatan & Kompensasi'
+    },
+    {
+      id: 'dr-rc-14',
+      prompt: 'Bulatkan 697 ke 700: tambah 700 lalu kurangi 3.',
+      question: '482 + 697 = ?',
+      options: [1179, 1169, 1189, 1079],
+      correctAnswer: 1179,
+      trickExplanation: '482 + 700 = 1182, lalu 1182 - 3 = 1179.',
+      category: 'Pembulatan & Kompensasi'
+    },
+    {
+      id: 'dr-rc-15',
+      prompt: 'Bulatkan 595 ke 600: kurangi 600 lalu tambah 5.',
+      question: '1240 - 595 = ?',
+      options: [645, 635, 655, 640],
+      correctAnswer: 645,
+      trickExplanation: '1240 - 600 = 640, lalu 640 + 5 = 645.',
+      category: 'Pembulatan & Kompensasi'
+    }
+  ],
+
+  'counting-up-subtraction': [
+    {
+      id: 'dr-cu-1',
+      prompt: 'Loncat: 263 -> 270 (+7) -> 300 (+30) -> 500 (+200).',
+      question: '500 - 263 = ?',
+      options: [237, 227, 247, 337],
+      correctAnswer: 237,
+      trickExplanation: '7 + 30 + 200 = 237.',
+      category: 'Pengurangan Maju'
+    },
+    {
+      id: 'dr-cu-2',
+      prompt: 'Loncat: 482 -> 490 (+8) -> 500 (+10) -> 1000 (+500).',
+      question: '1000 - 482 = ?',
+      options: [518, 508, 528, 618],
+      correctAnswer: 518,
+      trickExplanation: '8 + 10 + 500 = 518.',
+      category: 'Pengurangan Maju'
+    },
+    {
+      id: 'dr-cu-3',
+      prompt: 'Loncat: 385 -> 400 (+15) -> 730 (+330).',
+      question: '730 - 385 = ?',
+      options: [345, 335, 355, 445],
+      correctAnswer: 345,
+      trickExplanation: '15 + 330 = 345.',
+      category: 'Pengurangan Maju'
+    },
+    {
+      id: 'dr-cu-4',
+      prompt: 'Loncat: 348 -> 350 (+2) -> 400 (+50) -> 1000 (+600).',
+      question: '1000 - 348 = ?',
+      options: [652, 642, 662, 752],
+      correctAnswer: 652,
+      trickExplanation: '2 + 50 + 600 = 652.',
+      category: 'Pengurangan Maju'
+    },
+    {
+      id: 'dr-cu-5',
+      prompt: 'Loncat: 274 -> 300 (+26) -> 800 (+500).',
+      question: '800 - 274 = ?',
+      options: [526, 516, 536, 626],
+      correctAnswer: 526,
+      trickExplanation: '26 + 500 = 526.',
+      category: 'Pengurangan Maju'
+    },
+    {
+      id: 'dr-cu-6',
+      prompt: 'Loncat: 468 -> 500 (+32) -> 920 (+420).',
+      question: '920 - 468 = ?',
+      options: [452, 442, 462, 352],
+      correctAnswer: 452,
+      trickExplanation: '32 + 420 = 452.',
+      category: 'Pengurangan Maju'
+    },
+    {
+      id: 'dr-cu-7',
+      prompt: 'Loncat: 635 -> 640 (+5) -> 700 (+60) -> 1000 (+300).',
+      question: '1000 - 635 = ?',
+      options: [365, 355, 375, 465],
+      correctAnswer: 365,
+      trickExplanation: '5 + 60 + 300 = 365.',
+      category: 'Pengurangan Maju'
+    },
+    {
+      id: 'dr-cu-8',
+      prompt: 'Loncat: 187 -> 200 (+13) -> 600 (+400).',
+      question: '600 - 187 = ?',
+      options: [413, 403, 423, 513],
+      correctAnswer: 413,
+      trickExplanation: '13 + 400 = 413.',
+      category: 'Pengurangan Maju'
+    },
+    {
+      id: 'dr-cu-9',
+      prompt: 'Loncat: 512 -> 600 (+88) -> 840 (+240).',
+      question: '840 - 512 = ?',
+      options: [328, 318, 338, 428],
+      correctAnswer: 328,
+      trickExplanation: '88 + 240 = 328.',
+      category: 'Pengurangan Maju'
+    },
+    {
+      id: 'dr-cu-10',
+      prompt: 'Loncat: 789 -> 800 (+11) -> 1000 (+200).',
+      question: '1000 - 789 = ?',
+      options: [211, 201, 221, 311],
+      correctAnswer: 211,
+      trickExplanation: '11 + 200 = 211.',
+      category: 'Pengurangan Maju'
+    },
+    {
+      id: 'dr-cu-11',
+      prompt: 'Loncat: 245 -> 300 (+55) -> 750 (+450).',
+      question: '750 - 245 = ?',
+      options: [505, 495, 515, 605],
+      correctAnswer: 505,
+      trickExplanation: '55 + 450 = 505.',
+      category: 'Pengurangan Maju'
+    },
+    {
+      id: 'dr-cu-12',
+      prompt: 'Loncat: 165 -> 200 (+35) -> 500 (+300).',
+      question: '500 - 165 = ?',
+      options: [335, 325, 345, 435],
+      correctAnswer: 335,
+      trickExplanation: '35 + 300 = 335.',
+      category: 'Pengurangan Maju'
+    },
+    {
+      id: 'dr-cu-13',
+      prompt: 'Loncat: 673 -> 700 (+27) -> 1200 (+500).',
+      question: '1200 - 673 = ?',
+      options: [527, 517, 537, 627],
+      correctAnswer: 527,
+      trickExplanation: '27 + 500 = 527.',
+      category: 'Pengurangan Maju'
+    },
+    {
+      id: 'dr-cu-14',
+      prompt: 'Loncat: 846 -> 850 (+4) -> 900 (+50) -> 1000 (+100).',
+      question: '1000 - 846 = ?',
+      options: [154, 144, 164, 254],
+      correctAnswer: 154,
+      trickExplanation: '4 + 50 + 100 = 154.',
+      category: 'Pengurangan Maju'
+    },
+    {
+      id: 'dr-cu-15',
+      prompt: 'Loncat: 395 -> 400 (+5) -> 950 (+550).',
+      question: '950 - 395 = ?',
+      options: [555, 545, 565, 455],
+      correctAnswer: 555,
+      trickExplanation: '5 + 550 = 555.',
+      category: 'Pengurangan Maju'
+    }
+  ],
+
+  'magic-multiplication': [
+    {
+      id: 'dr-mm-1',
+      prompt: 'Trik × 5: Kalikan 10 (tambah 0) lalu bagi 2.',
+      question: '78 × 5 = ?',
+      options: [390, 380, 400, 370],
+      correctAnswer: 390,
+      trickExplanation: '78 × 10 = 780. Setengah dari 780 adalah 390.',
+      category: 'Perkalian Ajaib'
+    },
+    {
+      id: 'dr-mm-2',
+      prompt: 'Trik × 11: Selipkan jumlah digit di tengah (5 + 2 = 7).',
+      question: '52 × 11 = ?',
+      options: [572, 562, 582, 672],
+      correctAnswer: 572,
+      trickExplanation: '5 (5+2) 2 = 572.',
+      category: 'Perkalian Ajaib'
+    },
+    {
+      id: 'dr-mm-3',
+      prompt: 'Trik × 25: Bagi 4 lalu kalikan 100.',
+      question: '64 × 25 = ?',
+      options: [1600, 1500, 1700, 1400],
+      correctAnswer: 1600,
+      trickExplanation: '64 / 4 = 16. Kalikan 100 = 1.600.',
+      category: 'Perkalian Ajaib'
+    },
+    {
+      id: 'dr-mm-4',
+      prompt: 'Trik × 9: Kalikan 10 lalu kurangi angka itu sendiri.',
+      question: '67 × 9 = ?',
+      options: [603, 593, 613, 583],
+      correctAnswer: 603,
+      trickExplanation: '67 × 10 = 670. Lalu 670 - 67 = 603.',
+      category: 'Perkalian Ajaib'
+    },
+    {
+      id: 'dr-mm-5',
+      prompt: 'Trik × 5: 96 × 10 = 960, bagi 2.',
+      question: '96 × 5 = ?',
+      options: [480, 470, 490, 460],
+      correctAnswer: 480,
+      trickExplanation: '960 / 2 = 480.',
+      category: 'Perkalian Ajaib'
+    },
+    {
+      id: 'dr-mm-6',
+      prompt: 'Trik × 11: 3 (3+6) 6 = 396.',
+      question: '36 × 11 = ?',
+      options: [396, 386, 406, 376],
+      correctAnswer: 396,
+      trickExplanation: '3 + 6 = 9 di tengah -> 396.',
+      category: 'Perkalian Ajaib'
+    },
+    {
+      id: 'dr-mm-7',
+      prompt: 'Trik × 25: 48 / 4 = 12, tambah dua nol.',
+      question: '48 × 25 = ?',
+      options: [1200, 1100, 1300, 1250],
+      correctAnswer: 1200,
+      trickExplanation: '48 / 4 = 12 -> 1.200.',
+      category: 'Perkalian Ajaib'
+    },
+    {
+      id: 'dr-mm-8',
+      prompt: 'Trik × 9: 84 × 10 = 840. 840 - 84.',
+      question: '84 × 9 = ?',
+      options: [756, 746, 766, 736],
+      correctAnswer: 756,
+      trickExplanation: '840 - 84 = 756.',
+      category: 'Perkalian Ajaib'
+    },
+    {
+      id: 'dr-mm-9',
+      prompt: 'Trik × 5: 140 / 2.',
+      question: '14 × 5 = ?',
+      options: [70, 60, 80, 65],
+      correctAnswer: 70,
+      trickExplanation: '14 × 10 = 140 -> 140 / 2 = 70.',
+      category: 'Perkalian Ajaib'
+    },
+    {
+      id: 'dr-mm-10',
+      prompt: 'Trik × 11 dengan carry: 7 (7+5) 5 = 7 (12) 5 = 825.',
+      question: '75 × 11 = ?',
+      options: [825, 815, 835, 725],
+      correctAnswer: 825,
+      trickExplanation: '7 + 5 = 12. Tulis 2, simpan 1 ke angka 7 -> 825.',
+      category: 'Perkalian Ajaib'
+    },
+    {
+      id: 'dr-mm-11',
+      prompt: 'Trik × 25: 84 / 4 = 21, kali 100.',
+      question: '84 × 25 = ?',
+      options: [2100, 2000, 2200, 2050],
+      correctAnswer: 2100,
+      trickExplanation: '84 / 4 = 21 -> 2.100.',
+      category: 'Perkalian Ajaib'
+    },
+    {
+      id: 'dr-mm-12',
+      prompt: 'Trik × 9: 53 × 10 = 530. 530 - 53.',
+      question: '53 × 9 = ?',
+      options: [477, 467, 487, 457],
+      correctAnswer: 477,
+      trickExplanation: '530 - 53 = 477.',
+      category: 'Perkalian Ajaib'
+    },
+    {
+      id: 'dr-mm-13',
+      prompt: 'Trik × 5: 128 × 10 = 1280, bagi 2.',
+      question: '128 × 5 = ?',
+      options: [640, 630, 650, 620],
+      correctAnswer: 640,
+      trickExplanation: '1280 / 2 = 640.',
+      category: 'Perkalian Ajaib'
+    },
+    {
+      id: 'dr-mm-14',
+      prompt: 'Trik × 11: 4 (4+5) 5 = 495.',
+      question: '45 × 11 = ?',
+      options: [495, 485, 505, 475],
+      correctAnswer: 495,
+      trickExplanation: '4 + 5 = 9 di tengah -> 495.',
+      category: 'Perkalian Ajaib'
+    },
+    {
+      id: 'dr-mm-15',
+      prompt: 'Trik × 25: 32 / 4 = 8, kali 100.',
+      question: '32 × 25 = ?',
+      options: [800, 750, 850, 900],
+      correctAnswer: 800,
+      trickExplanation: '32 / 4 = 8 -> 800.',
+      category: 'Perkalian Ajaib'
+    }
+  ],
+
+  'quick-percentages': [
+    {
+      id: 'dr-qp-1',
+      prompt: 'Sifat komutatif: 18% dari 50 = 50% dari 18.',
+      question: '18% dari 50 = ?',
+      options: [9, 8, 10, 7],
+      correctAnswer: 9,
+      trickExplanation: '50% dari 18 adalah setengah dari 18 = 9.',
+      category: 'Persentase Cepat'
+    },
+    {
+      id: 'dr-qp-2',
+      prompt: 'Balok dasar: 10% = 32, 5% = 16.',
+      question: '15% dari 320 = ?',
+      options: [48, 44, 52, 40],
+      correctAnswer: 48,
+      trickExplanation: '32 + 16 = 48.',
+      category: 'Persentase Cepat'
+    },
+    {
+      id: 'dr-qp-3',
+      prompt: 'Sifat komutatif: 84% dari 25 = 25% dari 84.',
+      question: '84% dari 25 = ?',
+      options: [21, 20, 22, 19],
+      correctAnswer: 21,
+      trickExplanation: '25% dari 84 = 84 / 4 = 21.',
+      category: 'Persentase Cepat'
+    },
+    {
+      id: 'dr-qp-4',
+      prompt: 'Balok dasar: 10% = 45, 20% = 90.',
+      question: '20% dari 450 = ?',
+      options: [90, 80, 100, 85],
+      correctAnswer: 90,
+      trickExplanation: '10% dari 450 = 45. 45 × 2 = 90.',
+      category: 'Persentase Cepat'
+    },
+    {
+      id: 'dr-qp-5',
+      prompt: 'Sifat komutatif: 36% dari 50 = 50% dari 36.',
+      question: '36% dari 50 = ?',
+      options: [18, 16, 20, 15],
+      correctAnswer: 18,
+      trickExplanation: 'Setengah dari 36 = 18.',
+      category: 'Persentase Cepat'
+    },
+    {
+      id: 'dr-qp-6',
+      prompt: 'Balok 15%: 10% (60) + 5% (30).',
+      question: '15% dari 600 = ?',
+      options: [90, 80, 100, 85],
+      correctAnswer: 90,
+      trickExplanation: '60 + 30 = 90.',
+      category: 'Persentase Cepat'
+    },
+    {
+      id: 'dr-qp-7',
+      prompt: 'Sifat komutatif: 48% dari 25 = 25% dari 48.',
+      question: '48% dari 25 = ?',
+      options: [12, 11, 13, 10],
+      correctAnswer: 12,
+      trickExplanation: '48 / 4 = 12.',
+      category: 'Persentase Cepat'
+    },
+    {
+      id: 'dr-qp-8',
+      prompt: 'Balok dasar 30%: 10% dari 250 = 25. 25 × 3 = ?',
+      question: '30% dari 250 = ?',
+      options: [75, 70, 80, 65],
+      correctAnswer: 75,
+      trickExplanation: '25 × 3 = 75.',
+      category: 'Persentase Cepat'
+    },
+    {
+      id: 'dr-qp-9',
+      prompt: 'Sifat komutatif: 64% dari 50 = 50% dari 64.',
+      question: '64% dari 50 = ?',
+      options: [32, 30, 34, 28],
+      correctAnswer: 32,
+      trickExplanation: 'Setengah dari 64 = 32.',
+      category: 'Persentase Cepat'
+    },
+    {
+      id: 'dr-qp-10',
+      prompt: 'Balok 15%: 10% (84) + 5% (42).',
+      question: '15% dari 840 = ?',
+      options: [126, 120, 132, 116],
+      correctAnswer: 126,
+      trickExplanation: '84 + 42 = 126.',
+      category: 'Persentase Cepat'
+    },
+    {
+      id: 'dr-qp-11',
+      prompt: 'Sifat komutatif: 92% dari 50 = 50% dari 92.',
+      question: '92% dari 50 = ?',
+      options: [46, 44, 48, 42],
+      correctAnswer: 46,
+      trickExplanation: 'Setengah dari 92 = 46.',
+      category: 'Persentase Cepat'
+    },
+    {
+      id: 'dr-qp-12',
+      prompt: 'Sifat komutatif: 72% dari 25 = 25% dari 72.',
+      question: '72% dari 25 = ?',
+      options: [18, 16, 20, 15],
+      correctAnswer: 18,
+      trickExplanation: '72 / 4 = 18.',
+      category: 'Persentase Cepat'
+    },
+    {
+      id: 'dr-qp-13',
+      prompt: 'Balok 5%: 10% dari 480 = 48. Setengahnya = ?',
+      question: '5% dari 480 = ?',
+      options: [24, 20, 28, 22],
+      correctAnswer: 24,
+      trickExplanation: 'Setengah dari 48 = 24.',
+      category: 'Persentase Cepat'
+    },
+    {
+      id: 'dr-qp-14',
+      prompt: 'Balok 25%: 1/4 dari 360.',
+      question: '25% dari 360 = ?',
+      options: [90, 80, 100, 85],
+      correctAnswer: 90,
+      trickExplanation: '360 / 4 = 90.',
+      category: 'Persentase Cepat'
+    },
+    {
+      id: 'dr-qp-15',
+      prompt: 'Balok 15%: 10% (140) + 5% (70).',
+      question: '15% dari 1400 = ?',
+      options: [210, 200, 220, 190],
+      correctAnswer: 210,
+      trickExplanation: '140 + 70 = 210.',
+      category: 'Persentase Cepat'
+    }
+  ],
+
+  'square-ending-5': [
+    {
+      id: 'dr-sq-1',
+      prompt: 'Trik: 3 × 4 = 12, tempelkan 25 -> 1.225.',
+      question: '35² = ?',
+      options: [1225, 1125, 1325, 1255],
+      correctAnswer: 1225,
+      trickExplanation: '3 × 4 = 12, gabung 25 = 1.225.',
+      category: 'Kuadrat Berakhiran 5'
+    },
+    {
+      id: 'dr-sq-2',
+      prompt: 'Trik: 6 × 7 = 42, tempelkan 25 -> 4.225.',
+      question: '65² = ?',
+      options: [4225, 4125, 4325, 4255],
+      correctAnswer: 4225,
+      trickExplanation: '6 × 7 = 42, gabung 25 = 4.225.',
+      category: 'Kuadrat Berakhiran 5'
+    },
+    {
+      id: 'dr-sq-3',
+      prompt: 'Trik: 9 × 10 = 90, tempelkan 25 -> 9.025.',
+      question: '95² = ?',
+      options: [9025, 8925, 9125, 9055],
+      correctAnswer: 9025,
+      trickExplanation: '9 × 10 = 90, gabung 25 = 9.025.',
+      category: 'Kuadrat Berakhiran 5'
+    },
+    {
+      id: 'dr-sq-4',
+      prompt: 'Trik: 2 × 3 = 6, tempelkan 25 -> 625.',
+      question: '25² = ?',
+      options: [625, 525, 725, 655],
+      correctAnswer: 625,
+      trickExplanation: '2 × 3 = 6, gabung 25 = 625.',
+      category: 'Kuadrat Berakhiran 5'
+    },
+    {
+      id: 'dr-sq-5',
+      prompt: 'Trik: 4 × 5 = 20, tempelkan 25 -> 2.025.',
+      question: '45² = ?',
+      options: [2025, 1925, 2125, 2045],
+      correctAnswer: 2025,
+      trickExplanation: '4 × 5 = 20, gabung 25 = 2.025.',
+      category: 'Kuadrat Berakhiran 5'
+    },
+    {
+      id: 'dr-sq-6',
+      prompt: 'Trik: 7 × 8 = 56, tempelkan 25 -> 5.625.',
+      question: '75² = ?',
+      options: [5625, 5525, 5725, 5655],
+      correctAnswer: 5625,
+      trickExplanation: '7 × 8 = 56, gabung 25 = 5.625.',
+      category: 'Kuadrat Berakhiran 5'
+    },
+    {
+      id: 'dr-sq-7',
+      prompt: 'Trik: 8 × 9 = 72, tempelkan 25 -> 7.225.',
+      question: '85² = ?',
+      options: [7225, 7125, 7325, 7255],
+      correctAnswer: 7225,
+      trickExplanation: '8 × 9 = 72, gabung 25 = 7.225.',
+      category: 'Kuadrat Berakhiran 5'
+    },
+    {
+      id: 'dr-sq-8',
+      prompt: 'Trik: 1 × 2 = 2, tempelkan 25 -> 225.',
+      question: '15² = ?',
+      options: [225, 215, 235, 195],
+      correctAnswer: 225,
+      trickExplanation: '1 × 2 = 2, gabung 25 = 225.',
+      category: 'Kuadrat Berakhiran 5'
+    },
+    {
+      id: 'dr-sq-9',
+      prompt: 'Trik: 5 × 6 = 30, tempelkan 25 -> 3.025.',
+      question: '55² = ?',
+      options: [3025, 2925, 3125, 3055],
+      correctAnswer: 3025,
+      trickExplanation: '5 × 6 = 30, gabung 25 = 3.025.',
+      category: 'Kuadrat Berakhiran 5'
+    },
+    {
+      id: 'dr-sq-10',
+      prompt: 'Trik: 10 × 11 = 110, tempelkan 25 -> 11.025.',
+      question: '105² = ?',
+      options: [11025, 10925, 11125, 11055],
+      correctAnswer: 11025,
+      trickExplanation: '10 × 11 = 110, gabung 25 = 11.025.',
+      category: 'Kuadrat Berakhiran 5'
+    },
+    {
+      id: 'dr-sq-11',
+      prompt: 'Trik: 11 × 12 = 132, tempelkan 25 -> 13.225.',
+      question: '115² = ?',
+      options: [13225, 13125, 13325, 13255],
+      correctAnswer: 13225,
+      trickExplanation: '11 × 12 = 132, gabung 25 = 13.225.',
+      category: 'Kuadrat Berakhiran 5'
+    },
+    {
+      id: 'dr-sq-12',
+      prompt: 'Trik: 12 × 13 = 156, tempelkan 25 -> 15.625.',
+      question: '125² = ?',
+      options: [15625, 15525, 15725, 15655],
+      correctAnswer: 15625,
+      trickExplanation: '12 × 13 = 156, gabung 25 = 15.625.',
+      category: 'Kuadrat Berakhiran 5'
+    },
+    {
+      id: 'dr-sq-13',
+      prompt: 'Trik: 7 × 8 = 56, tempelkan 25.',
+      question: '75² = ?',
+      options: [5625, 5525, 5725, 5650],
+      correctAnswer: 5625,
+      trickExplanation: '7 × 8 = 56, gabung 25 = 5.625.',
+      category: 'Kuadrat Berakhiran 5'
+    },
+    {
+      id: 'dr-sq-14',
+      prompt: 'Trik: 4 × 5 = 20, tempelkan 25.',
+      question: '45² = ?',
+      options: [2025, 1925, 2125, 2015],
+      correctAnswer: 2025,
+      trickExplanation: '4 × 5 = 20, gabung 25 = 2.025.',
+      category: 'Kuadrat Berakhiran 5'
+    },
+    {
+      id: 'dr-sq-15',
+      prompt: 'Trik: 9 × 10 = 90, tempelkan 25.',
+      question: '95² = ?',
+      options: [9025, 8925, 9125, 9035],
+      correctAnswer: 9025,
+      trickExplanation: '9 × 10 = 90, gabung 25 = 9.025.',
+      category: 'Kuadrat Berakhiran 5'
+    }
+  ]
+};
+
+export function getModuleDrillSet(moduleId: string): MentalMathQuestion[] {
+  if (MODULE_DRILL_SETS[moduleId]) {
+    return MODULE_DRILL_SETS[moduleId];
+  }
+  // Default fallback to first set
+  return MODULE_DRILL_SETS['left-to-right'];
+}
+
 // Curated 10-Question sets for Mental Math Sessions
 export const MENTAL_MATH_QUESTION_SETS: MentalMathQuestion[][] = [
   // Set 1: Mixed Fundamental & Tricks
@@ -318,135 +1157,133 @@ export const MENTAL_MATH_QUESTION_SETS: MentalMathQuestion[][] = [
     },
     {
       id: 'mm-2-6',
-      prompt: 'Gunakan trik perkalian 25: 72 / 4.',
-      question: '72 × 25 = ?',
-      options: [1800, 1750, 1850, 1900],
-      correctAnswer: 1800,
-      trickExplanation: '72 / 4 = 18. Tambahkan dua nol -> 1.800.',
-      category: 'Perkalian 25'
+      prompt: 'Gunakan metode menghitung maju: 642 -> 700 (+58) -> 1000 (+300).',
+      question: '1000 - 642 = ?',
+      options: [358, 348, 368, 458],
+      correctAnswer: 358,
+      trickExplanation: '58 + 300 = 358.',
+      category: 'Pengurangan Maju'
     },
     {
       id: 'mm-2-7',
-      prompt: 'Gunakan trik perkalian 9: 730 - 73.',
+      prompt: 'Gunakan trik perkalian 9: 73 × 10 = 730. 730 - 73.',
       question: '73 × 9 = ?',
       options: [657, 647, 667, 637],
       correctAnswer: 657,
-      trickExplanation: '73 × 10 = 730. 730 - 73 = 657.',
+      trickExplanation: '730 - 73 = 657.',
       category: 'Perkalian 9'
     },
     {
       id: 'mm-2-8',
-      prompt: 'Gunakan metode menghitung maju ke 500.',
-      question: '500 - 247 = ?',
-      options: [253, 243, 263, 273],
-      correctAnswer: 253,
-      trickExplanation: '247 -> 250 (+3) -> 300 (+50) -> 500 (+200) = 253.',
-      category: 'Pengurangan Maju'
+      prompt: 'Gunakan trik perkalian 25: 56 / 4 = 14.',
+      question: '56 × 25 = ?',
+      options: [1400, 1350, 1450, 1300],
+      correctAnswer: 1400,
+      trickExplanation: '56 / 4 = 14 -> 1.400.',
+      category: 'Perkalian 25'
     },
     {
       id: 'mm-2-9',
-      prompt: 'Gunakan kuadrat berakhiran 5: 8 × 9 lalu 25.',
-      question: '85² = ?',
-      options: [7225, 7125, 7325, 7245],
-      correctAnswer: 7225,
-      trickExplanation: '8 × 9 = 72, tempelkan 25 -> 7.225.',
-      category: 'Kuadrat Cepat'
+      prompt: 'Gunakan penjumlahan kiri ke kanan: 746 + 400 = 1146 -> + 80 = 1226 -> + 7.',
+      question: '746 + 487 = ?',
+      options: [1233, 1223, 1243, 1133],
+      correctAnswer: 1233,
+      trickExplanation: '746 + 400 = 1146 -> + 80 = 1226 -> + 7 = 1233.',
+      category: 'Penjumlahan Kiri ke Kanan'
     },
     {
       id: 'mm-2-10',
-      prompt: 'Gunakan kiri ke kanan: 476 + 300 -> + 40 -> + 8.',
-      question: '476 + 348 = ?',
-      options: [824, 814, 834, 804],
-      correctAnswer: 824,
-      trickExplanation: '476 + 300 = 776 -> + 40 = 816 -> + 8 = 824.',
-      category: 'Penjumlahan Kiri ke Kanan'
+      prompt: 'Pecah ke 10%: 10% dari 650 = 65. 20% = 130.',
+      question: '20% dari 650 = ?',
+      options: [130, 120, 140, 125],
+      correctAnswer: 130,
+      trickExplanation: '65 × 2 = 130.',
+      category: 'Persentase Cepat'
     }
   ]
 ];
 
-// Simple pseudo-random generator with deterministic seed
-function createPseudoRandom(seedStr: string) {
-  let h = 1779033703 ^ seedStr.length;
-  for (let i = 0; i < seedStr.length; i++) {
-    h = Math.imul(h ^ seedStr.charCodeAt(i), 3432918353);
-    h = (h << 13) | (h >>> 19);
+/**
+ * Generate a dynamic pseudo-random set of 10 questions based on a seed prefix
+ */
+export function generateRandomMentalMathSet(seedPrefix: string = 'daily'): MentalMathQuestion[] {
+  let seed = 0;
+  for (let i = 0; i < seedPrefix.length; i++) {
+    seed = (seed << 5) - seed + seedPrefix.charCodeAt(i);
+    seed |= 0;
   }
-  return function() {
-    h = Math.imul(h ^ (h >>> 16), 2246822507);
-    h = Math.imul(h ^ (h >>> 13), 3266489909);
-    return ((h ^= h >>> 16) >>> 0) / 4294967296;
-  };
-}
 
-// Generator function to dynamically create 10-question sets (seeded or randomized)
-export function generateRandomMentalMathSet(seed?: string): MentalMathQuestion[] {
-  const rand = seed ? createPseudoRandom(seed) : Math.random;
+  const rand = () => {
+    seed = (seed * 9301 + 49297) % 233280;
+    return Math.abs(seed) / 233280;
+  };
+
   const set: MentalMathQuestion[] = [];
-  const seedPrefix = seed ? seed.replace(/[^a-zA-Z0-9]/g, '') : `${Date.now()}`;
-  
+
   // 1. Mult 5
-  const m5 = Math.floor(rand() * 80) + 14;
+  const m5 = Math.floor(rand() * 80) + 16;
   set.push({
     id: `mm-${seedPrefix}-1`,
-    prompt: 'Trik: Tambahkan 0 di belakang lalu bagi dua.',
+    prompt: 'Trik: Kalikan 10 lalu bagi 2.',
     question: `${m5} × 5 = ?`,
-    options: shuffleOptions(m5 * 5, [m5 * 5 - 10, m5 * 5 + 10, (m5 - 2) * 5], rand),
-    correctAnswer: m5 * 5,
-    trickExplanation: `${m5} × 10 = ${m5 * 10}, dibagi 2 = ${m5 * 5}.`,
+    options: shuffleOptions((m5 * 10) / 2, [((m5 * 10) / 2) - 10, ((m5 * 10) / 2) + 10, ((m5 * 10) / 2) + 5], rand),
+    correctAnswer: (m5 * 10) / 2,
+    trickExplanation: `${m5} × 10 = ${m5 * 10}, dibagi 2 = ${(m5 * 10) / 2}.`,
     category: 'Perkalian 5'
   });
 
   // 2. Mult 11
-  const d1 = Math.floor(rand() * 5) + 2;
-  const d2 = Math.floor(rand() * 4) + 1;
-  const num11 = d1 * 10 + d2;
+  const d1 = Math.floor(rand() * 6) + 2;
+  const d2 = Math.floor(rand() * (9 - d1)) + 1;
+  const n11 = d1 * 10 + d2;
   set.push({
     id: `mm-${seedPrefix}-2`,
-    prompt: 'Trik: Selipkan jumlah kedua digit di tengah (a + b).',
-    question: `${num11} × 11 = ?`,
-    options: shuffleOptions(num11 * 11, [num11 * 11 - 10, num11 * 11 + 10, num11 * 11 - 11], rand),
-    correctAnswer: num11 * 11,
-    trickExplanation: `Digit tengah = ${d1} + ${d2} = ${d1 + d2}. Hasil = ${num11 * 11}.`,
+    prompt: 'Trik: Selipkan jumlah kedua digit di tengah.',
+    question: `${n11} × 11 = ?`,
+    options: shuffleOptions(n11 * 11, [n11 * 11 - 10, n11 * 11 + 10, n11 * 11 - 11], rand),
+    correctAnswer: n11 * 11,
+    trickExplanation: `${d1} (${d1}+${d2}) ${d2} = ${n11 * 11}.`,
     category: 'Perkalian 11'
   });
 
-  // 3. Rounding Addition
-  const baseA = Math.floor(rand() * 300) + 220;
-  const roundB = 98; // close to 100
+  // 3. Square ending in 5
+  const tensDigit = Math.floor(rand() * 8) + 2;
+  const n5 = tensDigit * 10 + 5;
   set.push({
     id: `mm-${seedPrefix}-3`,
-    prompt: 'Trik: Bulatkan 98 menjadi 100 lalu kurangi 2.',
-    question: `${baseA} + ${roundB} = ?`,
-    options: shuffleOptions(baseA + roundB, [baseA + 100, baseA + roundB - 2, baseA + roundB + 10], rand),
-    correctAnswer: baseA + roundB,
-    trickExplanation: `${baseA} + 100 = ${baseA + 100}, lalu dikurangi 2 = ${baseA + roundB}.`,
+    prompt: `Trik: ${tensDigit} × ${tensDigit + 1} lalu tempelkan 25.`,
+    question: `${n5}² = ?`,
+    options: shuffleOptions(n5 * n5, [n5 * n5 - 100, n5 * n5 + 100, (tensDigit * tensDigit) * 100 + 25], rand),
+    correctAnswer: n5 * n5,
+    trickExplanation: `${tensDigit} × ${tensDigit + 1} = ${tensDigit * (tensDigit + 1)}, tempelkan 25 = ${n5 * n5}.`,
+    category: 'Kuadrat Berakhiran 5'
+  });
+
+  // 4. Rounding addition
+  const baseA = Math.floor(rand() * 400) + 300;
+  const baseB = [198, 298, 398, 497, 195][Math.floor(rand() * 5)];
+  set.push({
+    id: `mm-${seedPrefix}-4`,
+    prompt: `Trik: Bulatkan ${baseB} ke ratusan terdekat, lalu kurangkan selisihnya.`,
+    question: `${baseA} + ${baseB} = ?`,
+    options: shuffleOptions(baseA + baseB, [baseA + baseB - 2, baseA + baseB + 10, baseA + baseB - 10], rand),
+    correctAnswer: baseA + baseB,
+    trickExplanation: `${baseA} + ${Math.round(baseB / 100) * 100} = ${baseA + Math.round(baseB / 100) * 100}, kurangi ${Math.round(baseB / 100) * 100 - baseB} = ${baseA + baseB}.`,
     category: 'Penjumlahan Kompensasi'
   });
 
-  // 4. Commutative Percent
-  const evenSmall = (Math.floor(rand() * 12) + 4) * 2; // e.g. 12, 16, 24
-  set.push({
-    id: `mm-${seedPrefix}-4`,
-    prompt: 'Trik Komutatif: x% dari 50 = 50% dari x (setengah nilai x).',
-    question: `${evenSmall}% dari 50 = ?`,
-    options: shuffleOptions(evenSmall / 2, [evenSmall / 2 - 1, evenSmall / 2 + 2, evenSmall / 2 + 1], rand),
-    correctAnswer: evenSmall / 2,
-    trickExplanation: `50% dari ${evenSmall} = ${evenSmall} / 2 = ${evenSmall / 2}.`,
-    category: 'Persentase Cepat'
-  });
-
-  // 5. Square ending 5
-  const tens = Math.floor(rand() * 7) + 2; // 2..8
-  const sqNum = tens * 10 + 5;
-  const sqAns = sqNum * sqNum;
+  // 5. Commutative percentage
+  const pct = [12, 14, 16, 18, 24, 32, 48, 64, 84][Math.floor(rand() * 9)];
+  const pctBase = [50, 25][Math.floor(rand() * 2)];
+  const pctAns = (pct * pctBase) / 100;
   set.push({
     id: `mm-${seedPrefix}-5`,
-    prompt: `Trik: ${tens} × ${tens + 1} lalu tempelkan 25 di belakang.`,
-    question: `${sqNum}² = ?`,
-    options: shuffleOptions(sqAns, [sqAns - 100, sqAns + 100, (tens * (tens + 1)) * 100 + 15], rand),
-    correctAnswer: sqAns,
-    trickExplanation: `${tens} × ${tens + 1} = ${tens * (tens + 1)}, akhiri dengan 25 = ${sqAns}.`,
-    category: 'Kuadrat Cepat'
+    prompt: `Trik: ${pct}% dari ${pctBase} sama dengan ${pctBase}% dari ${pct}.`,
+    question: `${pct}% dari ${pctBase} = ?`,
+    options: shuffleOptions(pctAns, [pctAns - 2, pctAns + 2, pctAns + 1], rand),
+    correctAnswer: pctAns,
+    trickExplanation: `${pctBase}% dari ${pct} = ${pctBase === 50 ? `${pct} / 2 = ${pctAns}` : `${pct} / 4 = ${pctAns}`}.`,
+    category: 'Persentase Komutatif'
   });
 
   // 6. Subtraction from 1000
@@ -463,7 +1300,7 @@ export function generateRandomMentalMathSet(seed?: string): MentalMathQuestion[]
   });
 
   // 7. Mult 25
-  const m4 = (Math.floor(rand() * 15) + 4) * 4; // multiple of 4
+  const m4 = (Math.floor(rand() * 15) + 4) * 4;
   set.push({
     id: `mm-${seedPrefix}-7`,
     prompt: 'Trik: Bagi 4 lalu kalikan 100 (tambahkan dua nol).',
@@ -500,7 +1337,7 @@ export function generateRandomMentalMathSet(seed?: string): MentalMathQuestion[]
   });
 
   // 10. Percentage 15%
-  const p15 = (Math.floor(rand() * 10) + 4) * 40; // e.g. 160, 240, 320
+  const p15 = (Math.floor(rand() * 10) + 4) * 40;
   const pAns = (p15 * 15) / 100;
   set.push({
     id: `mm-${seedPrefix}-10`,
@@ -515,7 +1352,7 @@ export function generateRandomMentalMathSet(seed?: string): MentalMathQuestion[]
   return set;
 }
 
-// Get daily 10-question set for today (changes automatically every day!)
+// Get daily 10-question set for today
 export function getDailyMentalMathSet(dateStr?: string): MentalMathQuestion[] {
   const dateKey = dateStr || new Date().toISOString().split('T')[0];
   return generateRandomMentalMathSet(`mental-math-daily-${dateKey}`);
@@ -529,4 +1366,3 @@ function shuffleOptions(correct: number, distractorList: number[], randFn: () =>
   const all = [correct, ...uniqueDistractors.slice(0, 3)];
   return all.sort(() => randFn() - 0.5);
 }
-

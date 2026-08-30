@@ -1,22 +1,139 @@
-import React, { useState, useEffect } from 'react';
-import { Play, Check, ArrowLeft, ArrowRight, Clock, BookOpen, Sparkles, CheckCircle2, XCircle, Volume2, Globe, Download, Upload, Trash2 } from 'lucide-react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { Play, Check, ArrowLeft, ArrowRight, Clock, BookOpen, Sparkles, CheckCircle2, XCircle, Volume2, Globe, Download, Upload, Trash2, Search, Bookmark, BookmarkCheck, ExternalLink, HelpCircle, Layers, X, Eye } from 'lucide-react';
 import { ENGLISH_ARTICLES, getDailyEnglishArticles } from '../data/englishArticles';
-import { EnglishArticle } from '../types';
+import { DICTIONARY_ENTRIES } from '../data/dictionaryData';
+import { EnglishArticle, DictionaryEntry, MyVocabItem, VocabItem } from '../types';
 import { useHabit } from '../context/HabitContext';
 import { ExportModal } from './ExportModal';
 import { ImportArticleModal } from './ImportArticleModal';
 
+const MY_VOCAB_STORAGE_KEY = 'cloverait_my_vocab_list';
+
 interface Props {
   onBack: () => void;
+  onNavigateToDictionary?: () => void;
 }
 
 type Step = 'select' | 'vocab-preview' | 'reading' | 'quiz' | 'result';
 
-export const EnglishArticleReader: React.FC<Props> = ({ onBack }) => {
+export const EnglishArticleReader: React.FC<Props> = ({ onBack, onNavigateToDictionary }) => {
   const { recordSession, dailyEnglishProgress, recordArticleStep, allEnglishArticles, customEnglishArticles, deleteCustomArticle } = useHabit();
   const [viewMode, setViewMode] = useState<'daily' | 'custom' | 'all'>('daily');
   const [isExportOpen, setIsExportOpen] = useState(false);
   const [isImportOpen, setIsImportOpen] = useState(false);
+
+  // Dictionary Integration State
+  const [myVocab, setMyVocab] = useState<Record<string, MyVocabItem>>(() => {
+    try {
+      const saved = localStorage.getItem(MY_VOCAB_STORAGE_KEY);
+      return saved ? JSON.parse(saved) : {};
+    } catch {
+      return {};
+    }
+  });
+
+  const [activeDictEntry, setActiveDictEntry] = useState<DictionaryEntry | null>(null);
+  const [activeCustomVocab, setActiveCustomVocab] = useState<VocabItem | null>(null);
+  const [isDictModalOpen, setIsDictModalOpen] = useState(false);
+  const [vocabSearchTerm, setVocabSearchTerm] = useState('');
+  const [isQuickLookupOpen, setIsQuickLookupOpen] = useState(false);
+  const [quickLookupQuery, setQuickLookupQuery] = useState('');
+  const [toastMsg, setToastMsg] = useState<string | null>(null);
+
+  // Sync myVocab with localStorage
+  useEffect(() => {
+    try {
+      localStorage.setItem(MY_VOCAB_STORAGE_KEY, JSON.stringify(myVocab));
+    } catch (e) {
+      console.error(e);
+    }
+  }, [myVocab]);
+
+  const showToast = (msg: string) => {
+    setToastMsg(msg);
+    setTimeout(() => {
+      setToastMsg(null);
+    }, 2800);
+  };
+
+  const findDictMatch = (rawWord: string): DictionaryEntry | undefined => {
+    if (!rawWord) return undefined;
+    const clean = rawWord.toLowerCase().replace(/[^a-z0-9]/g, '').trim();
+    return DICTIONARY_ENTRIES.find(d => {
+      const dClean = d.word.toLowerCase().replace(/[^a-z0-9]/g, '').trim();
+      return dClean === clean || clean === dClean;
+    }) || DICTIONARY_ENTRIES.find(d => {
+      const dClean = d.word.toLowerCase().replace(/[^a-z0-9]/g, '').trim();
+      return clean.startsWith(dClean) || dClean.startsWith(clean);
+    });
+  };
+
+  const isWordSavedInMyVocab = (word: string): boolean => {
+    const match = findDictMatch(word);
+    const key = match ? match.id : `custom-vocab-${word.toLowerCase().replace(/[^a-z0-9]/g, '-')}`;
+    return !!myVocab[key];
+  };
+
+  const handleToggleMyVocab = (word: string, customItem?: VocabItem) => {
+    const match = findDictMatch(word);
+    const key = match ? match.id : `custom-vocab-${word.toLowerCase().replace(/[^a-z0-9]/g, '-')}`;
+    
+    setMyVocab(prev => {
+      const copy = { ...prev };
+      if (copy[key]) {
+        delete copy[key];
+        showToast(`Kata "${word}" dihapus dari My Vocab.`);
+      } else {
+        copy[key] = {
+          wordId: key,
+          word: match ? match.word : word,
+          addedAt: new Date().toISOString(),
+          mastered: false,
+          notes: customItem ? `${customItem.partOfSpeech || ''}: ${customItem.indonesianMeaning || customItem.definitionId || ''}` : undefined
+        };
+        showToast(`⭐ Kata "${match ? match.word : word}" disimpan ke My Vocab!`);
+      }
+      return copy;
+    });
+  };
+
+  const handleOpenWordInDict = (word: string, fallbackItem?: VocabItem) => {
+    const match = findDictMatch(word);
+    if (match) {
+      setActiveDictEntry(match);
+      setActiveCustomVocab(null);
+    } else if (fallbackItem) {
+      setActiveDictEntry(null);
+      setActiveCustomVocab(fallbackItem);
+    } else {
+      setActiveDictEntry(null);
+      setActiveCustomVocab({
+        word,
+        definition: 'Kata belum ada di database offline Oxford. Buka tab Kamus untuk mencari entri terkait.',
+        indonesianMeaning: 'Kata baru dalam bacaan'
+      });
+    }
+    setIsDictModalOpen(true);
+  };
+
+  const searchedDictResults = useMemo(() => {
+    if (!vocabSearchTerm.trim()) return [];
+    const query = vocabSearchTerm.toLowerCase().trim();
+    return DICTIONARY_ENTRIES.filter(d => 
+      d.word.toLowerCase().includes(query) ||
+      d.indonesianTranslation.toLowerCase().includes(query) ||
+      d.synonyms.some(s => s.toLowerCase().includes(query))
+    ).slice(0, 6);
+  }, [vocabSearchTerm]);
+
+  const quickLookupResults = useMemo(() => {
+    if (!quickLookupQuery.trim()) return [];
+    const query = quickLookupQuery.toLowerCase().trim();
+    return DICTIONARY_ENTRIES.filter(d => 
+      d.word.toLowerCase().includes(query) ||
+      d.indonesianTranslation.toLowerCase().includes(query)
+    ).slice(0, 5);
+  }, [quickLookupQuery]);
 
   const todayStr = new Date().toISOString().split('T')[0];
   const dailyArticles = getDailyEnglishArticles(todayStr);
@@ -167,6 +284,219 @@ export const EnglishArticleReader: React.FC<Props> = ({ onBack }) => {
     setVocabAnswers({});
     setComprehensionAnswers({});
     setSubmittedQuiz(false);
+  };
+
+  const renderDictionaryModal = () => {
+    if (!isDictModalOpen || (!activeDictEntry && !activeCustomVocab)) return null;
+
+    const entry = activeDictEntry;
+    const custom = activeCustomVocab;
+    const currentWord = entry ? entry.word : custom?.word || '';
+    const isSaved = isWordSavedInMyVocab(currentWord);
+
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-xs overflow-y-auto animate-in fade-in duration-150">
+        <div 
+          className="bg-[#FFFDF9] border-3 border-slate-900 rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] my-8 space-y-6 max-h-[90vh] overflow-y-auto text-slate-900"
+          onClick={e => e.stopPropagation()}
+        >
+          {/* Header */}
+          <div className="flex items-start justify-between gap-4 border-b-2 border-slate-900 pb-4">
+            <div>
+              <div className="flex items-center gap-2.5 flex-wrap">
+                {entry && (
+                  <span className="text-xs font-black uppercase px-2.5 py-0.5 rounded-lg bg-amber-300 text-slate-950 border border-slate-900 shadow-xs">
+                    Level {entry.level} • {entry.partOfSpeech}
+                  </span>
+                )}
+                {custom && (
+                  <span className="text-xs font-black uppercase px-2.5 py-0.5 rounded-lg bg-rose-200 text-rose-950 border border-slate-900">
+                    {custom.partOfSpeech || 'Vocabulary'}
+                  </span>
+                )}
+                <span className="text-xs font-mono font-bold text-slate-500">
+                  {entry ? entry.phonetic : custom?.phonetic || ''}
+                </span>
+              </div>
+
+              <div className="flex items-center gap-3 mt-1.5 flex-wrap">
+                <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-slate-900 capitalize">
+                  {currentWord}
+                </h2>
+                <button
+                  onClick={() => speakWord(currentWord)}
+                  title="Dengarkan pengucapan US Audio"
+                  className="p-2 rounded-xl bg-amber-100 hover:bg-amber-200 border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] text-slate-900 active:scale-95 transition-transform cursor-pointer"
+                >
+                  <Volume2 className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            <button
+              onClick={() => setIsDictModalOpen(false)}
+              className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] text-slate-900 cursor-pointer active:translate-y-0.5"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* Indonesian Meaning Highlight */}
+          <div className="bg-amber-100/80 border-2 border-slate-900 rounded-2xl p-4 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] space-y-1">
+            <div className="text-[10px] font-black uppercase tracking-wider text-amber-900">
+              Terjemahan Bahasa Indonesia:
+            </div>
+            <div className="text-base sm:text-lg font-black text-slate-950">
+              🇮🇩 {entry ? entry.indonesianTranslation : custom?.indonesianMeaning || custom?.definitionId}
+            </div>
+          </div>
+
+          {/* Definitions */}
+          <div className="space-y-3">
+            <h4 className="text-xs font-black uppercase tracking-wider text-slate-700">
+              Definisi Lengkap:
+            </h4>
+            <div className="bg-white border-2 border-slate-900 rounded-2xl p-4 space-y-2.5 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+              <div>
+                <span className="text-[11px] font-bold uppercase text-slate-500 block">Bahasa Indonesia:</span>
+                <p className="text-xs sm:text-sm font-semibold text-slate-900">
+                  {entry ? entry.detailedDefinition.indonesian : custom?.indonesianMeaning || custom?.definitionId}
+                </p>
+              </div>
+              <div className="pt-2 border-t border-slate-100">
+                <span className="text-[11px] font-bold uppercase text-slate-500 block">English Definition:</span>
+                <p className="text-xs sm:text-sm font-semibold text-slate-700 italic">
+                  "{entry ? entry.detailedDefinition.english : custom?.definition}"
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Synonyms & Antonyms */}
+          {entry && (entry.synonyms.length > 0 || entry.antonyms.length > 0) && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {entry.synonyms.length > 0 && (
+                <div className="bg-[#FEF9C3] border-2 border-slate-900 rounded-2xl p-3.5 space-y-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                  <div className="text-[10px] font-black uppercase text-amber-900">
+                    Sinonim (Kata Serupa):
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {entry.synonyms.map((syn, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => handleOpenWordInDict(syn, undefined)}
+                        className="text-xs font-bold px-2.5 py-1 bg-white hover:bg-amber-100 rounded-lg border border-slate-900 shadow-xs cursor-pointer active:scale-95"
+                      >
+                        {syn}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {entry.antonyms.length > 0 && (
+                <div className="bg-[#FFE4E6] border-2 border-slate-900 rounded-2xl p-3.5 space-y-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                  <div className="text-[10px] font-black uppercase text-rose-900">
+                    Antonim (Lawan Kata):
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {entry.antonyms.map((ant, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => handleOpenWordInDict(ant, undefined)}
+                        className="text-xs font-bold px-2.5 py-1 bg-white hover:bg-rose-100 rounded-lg border border-slate-900 shadow-xs cursor-pointer active:scale-95"
+                      >
+                        {ant}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Similar Words / Family */}
+          {entry && entry.similarWords && entry.similarWords.length > 0 && (
+            <div className="space-y-1.5">
+              <span className="text-[11px] font-black uppercase text-slate-500">Kata Terkait / Word Family:</span>
+              <div className="flex flex-wrap gap-1.5">
+                {entry.similarWords.map((sim, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => handleOpenWordInDict(sim, undefined)}
+                    className="text-xs font-bold px-2.5 py-1 bg-slate-100 hover:bg-slate-200 rounded-lg border border-slate-900 shadow-xs cursor-pointer"
+                  >
+                    {sim}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Sentence & Context Paragraph */}
+          {entry && (
+            <div className="bg-white border-2 border-slate-900 rounded-2xl p-4 space-y-3 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
+              <div>
+                <div className="text-[10px] font-black uppercase text-slate-500">Contoh Kalimat:</div>
+                <p className="text-xs sm:text-sm font-bold text-slate-900 mt-0.5">
+                  "{entry.exampleSentence.english}"
+                </p>
+                <p className="text-xs text-slate-600 italic mt-0.5">
+                  🇮🇩 {entry.exampleSentence.indonesian}
+                </p>
+              </div>
+
+              {entry.exampleParagraph && (
+                <div className="pt-2 border-t border-slate-200">
+                  <div className="text-[10px] font-black uppercase text-slate-500">Konteks Paragraf Nyata:</div>
+                  <p className="text-xs font-serif leading-relaxed text-slate-800 mt-1">
+                    "{entry.exampleParagraph.english}"
+                  </p>
+                  <p className="text-[11px] text-slate-600 italic mt-1 bg-slate-50 p-2 rounded-lg border border-slate-200">
+                    🇮🇩 {entry.exampleParagraph.indonesian}
+                  </p>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Action Row */}
+          <div className="pt-2 border-t-2 border-slate-900 flex items-center justify-between flex-wrap gap-3">
+            <button
+              onClick={() => handleToggleMyVocab(currentWord, custom || undefined)}
+              className={`px-4 py-2.5 rounded-xl border-2 border-slate-900 font-black text-xs uppercase shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] flex items-center gap-2 cursor-pointer transition-all active:translate-y-0.5 ${
+                isSaved ? 'bg-amber-400 text-slate-950' : 'bg-white hover:bg-amber-50 text-slate-900'
+              }`}
+            >
+              {isSaved ? <BookmarkCheck className="w-4 h-4 fill-slate-950" /> : <Bookmark className="w-4 h-4" />}
+              {isSaved ? 'Tersimpan di My Vocab' : 'Simpan ke My Vocab'}
+            </button>
+
+            <div className="flex items-center gap-2">
+              {onNavigateToDictionary && (
+                <button
+                  onClick={() => {
+                    setIsDictModalOpen(false);
+                    onNavigateToDictionary();
+                  }}
+                  className="px-4 py-2.5 rounded-xl bg-amber-200 hover:bg-amber-300 border-2 border-slate-900 font-black text-xs uppercase text-slate-950 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] flex items-center gap-1.5 cursor-pointer"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                  Buka di Tab Kamus
+                </button>
+              )}
+
+              <button
+                onClick={() => setIsDictModalOpen(false)}
+                className="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-black text-xs uppercase border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] cursor-pointer"
+              >
+                Tutup
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   };
 
   // STEP 1: SELECT ENGLISH ARTICLE
@@ -391,7 +721,16 @@ export const EnglishArticleReader: React.FC<Props> = ({ onBack }) => {
   if (step === 'vocab-preview') {
     return (
       <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
-        <div className="bg-white rounded-2xl p-6 sm:p-8 border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] space-y-4">
+        {/* Toast Notification */}
+        {toastMsg && (
+          <div className="fixed top-20 right-6 z-50 bg-[#2D2319] text-amber-200 border-2 border-amber-400 px-4 py-2.5 rounded-xl shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-xs font-black flex items-center gap-2 animate-bounce">
+            <Sparkles className="w-4 h-4 text-amber-400" />
+            {toastMsg}
+          </div>
+        )}
+
+        <div className="bg-white rounded-2xl p-6 sm:p-8 border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] space-y-5">
+          {/* Top Bar Navigation */}
           <div className="flex items-center justify-between flex-wrap gap-2">
             <button
               onClick={() => setStep('select')}
@@ -399,69 +738,218 @@ export const EnglishArticleReader: React.FC<Props> = ({ onBack }) => {
             >
               ← Pilih Artikel Lain
             </button>
-            <span className="text-xs font-black uppercase bg-amber-300 text-slate-950 px-3 py-1 rounded-md border border-slate-900">
-              Langkah 1 dari 3: Pelajari Kosakata
-            </span>
+
+            <div className="flex items-center gap-2 flex-wrap">
+              {onNavigateToDictionary && (
+                <button
+                  type="button"
+                  onClick={onNavigateToDictionary}
+                  className="text-xs font-black uppercase text-[#2D2319] bg-[#FEF3C7] hover:bg-[#FDE68A] px-3.5 py-2 rounded-xl border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] flex items-center gap-1.5 cursor-pointer"
+                >
+                  <BookOpen className="w-3.5 h-3.5 text-amber-700" />
+                  Buka Tab Kamus Oxford
+                </button>
+              )}
+              <span className="text-xs font-black uppercase bg-amber-300 text-slate-950 px-3 py-2 rounded-xl border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                Langkah 1 dari 3: Pelajari Kosakata
+              </span>
+            </div>
           </div>
 
           <div>
-            <h2 className="text-xl sm:text-2xl font-black text-slate-900 uppercase tracking-tight">
+            <div className="flex items-center gap-2 text-xs font-black text-rose-600 uppercase tracking-wider">
+              <Sparkles className="w-3.5 h-3.5 fill-rose-400" /> Terhubung dengan Kamus Inggris–Indonesia
+            </div>
+            <h2 className="text-xl sm:text-2xl font-black text-slate-900 uppercase tracking-tight mt-1">
               10 Vocabulary Kunci: {selectedArticle.title}
             </h2>
             <p className="text-xs sm:text-sm font-bold text-slate-600 mt-1">
-              Pelajari arti 10 kata di bawah ini sebelum membaca artikel untuk mempermudah pemahaman konteks!
+              Klik <strong>"Detail Kamus"</strong> untuk sinonim/antonim lengkap atau tombol <strong>⭐</strong> untuk menyimpan ke <em>My Vocab</em>!
             </p>
           </div>
 
-          {/* 10 Vocab Cards Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-            {selectedArticle.vocabList.map((v, i) => (
-              <div
-                key={i}
-                className="bg-amber-50 rounded-xl p-4 border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] space-y-2"
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-lg bg-amber-300 text-slate-950 font-mono font-black text-xs flex items-center justify-center border border-slate-900">
-                      {i + 1}
-                    </span>
-                    <strong className="text-sm font-black text-slate-900">{v.word}</strong>
-                  </div>
-                  <button
-                    onClick={() => speakWord(v.word)}
-                    title="Dengarkan pengucapan audio"
-                    className="p-1.5 rounded-lg bg-white border border-slate-900 hover:bg-amber-100 active:scale-95 transition-transform text-slate-900 cursor-pointer"
-                  >
-                    <Volume2 className="w-4 h-4 text-slate-900" />
-                  </button>
-                </div>
+          {/* Quick Search in Dictionary */}
+          <div className="bg-[#FAF6EE] border-2 border-slate-900 rounded-2xl p-3.5 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] space-y-2">
+            <div className="flex items-center gap-2">
+              <Search className="w-4 h-4 text-slate-600" />
+              <input
+                type="text"
+                value={vocabSearchTerm}
+                onChange={e => setVocabSearchTerm(e.target.value)}
+                placeholder="🔍 Cari kata lain di Kamus Inggris-Indonesia Oxford 3000/5000..."
+                className="w-full bg-white border-2 border-slate-900 rounded-xl px-3 py-1.5 text-xs font-bold text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-amber-400 shadow-xs"
+              />
+              {vocabSearchTerm && (
+                <button
+                  onClick={() => setVocabSearchTerm('')}
+                  className="p-1 text-slate-500 hover:text-slate-800"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              )}
+            </div>
 
-                <div className="text-xs space-y-1">
-                  <p className="text-slate-600 italic">
-                    {v.partOfSpeech} • <span className="font-mono text-slate-700">{v.phonetic}</span>
-                  </p>
-                  <p className="font-bold text-slate-900">{v.definition}</p>
-                  <p className="text-amber-900 font-semibold bg-amber-200/60 px-2 py-0.5 rounded text-[11px]">
-                    🇮🇩 {v.indonesianMeaning}
-                  </p>
+            {/* Instant Search Results Dropdown */}
+            {searchedDictResults.length > 0 && (
+              <div className="bg-white border-2 border-slate-900 rounded-xl p-2 divide-y divide-slate-100 shadow-sm space-y-1">
+                <div className="text-[10px] font-black uppercase text-slate-500 px-2 py-0.5">
+                  Hasil Pencarian Kamus ({searchedDictResults.length}):
                 </div>
+                {searchedDictResults.map(entry => (
+                  <div
+                    key={entry.id}
+                    className="p-2 flex items-center justify-between hover:bg-amber-50 rounded-lg transition-colors cursor-pointer"
+                    onClick={() => handleOpenWordInDict(entry.word, undefined)}
+                  >
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <strong className="text-xs font-black text-slate-900">{entry.word}</strong>
+                        <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-amber-100 text-amber-900 border border-amber-300 uppercase">
+                          {entry.level}
+                        </span>
+                        <span className="text-[10px] text-slate-500 italic font-mono">{entry.phonetic}</span>
+                      </div>
+                      <p className="text-[11px] font-medium text-slate-600 line-clamp-1">
+                        🇮🇩 {entry.indonesianTranslation}
+                      </p>
+                    </div>
+
+                    <div className="flex items-center gap-1.5">
+                      <button
+                        onClick={e => {
+                          e.stopPropagation();
+                          handleToggleMyVocab(entry.word, undefined);
+                        }}
+                        title="Simpan ke My Vocab"
+                        className="p-1 rounded bg-white hover:bg-amber-100 border border-slate-300"
+                      >
+                        {isWordSavedInMyVocab(entry.word) ? (
+                          <BookmarkCheck className="w-3.5 h-3.5 text-amber-600 fill-amber-500" />
+                        ) : (
+                          <Bookmark className="w-3.5 h-3.5 text-slate-400" />
+                        )}
+                      </button>
+                      <button
+                        onClick={() => handleOpenWordInDict(entry.word, undefined)}
+                        className="px-2 py-1 bg-amber-300 text-slate-950 font-black text-[10px] rounded border border-slate-900 uppercase"
+                      >
+                        Buka
+                      </button>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
+            )}
           </div>
 
-          <div className="pt-4 flex items-center justify-end">
+          {/* 10 Vocab Cards Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-1">
+            {selectedArticle.vocabList.map((v, i) => {
+              const dictMatch = findDictMatch(v.word);
+              const isSaved = isWordSavedInMyVocab(v.word);
+
+              return (
+                <div
+                  key={i}
+                  className="bg-[#FFFDF9] rounded-2xl p-4 border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all flex flex-col justify-between space-y-3"
+                >
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="w-6 h-6 rounded-lg bg-amber-300 text-slate-950 font-mono font-black text-xs flex items-center justify-center border border-slate-900">
+                          {i + 1}
+                        </span>
+                        <strong className="text-sm font-black text-slate-900">{v.word}</strong>
+                        {dictMatch && (
+                          <span className="text-[10px] font-black uppercase px-1.5 py-0.2 rounded bg-amber-100 text-amber-900 border border-[#2D2319]">
+                            {dictMatch.level}
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="flex items-center gap-1.5">
+                        <button
+                          onClick={() => speakWord(v.word)}
+                          title="Dengarkan pengucapan audio"
+                          className="p-1.5 rounded-lg bg-white border border-slate-900 hover:bg-amber-100 active:scale-95 transition-transform text-slate-900 cursor-pointer"
+                        >
+                          <Volume2 className="w-3.5 h-3.5 text-slate-900" />
+                        </button>
+                        <button
+                          onClick={() => handleToggleMyVocab(v.word, v)}
+                          title={isSaved ? 'Tersimpan di My Vocab' : 'Simpan ke My Vocab'}
+                          className={`p-1.5 rounded-lg border border-slate-900 transition-all cursor-pointer ${
+                            isSaved ? 'bg-amber-400 text-slate-950 shadow-xs' : 'bg-white text-slate-500 hover:text-slate-900 hover:bg-amber-50'
+                          }`}
+                        >
+                          {isSaved ? (
+                            <BookmarkCheck className="w-3.5 h-3.5 fill-slate-950" />
+                          ) : (
+                            <Bookmark className="w-3.5 h-3.5" />
+                          )}
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="text-xs space-y-1.5">
+                      <p className="text-slate-600 italic">
+                        {v.partOfSpeech} • <span className="font-mono text-slate-700">{v.phonetic}</span>
+                      </p>
+                      <p className="font-bold text-slate-900 leading-snug">
+                        {v.definition || (dictMatch && dictMatch.detailedDefinition.english)}
+                      </p>
+                      <div className="text-amber-950 font-bold bg-amber-100/90 px-2.5 py-1 rounded-lg border border-amber-300/80 text-[11px] flex items-center justify-between gap-1">
+                        <span>🇮🇩 {v.indonesianMeaning || v.definitionId || (dictMatch && dictMatch.indonesianTranslation)}</span>
+                      </div>
+                      {dictMatch && dictMatch.synonyms.length > 0 && (
+                        <div className="flex items-center gap-1 flex-wrap pt-0.5 text-[10px] text-slate-600">
+                          <span className="font-bold uppercase text-slate-500">Sinonim:</span>
+                          {dictMatch.synonyms.slice(0, 3).map((syn, sIdx) => (
+                            <span key={sIdx} className="bg-slate-100 border border-slate-300 px-1.5 py-0.2 rounded font-medium">
+                              {syn}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="pt-2 border-t border-slate-200 flex items-center justify-between text-xs">
+                    <span className="text-[10px] font-bold text-slate-500">
+                      {isSaved ? '⭐ Tersimpan di My Vocab' : 'Kamus Oxford Ready'}
+                    </span>
+                    <button
+                      onClick={() => handleOpenWordInDict(v.word, v)}
+                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-amber-200 hover:bg-amber-300 text-[#2D2319] font-black text-[11px] uppercase border border-slate-900 shadow-[1.5px_1.5px_0px_0px_rgba(0,0,0,1)] active:translate-y-0.5 transition-all cursor-pointer"
+                    >
+                      <BookOpen className="w-3 h-3 text-amber-800" />
+                      Detail Kamus
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="pt-4 flex items-center justify-between flex-wrap gap-3">
+            <div className="text-xs font-bold text-slate-500">
+              💡 Tip: Kosakata ini akan diuji pada 10 soal awal kuis pemahaman setelah membaca.
+            </div>
             <button
               onClick={() => {
                 setStep('reading');
                 handleStartReading();
               }}
-              className="w-full sm:w-auto bg-rose-500 hover:bg-rose-600 text-white font-black py-3.5 px-8 rounded-2xl border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-sm uppercase transition-all flex items-center justify-center gap-2 cursor-pointer active:translate-y-0.5"
+              className="w-full sm:w-auto bg-rose-500 hover:bg-rose-600 text-white font-black py-3 px-8 rounded-2xl border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-sm uppercase transition-all flex items-center justify-center gap-2 cursor-pointer active:translate-y-0.5"
             >
               Mulai Membaca Teks Lengkap
               <ArrowRight className="w-4 h-4 stroke-[3]" />
             </button>
           </div>
         </div>
+
+        {/* DICTIONARY MODAL POPUP */}
+        {renderDictionaryModal()}
       </div>
     );
   }
@@ -470,8 +958,16 @@ export const EnglishArticleReader: React.FC<Props> = ({ onBack }) => {
   if (step === 'reading') {
     return (
       <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
+        {/* Toast Notification */}
+        {toastMsg && (
+          <div className="fixed top-20 right-6 z-50 bg-[#2D2319] text-amber-200 border-2 border-amber-400 px-4 py-2.5 rounded-xl shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-xs font-black flex items-center gap-2 animate-bounce">
+            <Sparkles className="w-4 h-4 text-amber-400" />
+            {toastMsg}
+          </div>
+        )}
+
         <div className="sticky top-20 z-30 bg-white p-4 rounded-2xl border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-between gap-3 flex-wrap">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 flex-wrap">
             <button
               onClick={() => {
                 setIsReadingActive(false);
@@ -491,6 +987,17 @@ export const EnglishArticleReader: React.FC<Props> = ({ onBack }) => {
                 {isReadingActive ? 'Reading' : 'Paused'}
               </span>
             </div>
+
+            {/* Quick Dictionary Trigger */}
+            <button
+              onClick={() => setIsQuickLookupOpen(!isQuickLookupOpen)}
+              className={`text-xs font-black uppercase px-3 py-1.5 rounded-xl border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] flex items-center gap-1.5 cursor-pointer transition-colors ${
+                isQuickLookupOpen ? 'bg-amber-400 text-slate-950' : 'bg-amber-100 hover:bg-amber-200 text-amber-900'
+              }`}
+            >
+              <Search className="w-3.5 h-3.5" />
+              {isQuickLookupOpen ? 'Tutup Kamus Cepat' : '🔎 Kamus Cepat'}
+            </button>
           </div>
 
           <button
@@ -502,10 +1009,73 @@ export const EnglishArticleReader: React.FC<Props> = ({ onBack }) => {
           </button>
         </div>
 
+        {/* Quick Dictionary Floating Bar */}
+        {isQuickLookupOpen && (
+          <div className="bg-[#FEF3C7] border-2 border-slate-900 rounded-2xl p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] space-y-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-1.5 text-xs font-black text-[#2D2319] uppercase">
+                <BookOpen className="w-4 h-4 text-amber-800" />
+                Cari Kosakata Saat Membaca (Oxford 3000/5000)
+              </div>
+              <button
+                onClick={() => setIsQuickLookupOpen(false)}
+                className="text-slate-600 hover:text-slate-900 text-xs font-bold"
+              >
+                ✕ Tutup
+              </button>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <input
+                type="text"
+                value={quickLookupQuery}
+                onChange={e => setQuickLookupQuery(e.target.value)}
+                placeholder="Ketik kata bahasa Inggris yang ingin kamu cari artinya..."
+                className="w-full bg-white border-2 border-slate-900 rounded-xl px-3 py-2 text-xs font-bold text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-amber-500 shadow-xs"
+              />
+            </div>
+
+            {quickLookupResults.length > 0 && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+                {quickLookupResults.map(entry => (
+                  <div
+                    key={entry.id}
+                    onClick={() => handleOpenWordInDict(entry.word, undefined)}
+                    className="bg-white border-2 border-slate-900 rounded-xl p-2.5 hover:bg-amber-50 transition-colors cursor-pointer flex items-center justify-between"
+                  >
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <strong className="text-xs font-black text-slate-900">{entry.word}</strong>
+                        <span className="text-[10px] font-black px-1.5 py-0.2 rounded bg-amber-200 text-amber-900 uppercase">
+                          {entry.level}
+                        </span>
+                        <span className="text-[10px] italic text-slate-500 font-mono">{entry.phonetic}</span>
+                      </div>
+                      <p className="text-[11px] font-bold text-amber-900 mt-0.5">
+                        🇮🇩 {entry.indonesianTranslation}
+                      </p>
+                    </div>
+
+                    <button
+                      onClick={e => {
+                        e.stopPropagation();
+                        handleOpenWordInDict(entry.word, undefined);
+                      }}
+                      className="px-2 py-1 bg-amber-300 text-slate-950 font-black text-[10px] rounded border border-slate-900 uppercase"
+                    >
+                      Buka
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
         {/* Reading Body */}
         <div className="bg-white rounded-2xl p-6 sm:p-10 border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] space-y-6">
           <div className="border-b-2 border-slate-900 pb-4 space-y-2">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <span className="text-xs font-black uppercase bg-rose-100 text-rose-900 px-3 py-1 rounded-md border border-slate-900">
                 {selectedArticle.category}
               </span>
@@ -539,6 +1109,9 @@ export const EnglishArticleReader: React.FC<Props> = ({ onBack }) => {
             </button>
           </div>
         </div>
+
+        {/* DICTIONARY MODAL POPUP */}
+        {renderDictionaryModal()}
       </div>
     );
   }

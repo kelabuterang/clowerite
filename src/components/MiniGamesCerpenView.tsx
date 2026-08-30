@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Gamepad2, BookOpen, Clock, Check, ArrowRight, ArrowLeft, Sparkles, CheckCircle2, XCircle, Award, Volume2, Globe } from 'lucide-react';
-import { CERPEN_COLLECTION } from '../data/cerpenData';
+import { Gamepad2, BookOpen, Clock, Check, ArrowRight, ArrowLeft, Sparkles, CheckCircle2, XCircle, Award, Volume2, Globe, Plus, Trash2 } from 'lucide-react';
 import { CerpenItem } from '../types';
 import { useHabit } from '../context/HabitContext';
+import { ImportArticleModal } from './ImportArticleModal';
 
 export const MiniGamesCerpenView: React.FC = () => {
-  const { recordSession } = useHabit();
+  const { recordSession, allCerpenArticles, deleteCustomArticle } = useHabit();
   const [activeLang, setActiveLang] = useState<'id' | 'en'>('id');
   const [selectedCerpen, setSelectedCerpen] = useState<CerpenItem | null>(null);
+  const [isImportOpen, setIsImportOpen] = useState(false);
 
   // States
   const [mode, setMode] = useState<'browse' | 'reading' | 'quiz' | 'result'>('browse');
@@ -18,7 +19,7 @@ export const MiniGamesCerpenView: React.FC = () => {
   // Quiz Answers
   const [answers, setAnswers] = useState<{ [qId: string]: number | null }>({});
 
-  const filteredCerpen = CERPEN_COLLECTION.filter(c => c.language === activeLang);
+  const filteredCerpen = allCerpenArticles.filter(c => c.language === activeLang);
 
   // Reading Timer
   useEffect(() => {
@@ -68,7 +69,7 @@ export const MiniGamesCerpenView: React.FC = () => {
     });
 
     const totalQuestions = selectedCerpen.quiz.length;
-    const accuracy = Math.round((correctCount / totalQuestions) * 100);
+    const accuracy = Math.round((correctCount / (totalQuestions || 1)) * 100);
     const readSec = Math.max(readingSeconds, 1);
     const wpm = Math.round((selectedCerpen.wordCount / readSec) * 60);
     const kem = Math.round((wpm * accuracy) / 100);
@@ -87,7 +88,7 @@ export const MiniGamesCerpenView: React.FC = () => {
     const stats = evaluateQuiz();
 
     recordSession({
-      habitId: 'cerpen',
+      habitId: 'cerpen' as any,
       title: `Cerpen: ${selectedCerpen.title}`,
       readingDurationSeconds: readingSeconds,
       quizDurationSeconds: quizSeconds,
@@ -114,171 +115,174 @@ export const MiniGamesCerpenView: React.FC = () => {
     return (
       <div className="max-w-5xl mx-auto px-4 py-6 space-y-6">
         {/* Banner */}
-        <div className="bg-teal-300 text-slate-950 rounded-2xl p-6 sm:p-8 border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="bg-[#CCD5AE] text-[#283618] rounded-2xl p-6 sm:p-8 border-2 border-[#283618] shadow-[4px_4px_0px_0px_#283618] flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-2 max-w-xl">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-white border border-slate-900 text-xs font-black tracking-widest uppercase">
-              <Gamepad2 className="w-3.5 h-3.5 text-teal-800 stroke-[2.5]" />
-              MINI GAMES LITERASI
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-white border border-[#283618] text-xs font-black tracking-widest uppercase text-[#3A5A40]">
+              <Gamepad2 className="w-3.5 h-3.5 text-[#588157] stroke-[2.5]" />
+              MINI GAMES LITERASI SASTRA
             </div>
-            <h1 className="text-2xl sm:text-3xl font-black leading-snug uppercase tracking-tight text-slate-900">
+            <h1 className="text-2xl sm:text-3xl font-black leading-snug uppercase tracking-tight text-[#283618]">
               Cerpen Pilihan & Quiz 5 Soal
             </h1>
-            <p className="text-xs sm:text-sm text-slate-800 font-bold leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#3A5A40] font-bold leading-relaxed">
               Nikmati teks sastra pendek dan uji kemampuan menganalisis Ide Pokok, Sinonim Kata, Makna Kosakata, Inferensi, dan Tema Cerita.
             </p>
           </div>
 
-          <div className="bg-white p-4 rounded-xl border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] text-center shrink-0">
-            <span className="text-[10px] font-black uppercase text-slate-500 block">Sumber Koleksi</span>
-            <span className="font-black text-sm text-slate-900 uppercase">Baca Petra & Reedsy Stories</span>
+          <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0">
+            <button
+              onClick={() => setIsImportOpen(true)}
+              className="bg-[#709752] hover:bg-[#588157] text-white font-black text-xs sm:text-sm px-4 py-3 rounded-xl border-2 border-[#283618] shadow-[3px_3px_0px_0px_#283618] uppercase flex items-center gap-2 cursor-pointer active:translate-y-0.5 transition-all"
+            >
+              <Plus className="w-4 h-4" />
+              Impor Cerpen (PDF/Link)
+            </button>
           </div>
         </div>
 
         {/* Language Tabs */}
-        <div className="flex items-center justify-center p-1.5 bg-amber-200 rounded-xl max-w-xs mx-auto border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
+        <div className="flex items-center justify-center p-1.5 bg-[#FAEDCD] rounded-xl max-w-xs mx-auto border-2 border-[#283618] shadow-[3px_3px_0px_0px_#283618]">
           <button
             onClick={() => setActiveLang('id')}
-            className={`flex-1 py-2 px-3 rounded-lg text-xs font-black uppercase transition-all cursor-pointer ${
+            className={`flex-1 py-2 rounded-lg text-xs font-black uppercase transition-all cursor-pointer ${
               activeLang === 'id'
-                ? 'bg-white text-slate-900 border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
-                : 'text-slate-800 hover:text-slate-950'
+                ? 'bg-[#709752] text-white border-2 border-[#283618] shadow-[1px_1px_0px_0px_#283618]'
+                : 'text-[#283618] hover:bg-white/60'
             }`}
           >
-            🇮🇩 Cerpen ID
+            🇮🇩 Cerpen Indonesia ({allCerpenArticles.filter(c => c.language === 'id').length})
           </button>
-
           <button
             onClick={() => setActiveLang('en')}
-            className={`flex-1 py-2 px-3 rounded-lg text-xs font-black uppercase transition-all cursor-pointer ${
+            className={`flex-1 py-2 rounded-lg text-xs font-black uppercase transition-all cursor-pointer ${
               activeLang === 'en'
-                ? 'bg-amber-400 text-slate-950 border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
-                : 'text-slate-800 hover:text-slate-950'
+                ? 'bg-[#709752] text-white border-2 border-[#283618] shadow-[1px_1px_0px_0px_#283618]'
+                : 'text-[#283618] hover:bg-white/60'
             }`}
           >
-            🇬🇧 English Stories
+            🇬🇧 English Stories ({allCerpenArticles.filter(c => c.language === 'en').length})
           </button>
         </div>
 
-        {/* Cerpen Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {filteredCerpen.map(c => (
-            <div
-              key={c.id}
-              onClick={() => handleSelectCerpen(c)}
-              className="bg-white rounded-2xl p-6 border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all cursor-pointer flex flex-col justify-between group space-y-4 active:translate-y-0.5"
-            >
-              <div className="space-y-2.5">
-                <div className="flex items-center justify-between gap-2">
-                  <span className="text-[10px] font-black uppercase px-2.5 py-0.5 rounded-md bg-teal-100 text-teal-950 border border-slate-900">
-                    {c.source}
-                  </span>
-                  <span className="text-[10px] font-black uppercase text-slate-600 font-mono">
-                    {c.wordCount} Kata
-                  </span>
+        {/* Cerpen Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {filteredCerpen.map((cerpen) => {
+            const isCustom = cerpen.id.startsWith('custom-cerpen-');
+            return (
+              <div
+                key={cerpen.id}
+                className="bg-white rounded-2xl p-5 border-2 border-[#283618] shadow-[4px_4px_0px_0px_#283618] flex flex-col justify-between space-y-4 hover:-translate-y-1 transition-all"
+              >
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-[10px] font-black uppercase text-[#3A5A40] bg-[#E9EDC9] px-2.5 py-0.5 rounded-md border border-[#A3B18A]">
+                      {cerpen.author}
+                    </span>
+                    <div className="flex items-center gap-1.5">
+                      {isCustom && (
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            deleteCustomArticle('cerpen', cerpen.id);
+                          }}
+                          className="text-red-500 hover:text-red-700 p-1 rounded hover:bg-red-50"
+                          title="Hapus cerpen impor"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      )}
+                      <span className="text-[10px] font-bold text-[#8C6B4F]">
+                        {cerpen.wordCount} Kata
+                      </span>
+                    </div>
+                  </div>
+
+                  <h3 className="text-base font-black text-[#283618] line-clamp-2">
+                    {cerpen.title}
+                  </h3>
+
+                  <p className="text-xs text-[#574332] line-clamp-3 font-medium leading-relaxed">
+                    {cerpen.synopsis}
+                  </p>
                 </div>
 
-                <h3 className="text-lg font-black text-slate-900 group-hover:text-amber-800 transition-colors leading-snug">
-                  {c.title}
-                </h3>
-
-                <p className="text-xs text-slate-600 font-medium line-clamp-2">
-                  {c.synopsis}
-                </p>
+                <button
+                  onClick={() => handleSelectCerpen(cerpen)}
+                  className="w-full bg-[#FAEDCD] hover:bg-[#E9EDC9] text-[#283618] font-black text-xs uppercase py-3 rounded-xl border-2 border-[#283618] shadow-[2px_2px_0px_0px_#283618] flex items-center justify-center gap-2 cursor-pointer active:translate-y-0.5 transition-all"
+                >
+                  <BookOpen className="w-3.5 h-3.5" />
+                  Mulai Membaca & Kuis
+                </button>
               </div>
-
-              <div className="pt-3 border-t-2 border-slate-100 flex items-center justify-between text-xs font-bold">
-                <span className="text-slate-600 uppercase text-[11px]">5 Soal Mini Game</span>
-                <span className="text-slate-900 font-black uppercase group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
-                  Mulai Membaca <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />
-                </span>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
+
+        <ImportArticleModal isOpen={isImportOpen} onClose={() => setIsImportOpen(false)} />
       </div>
     );
   }
 
-  // STEP 2: READING VIEW (CLEAN TEXT ONLY)
+  // STEP 2: READING MODE
   if (mode === 'reading' && selectedCerpen) {
     return (
-      <div className="max-w-4xl mx-auto px-4 py-6 space-y-5">
-        {/* Sticky Header with Timer */}
-        <div className="sticky top-20 z-30 bg-white p-4 rounded-2xl border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-between gap-3 flex-wrap">
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => {
-                setIsReadingActive(false);
-                setMode('browse');
-              }}
-              className="text-xs font-black uppercase text-slate-900 bg-slate-100 hover:bg-slate-200 px-3.5 py-2 rounded-xl border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] cursor-pointer active:translate-y-0.5"
-            >
-              ← Pilih Cerpen Lain
-            </button>
-
-            <div className="flex items-center gap-2 bg-amber-100 border-2 border-slate-900 px-3.5 py-1.5 rounded-xl shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-              <Clock className="w-4 h-4 text-amber-900 stroke-[2.5] animate-spin" />
-              <span className="font-mono font-black text-base text-slate-900">
-                {formatTime(readingSeconds)}
-              </span>
-              <span className="text-[10px] uppercase font-black text-amber-900">
-                Membaca
-              </span>
-            </div>
-          </div>
-
+      <div className="max-w-3xl mx-auto px-4 py-6 space-y-6">
+        {/* Floating Top Bar */}
+        <div className="bg-white rounded-2xl p-4 border-2 border-[#283618] shadow-[4px_4px_0px_0px_#283618] flex items-center justify-between gap-4 sticky top-4 z-20">
           <button
-            onClick={handleFinishReading}
-            className="bg-amber-400 hover:bg-amber-500 text-slate-950 px-6 py-2 rounded-xl text-xs sm:text-sm font-black uppercase border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] flex items-center gap-1.5 cursor-pointer active:translate-y-0.5"
+            onClick={() => setMode('browse')}
+            className="flex items-center gap-1.5 text-xs font-black uppercase text-[#283618] hover:text-[#588157] cursor-pointer"
           >
-            <Check className="w-4 h-4 stroke-[3]" />
-            Selesai Membaca & Mulai Quiz (5 Soal)
+            <ArrowLeft className="w-4 h-4" />
+            Kembali
           </button>
+
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1.5 bg-[#E9EDC9] text-[#3A5A40] px-3 py-1 rounded-lg border border-[#A3B18A] font-mono text-xs font-black">
+              <Clock className="w-3.5 h-3.5" />
+              <span>{formatTime(readingSeconds)}</span>
+            </div>
+
+            <button
+              onClick={handleFinishReading}
+              className="bg-[#709752] hover:bg-[#588157] text-white font-black text-xs uppercase px-4 py-2 rounded-xl border-2 border-[#283618] shadow-[2px_2px_0px_0px_#283618] cursor-pointer active:translate-y-0.5 flex items-center gap-1.5 transition-all"
+            >
+              <span>Selesai Baca & Lanjut Kuis</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
         </div>
 
-        {/* Clean Story Box */}
-        <div className="bg-white rounded-2xl p-6 sm:p-10 border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] space-y-6">
-          <div className="space-y-2 pb-4 border-b-2 border-slate-100">
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-black uppercase text-teal-950 bg-teal-200 px-3 py-1 rounded-md border border-slate-900">
-                Teks Bersih Sastra ({selectedCerpen.source})
-              </span>
-              <span className="text-xs text-slate-600 font-bold">
-                {selectedCerpen.author} • {selectedCerpen.wordCount} Kata
-              </span>
-            </div>
-
-            <h1 className="text-2xl sm:text-3xl font-black text-slate-900 leading-tight">
+        {/* Reading Content */}
+        <div className="bg-[#FAF6EE] rounded-3xl p-6 sm:p-10 border-2 border-[#283618] shadow-[6px_6px_0px_0px_#283618] space-y-6">
+          <div className="border-b-2 border-slate-200 pb-4 space-y-1">
+            <span className="text-[10px] font-black uppercase text-[#3A5A40] bg-[#E9EDC9] px-2.5 py-0.5 rounded-md border border-[#A3B18A]">
+              Karya: {selectedCerpen.author}
+            </span>
+            <h1 className="text-2xl sm:text-3xl font-black text-[#283618] pt-1">
               {selectedCerpen.title}
             </h1>
+            <p className="text-xs text-[#8C6B4F] font-bold">
+              Sumber: {selectedCerpen.source} • {selectedCerpen.wordCount} Kata
+            </p>
           </div>
 
-          {/* Literary Narrative Content */}
-          <div className="space-y-5 text-slate-800 text-lg sm:text-xl font-normal leading-relaxed font-sans">
-            {selectedCerpen.content.map((paragraph, idx) => (
-              <p key={idx} className="indent-6 sm:indent-8">
-                {paragraph}
+          <div className="space-y-4 text-sm sm:text-base leading-relaxed text-[#283618] font-serif">
+            {selectedCerpen.content.map((p, idx) => (
+              <p key={idx} className="indent-6 text-justify">
+                {p}
               </p>
             ))}
           </div>
 
-          <div className="pt-6 border-t-2 border-slate-100 flex items-center justify-between gap-4 flex-wrap">
-            <button
-              onClick={() => {
-                setIsReadingActive(false);
-                setMode('browse');
-              }}
-              className="bg-white hover:bg-slate-100 text-slate-900 border-2 border-slate-900 px-6 py-2.5 rounded-xl text-xs sm:text-sm font-black uppercase shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] cursor-pointer active:translate-y-0.5"
-            >
-              Kembali
-            </button>
-
+          {/* Bottom Call to Action */}
+          <div className="pt-6 border-t-2 border-slate-200 text-center">
             <button
               onClick={handleFinishReading}
-              className="bg-amber-400 hover:bg-amber-500 text-slate-950 px-8 py-2.5 rounded-xl text-xs sm:text-sm font-black uppercase border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] flex items-center gap-2 cursor-pointer active:translate-y-0.5"
+              className="bg-[#709752] hover:bg-[#588157] text-white font-black text-sm uppercase px-8 py-3.5 rounded-xl border-2 border-[#283618] shadow-[3px_3px_0px_0px_#283618] cursor-pointer active:translate-y-0.5 inline-flex items-center gap-2 transition-all"
             >
-              Mulai Quiz Mini Games (5 Soal)
-              <ArrowRight className="w-4 h-4 stroke-[3]" />
+              <span>Saya Sudah Selesai Membaca, Mulai Kuis (5 Soal)</span>
+              <ArrowRight className="w-4 h-4" />
             </button>
           </div>
         </div>
@@ -286,212 +290,165 @@ export const MiniGamesCerpenView: React.FC = () => {
     );
   }
 
-  // STEP 3: 5-QUESTION MULTIPLE CHOICE QUIZ (Ide Pokok, Sinonim, Arti Vocab, Inferensi, Tema)
+  // STEP 3: QUIZ MODE
   if (mode === 'quiz' && selectedCerpen) {
+    const isAllAnswered = selectedCerpen.quiz.every(q => answers[q.id] !== undefined && answers[q.id] !== null);
+
     return (
       <div className="max-w-3xl mx-auto px-4 py-6 space-y-6">
-        <div className="bg-white rounded-2xl p-6 border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] space-y-2">
-          <div className="flex items-center justify-between flex-wrap gap-2">
-            <span className="bg-teal-200 text-teal-950 font-black uppercase text-xs px-3 py-1 rounded-md border border-slate-900">
-              Mini Game Quiz: 5 Soal Pemahaman Cerpen
-            </span>
-            <span className="font-mono text-xs font-black text-slate-700 flex items-center gap-1">
-              <Clock className="w-3.5 h-3.5 stroke-[2.5]" /> Waktu Quiz: {formatTime(quizSeconds)}
-            </span>
+        {/* Header */}
+        <div className="bg-white rounded-2xl p-4 sm:p-5 border-2 border-[#283618] shadow-[4px_4px_0px_0px_#283618] flex items-center justify-between">
+          <div>
+            <h2 className="text-sm sm:text-base font-black text-[#283618] uppercase tracking-tight">
+              Quiz Pemahaman Cerpen: {selectedCerpen.title}
+            </h2>
+            <p className="text-xs text-[#574332] font-semibold">
+              5 Soal: Ide Pokok, Sinonim, Kosakata, Inferensi, & Tema
+            </p>
           </div>
 
-          <h2 className="text-xl sm:text-2xl font-black text-slate-900">
-            {selectedCerpen.title}
-          </h2>
-          <p className="text-xs sm:text-sm text-slate-600 font-medium">
-            Soal mencakup: Ide Pokok (Main Idea), Sinonim Kata, Arti Kosakata, Inferensi Tokoh/Plot, dan Amanat/Tema.
-          </p>
+          <div className="flex items-center gap-1.5 bg-[#FAEDCD] text-[#8C6B4F] px-3 py-1 rounded-lg border border-[#DDA15E] font-mono text-xs font-black">
+            <Clock className="w-3.5 h-3.5" />
+            <span>{formatTime(quizSeconds)}</span>
+          </div>
         </div>
 
-        {/* 5 Questions */}
+        {/* Questions */}
         <div className="space-y-4">
-          {selectedCerpen.quiz.map((q, idx) => {
-            const badgeLabel =
-              q.type === 'main_idea'
-                ? 'Ide Pokok / Main Idea'
-                : q.type === 'synonym'
-                ? 'Sinonim / Synonym'
-                : q.type === 'vocab'
-                ? 'Arti Kosakata / Vocab Meaning'
-                : q.type === 'inference'
-                ? 'Inferensi / Karakter'
-                : 'Tema / Amanat Cerita';
+          {selectedCerpen.quiz.map((q, qIdx) => (
+            <div
+              key={q.id}
+              className="bg-white rounded-2xl p-5 sm:p-6 border-2 border-[#283618] shadow-[4px_4px_0px_0px_#283618] space-y-4"
+            >
+              <div className="flex items-start gap-2.5">
+                <span className="w-6 h-6 rounded-lg bg-[#283618] text-white font-black text-xs flex items-center justify-center shrink-0 mt-0.5">
+                  {qIdx + 1}
+                </span>
+                <h4 className="text-xs sm:text-sm font-black text-[#283618] leading-snug">
+                  {q.question}
+                </h4>
+              </div>
 
-            return (
-              <div key={q.id} className="bg-white rounded-2xl p-5 sm:p-6 border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] space-y-3">
-                <div className="flex items-start gap-3">
-                  <span className="font-mono font-black text-teal-950 text-sm bg-teal-200 border border-slate-900 w-7 h-7 rounded-md flex items-center justify-center shrink-0">
-                    {idx + 1}
-                  </span>
-                  <div>
-                    <span className="text-[10px] font-black uppercase tracking-wider bg-slate-100 text-slate-700 px-2.5 py-0.5 rounded border border-slate-900 inline-block mb-1.5">
-                      {badgeLabel}
-                    </span>
-                    <p className="text-sm sm:text-base font-black text-slate-900">
-                      {q.question}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Options */}
-                <div className="pl-10 space-y-2 pt-1">
-                  {q.options.map((opt, optIdx) => (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 pl-8">
+                {q.options.map((opt, optIdx) => {
+                  const isSelected = answers[q.id] === optIdx;
+                  return (
                     <button
                       key={optIdx}
                       onClick={() => setAnswers(prev => ({ ...prev, [q.id]: optIdx }))}
-                      className={`w-full text-left p-3 rounded-xl border-2 border-slate-900 text-xs sm:text-sm font-bold transition-all flex items-center gap-3 cursor-pointer active:translate-y-0.5 ${
-                        answers[q.id] === optIdx
-                          ? 'bg-amber-300 text-slate-950 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] font-black'
-                          : 'bg-slate-50 text-slate-800 hover:bg-slate-100'
+                      className={`p-3 rounded-xl border-2 text-left text-xs font-bold transition-all cursor-pointer ${
+                        isSelected
+                          ? 'bg-[#E9EDC9] text-[#283618] border-[#283618] shadow-[2px_2px_0px_0px_#283618]'
+                          : 'bg-slate-50 text-slate-700 border-slate-300 hover:bg-slate-100'
                       }`}
                     >
-                      <span className="w-6 h-6 rounded-md bg-white border border-slate-900 flex items-center justify-center font-black text-xs shrink-0 text-slate-900">
-                        {String.fromCharCode(65 + optIdx)}
-                      </span>
-                      <span>{opt}</span>
+                      <span className="font-black mr-1.5">{String.fromCharCode(65 + optIdx)}.</span>
+                      {opt}
                     </button>
-                  ))}
-                </div>
+                  );
+                })}
               </div>
-            );
-          })}
+            </div>
+          ))}
         </div>
 
         {/* Submit */}
         <div className="pt-2">
           <button
             onClick={handleSubmitQuiz}
-            className="w-full bg-amber-400 hover:bg-amber-500 text-slate-950 font-black py-4 px-6 rounded-2xl border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-base uppercase transition-all flex items-center justify-center gap-2 cursor-pointer active:translate-y-0.5"
+            disabled={!isAllAnswered}
+            className="w-full bg-[#709752] hover:bg-[#588157] text-white font-black py-4 rounded-xl border-2 border-[#283618] shadow-[4px_4px_0px_0px_#283618] uppercase text-sm flex items-center justify-center gap-2 cursor-pointer active:translate-y-0.5 transition-all disabled:opacity-50"
           >
-            Kirim Jawaban & Lihat Hasil
-            <Sparkles className="w-5 h-5 fill-slate-950" />
+            <Check className="w-4 h-4 stroke-[3]" />
+            Submit Jawaban & Lihat Analisis Skor
           </button>
         </div>
       </div>
     );
   }
 
-  // STEP 4: RESULTS & DETAILED ANSWER KEYS (Jawaban yang Benar)
-  const result = evaluateQuiz();
+  // STEP 4: RESULT SUMMARY
+  const stats = evaluateQuiz();
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-6 space-y-6">
-      <div className="bg-teal-300 text-slate-950 rounded-2xl p-6 sm:p-8 border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-center space-y-4">
-        <div className="w-16 h-16 rounded-2xl bg-white border-2 border-slate-900 mx-auto flex items-center justify-center shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
-          <Award className="w-9 h-9 text-slate-900" />
+    <div className="max-w-2xl mx-auto px-4 py-8 space-y-6">
+      <div className="bg-white rounded-3xl p-6 sm:p-8 border-2 border-[#283618] shadow-[6px_6px_0px_0px_#283618] text-center space-y-6">
+        <div className="w-16 h-16 bg-[#CCD5AE] rounded-2xl border-2 border-[#283618] shadow-[3px_3px_0px_0px_#283618] flex items-center justify-center mx-auto">
+          <Award className="w-8 h-8 text-[#588157]" />
         </div>
 
-        <div>
-          <span className="text-xs font-black uppercase tracking-wider bg-white px-3 py-1 rounded-md border border-slate-900">
-            Hasil Mini Game Cerpen
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-black mt-2 uppercase tracking-tight">
-            Selesai Menganalisis Cerita!
+        <div className="space-y-1">
+          <h2 className="text-2xl sm:text-3xl font-black text-[#283618] uppercase tracking-tight">
+            Hasil Analisis Sastra Selesai!
           </h2>
-          <p className="text-xs sm:text-sm font-bold text-slate-800">
-            {selectedCerpen?.title}
+          <p className="text-xs sm:text-sm text-[#574332] font-bold">
+            {selectedCerpen?.title} ({selectedCerpen?.author})
           </p>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 text-slate-900">
-          <div className="bg-white rounded-xl p-3 border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-            <span className="text-[10px] font-black uppercase text-slate-500 block">Akurasi Soal</span>
-            <span className="text-2xl font-black font-mono text-teal-900">{result.accuracy}%</span>
-            <span className="text-[10px] font-bold text-slate-600 block">{result.correctCount}/5 Benar</span>
+        {/* Stats Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div className="bg-[#E9EDC9] p-3 rounded-xl border-2 border-[#283618]">
+            <div className="text-[10px] font-black uppercase text-[#3A5A40]">Akurasi</div>
+            <div className="text-2xl font-mono font-black text-[#283618] mt-1">{stats.accuracy}%</div>
           </div>
-
-          <div className="bg-white rounded-xl p-3 border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-            <span className="text-[10px] font-black uppercase text-slate-500 block">Kecepatan (WPM)</span>
-            <span className="text-2xl font-black font-mono text-amber-900">{result.wpm}</span>
-            <span className="text-[10px] font-bold text-slate-600 block">Kata / Menit</span>
+          <div className="bg-[#FAEDCD] p-3 rounded-xl border-2 border-[#283618]">
+            <div className="text-[10px] font-black uppercase text-[#8C6B4F]">Benar</div>
+            <div className="text-2xl font-mono font-black text-[#283618] mt-1">{stats.correctCount}/5</div>
           </div>
-
-          <div className="bg-white rounded-xl p-3 border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-            <span className="text-[10px] font-black uppercase text-slate-500 block">Skor KEM</span>
-            <span className="text-2xl font-black font-mono text-blue-900">{result.kem}</span>
-            <span className="text-[10px] font-bold text-slate-600 block">Kec. Efektif</span>
+          <div className="bg-[#CCD5AE] p-3 rounded-xl border-2 border-[#283618]">
+            <div className="text-[10px] font-black uppercase text-[#3A5A40]">Waktu Baca</div>
+            <div className="text-2xl font-mono font-black text-[#283618] mt-1">{formatTime(readingSeconds)}</div>
           </div>
-
-          <div className="bg-white rounded-xl p-3 border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-            <span className="text-[10px] font-black uppercase text-slate-500 block">Waktu Baca</span>
-            <span className="text-2xl font-black font-mono text-purple-900">{formatTime(readingSeconds)}</span>
-            <span className="text-[10px] font-bold text-slate-600 block">Durasi</span>
+          <div className="bg-[#F4F1DE] p-3 rounded-xl border-2 border-[#283618]">
+            <div className="text-[10px] font-black uppercase text-[#574332]">Waktu Kuis</div>
+            <div className="text-2xl font-mono font-black text-[#283618] mt-1">{formatTime(quizSeconds)}</div>
           </div>
         </div>
-      </div>
 
-      {/* ANSWER KEYS & EXPLANATIONS */}
-      <div className="space-y-4">
-        <h3 className="text-lg font-black text-slate-900 px-1 uppercase tracking-tight">
-          Kunci Jawaban & Penjelasan Lengkap:
-        </h3>
-
-        <div className="space-y-3">
-          {selectedCerpen?.quiz.map((q, idx) => {
-            const userChoice = answers[q.id];
-            const isCorrect = userChoice === q.correctIndex;
-
-            return (
-              <div key={q.id} className="bg-white rounded-2xl p-5 border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] space-y-2">
-                <div className="flex items-start justify-between gap-2">
-                  <div className="flex items-start gap-2.5">
-                    <span className="font-black text-xs bg-teal-200 text-teal-950 border border-slate-900 w-6 h-6 rounded-md flex items-center justify-center shrink-0">
-                      {idx + 1}
-                    </span>
-                    <div>
-                      <span className="text-[10px] font-black uppercase tracking-wider bg-slate-100 text-slate-700 px-2 py-0.5 rounded border border-slate-900 inline-block mb-1">
-                        {q.type.toUpperCase()}
+        {/* Quiz Explanations Breakdown */}
+        {selectedCerpen && (
+          <div className="text-left space-y-3 pt-2">
+            <h4 className="text-xs font-black text-[#283618] uppercase tracking-wider">
+              Pembahasan Kunci Jawaban:
+            </h4>
+            <div className="space-y-2">
+              {selectedCerpen.quiz.map((q, idx) => {
+                const userAns = answers[q.id];
+                const isCorrect = userAns === q.correctIndex;
+                return (
+                  <div key={q.id} className={`p-3 rounded-xl border-2 border-[#283618] text-xs space-y-1 ${
+                    isCorrect ? 'bg-[#E9EDC9]' : 'bg-red-50'
+                  }`}>
+                    <div className="flex items-center justify-between font-black">
+                      <span>{idx + 1}. {q.question}</span>
+                      <span className={isCorrect ? 'text-[#709752]' : 'text-red-600'}>
+                        {isCorrect ? '✓ Benar' : '✗ Salah'}
                       </span>
-                      <p className="text-sm font-black text-slate-900">{q.question}</p>
                     </div>
+                    <div className="text-[#574332]">
+                      <strong>Kunci:</strong> {q.options[q.correctIndex]}
+                    </div>
+                    <p className="text-[11px] text-[#283618]">
+                      {q.explanation}
+                    </p>
                   </div>
-                  {isCorrect ? (
-                    <span className="text-xs font-black text-emerald-950 bg-emerald-300 border border-slate-900 px-2.5 py-0.5 rounded-md flex items-center gap-1 shrink-0">
-                      <CheckCircle2 className="w-3.5 h-3.5" /> Benar
-                    </span>
-                  ) : (
-                    <span className="text-xs font-black text-rose-950 bg-rose-300 border border-slate-900 px-2.5 py-0.5 rounded-md flex items-center gap-1 shrink-0">
-                      <XCircle className="w-3.5 h-3.5" /> Salah
-                    </span>
-                  )}
-                </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
 
-                <div className="text-xs space-y-1.5 pl-8 font-medium">
-                  <p className="text-slate-700">
-                    Pilihanmu: <strong className="text-slate-900">{userChoice !== null && userChoice !== undefined ? `(${String.fromCharCode(65 + userChoice)}) ${q.options[userChoice]}` : '(Tidak dijawab)'}</strong>
-                  </p>
-                  <p className="text-emerald-900 font-bold">
-                    Kunci Jawaban: ({String.fromCharCode(65 + q.correctIndex)}) {q.options[q.correctIndex]}
-                  </p>
-                  <p className="text-slate-600 text-[11px] bg-slate-50 p-2.5 rounded-xl border border-slate-200">
-                    💡 <strong>Pembahasan:</strong> {q.explanation}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
+        {/* Action Button */}
+        <div className="pt-2">
+          <button
+            onClick={() => setMode('browse')}
+            className="w-full bg-[#709752] hover:bg-[#588157] text-white font-black text-xs sm:text-sm py-3.5 rounded-xl border-2 border-[#283618] shadow-[3px_3px_0px_0px_#283618] uppercase flex items-center justify-center gap-2 cursor-pointer active:translate-y-0.5 transition-all"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Kembali ke Daftar Cerpen
+          </button>
         </div>
-      </div>
-
-      <div className="pt-4 flex items-center justify-between gap-3">
-        <button
-          onClick={() => setMode('browse')}
-          className="px-5 py-2.5 rounded-xl bg-white border-2 border-slate-900 text-xs sm:text-sm font-black uppercase text-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-slate-50 cursor-pointer active:translate-y-0.5"
-        >
-          Pilih Cerpen Lainnya
-        </button>
-
-        <button
-          onClick={() => setMode('browse')}
-          className="px-6 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-500 text-slate-950 text-xs sm:text-sm font-black uppercase border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] cursor-pointer active:translate-y-0.5"
-        >
-          Kembali ke Menu Game
-        </button>
       </div>
     </div>
   );
