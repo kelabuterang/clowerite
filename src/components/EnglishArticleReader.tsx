@@ -17,7 +17,8 @@ interface Props {
 type Step = 'select' | 'vocab-preview' | 'reading' | 'quiz' | 'result';
 
 export const EnglishArticleReader: React.FC<Props> = ({ onBack, onNavigateToDictionary }) => {
-  const { recordSession, dailyEnglishProgress, recordArticleStep, allEnglishArticles, customEnglishArticles, deleteCustomArticle } = useHabit();
+  const { recordSession, dailyEnglishProgress, recordArticleStep, allEnglishArticles, customEnglishArticles, deleteCustomArticle, theme } = useHabit();
+  const isCoastal = theme === 'coastal';
   const [viewMode, setViewMode] = useState<'daily' | 'custom' | 'all'>('daily');
   const [isExportOpen, setIsExportOpen] = useState(false);
   const [isImportOpen, setIsImportOpen] = useState(false);
@@ -519,9 +520,9 @@ export const EnglishArticleReader: React.FC<Props> = ({ onBack, onNavigateToDict
             <button
               type="button"
               onClick={() => setIsImportOpen(true)}
-              className="flex items-center gap-1.5 text-xs font-black uppercase bg-[#ECFDF5] hover:bg-emerald-100 text-[#047857] px-3.5 py-2 rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319] cursor-pointer"
+              className={`flex items-center gap-1.5 text-xs font-black uppercase ${isCoastal ? 'bg-[#D0E1F0] hover:bg-[#BFDBFE] text-[#1E40AF]' : 'bg-[#ECFDF5] hover:bg-emerald-100 text-[#047857]'} px-3.5 py-2 rounded-xl border-2 ${isCoastal ? 'border-[#1E293B] shadow-[2px_2px_0px_0px_#1E293B]' : 'border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319]'} cursor-pointer transition-all`}
             >
-              <Upload className="w-3.5 h-3.5" /> Impor PDF / Naskah
+              <Upload className="w-3.5 h-3.5" /> Impor Link / Naskah
             </button>
 
             <button

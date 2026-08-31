@@ -3,9 +3,13 @@ import { Sparkles, CheckCircle2, XCircle, ArrowRight, BookOpen, Lightbulb, Rotat
 import { SENTENCE_DRILL_LIST } from '../data/sentenceDrillData';
 import { CloverMascot } from './CloverMascot';
 import { SentenceDrillItem } from '../types';
+import { useHabit } from '../context/HabitContext';
 import confetti from 'canvas-confetti';
 
 export const SentenceDrillGame: React.FC = () => {
+  const { theme } = useHabit();
+  const isCoastal = theme === 'coastal';
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [userInput, setUserInput] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -116,24 +120,24 @@ export const SentenceDrillGame: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
+    <div className="w-full max-w-4xl mx-auto px-2 sm:px-4 py-4 sm:py-6 space-y-4 sm:space-y-6">
       {/* Header Bento Card */}
-      <div className="bg-[#ECFDF5] border-2 border-[#2D2319] rounded-2xl p-6 shadow-[4px_4px_0px_0px_#2D2319] flex flex-col md:flex-row items-center justify-between gap-6">
-        <div className="space-y-2 text-left flex-1">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border-2 border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319] text-xs font-black tracking-wider uppercase text-[#047857]">
-            <Sparkles className="w-3.5 h-3.5 fill-[#10B981]" />
-            LATIHAN PENULISAN KALIMAT BAHASA INGGRIS
+      <div className={`${isCoastal ? 'bg-[#EBF1F5] border-[#334155] shadow-[4px_4px_0px_0px_#334155]' : 'bg-[#ECFDF5] border-[#2D2319] shadow-[4px_4px_0px_0px_#2D2319]'} border-2 rounded-2xl sm:rounded-3xl p-4 sm:p-6 flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-6`}>
+        <div className="space-y-2 text-left w-full flex-1 min-w-0">
+          <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border-2 ${isCoastal ? 'border-[#334155] shadow-[2px_2px_0px_0px_#334155] text-[#3A6B88]' : 'border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319] text-[#047857]'} text-[10px] sm:text-xs font-black tracking-wider uppercase`}>
+            <Sparkles className={`w-3.5 h-3.5 ${isCoastal ? 'fill-[#4A7C9B] text-[#4A7C9B]' : 'fill-[#10B981] text-[#10B981]'} shrink-0`} />
+            <span>LATIHAN PENULISAN KALIMAT BAHASA INGGRIS</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black text-[#2D2319] tracking-tight">
+          <h1 className={`text-xl sm:text-2xl md:text-3xl font-black ${isCoastal ? 'text-[#334155]' : 'text-[#2D2319]'} tracking-tight break-words`}>
             Latihan Buat Kalimat Bahasa Inggris
           </h1>
-          <p className="text-xs sm:text-sm text-[#574332] font-semibold max-w-xl">
+          <p className={`text-xs sm:text-sm ${isCoastal ? 'text-[#475569]' : 'text-[#574332]'} font-semibold max-w-xl leading-relaxed break-words`}>
             Ketik terjemahan kalimat bahasa Indonesia ke bahasa Inggris. Kalimat dikutip langsung dari tema artikel ilmiah & wacana habit, dilengkapi bank kosakata, koreksi instan, dan modul grammar SMA.
           </p>
 
           {/* Level Filter & Stats */}
           <div className="flex items-center gap-2 pt-2 flex-wrap">
-            <div className="flex items-center bg-white p-1 rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319] text-xs font-black uppercase">
+            <div className={`flex items-center bg-white p-1 rounded-xl border-2 ${isCoastal ? 'border-[#334155] shadow-[2px_2px_0px_0px_#334155]' : 'border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319]'} text-[11px] sm:text-xs font-black uppercase flex-wrap gap-0.5`}>
               {(['All', 'Beginner', 'Intermediate', 'Advanced'] as const).map(lvl => (
                 <button
                   key={lvl}
@@ -143,9 +147,9 @@ export const SentenceDrillGame: React.FC = () => {
                     setUserInput('');
                     setIsSubmitted(false);
                   }}
-                  className={`px-3 py-1 rounded-lg transition-all cursor-pointer ${
+                  className={`px-2.5 sm:px-3 py-1 rounded-lg transition-all cursor-pointer ${
                     selectedLevel === lvl
-                      ? 'bg-[#10B981] text-white font-black'
+                      ? isCoastal ? 'bg-[#3A6B88] text-white font-black shadow-xs' : 'bg-[#10B981] text-white font-black shadow-xs'
                       : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
@@ -156,54 +160,56 @@ export const SentenceDrillGame: React.FC = () => {
 
             <button
               onClick={() => setIsShuffleActive(!isShuffleActive)}
-              className={`px-3 py-1.5 rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319] text-xs font-black cursor-pointer flex items-center gap-1.5 transition-all ${
-                isShuffleActive ? 'bg-[#10B981] text-white' : 'bg-white text-[#2D2319] hover:bg-stone-50'
+              className={`px-3 py-1.5 rounded-xl border-2 ${isCoastal ? 'border-[#334155] shadow-[2px_2px_0px_0px_#334155]' : 'border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319]'} text-xs font-black cursor-pointer flex items-center gap-1.5 transition-all ${
+                isShuffleActive
+                  ? isCoastal ? 'bg-[#3A6B88] text-white' : 'bg-[#10B981] text-white'
+                  : isCoastal ? 'bg-white text-[#334155] hover:bg-slate-50' : 'bg-white text-[#2D2319] hover:bg-stone-50'
               }`}
             >
               <Shuffle className="w-3.5 h-3.5" />
               <span>{isShuffleActive ? 'Mode Acak: ON' : 'Mode Acak: OFF'}</span>
             </button>
 
-            <div className="bg-white px-3 py-1.5 border-2 border-[#2D2319] rounded-xl shadow-[2px_2px_0px_0px_#2D2319] flex items-center gap-1.5 text-xs font-black text-[#2D2319]">
-              <Award className="w-4 h-4 text-amber-600" />
+            <div className={`bg-white px-3 py-1.5 border-2 ${isCoastal ? 'border-[#334155] shadow-[2px_2px_0px_0px_#334155] text-[#334155]' : 'border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319] text-[#2D2319]'} rounded-xl flex items-center gap-1.5 text-xs font-black`}>
+              <Award className={`w-4 h-4 ${isCoastal ? 'text-[#4A7C9B]' : 'text-amber-600'}`} />
               <span>Skor: {score} / {totalAnswered}</span>
             </div>
 
             <button
               onClick={() => setShowGrammarModal(true)}
-              className="px-3 py-1.5 bg-[#FEF3C7] hover:bg-[#FDE68A] rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319] text-xs font-black text-[#2D2319] cursor-pointer flex items-center gap-1.5"
+              className={`px-3 py-1.5 ${isCoastal ? 'bg-[#FDFBF7] hover:bg-[#F3EFE6] border-[#334155] shadow-[2px_2px_0px_0px_#334155] text-[#334155]' : 'bg-[#FEF3C7] hover:bg-[#FDE68A] border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319] text-[#2D2319]'} rounded-xl border-2 text-xs font-black cursor-pointer flex items-center gap-1.5`}
             >
-              <FileText className="w-3.5 h-3.5 text-amber-700" /> Modul Grammar SMA
+              <FileText className={`w-3.5 h-3.5 ${isCoastal ? 'text-[#4A7C9B]' : 'text-amber-700'}`} /> Modul Grammar SMA
             </button>
           </div>
         </div>
 
-        <div className="shrink-0">
-          <div className="relative p-2 bg-white rounded-2xl border-2 border-[#2D2319] shadow-[3px_3px_0px_0px_#2D2319]">
-            <CloverMascot type="sentence" size={100} />
+        <div className="shrink-0 self-center">
+          <div className={`relative p-2 bg-white rounded-2xl border-2 ${isCoastal ? 'border-[#334155] shadow-[3px_3px_0px_0px_#334155]' : 'border-[#2D2319] shadow-[3px_3px_0px_0px_#2D2319]'}`}>
+            <CloverMascot type="sentence" size={90} />
           </div>
         </div>
       </div>
 
-      {/* Main Sentence Drill Box */}
-      <div className="bg-white border-2 border-[#2D2319] rounded-2xl p-6 sm:p-8 shadow-[4px_4px_0px_0px_#2D2319] space-y-6">
+      {/* Main Sentence Drill Box - Expanded & Mobile Optimized */}
+      <div className={`w-full bg-white border-2 ${isCoastal ? 'border-[#334155] shadow-[4px_4px_0px_0px_#334155]' : 'border-[#2D2319] shadow-[4px_4px_0px_0px_#2D2319]'} rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 space-y-5 sm:space-y-6`}>
         {/* Top Info Bar */}
         <div className="flex items-center justify-between border-b-2 border-slate-100 pb-3 flex-wrap gap-2">
-          <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-xs font-black uppercase text-[#047857] bg-[#ECFDF5] px-2.5 py-1 rounded-lg border border-[#10B981]/40">
+          <div className="flex items-center gap-2 flex-wrap min-w-0">
+            <span className={`text-[11px] sm:text-xs font-black uppercase ${isCoastal ? 'text-[#3A6B88] bg-[#EBF1F5] border-[#4A7C9B]/40' : 'text-[#047857] bg-[#ECFDF5] border-[#10B981]/40'} px-2.5 py-1 rounded-lg border shrink-0`}>
               Kalimat #{((currentIndex % filteredList.length) || 0) + 1} dari {filteredList.length} • {currentItem.level}
             </span>
-            <span className="text-xs font-bold text-slate-600">
+            <span className={`text-[11px] sm:text-xs font-bold ${isCoastal ? 'text-[#475569]' : 'text-slate-600'} truncate`}>
               Focus: {currentItem.grammarTopic}
             </span>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 shrink-0">
             <button
               onClick={() => setShowVocabHints(!showVocabHints)}
-              className="flex items-center gap-1.5 px-3 py-1 bg-[#FEF3C7] hover:bg-[#FDE68A] text-[#78350F] text-xs font-black rounded-lg border border-[#B45309]/30 transition-all cursor-pointer"
+              className={`flex items-center gap-1.5 px-3 py-1 ${isCoastal ? 'bg-[#FDFBF7] hover:bg-[#F3EFE6] text-[#334155] border-[#334155]/30' : 'bg-[#FEF3C7] hover:bg-[#FDE68A] text-[#78350F] border-[#B45309]/30'} text-xs font-black rounded-lg border transition-all cursor-pointer shadow-xs`}
             >
-              <Lightbulb className="w-3.5 h-3.5 text-amber-600" />
+              <Lightbulb className={`w-3.5 h-3.5 ${isCoastal ? 'text-[#4A7C9B]' : 'text-amber-600'}`} />
               {showVocabHints ? 'Sembunyikan Vocab' : 'Bantuan Vocab'}
             </button>
           </div>
@@ -211,34 +217,39 @@ export const SentenceDrillGame: React.FC = () => {
 
         {/* Source Citation Badge */}
         {currentItem.sourceArticleTitle && (
-          <div className="flex items-center gap-1.5 text-[11px] font-bold text-[#047857] bg-emerald-50/70 border border-emerald-200 px-3 py-1.5 rounded-xl">
-            <Bookmark className="w-3.5 h-3.5 text-emerald-600" />
-            <span>Dikutip dari Artikel: <strong>{currentItem.sourceArticleTitle}</strong></span>
+          <div className={`flex items-center gap-1.5 text-[11px] font-bold ${isCoastal ? 'text-[#3A6B88] bg-[#EBF1F5] border-[#93C5FD]' : 'text-[#047857] bg-emerald-50/80 border-emerald-200'} px-3 py-2 rounded-xl w-full min-w-0 break-words border`}>
+            <Bookmark className={`w-3.5 h-3.5 ${isCoastal ? 'text-[#4A7C9B]' : 'text-emerald-600'} shrink-0`} />
+            <span className="break-words">Dikutip dari: <strong>{currentItem.sourceArticleTitle}</strong></span>
           </div>
         )}
 
-        {/* Indonesian Prompt Sentence */}
-        <div className="bg-[#FAF6EE] p-5 rounded-2xl border-2 border-[#2D2319] shadow-[3px_3px_0px_0px_#2D2319] space-y-1">
-          <span className="text-[10px] font-black uppercase text-[#8C6B4F] tracking-wide">
-            Kalimat Bahasa Indonesia:
-          </span>
-          <p className="text-lg sm:text-xl font-black text-[#2D2319] leading-relaxed">
+        {/* Indonesian Prompt Sentence - Spacious Full-Width Background Box */}
+        <div className={`w-full ${isCoastal ? 'bg-[#FDFBF7] border-[#334155] shadow-[3px_3px_0px_0px_#334155]' : 'bg-[#FAF6EE] border-[#2D2319] shadow-[3px_3px_0px_0px_#2D2319]'} p-4 sm:p-6 md:p-7 rounded-2xl border-2 space-y-2 min-w-0`}>
+          <div className="flex items-center justify-between">
+            <span className={`text-[10px] sm:text-xs font-black uppercase ${isCoastal ? 'text-[#475569]' : 'text-[#8C6B4F]'} tracking-wider block`}>
+              🇮🇩 Kalimat Bahasa Indonesia:
+            </span>
+            <span className={`text-[10px] font-bold px-2 py-0.5 bg-white/80 rounded-md border ${isCoastal ? 'border-[#334155]/20 text-[#334155]' : 'border-[#2D2319]/20 text-[#574332]'}`}>
+              Tingkat: {currentItem.level}
+            </span>
+          </div>
+          <p className={`text-base sm:text-lg md:text-xl font-black ${isCoastal ? 'text-[#334155]' : 'text-[#2D2319]'} leading-relaxed break-words [overflow-wrap:anywhere]`}>
             "{currentItem.indonesian}"
           </p>
         </div>
 
         {/* Vocab Hints Box (Collapsible / Toggleable) */}
         {showVocabHints && (
-          <div className="bg-[#FFFBEB] p-4 rounded-2xl border-2 border-[#D97706]/40 space-y-2 animate-fadeIn">
-            <div className="flex items-center gap-2 text-xs font-black text-[#92400E] uppercase">
-              <Lightbulb className="w-4 h-4 text-amber-600" />
+          <div className={`w-full ${isCoastal ? 'bg-[#F8FAFC] border-[#4A7C9B]/40' : 'bg-[#FFFBEB] border-[#D97706]/40'} p-4 sm:p-5 rounded-2xl border-2 space-y-2.5 animate-fadeIn min-w-0`}>
+            <div className={`flex items-center gap-2 text-xs font-black ${isCoastal ? 'text-[#334155]' : 'text-[#92400E]'} uppercase`}>
+              <Lightbulb className={`w-4 h-4 ${isCoastal ? 'text-[#4A7C9B]' : 'text-amber-600'} shrink-0`} />
               <span>Daftar Kosakata & Frasa Kunci untuk Membantu:</span>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
               {currentItem.vocabHints.map((vh, i) => (
-                <div key={i} className="bg-white p-2.5 rounded-xl border border-[#D97706]/30 text-xs flex justify-between items-center">
-                  <span className="font-bold text-slate-700">{vh.indonesian}</span>
-                  <span className="font-mono font-black text-[#047857] bg-emerald-50 px-2 py-0.5 rounded">
+                <div key={i} className={`bg-white p-2.5 sm:p-3 rounded-xl border ${isCoastal ? 'border-[#4A7C9B]/30' : 'border-[#D97706]/30'} text-xs flex justify-between items-center gap-2 min-w-0`}>
+                  <span className={`font-bold ${isCoastal ? 'text-[#334155]' : 'text-slate-700'} truncate`}>{vh.indonesian}</span>
+                  <span className={`font-mono font-black ${isCoastal ? 'text-[#3A6B88] bg-[#EBF1F5]' : 'text-[#047857] bg-emerald-50'} px-2 py-0.5 rounded shrink-0`}>
                     {vh.english}
                   </span>
                 </div>
@@ -248,18 +259,18 @@ export const SentenceDrillGame: React.FC = () => {
         )}
 
         {/* User Input Form */}
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4 w-full min-w-0">
           <div>
-            <label className="block text-xs font-black uppercase text-[#2D2319] mb-1.5">
-              Ketik Kalimat dalam Bahasa Inggris:
+            <label className={`block text-xs font-black uppercase ${isCoastal ? 'text-[#334155]' : 'text-[#2D2319]'} mb-1.5`}>
+              🇬🇧 Ketik Kalimat dalam Bahasa Inggris:
             </label>
             <textarea
               rows={3}
               value={userInput}
               onChange={e => setUserInput(e.target.value)}
               disabled={isSubmitted}
-              placeholder="Type the English sentence here..."
-              className="w-full p-4 rounded-2xl border-2 border-[#2D2319] focus:outline-none focus:ring-2 focus:ring-[#10B981] font-sans text-base text-[#2D2319] bg-[#FFFDF9] resize-none shadow-[inset_2px_2px_0px_0px_rgba(0,0,0,0.05)]"
+              placeholder="Type your English translation here..."
+              className={`w-full p-3.5 sm:p-4 rounded-2xl border-2 ${isCoastal ? 'border-[#334155] focus:ring-[#3A6B88] text-[#334155]' : 'border-[#2D2319] focus:ring-[#10B981] text-[#2D2319]'} focus:outline-none focus:ring-2 font-sans text-sm sm:text-base bg-[#FFFDF9] resize-none shadow-[inset_2px_2px_0px_0px_rgba(0,0,0,0.05)] leading-relaxed break-words`}
             />
           </div>
 
@@ -268,9 +279,9 @@ export const SentenceDrillGame: React.FC = () => {
               <button
                 type="submit"
                 disabled={!userInput.trim()}
-                className="py-3 px-8 bg-[#10B981] hover:bg-[#059669] disabled:bg-slate-300 disabled:text-slate-500 text-white font-black uppercase text-sm rounded-xl border-2 border-[#2D2319] shadow-[3px_3px_0px_0px_#2D2319] active:translate-y-0.5 active:shadow-none flex items-center gap-2 cursor-pointer transition-all"
+                className={`w-full sm:w-auto py-3 px-8 ${isCoastal ? 'bg-[#3A6B88] hover:bg-[#2C526A] border-[#334155] shadow-[3px_3px_0px_0px_#334155]' : 'bg-[#10B981] hover:bg-[#059669] border-[#2D2319] shadow-[3px_3px_0px_0px_#2D2319]'} disabled:bg-slate-300 disabled:text-slate-500 text-white font-black uppercase text-xs sm:text-sm rounded-xl border-2 active:translate-y-0.5 active:shadow-none flex items-center justify-center gap-2 cursor-pointer transition-all`}
               >
-                <span>Periksa & Koreksi</span>
+                <span>Periksa & Koreksi Kalimat</span>
                 <Check className="w-4 h-4 stroke-[3]" />
               </button>
             </div>
@@ -279,51 +290,57 @@ export const SentenceDrillGame: React.FC = () => {
 
         {/* Feedback & Correction Section */}
         {isSubmitted && evaluationResult && (
-          <div className="space-y-4 pt-4 border-t-2 border-slate-100 animate-fadeIn">
+          <div className="w-full space-y-4 pt-4 border-t-2 border-slate-100 animate-fadeIn min-w-0">
             <div
-              className={`p-6 rounded-2xl border-2 border-[#2D2319] shadow-[4px_4px_0px_0px_#2D2319] space-y-4 ${
-                evaluationResult.isPassing ? 'bg-[#ECFDF5]' : 'bg-[#FFF1F2]'
+              className={`p-4 sm:p-6 rounded-2xl border-2 ${isCoastal ? 'border-[#334155] shadow-[4px_4px_0px_0px_#334155]' : 'border-[#2D2319] shadow-[4px_4px_0px_0px_#2D2319]'} space-y-4 w-full min-w-0 ${
+                evaluationResult.isPassing
+                  ? isCoastal ? 'bg-[#EBF1F5]' : 'bg-[#ECFDF5]'
+                  : 'bg-[#FFF1F2]'
               }`}
             >
               <div className="flex items-center justify-between flex-wrap gap-2">
-                <span className={`text-base font-black flex items-center gap-2 ${
-                  evaluationResult.isPassing ? 'text-[#047857]' : 'text-[#BE123C]'
+                <span className={`text-sm sm:text-base font-black flex items-center gap-2 break-words ${
+                  evaluationResult.isPassing
+                    ? isCoastal ? 'text-[#3A6B88]' : 'text-[#047857]'
+                    : 'text-[#BE123C]'
                 }`}>
                   {evaluationResult.isExactMatch ? (
                     <>
-                      <CheckCircle2 className="w-5 h-5" /> LUAR BIASA! TERJEMAHAN PERSIS TEPAT 🎉
+                      <CheckCircle2 className="w-5 h-5 shrink-0" /> LUAR BIASA! TERJEMAHAN PERSIS TEPAT 🎉
                     </>
                   ) : evaluationResult.isPassing ? (
                     <>
-                      <CheckCircle2 className="w-5 h-5" /> BAGUS! STRUKTUR KALIMAT SUDAH BENAR ({evaluationResult.matchRatio}%)
+                      <CheckCircle2 className="w-5 h-5 shrink-0" /> BAGUS! STRUKTUR SUDAH BENAR ({evaluationResult.matchRatio}%)
                     </>
                   ) : (
                     <>
-                      <XCircle className="w-5 h-5" /> PERLU PENYESUAIAN STRUKTUR GRAMMAR
+                      <XCircle className="w-5 h-5 shrink-0" /> PERLU PENYESUAIAN STRUKTUR GRAMMAR
                     </>
                   )}
                 </span>
               </div>
 
               {/* Target Correct Sentence Reference */}
-              <div className="space-y-2 bg-white/80 p-4 rounded-xl border border-[#2D2319]/20 text-xs sm:text-sm">
-                <div>
-                  <span className="text-[10px] font-black uppercase text-slate-500">
+              <div className={`space-y-2.5 bg-white/90 p-4 rounded-xl border ${isCoastal ? 'border-[#334155]/20' : 'border-[#2D2319]/20'} text-xs sm:text-sm w-full min-w-0`}>
+                <div className="space-y-1">
+                  <span className="text-[10px] font-black uppercase text-slate-500 block">
                     Target Kalimat Bahasa Inggris:
                   </span>
-                  <p className="text-base font-black text-[#047857]">
+                  <p className={`text-sm sm:text-base font-black ${isCoastal ? 'text-[#3A6B88]' : 'text-[#047857]'} break-words [overflow-wrap:anywhere] leading-relaxed`}>
                     {currentItem.targetEnglish}
                   </p>
                 </div>
 
                 {currentItem.acceptedVariations.length > 0 && (
-                  <div className="pt-2 border-t border-slate-200">
-                    <span className="text-[10px] font-black uppercase text-slate-500">
+                  <div className="pt-2 border-t border-slate-200 space-y-1">
+                    <span className="text-[10px] font-black uppercase text-slate-500 block">
                       Variasi Lain yang Juga Diterima:
                     </span>
-                    <ul className="list-disc list-inside text-xs font-semibold text-slate-700 space-y-0.5 mt-0.5">
+                    <ul className="list-disc list-inside text-xs font-semibold text-slate-700 space-y-1 mt-0.5">
                       {currentItem.acceptedVariations.map((v, idx) => (
-                        <li key={idx}>"{v}"</li>
+                        <li key={idx} className="break-words [overflow-wrap:anywhere]">
+                          "{v}"
+                        </li>
                       ))}
                     </ul>
                   </div>
@@ -331,12 +348,12 @@ export const SentenceDrillGame: React.FC = () => {
               </div>
 
               {/* Grammar Rule & Pedagogical Feedback */}
-              <div className="bg-[#FAF6EE] p-4 rounded-xl border border-[#2D2319]/20 space-y-1.5 text-xs">
-                <div className="flex items-center gap-1.5 font-black uppercase text-[#92400E]">
-                  <BookOpen className="w-4 h-4 text-amber-700" />
+              <div className={`${isCoastal ? 'bg-[#FDFBF7] border-[#334155]/20' : 'bg-[#FAF6EE] border-[#2D2319]/20'} p-4 rounded-xl border space-y-1.5 text-xs w-full min-w-0`}>
+                <div className={`flex items-center gap-1.5 font-black uppercase ${isCoastal ? 'text-[#334155]' : 'text-[#92400E]'}`}>
+                  <BookOpen className={`w-4 h-4 ${isCoastal ? 'text-[#4A7C9B]' : 'text-amber-700'} shrink-0`} />
                   <span>Kaidah Grammar: {currentItem.grammarTopic}</span>
                 </div>
-                <p className="font-medium text-[#4A3B2C] leading-relaxed">
+                <p className={`font-medium ${isCoastal ? 'text-[#475569]' : 'text-[#4A3B2C]'} leading-relaxed break-words`}>
                   {currentItem.grammarExplanation}
                 </p>
               </div>
@@ -347,14 +364,14 @@ export const SentenceDrillGame: React.FC = () => {
               <button
                 type="button"
                 onClick={handleReset}
-                className="py-2.5 px-4 bg-white hover:bg-stone-50 text-[#574332] font-black uppercase text-xs rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319] cursor-pointer flex items-center gap-1.5"
+                className={`py-2.5 px-4 bg-white hover:bg-stone-50 ${isCoastal ? 'text-[#334155] border-[#334155] shadow-[2px_2px_0px_0px_#334155]' : 'text-[#574332] border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319]'} font-black uppercase text-xs rounded-xl border-2 cursor-pointer flex items-center gap-1.5`}
               >
                 <RotateCcw className="w-3.5 h-3.5" /> Ulangi dari Awal
               </button>
 
               <button
                 onClick={handleNext}
-                className="py-3 px-7 bg-[#F59E0B] hover:bg-[#D97706] text-[#2D2319] font-black uppercase text-sm rounded-xl border-2 border-[#2D2319] shadow-[3px_3px_0px_0px_#2D2319] active:translate-y-0.5 active:shadow-none flex items-center gap-2 cursor-pointer transition-all"
+                className={`py-3 px-7 ${isCoastal ? 'bg-[#4A7C9B] hover:bg-[#3A6B88] text-white border-[#334155] shadow-[3px_3px_0px_0px_#334155]' : 'bg-[#F59E0B] hover:bg-[#D97706] text-[#2D2319] border-[#2D2319] shadow-[3px_3px_0px_0px_#2D2319]'} font-black uppercase text-sm rounded-xl border-2 active:translate-y-0.5 active:shadow-none flex items-center gap-2 cursor-pointer transition-all`}
               >
                 <span>Kalimat Selanjutnya</span>
                 <ArrowRight className="w-4 h-4 stroke-[3]" />
@@ -367,10 +384,10 @@ export const SentenceDrillGame: React.FC = () => {
       {/* SMA Grammar Module Reference Modal */}
       {showGrammarModal && (
         <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-xs">
-          <div className="bg-white border-2 border-[#2D2319] rounded-2xl max-w-2xl w-full p-6 shadow-[6px_6px_0px_0px_#2D2319] max-h-[85vh] overflow-y-auto space-y-4">
+          <div className={`bg-white border-2 ${isCoastal ? 'border-[#334155] shadow-[6px_6px_0px_0px_#334155]' : 'border-[#2D2319] shadow-[6px_6px_0px_0px_#2D2319]'} rounded-2xl max-w-2xl w-full p-6 max-h-[85vh] overflow-y-auto space-y-4`}>
             <div className="flex items-center justify-between border-b-2 border-slate-100 pb-3">
-              <h3 className="text-lg font-black text-[#2D2319] flex items-center gap-2">
-                <BookOpen className="w-5 h-5 text-[#047857]" /> Panduan Ringkas Modul Grammar SMA
+              <h3 className={`text-lg font-black ${isCoastal ? 'text-[#334155]' : 'text-[#2D2319]'} flex items-center gap-2`}>
+                <BookOpen className={`w-5 h-5 ${isCoastal ? 'text-[#3A6B88]' : 'text-[#047857]'}`} /> Panduan Ringkas Modul Grammar SMA
               </h3>
               <button
                 onClick={() => setShowGrammarModal(false)}
@@ -380,33 +397,33 @@ export const SentenceDrillGame: React.FC = () => {
               </button>
             </div>
 
-            <div className="space-y-4 text-xs text-[#2D2319]">
-              <div className="bg-[#FAF6EE] p-3.5 rounded-xl border border-[#2D2319]/20 space-y-1">
-                <h4 className="font-black text-[#047857]">1. Tenses Dasar (Present, Past, Perfect)</h4>
+            <div className={`space-y-4 text-xs ${isCoastal ? 'text-[#334155]' : 'text-[#2D2319]'}`}>
+              <div className={`${isCoastal ? 'bg-[#FDFBF7] border-[#334155]/20' : 'bg-[#FAF6EE] border-[#2D2319]/20'} p-3.5 rounded-xl border space-y-1`}>
+                <h4 className={`font-black ${isCoastal ? 'text-[#3A6B88]' : 'text-[#047857]'}`}>1. Tenses Dasar (Present, Past, Perfect)</h4>
                 <p className="font-medium text-slate-700">
                   • <strong>Simple Present:</strong> S + V1/V-s (untuk fakta umum, temuan riset, kebiasaan).<br />
                   • <strong>Present Perfect:</strong> S + have/has + V3 (kejadian masa lalu yang hasilnya masih relevan: "Scientists have discovered...").
                 </p>
               </div>
 
-              <div className="bg-[#FAF6EE] p-3.5 rounded-xl border border-[#2D2319]/20 space-y-1">
-                <h4 className="font-black text-[#047857]">2. Conditional Sentences (Pengandaian)</h4>
+              <div className={`${isCoastal ? 'bg-[#FDFBF7] border-[#334155]/20' : 'bg-[#FAF6EE] border-[#2D2319]/20'} p-3.5 rounded-xl border space-y-1`}>
+                <h4 className={`font-black ${isCoastal ? 'text-[#3A6B88]' : 'text-[#047857]'}`}>2. Conditional Sentences (Pengandaian)</h4>
                 <p className="font-medium text-slate-700">
                   • <strong>Type 1:</strong> If + S + V1, S + will + V1 (kemungkinan nyata di masa depan: "If temperatures rise, heatwaves will become...").<br />
                   • <strong>Type 2:</strong> If + S + V2, S + would + V1 (pengandaian tidak nyata di masa sekarang).
                 </p>
               </div>
 
-              <div className="bg-[#FAF6EE] p-3.5 rounded-xl border border-[#2D2319]/20 space-y-1">
-                <h4 className="font-black text-[#047857]">3. Passive Voice & Gerunds</h4>
+              <div className={`${isCoastal ? 'bg-[#FDFBF7] border-[#334155]/20' : 'bg-[#FAF6EE] border-[#2D2319]/20'} p-3.5 rounded-xl border space-y-1`}>
+                <h4 className={`font-black ${isCoastal ? 'text-[#3A6B88]' : 'text-[#047857]'}`}>3. Passive Voice & Gerunds</h4>
                 <p className="font-medium text-slate-700">
                   • <strong>Passive:</strong> S + be (is/are/was/were) + V3 (fokus pada objek/korban/hasil buatan: "The sponge was made from...").<br />
                   • <strong>Gerund Subject:</strong> V-ing sebagai subjek tunggal ("Breathing through the nose lowers blood pressure").
                 </p>
               </div>
 
-              <div className="bg-[#FAF6EE] p-3.5 rounded-xl border border-[#2D2319]/20 space-y-1">
-                <h4 className="font-black text-[#047857]">4. Relative Clauses & Conjunctions</h4>
+              <div className={`${isCoastal ? 'bg-[#FDFBF7] border-[#334155]/20' : 'bg-[#FAF6EE] border-[#2D2319]/20'} p-3.5 rounded-xl border space-y-1`}>
+                <h4 className={`font-black ${isCoastal ? 'text-[#3A6B88]' : 'text-[#047857]'}`}>4. Relative Clauses & Conjunctions</h4>
                 <p className="font-medium text-slate-700">
                   • <strong>Who / Which / That:</strong> Klausa penjelas subjek ("Teens who limit social media...").<br />
                   • <strong>Although / Even though:</strong> Menyatakan kontras ("Although plastics decompose slowly...").<br />
@@ -420,13 +437,13 @@ export const SentenceDrillGame: React.FC = () => {
                 href="https://aguswuryanto.wordpress.com/wp-content/uploads/2010/09/english-modul-for-sma.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xs font-black text-[#047857] hover:underline"
+                className={`text-xs font-black ${isCoastal ? 'text-[#3A6B88]' : 'text-[#047857]'} hover:underline`}
               >
                 Unduh PDF Modul Lengkap SMA ↗
               </a>
               <button
                 onClick={() => setShowGrammarModal(false)}
-                className="py-2.5 px-6 bg-[#10B981] hover:bg-[#059669] text-white font-black uppercase text-xs rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319] cursor-pointer"
+                className={`py-2.5 px-6 ${isCoastal ? 'bg-[#3A6B88] hover:bg-[#2C526A] border-[#334155] shadow-[2px_2px_0px_0px_#334155]' : 'bg-[#10B981] hover:bg-[#059669] border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319]'} text-white font-black uppercase text-xs rounded-xl border-2 cursor-pointer`}
               >
                 Tutup Panduan
               </button>

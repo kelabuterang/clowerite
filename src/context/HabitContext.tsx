@@ -5,7 +5,12 @@ import { INDONESIAN_ARTICLES, getDailyIndonesianArticles } from '../data/indones
 import { ENGLISH_ARTICLES, getDailyEnglishArticles } from '../data/englishArticles';
 import { CERPEN_COLLECTION } from '../data/cerpenData';
 
+export type AppTheme = 'forest' | 'coastal';
+
 interface HabitContextType {
+  theme: AppTheme;
+  setTheme: (theme: AppTheme) => void;
+  toggleTheme: () => void;
   progress: UserHabitProgress;
   recordSession: (session: Omit<SessionResult, 'id' | 'timestamp' | 'date'>) => SessionResult;
   isHabitCompletedToday: (habitId: HabitId) => boolean;
@@ -67,7 +72,42 @@ const initialProgress: UserHabitProgress = {
 
 const HabitContext = createContext<HabitContextType | null>(null);
 
+const THEME_STORAGE_KEY = 'cloverait_app_theme_v1';
+
 export const HabitProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [theme, setThemeState] = useState<AppTheme>(() => {
+    try {
+      const saved = localStorage.getItem(THEME_STORAGE_KEY);
+      return (saved === 'coastal' || saved === 'forest') ? saved : 'forest';
+    } catch {
+      return 'forest';
+    }
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(THEME_STORAGE_KEY, theme);
+      document.documentElement.setAttribute('data-theme', theme);
+      if (theme === 'coastal') {
+        document.documentElement.classList.add('theme-coastal');
+        document.documentElement.classList.remove('theme-forest');
+      } else {
+        document.documentElement.classList.add('theme-forest');
+        document.documentElement.classList.remove('theme-coastal');
+      }
+    } catch {
+      // ignore
+    }
+  }, [theme]);
+
+  const setTheme = (newTheme: AppTheme) => {
+    setThemeState(newTheme);
+  };
+
+  const toggleTheme = () => {
+    setThemeState(prev => (prev === 'forest' ? 'coastal' : 'forest'));
+  };
+
   const [progress, setProgress] = useState<UserHabitProgress>(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
@@ -441,6 +481,9 @@ export const HabitProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   return (
     <HabitContext.Provider
       value={{
+        theme,
+        setTheme,
+        toggleTheme,
         progress,
         recordSession,
         isHabitCompletedToday,

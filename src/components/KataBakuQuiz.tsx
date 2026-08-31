@@ -3,9 +3,13 @@ import { Sparkles, CheckCircle2, XCircle, ArrowRight, RotateCcw, BookOpen, Flame
 import { KATA_BAKU_LIST } from '../data/kataBakuData';
 import { CloverMascot } from './CloverMascot';
 import { KataBakuItem } from '../types';
+import { useHabit } from '../context/HabitContext';
 import confetti from 'canvas-confetti';
 
 export const KataBakuQuiz: React.FC = () => {
+  const { theme } = useHabit();
+  const isCoastal = theme === 'coastal';
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [isAnswered, setIsAnswered] = useState(false);
@@ -89,36 +93,52 @@ export const KataBakuQuiz: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
       {/* Header Bento Card */}
-      <div className="bg-[#FEF3C7] border-2 border-[#2D2319] rounded-2xl p-6 shadow-[4px_4px_0px_0px_#2D2319] flex flex-col md:flex-row items-center justify-between gap-6">
+      <div className={`border-2 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-6 ${
+        isCoastal
+          ? 'bg-[#EBF1F5] border-slate-700 shadow-[4px_4px_0px_0px_rgba(51,65,85,1)]'
+          : 'bg-[#FEF3C7] border-[#2D2319] shadow-[4px_4px_0px_0px_#2D2319]'
+      }`}>
         <div className="space-y-2 text-left flex-1">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border-2 border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319] text-xs font-black tracking-wider uppercase text-[#047857]">
-            <Sparkles className="w-3.5 h-3.5 fill-[#10B981]" />
+          <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full border-2 text-xs font-black tracking-wider uppercase ${
+            isCoastal
+              ? 'bg-white border-slate-700 shadow-[2px_2px_0px_0px_rgba(51,65,85,1)] text-[#2C4A6F]'
+              : 'bg-white border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319] text-[#047857]'
+          }`}>
+            <Sparkles className={`w-3.5 h-3.5 ${isCoastal ? 'text-[#3A6B88] fill-[#3A6B88]' : 'text-[#10B981] fill-[#10B981]'}`} />
             DRILLING TANPA BATAS • KBBI RESMI
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black text-[#2D2319] tracking-tight">
+          <h1 className={`text-2xl sm:text-3xl font-black tracking-tight ${isCoastal ? 'text-slate-800' : 'text-[#2D2319]'}`}>
             Quiz Kata Baku vs Tidak Baku
           </h1>
-          <p className="text-xs sm:text-sm text-[#574332] font-semibold max-w-xl">
+          <p className={`text-xs sm:text-sm font-semibold max-w-xl ${isCoastal ? 'text-slate-600' : 'text-[#574332]'}`}>
             Asah ketelitian ejaan bahasa Indonesia sesuai kaidah baku KBBI & PUEBI. Sumber kurasi terpercaya dari 600+ daftar kata baku Indonesia.
           </p>
 
           {/* Quick Stats Pill */}
           <div className="flex items-center gap-3 pt-2 flex-wrap">
-            <div className="bg-white px-3 py-1 border-2 border-[#2D2319] rounded-xl shadow-[2px_2px_0px_0px_#2D2319] flex items-center gap-1.5 text-xs font-black text-[#2D2319]">
+            <div className={`bg-white px-3 py-1 border-2 rounded-xl flex items-center gap-1.5 text-xs font-black ${
+              isCoastal ? 'border-slate-700 shadow-[2px_2px_0px_0px_rgba(51,65,85,1)] text-slate-800' : 'border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319] text-[#2D2319]'
+            }`}>
               <Flame className="w-4 h-4 text-orange-500 fill-orange-500" />
               <span>Streak: {streak}</span>
               <span className="text-[10px] text-slate-500 font-bold">(Rekor: {highestStreak})</span>
             </div>
 
-            <div className="bg-white px-3 py-1 border-2 border-[#2D2319] rounded-xl shadow-[2px_2px_0px_0px_#2D2319] flex items-center gap-1.5 text-xs font-black text-[#047857]">
+            <div className={`bg-white px-3 py-1 border-2 rounded-xl flex items-center gap-1.5 text-xs font-black ${
+              isCoastal ? 'border-slate-700 shadow-[2px_2px_0px_0px_rgba(51,65,85,1)] text-[#2C4A6F]' : 'border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319] text-[#047857]'
+            }`}>
               <Award className="w-4 h-4" />
               <span>Skor: {score} / {totalAnswered}</span>
-              <span className="font-mono text-amber-700 font-bold">({accuracy}%)</span>
+              <span className={`font-mono font-bold ${isCoastal ? 'text-blue-700' : 'text-amber-700'}`}>({accuracy}%)</span>
             </div>
 
             <button
               onClick={handleShuffle}
-              className="p-1.5 bg-white hover:bg-amber-100 rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319] text-xs font-black text-[#2D2319] cursor-pointer flex items-center gap-1"
+              className={`p-1.5 bg-white rounded-xl border-2 text-xs font-black cursor-pointer flex items-center gap-1 transition-all ${
+                isCoastal
+                  ? 'border-slate-700 shadow-[2px_2px_0px_0px_rgba(51,65,85,1)] text-slate-800 hover:bg-slate-100'
+                  : 'border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319] text-[#2D2319] hover:bg-amber-100'
+              }`}
               title="Acak Soal"
             >
               <Shuffle className="w-3.5 h-3.5" /> Acak
@@ -126,7 +146,11 @@ export const KataBakuQuiz: React.FC = () => {
 
             <button
               onClick={handleResetStats}
-              className="p-1.5 bg-white hover:bg-rose-100 rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319] text-xs font-black text-[#2D2319] cursor-pointer flex items-center gap-1"
+              className={`p-1.5 bg-white rounded-xl border-2 text-xs font-black cursor-pointer flex items-center gap-1 transition-all ${
+                isCoastal
+                  ? 'border-slate-700 shadow-[2px_2px_0px_0px_rgba(51,65,85,1)] text-slate-800 hover:bg-rose-50'
+                  : 'border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319] text-[#2D2319] hover:bg-rose-100'
+              }`}
               title="Reset Statistik"
             >
               <RotateCcw className="w-3.5 h-3.5" /> Reset
@@ -135,7 +159,9 @@ export const KataBakuQuiz: React.FC = () => {
         </div>
 
         <div className="shrink-0">
-          <div className="relative p-2 bg-white rounded-2xl border-2 border-[#2D2319] shadow-[3px_3px_0px_0px_#2D2319]">
+          <div className={`relative p-2 bg-white rounded-2xl border-2 ${
+            isCoastal ? 'border-slate-700 shadow-[3px_3px_0px_0px_rgba(51,65,85,1)]' : 'border-[#2D2319] shadow-[3px_3px_0px_0px_#2D2319]'
+          }`}>
             <CloverMascot type="kata-baku" size={100} />
           </div>
         </div>
@@ -154,8 +180,12 @@ export const KataBakuQuiz: React.FC = () => {
             }}
             className={`px-3.5 py-1.5 rounded-xl border-2 shrink-0 transition-all cursor-pointer ${
               selectedCategory === cat
-                ? 'bg-[#10B981] text-white border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319]'
-                : 'bg-white text-[#574332] border-[#2D2319]/30 hover:border-[#2D2319]'
+                ? isCoastal
+                  ? 'bg-[#3A6B88] text-white border-slate-700 shadow-[2px_2px_0px_0px_rgba(51,65,85,1)]'
+                  : 'bg-[#10B981] text-white border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319]'
+                : isCoastal
+                  ? 'bg-white text-slate-700 border-slate-300 hover:border-slate-700'
+                  : 'bg-white text-[#574332] border-[#2D2319]/30 hover:border-[#2D2319]'
             }`}
           >
             {cat === 'all' ? 'Semua Kategori' : cat}
@@ -164,9 +194,15 @@ export const KataBakuQuiz: React.FC = () => {
       </div>
 
       {/* Main Question Bento Card */}
-      <div className="bg-white border-2 border-[#2D2319] rounded-2xl p-6 sm:p-8 shadow-[4px_4px_0px_0px_#2D2319] space-y-6">
+      <div className={`bg-white border-2 rounded-2xl p-6 sm:p-8 space-y-6 ${
+        isCoastal ? 'border-slate-700 shadow-[4px_4px_0px_0px_rgba(51,65,85,1)]' : 'border-[#2D2319] shadow-[4px_4px_0px_0px_#2D2319]'
+      }`}>
         <div className="flex items-center justify-between border-b-2 border-slate-100 pb-3">
-          <span className="text-xs font-black uppercase tracking-wider text-[#047857] bg-[#ECFDF5] px-3 py-1 rounded-lg border border-[#10B981]/40">
+          <span className={`text-xs font-black uppercase tracking-wider px-3 py-1 rounded-lg border ${
+            isCoastal
+              ? 'text-[#2C4A6F] bg-[#EBF1F5] border-[#CBD5E1]'
+              : 'text-[#047857] bg-[#ECFDF5] border-[#10B981]/40'
+          }`}>
             Soal #{currentIndex + 1} • {currentItem.category}
           </span>
           <span className="text-xs font-bold text-slate-500">
@@ -175,10 +211,10 @@ export const KataBakuQuiz: React.FC = () => {
         </div>
 
         <div className="text-center py-4 space-y-2">
-          <p className="text-sm font-bold text-[#8C6B4F] uppercase tracking-wide">
+          <p className={`text-sm font-bold uppercase tracking-wide ${isCoastal ? 'text-slate-500' : 'text-[#8C6B4F]'}`}>
             Pertanyaan:
           </p>
-          <h2 className="text-2xl sm:text-3xl font-black text-[#2D2319] tracking-tight">
+          <h2 className={`text-2xl sm:text-3xl font-black tracking-tight ${isCoastal ? 'text-slate-800' : 'text-[#2D2319]'}`}>
             Mana yang merupakan bentuk bakunya?
           </h2>
         </div>
@@ -189,13 +225,19 @@ export const KataBakuQuiz: React.FC = () => {
             const isCorrect = option === currentItem.baku;
             const isChosen = selectedOption === option;
 
-            let btnStyle = 'bg-[#FAF6EE] text-[#2D2319] border-[#2D2319] hover:bg-[#FDE68A] shadow-[3px_3px_0px_0px_#2D2319]';
+            let btnStyle = isCoastal
+              ? 'bg-[#F8FAFC] text-slate-800 border-slate-700 hover:bg-[#EBF1F5] shadow-[3px_3px_0px_0px_rgba(51,65,85,1)]'
+              : 'bg-[#FAF6EE] text-[#2D2319] border-[#2D2319] hover:bg-[#FDE68A] shadow-[3px_3px_0px_0px_#2D2319]';
 
             if (isAnswered) {
               if (isCorrect) {
-                btnStyle = 'bg-[#10B981] text-white border-[#2D2319] shadow-[3px_3px_0px_0px_#2D2319]';
+                btnStyle = isCoastal
+                  ? 'bg-[#3A6B88] text-white border-slate-700 shadow-[3px_3px_0px_0px_rgba(51,65,85,1)]'
+                  : 'bg-[#10B981] text-white border-[#2D2319] shadow-[3px_3px_0px_0px_#2D2319]';
               } else if (isChosen && !isCorrect) {
-                btnStyle = 'bg-[#F43F5E] text-white border-[#2D2319] shadow-[3px_3px_0px_0px_#2D2319]';
+                btnStyle = isCoastal
+                  ? 'bg-[#E11D48] text-white border-slate-700 shadow-[3px_3px_0px_0px_rgba(51,65,85,1)]'
+                  : 'bg-[#F43F5E] text-white border-[#2D2319] shadow-[3px_3px_0px_0px_#2D2319]';
               } else {
                 btnStyle = 'bg-slate-100 text-slate-400 border-slate-300 opacity-60';
               }
@@ -235,13 +277,19 @@ export const KataBakuQuiz: React.FC = () => {
         {isAnswered && (
           <div className="space-y-4 pt-4 border-t-2 border-slate-100 animate-fadeIn">
             <div
-              className={`p-5 rounded-2xl border-2 border-[#2D2319] shadow-[3px_3px_0px_0px_#2D2319] ${
-                selectedOption === currentItem.baku ? 'bg-[#ECFDF5]' : 'bg-[#FFF1F2]'
+              className={`p-5 rounded-2xl border-2 ${
+                isCoastal
+                  ? selectedOption === currentItem.baku
+                    ? 'bg-[#EBF1F5] border-slate-700 shadow-[3px_3px_0px_0px_rgba(51,65,85,1)]'
+                    : 'bg-[#FFF1F2] border-slate-700 shadow-[3px_3px_0px_0px_rgba(51,65,85,1)]'
+                  : selectedOption === currentItem.baku
+                    ? 'bg-[#ECFDF5] border-[#2D2319] shadow-[3px_3px_0px_0px_#2D2319]'
+                    : 'bg-[#FFF1F2] border-[#2D2319] shadow-[3px_3px_0px_0px_#2D2319]'
               }`}
             >
               <div className="flex items-center gap-2 mb-2">
                 {selectedOption === currentItem.baku ? (
-                  <span className="text-sm font-black text-[#047857] flex items-center gap-1.5">
+                  <span className={`text-sm font-black flex items-center gap-1.5 ${isCoastal ? 'text-[#2C4A6F]' : 'text-[#047857]'}`}>
                     <CheckCircle2 className="w-4 h-4" /> JAWABAN TEPAT! 🎉
                   </span>
                 ) : (
@@ -251,19 +299,21 @@ export const KataBakuQuiz: React.FC = () => {
                 )}
               </div>
 
-              <div className="space-y-2 text-xs sm:text-sm text-[#2D2319]">
+              <div className={`space-y-2 text-xs sm:text-sm ${isCoastal ? 'text-slate-800' : 'text-[#2D2319]'}`}>
                 <div className="flex items-baseline gap-2 flex-wrap font-bold">
-                  <span>Baku: <strong className="text-[#047857] text-base underline decoration-2">{currentItem.baku}</strong></span>
+                  <span>Baku: <strong className={`text-base underline decoration-2 ${isCoastal ? 'text-[#2C4A6F]' : 'text-[#047857]'}`}>{currentItem.baku}</strong></span>
                   <span className="text-slate-400">|</span>
                   <span>Tidak Baku: <s className="text-[#BE123C]">{currentItem.tidakBaku}</s></span>
                 </div>
 
-                <p className="font-medium text-[#4A3B2C] leading-relaxed bg-white/70 p-3 rounded-xl border border-[#2D2319]/20">
+                <p className={`font-medium leading-relaxed bg-white/70 p-3 rounded-xl border ${
+                  isCoastal ? 'text-slate-700 border-slate-300' : 'text-[#4A3B2C] border-[#2D2319]/20'
+                }`}>
                   {currentItem.explanation}
                 </p>
 
                 {currentItem.exampleSentence && (
-                  <p className="text-xs italic text-[#6B533E]">
+                  <p className={`text-xs italic ${isCoastal ? 'text-slate-600' : 'text-[#6B533E]'}`}>
                     Contoh: "{currentItem.exampleSentence}"
                   </p>
                 )}
@@ -274,7 +324,11 @@ export const KataBakuQuiz: React.FC = () => {
             <div className="flex justify-end pt-2">
               <button
                 onClick={handleNextQuestion}
-                className="py-3 px-6 bg-[#F59E0B] hover:bg-[#D97706] text-[#2D2319] font-black uppercase text-sm rounded-xl border-2 border-[#2D2319] shadow-[3px_3px_0px_0px_#2D2319] active:translate-y-0.5 active:shadow-none flex items-center gap-2 cursor-pointer transition-all"
+                className={`py-3 px-6 font-black uppercase text-sm rounded-xl border-2 active:translate-y-0.5 active:shadow-none flex items-center gap-2 cursor-pointer transition-all ${
+                  isCoastal
+                    ? 'bg-[#3A6B88] hover:bg-[#2C4A6F] text-white border-slate-700 shadow-[3px_3px_0px_0px_rgba(51,65,85,1)]'
+                    : 'bg-[#F59E0B] hover:bg-[#D97706] text-[#2D2319] border-[#2D2319] shadow-[3px_3px_0px_0px_#2D2319]'
+                }`}
               >
                 <span>Soal Selanjutnya</span>
                 <ArrowRight className="w-4 h-4 stroke-[3]" />
@@ -285,16 +339,20 @@ export const KataBakuQuiz: React.FC = () => {
       </div>
 
       {/* Footer Reference Card */}
-      <div className="bg-[#FAF6EE] border-2 border-[#2D2319] rounded-2xl p-4 shadow-[3px_3px_0px_0px_#2D2319] text-xs text-[#574332] flex items-center justify-between flex-wrap gap-2">
+      <div className={`border-2 rounded-2xl p-4 text-xs flex items-center justify-between flex-wrap gap-2 ${
+        isCoastal
+          ? 'bg-[#F8FAFC] border-slate-700 shadow-[3px_3px_0px_0px_rgba(51,65,85,1)] text-slate-600'
+          : 'bg-[#FAF6EE] border-[#2D2319] shadow-[3px_3px_0px_0px_#2D2319] text-[#574332]'
+      }`}>
         <div className="flex items-center gap-2 font-bold">
-          <BookOpen className="w-4 h-4 text-[#B45309]" />
+          <BookOpen className={`w-4 h-4 ${isCoastal ? 'text-[#3A6B88]' : 'text-[#B45309]'}`} />
           <span>Sumber Rujukan: 600 Daftar Lengkap Kata Baku & Tidak Baku (KBBI & PUEBI)</span>
         </div>
         <a
           href="https://muhyidin.id/600-daftar-lengkap-kata-baku-dan-tidak-baku/"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-[#047857] hover:underline font-black"
+          className={`font-black hover:underline ${isCoastal ? 'text-[#2C4A6F]' : 'text-[#047857]'}`}
         >
           Buka Tautan Sumber ↗
         </a>

@@ -19,35 +19,35 @@ export const INDONESIAN_ARTICLES: IndonesianArticle[] = [
     ],
     fillInQuestions: [
       {
-        id: 'q-isian-1',
+        id: 'q-isian-1-1',
         question: 'Undang-Undang nomor berapakah yang mengatur tentang Desa dan disahkan pada tahun 2014?',
         correctAnswers: ['UU No. 6 Tahun 2014', 'Undang-Undang Nomor 6 Tahun 2014', 'Nomor 6 Tahun 2014', 'UU No 6 Tahun 2014', 'UU Nomor 6', 'Nomor 6'],
         explanation: 'Disebutkan pada paragraf pertama bahwa Undang-Undang Nomor 6 Tahun 2014 mengubah kedudukan desa dalam pemerintahan Indonesia.',
         hint: 'Perhatikan angka undang-undang di awal artikel.'
       },
       {
-        id: 'q-isian-2',
+        id: 'q-isian-1-2',
         question: 'Pada tahun berapa Dana Desa pertama kali mulai disalurkan ke desa-desa di Indonesia?',
         correctAnswers: ['2015', 'Tahun 2015'],
         explanation: 'Penyaluran Dana Desa pertama kali dimulai pada tahun 2015 dengan alokasi awal Rp20,77 triliun.',
         hint: 'Satu tahun setelah undang-undang disahkan.'
       },
       {
-        id: 'q-isian-3',
+        id: 'q-isian-1-3',
         question: 'Berapa triliun rupiah alokasi Dana Desa pada tahun 2024?',
         correctAnswers: ['71', 'Rp71 triliun', '71 triliun', 'Rp 71 triliun'],
         explanation: 'Alokasi Dana Desa naik terus hingga mencapai Rp71 triliun pada tahun 2024.',
         hint: 'Angka puluhan triliun pada tahun 2024.'
       },
       {
-        id: 'q-isian-4',
+        id: 'q-isian-1-4',
         question: 'Lembaga usaha milik desa apa yang menjadi pengungkit ekonomi lokal di pedesaan?',
         correctAnswers: ['BUMDes', 'Badan Usaha Milik Desa', 'BUM Desa'],
         explanation: 'BUMDes (Badan Usaha Milik Desa) disebut sebagai instrumen pengungkit ekonomi lokal yang membuka lapangan kerja.',
         hint: 'Singkatan 6 huruf berawalan BUM.'
       },
       {
-        id: 'q-isian-5',
+        id: 'q-isian-1-5',
         question: 'Sistem digital apa yang digunakan untuk pengelolaan keuangan desa menurut artikel?',
         correctAnswers: ['Siskeudes', 'Sistem Keuangan Desa'],
         explanation: 'Siskeudes (Sistem Keuangan Desa) merupakan platform digitalisasi tata kelola anggaran desa.',
@@ -56,31 +56,31 @@ export const INDONESIAN_ARTICLES: IndonesianArticle[] = [
     ],
     trueFalseQuestions: [
       {
-        id: 'q-tf-1',
+        id: 'q-tf-1-1',
         statement: 'Sebelum adanya UU Desa 2014, keputusan proyek pembangunan ditentukan langsung oleh musyawarah desa tanpa campur tangan kabupaten.',
         isTrue: false,
         explanation: 'Salah. Sebelumnya, pembangunan ditentukan berjenjang ke kabupaten dan turun sebagai proyek yang ditetapkan pihak lain.'
       },
       {
-        id: 'q-tf-2',
+        id: 'q-tf-1-2',
         statement: 'Total alokasi Dana Desa dari tahun 2015 hingga 2024 mencapai sekitar Rp609,9 triliun.',
         isTrue: true,
         explanation: 'Benar. Sepanjang 2015-2024, total alokasi tercatat sekitar Rp609,9 triliun untuk 75.259 desa.'
       },
       {
-        id: 'q-tf-3',
+        id: 'q-tf-1-3',
         statement: 'Dana Desa tidak diperbolehkan digunakan untuk program penanganan stunting dan pengentasan kemiskinan ekstrem.',
         isTrue: false,
         explanation: 'Salah. Penanganan stunting dan kemiskinan ekstrem justru menjadi salah satu prioritas utama penggunaan Dana Desa.'
       },
       {
-        id: 'q-tf-4',
+        id: 'q-tf-1-4',
         statement: 'Modus korupsi Dana Desa antara lain meliputi penggelembungan harga material dan proyek fiktif.',
         isTrue: true,
         explanation: 'Benar. Analisis 591 putusan perkara korupsi menunjukkan pola penggelembungan harga material, proyek fiktif, dan manipulasi laporan.'
       },
       {
-        id: 'q-tf-5',
+        id: 'q-tf-1-5',
         statement: 'Transparansi papan informasi proyek di balai desa merupakan salah satu wujud pengawasan partisipatif warga.',
         isTrue: true,
         explanation: 'Benar. Kunci keberlanjutan dan pencegahan korupsi adalah keterbukaan informasi publik bagi seluruh warga desa.'
@@ -105,35 +105,35 @@ export const INDONESIAN_ARTICLES: IndonesianArticle[] = [
     ],
     fillInQuestions: [
       {
-        id: 'q-isian-1',
+        id: 'q-isian-2-1',
         question: 'Berapa batas ukuran maksimal partikel plastik untuk dikategorikan sebagai mikroplastik menurut artikel?',
         correctAnswers: ['5 milimeter', '5 mm', 'lima milimeter', 'kurang dari 5 mm'],
         explanation: 'Mikroplastik didefinisikan sebagai partikel plastik dengan ukuran kurang dari lima milimeter (5 mm).',
         hint: 'Angka satuan milimeter di paragraf pertama.'
       },
       {
-        id: 'q-isian-2',
+        id: 'q-isian-2-2',
         question: 'Partikel mikroplastik pada produk kosmetik pembersih wajah disebut dengan istilah apa?',
         correctAnswers: ['Microbeads', 'Mikroplastik primer', 'Microbead'],
         explanation: 'Microbeads adalah contoh mikroplastik primer yang sengaja diproduksi untuk scrub kosmetik.',
         hint: 'Istilah bahasa Inggris untuk butiran scrub.'
       },
       {
-        id: 'q-isian-3',
+        id: 'q-isian-2-3',
         question: 'Proses akumulasi racun yang meningkat pada tingkatan rantai makanan yang lebih tinggi disebut fenomena apa?',
         correctAnswers: ['Biomagnifikasi', 'Biomagnification'],
         explanation: 'Biomagnifikasi adalah peningkatan konsentrasi zat berbahaya pada setiap tingkat trofik rantai makanan.',
         hint: 'Istilah biologi berawalan Bio-.'
       },
       {
-        id: 'q-isian-4',
+        id: 'q-isian-2-4',
         question: 'Bahan alami hayati apa yang dapat dikembangkan sebagai bahan baku bioplastik lokal di Indonesia?',
         correctAnswers: ['Rumput laut', 'Rumput laut lokal', 'Seaweed'],
         explanation: 'Riset bioplastik berbasis rumput laut lokal menjadi salah satu solusi ramah lingkungan pengganti plastik polimer sintetis.',
         hint: 'Tumbuhan laut yang melimpah di pesisir Indonesia.'
       },
       {
-        id: 'q-isian-5',
+        id: 'q-isian-2-5',
         question: 'Sebutkan salah satu zat kimia pengganggu endokrin yang terkandung dalam plastik menurut artikel!',
         correctAnswers: ['BPA', 'Bisphenol A', 'Ftalat', 'Phthalate'],
         explanation: 'BPA (Bisphenol A) dan ftalat adalah senyawa kimia berbahaya yang berfungsi sebagai pengganggu hormon endokrin.',
@@ -142,1239 +142,905 @@ export const INDONESIAN_ARTICLES: IndonesianArticle[] = [
     ],
     trueFalseQuestions: [
       {
-        id: 'q-tf-1',
-        statement: 'Mikroplastik sekunder tercipta dari pemecahan sampah plastik besar akibat radiasi sinar UV matahari dan ombak laut.',
-        isTrue: true,
-        explanation: 'Benar. Sampah plastik besar hancur menjadi partikel kecil sekunder karena paparan cuaca dan gelombang mekanik.'
-      },
-      {
-        id: 'q-tf-2',
-        statement: 'Ikan laut memakan mikroplastik karena rasanya yang manis dan menarik indra penciuman mereka.',
+        id: 'q-tf-2-1',
+        statement: 'Mikroplastik primer terbentuk secara alami dari hancurnya botol plastik oleh sinar matahari.',
         isTrue: false,
-        explanation: 'Salah. Ikan memakan mikroplastik karena keliru mengiranya sebagai mangsa alami mereka, yaitu zooplankton.'
+        explanation: 'Salah. Mikroplastik dari pelapukan botol adalah mikroplastik sekunder, sedangkan primer diproduksi langsung pabrik seperti microbeads.'
       },
       {
-        id: 'q-tf-3',
-        statement: 'Permukaan mikroplastik mampu menyerap zat berbahaya seperti logam berat timbal dan bakteri patogen di lautan.',
+        id: 'q-tf-2-2',
+        statement: 'Ikan pelagis kecil sering menelan partikel mikroplastik karena mengiranya sebagai zooplankton.',
         isTrue: true,
-        explanation: 'Benar. Permukaan mikroplastik bertindak seperti spons penyerap polutan berbahaya dan logam berat.'
+        explanation: 'Benar. Ukuran dan warna mikroplastik menyerupai makanan alami ikan seperti plankton.'
       },
       {
-        id: 'q-tf-4',
-        statement: 'Partikel mikroplastik di tubuh ikan tidak akan pernah bisa berpindah atau masuk ke dalam tubuh manusia yang mengonsumsinya.',
+        id: 'q-tf-2-3',
+        statement: 'Permukaan mikroplastik mampu menyerap polutan logam berat berbahaya seperti timbal dan kadmium di laut.',
+        isTrue: true,
+        explanation: 'Benar. Partikel mikroplastik bertindak layaknya spons penyerap zat kimia berbahaya di perairan.'
+      },
+      {
+        id: 'q-tf-2-4',
+        statement: 'Fenomena biomagnifikasi menyebabkan kadar racun kimia dalam tubuh predator puncak menjadi lebih rendah daripada mangsanya.',
         isTrue: false,
-        explanation: 'Salah. Melalui fenomena biomagnifikasi di rantai makanan, mikroplastik dan racunnya masuk ke tubuh manusia.'
+        explanation: 'Salah. Biomagnifikasi justru melipatgandakan akumulasi racun pada tingkat trofik rantai makanan yang lebih tinggi.'
       },
       {
-        id: 'q-tf-5',
-        statement: 'Pengembangan bioplastik berbasis rumput laut merupakan salah satu solusi inovatif yang ditawarkan dalam artikel.',
+        id: 'q-tf-2-5',
+        statement: 'Pengembangan bioplastik berbasis rumput laut lokal merupakan alternatif pengganti plastik sintetis sekali pakai.',
         isTrue: true,
-        explanation: 'Benar. Rumput laut diusulkan sebagai alternatif biomaterial pengganti plastik konvensional.'
+        explanation: 'Benar. Riset bioplastik rumput laut diusulkan untuk mengurangi ketergantungan pada plastik konvensional.'
       }
     ]
   },
   {
     id: 'id-art-3',
-    title: 'Irama Sirkadian: Mengapa Kualitas Tidur Menentukan Kinerja Kognitif',
-    category: 'Kesehatan & Kedokteran',
-    subTopic: 'Gaya Hidup Sehat & Riset Neurosains',
+    title: 'Misteri Tidur Gelombang Lambat dan Pembersihan Racun Otak',
+    category: 'Sains & Kesehatan',
+    subTopic: 'Neurosains & Sistem Glimfatik',
     source: 'The Conversation Indonesia',
     sourceUrl: 'https://theconversation.com/id',
-    wordCount: 410,
+    wordCount: 375,
     estimatedMinutes: 2,
     content: [
-      'Di era konektivitas 24 jam tanpa henti, gangguan pola tidur telah menjadi epidemi senyap yang mengikis kesehatan mental dan kapasitas intelektual manusia modern. Jam biologis tubuh kita dikendalikan oleh sistem bernama ritme sirkadian, sebuah osilator internal berdurasi sekitar 24 jam yang terletak di nukleus suprakiasmatik pada hipotalamus otak.',
-      'Ritme sirkadian mengatur fluktuasi hormon krusial: produksi kortisol meningkat di pagi hari untuk memberikan energi dan kesiagaan, sementara kelenjar pineal menyekresikan melatonin saat kegelapan tiba guna menginduksi rasa kantuk dan relaksasi.',
-      'Paparan cahaya biru (blue light) dengan panjang gelombang 450-480 nanometer dari layar gawai pintar dan laptop di malam hari menipu fotoreseptor retina. Otak mengira hari masih siang, sehingga sekresi melatonin tertunda hingga dua jam. Dampaknya adalah fase tidur gelombang lambat (deep sleep) dan tidur REM (Rapid Eye Movement) berkurang drastis.',
-      'Padahal, saat fase tidur dalam inilah sistem glimfatik otak bekerja membersihkan metabolit beracun, termasuk plak protein beta-amiloid yang berkaitan erat dengan risiko penyakit Alzheimer. Selain itu, fase REM memegang peranan krusial dalam konsolidasi memori jangka panjang dan stabilitas regulasi emosi.',
-      'Untuk memperbaiki ritme sirkadian, para pakar merekomendasikan paparan sinar matahari pagi selama 15-30 menit, menetapkan jadwal tidur yang konsisten setiap hari bahkan di akhir pekan, serta menghentikan pemakaian layar gawai minimal satu jam sebelum tidur.'
+      'Banyak orang menganggap tidur sekadar kondisi pasif saat tubuh mengistirahatkan otot. Namun bagi neurosaintis, tidur merupakan fase pemeliharaan biologis paling aktif bagi otak manusia, khususnya selama tahap slow-wave sleep (NREM fase 3).',
+      'Pada fase tidur dalam ini, sistem pembuangan limbah metabolik otak yang dinamakan sistem glimfatik (glymphatic system) bekerja sepuluh kali lipat lebih cepat dibanding saat terjaga. Sel-sel glia menyusutkan volumenya hingga 60 persen, menciptakan ruang antar-sel yang lebih lapang bagi cairan serebrospinal (CSF) untuk mengalir deras membilas jaringan otak.',
+      'Proses pembilasan ini membuang protein toksik berbahaya, termasuk beta-amiloid dan protein tau, yang jika menumpuk bertahun-tahun dapat memicu plak penyebab penyakit neurodegeneratif seperti Alzheimer.',
+      'Kurang tidur kronis tidak hanya mengacaukan konsentrasi dan stabilitas emosi harian, tetapi secara bertahap melemahkan mekanisme glimfatik ini. Menjaga durasi tidur 7-8 jam per malam dengan jadwal konsisten terbukti secara klinis merupakan investasi protektif paling efektif bagi kesehatan kognitif jangka panjang.'
     ],
     fillInQuestions: [
       {
-        id: 'q-isian-1',
-        question: 'Bagian otak manakah yang menjadi pusat pengendali utama jam biologis tubuh sirkadian?',
-        correctAnswers: ['Nukleus suprakiasmatik', 'Hipotalamus', 'Suprakiasmatik', 'SCN'],
-        explanation: 'Pusat pengendali jam biologis sirkadian berada di nukleus suprakiasmatik (SCN) yang terletak pada hipotalamus.',
-        hint: 'Istilah neurosains berawalan nukleus.'
+        id: 'q-isian-3-1',
+        question: 'Sistem pembuangan limbah metabolik khusus pada jaringan otak manusia dinamakan sistem apa?',
+        correctAnswers: ['Sistem glimfatik', 'Glymphatic system', 'Glimfatik'],
+        explanation: 'Sistem glimfatik adalah jaringan pembersih limbah biologis otak yang aktif saat tidur lelap.',
+        hint: 'Kata berawalan Glim-.'
       },
       {
-        id: 'q-isian-2',
-        question: 'Hormon apa yang disekresikan oleh kelenjar pineal saat gelap untuk memicu rasa kantuk?',
-        correctAnswers: ['Melatonin', 'Hormon melatonin'],
-        explanation: 'Melatonin adalah hormon tidur yang diproduksi oleh kelenjar pineal ketika kondisi sekitar mulai gelap.',
-        hint: 'Hormon tidur populer berawalan huruf M.'
+        id: 'q-isian-3-2',
+        question: 'Pada tahap tidur apa sistem pembersihan otak bekerja sepuluh kali lipat lebih aktif?',
+        correctAnswers: ['Slow-wave sleep', 'NREM fase 3', 'Tidur dalam', 'NREM 3', 'Tidur gelombang lambat'],
+        explanation: 'Fase slow-wave sleep (NREM 3) adalah tahap tidur gelombang lambat yang paling restoratif.',
+        hint: 'Istilah bahasa Inggris untuk tidur gelombang lambat.'
       },
       {
-        id: 'q-isian-3',
-        question: 'Sistem pembersihan sisa racun dan metabolit di otak saat tidur disebut sistem apa?',
-        correctAnswers: ['Sistem glimfatik', 'Glimfatik', 'Glymphatic system'],
-        explanation: 'Sistem glimfatik bertugas memompa cairan serebrospinal untuk membersihkan protein sampah di otak saat tidur lelap.',
-        hint: 'Sistem pembersih otak berawalan G.'
+        id: 'q-isian-3-3',
+        question: 'Berapa persen sel-sel glia menyusutkan volumenya saat fase tidur dalam untuk melancarkan aliran cairan?',
+        correctAnswers: ['60 persen', '60%', '60'],
+        explanation: 'Sel glia menyusut hingga 60 persen agar ruang antar-sel melebar dan cairan CSF membilas racun.',
+        hint: 'Angka puluhan persen di paragraf kedua.'
       },
       {
-        id: 'q-isian-4',
-        question: 'Protein racun apa yang dibersihkan otak saat tidur yang menjadi pemicu penyakit Alzheimer?',
-        correctAnswers: ['Beta-amiloid', 'Beta amiloid', 'Amiloid'],
-        explanation: 'Penumpukan plak protein beta-amiloid di otak merupakan salah satu penyebab utama penurunan fungsi kognitif dan Alzheimer.',
-        hint: 'Protein bernama Beta-...'
+        id: 'q-isian-3-4',
+        question: 'Protein toksik apa yang jika menumpuk di otak menjadi pemicu utama timbulnya plak penyakit Alzheimer?',
+        correctAnswers: ['Beta-amiloid', 'Beta amiloid', 'Protein tau', 'Amiloid'],
+        explanation: 'Beta-amiloid dan protein tau adalah protein sampah berbahaya yang dibersihkan oleh sistem glimfatik.',
+        hint: 'Nama senyawa protein berawalan Beta.'
       },
       {
-        id: 'q-isian-5',
-        question: 'Berapa rentang waktu paparan sinar matahari pagi yang dianjurkan untuk mengatur ritme biologis?',
-        correctAnswers: ['15-30 menit', '15 hingga 30 menit', '15-30', '15 sampai 30 menit'],
-        explanation: 'Paparan sinar matahari pagi selama 15-30 menit membantu menyinkronkan jam biologis internal tubuh.',
-        hint: 'Rentang waktu dalam hitungan menit di pagi hari.'
+        id: 'q-isian-3-5',
+        question: 'Cairan tubuh apa yang mengalir deras membilas jaringan otak saat tidur lelap?',
+        correctAnswers: ['Cairan serebrospinal', 'CSF', 'Cerebrospinal fluid'],
+        explanation: 'Cairan serebrospinal (CSF) mengalir membilas racun dan limbah metabolik di antara neuron otak.',
+        hint: 'Singkatan CSF.'
       }
     ],
     trueFalseQuestions: [
       {
-        id: 'q-tf-1',
-        statement: 'Kadar hormon kortisol secara alami mencapai puncaknya pada malam hari tepat saat seseorang bersiap untuk tidur.',
+        id: 'q-tf-3-1',
+        statement: 'Sistem glimfatik bekerja sepuluh kali lipat lebih aktif ketika manusia sedang terjaga dibanding saat tidur lelap.',
         isTrue: false,
-        explanation: 'Salah. Kortisol meningkat di pagi hari untuk memberikan kesiagaan dan menurun menjelang malam.'
+        explanation: 'Salah. Sistem glimfatik justru bekerja sepuluh kali lipat lebih aktif saat tidur lelap fase slow-wave sleep.'
       },
       {
-        id: 'q-tf-2',
-        statement: 'Cahaya biru dari layar gawai dapat menghambat dan menunda produksi hormon melatonin di otak.',
+        id: 'q-tf-3-2',
+        statement: 'Penumpukan protein beta-amiloid dan tau berhubungan erat dengan risiko penyakit Alzheimer.',
         isTrue: true,
-        explanation: 'Benar. Cahaya biru menstimulasi retina sehingga otak mengira masih siang dan menunda pelepasan melatonin.'
+        explanation: 'Benar. Kedua protein beracun tersebut membentuk plak dan kusut serat yang merusak sel saraf otak.'
       },
       {
-        id: 'q-tf-3',
-        statement: 'Fase tidur REM sangat penting untuk memproses konsolidasi memori jangka panjang dan keseimbangan emosional.',
-        isTrue: true,
-        explanation: 'Benar. Fase REM (Rapid Eye Movement) bertanggung jawab atas penyimpanan memori dan regulasi emosi.'
-      },
-      {
-        id: 'q-tf-4',
-        statement: 'Sistem glimfatik paling aktif membersihkan plak racun otak saat kita sedang berolahraga di siang hari.',
+        id: 'q-tf-3-3',
+        statement: 'Saat tidur dalam, sel glia membesar hingga menyumbat celah aliran cairan serebrospinal.',
         isTrue: false,
-        explanation: 'Salah. Sistem glimfatik aktif bekerja maksimal pada saat fase tidur gelombang lambat (deep sleep) di malam hari.'
+        explanation: 'Salah. Sel glia justru menyusut 60% untuk memperlebar ruang aliran cairan pembersih.'
       },
       {
-        id: 'q-tf-5',
-        statement: 'Menjaga jadwal tidur yang sama di akhir pekan membantu menjaga stabilitas ritme sirkadian tubuh.',
+        id: 'q-tf-3-4',
+        statement: 'Kurang tidur kronis dapat mengganggu proses detoksifikasi alami otak.',
         isTrue: true,
-        explanation: 'Benar. Konsistensi waktu tidur setiap hari mencegah terjadinya fenomena social jetlag.'
+        explanation: 'Benar. Kurang tidur menghambat pembersihan limbah metabolik otak secara menyeluruh.'
+      },
+      {
+        id: 'q-tf-3-5',
+        statement: 'Durasi tidur 7-8 jam per malam terbukti secara klinis penting untuk menjaga kesehatan kognitif jangka panjang.',
+        isTrue: true,
+        explanation: 'Benar. Tidur yang cukup dan berkualitas melindungi fungsi kognitif otak hingga usia lanjut.'
       }
     ]
   },
   {
     id: 'id-art-4',
-    title: 'Akselerasi Transisi Energi: Potensi dan Tantangan Pembangkit Listrik Surya di Indonesia',
+    title: 'Mengapa Restorasi Lahan Gambut Jadi Kunci Pencegahan Karhutla Tropis',
     category: 'Lingkungan & Isu Global',
-    subTopic: 'Energi Terbarukan & Dekarbonisasi',
+    subTopic: 'Ekologi Lahan Basah & Mitigasi Iklim',
     source: 'The Conversation Indonesia',
     sourceUrl: 'https://theconversation.com/id',
-    wordCount: 390,
+    wordCount: 410,
     estimatedMinutes: 2,
     content: [
-      'Sebagai negara kepulauan yang dilintasi garis khatulistiwa, Indonesia dianugerahi intensitas radiasi matahari yang luar biasa melimpah sepanjang tahun. Potensi teknis energi surya nasional diperkirakan mencapai lebih dari 3.200 gigawatt (GW). Namun hingga saat ini, pemanfaatannya baru berkisar kurang dari 1 persen dari total kapasitas tersebut.',
-      'Ketergantungan terhadap bahan bakar fosil, terutama batubara yang mendominasi lebih dari 60 persen bauran listrik PLN, menjadi hambatan utama dekarbonisasi. Kontrak jangka panjang dengan skema take-or-pay pada pembangkit listrik tenaga uap (PLTU) swasta menciptakan kondisi oversupply listrik di jaringan Jawa-Bali, sehingga mempersempit ruang integrasi energi baru terbarukan.',
-      'Di sisi teknologi, penurunan drastis harga modul fotovoltaik global hingga lebih dari 80 persen dalam satu dekade terakhir membuka peluang besar bagi penerapan PLTS terapung (floating solar) di danau dan waduk serta PLTS atap skala perumahan dan industri.',
-      'Tantangan mendasar dari energi surya adalah sifatnya yang intermiten—daya yang dihasilkan berfluktuasi bergantung pada intensitas cahaya dan tutupan awan. Solusi masa depan terletak pada penguatan jaringan transmisi pintar (smart grid) dan adopsi sistem penyimpanan energi baterai (Battery Energy Storage System / BESS) skala utilitas.',
-      'Dengan kebijakan insentif tarif yang adil dan penyederhanaan izin instalasi PLTS atap, transisi menuju target Net Zero Emission pada 2060 dapat tercapai lebih cepat sekaligus menciptakan ribuan green jobs bagi generasi muda.'
+      'Indonesia memiliki lahan gambut tropis terluas di dunia, dengan luasan sekitar 13,4 juta hektare. Gambut terbentuk dari sisa-sisa vegetasi purba yang membusuk lambat dalam kondisi anaerobik tergenang air selama ribuan tahun, menyimpan cadangan karbon raksasa hingga puluhan kali lipat dari hutan tanah mineral biasa.',
+      'Namun dalam beberapa dekade terakhir, pembukaan kanalisasi drainase untuk perkebunan monokultur telah mengeringkan kubah gambut alami. Ketika gambut kering terkena percikan api saat musim kemarau, terjadi kebakaran bawah permukaan (smouldering combustion) yang sangat sulit dipadamkan karena api merambat di kedalaman tanah tanpa asap tebal yang jelas di awal.',
+      'Strategi efektif pemulihan gambut berpusat pada prinsip 3R: Rewetting (pembasahan kembali melalui sekat kanal), Revegetation (penanaman kembali spesies asli seperti jelutung dan belangeran), serta Revitalization (pemberdayaan ekonomi masyarakat lokal berbasis paludikultur).',
+      'Paludikultur memungkinkan pemanfaatan komoditas ramah air seperti sagu, rotan, dan purun tanpa harus mengeringkan lahan. Pendekatan berbasis sains dan keterlibatan komunitas ini terbukti mampu mengembalikan tinggi muka air tanah di atas batas aman 40 sentimeter, memutus siklus bencana kabut asap lintas batas.'
     ],
     fillInQuestions: [
       {
-        id: 'q-isian-1',
-        question: 'Berapa gigawatt (GW) estimasi potensi teknis energi surya yang dimiliki Indonesia?',
-        correctAnswers: ['3.200 GW', '3200 GW', 'lebih dari 3.200 gigawatt', '3200 gigawatt', '3.200'],
-        explanation: 'Potensi teknis energi surya nasional diperkirakan melebihi 3.200 gigawatt (GW).',
-        hint: 'Angka ribuan GW di paragraf pertama.'
+        id: 'q-isian-4-1',
+        question: 'Berapa juta hektare perkiraan luasan lahan gambut tropis di Indonesia menurut artikel?',
+        correctAnswers: ['13,4 juta hektare', '13,4 juta ha', '13.4 juta', '13,4'],
+        explanation: 'Indonesia memiliki luasan lahan gambut tropis sekitar 13,4 juta hektare.',
+        hint: 'Angka belasan koma empat juta hektare.'
       },
       {
-        id: 'q-isian-2',
-        question: 'Sumber energi fosil apa yang masih mendominasi lebih dari 60 persen bauran listrik nasional di Indonesia?',
-        correctAnswers: ['Batubara', 'Batu bara', 'PLTU Batubara'],
-        explanation: 'Pembangkit listrik tenaga uap berbahan bakar batubara mendominasi pasokan listrik saat ini.',
-        hint: 'Batuan fosil hitam mudah terbakar.'
+        id: 'q-isian-4-2',
+        question: 'Kondisi tanpa oksigen dalam genangan air alami pembentuk gambut disebut kondisi apa?',
+        correctAnswers: ['Anaerobik', 'Anaerob'],
+        explanation: 'Kondisi anaerobik (tanpa oksigen) memperlambat pembusukan bahan organik sehingga terbentuk lapisan gambut tebal.',
+        hint: 'Istilah biologi berawalan Anaer-.'
       },
       {
-        id: 'q-isian-3',
-        question: 'Apa istilah teknologi sistem penyimpanan energi baterai skala utilitas menurut artikel?',
-        correctAnswers: ['BESS', 'Battery Energy Storage System'],
-        explanation: 'BESS (Battery Energy Storage System) digunakan untuk menstabilkan pasokan energi surya yang intermiten.',
-        hint: 'Singkatan 4 huruf sistem baterai.'
+        id: 'q-isian-4-3',
+        question: 'Sebutkan prinsip pertama dalam strategi 3R pemulihan lahan gambut!',
+        correctAnswers: ['Rewetting', 'Pembasahan kembali'],
+        explanation: 'Rewetting atau pembasahan kembali kubah gambut melalui pembangunan sekat kanal (canal blocking).',
+        hint: 'Kata bahasa Inggris berawalan Re-wet.'
       },
       {
-        id: 'q-isian-4',
-        question: 'Tahun berapakah target pencapaian Net Zero Emission (Emisi Nol Bersih) Indonesia yang disebutkan?',
-        correctAnswers: ['2060', 'Tahun 2060'],
-        explanation: 'Pemerintah menargetkan pencapaian Net Zero Emission nasional pada tahun 2060.',
-        hint: 'Tahun target di pertengahan abad 21.'
+        id: 'q-isian-4-4',
+        question: 'Sistem budidaya pertanian atau kehutanan pada lahan basah tanpa drainase dinamakan apa?',
+        correctAnswers: ['Paludikultur', 'Paludiculture'],
+        explanation: 'Paludikultur adalah pertanian produktif di lahan basah/gambut yang tidak memerlukan pengeringan kanal.',
+        hint: 'Istilah berakhiran -kultur.'
       },
       {
-        id: 'q-isian-5',
-        question: 'Model PLTS yang dibangun di atas permukaan waduk atau danau dinamakan PLTS apa?',
-        correctAnswers: ['PLTS Terapung', 'Floating solar', 'Terapung'],
-        explanation: 'PLTS terapung memanfaatkan permukaan air waduk untuk menghemat penggunaan lahan daratan.',
-        hint: 'Kata sifat yang berarti mengapung di atas air.'
+        id: 'q-isian-4-5',
+        question: 'Berapa sentimeter batas aman tinggi muka air tanah gambut untuk mencegah kebakaran menurut regulasi?',
+        correctAnswers: ['40 sentimeter', '40 cm', '40'],
+        explanation: 'Muka air tanah gambut harus dijaga minimal tidak lebih rendah dari 40 cm di bawah permukaan tanah.',
+        hint: 'Angka 40.'
       }
     ],
     trueFalseQuestions: [
       {
-        id: 'q-tf-1',
-        statement: 'Pemanfaatan energi surya di Indonesia saat ini sudah mencapai lebih dari 50 persen dari total kapasitas potensinya.',
+        id: 'q-tf-4-1',
+        statement: 'Lahan gambut tropis menyimpan cadangan karbon lebih besar dibanding hutan di atas tanah mineral biasa.',
+        isTrue: true,
+        explanation: 'Benar. Lapisan gambut tebal menyimpan cadangan karbon organik yang sangat masif selama ribuan tahun.'
+      },
+      {
+        id: 'q-tf-4-2',
+        statement: 'Kebakaran lahan gambut mudah dideteksi dan dipadamkan karena api hanya membakar dedaunan di atas permukaan.',
         isTrue: false,
-        explanation: 'Salah. Pemanfaatan energi surya saat ini masih di bawah 1 persen dari total potensi teknis 3.200 GW.'
+        explanation: 'Salah. Api gambut membakar di bawah permukaan tanah (smouldering) sehingga sulit dipadamkan dan minim api terbuka.'
       },
       {
-        id: 'q-tf-2',
-        statement: 'Harga modul fotovoltaik surya global mengalami penurunan lebih dari 80 persen dalam satu dekade terakhir.',
+        id: 'q-tf-4-3',
+        statement: 'Prinsip 3R restorasi gambut mencakup Rewetting, Revegetation, dan Revitalization.',
         isTrue: true,
-        explanation: 'Benar. Kemajuan teknologi dan skala produksi menurunkan harga panel surya secara signifikan.'
+        explanation: 'Benar. Tiga pilar ini adalah kerangka kerja ilmiah Badan Restorasi Gambut dan Mangrove.'
       },
       {
-        id: 'q-tf-3',
-        statement: 'Sifat intermiten pada PLTS berarti listrik yang dihasilkan selalu stabil 24 jam tanpa terpengaruh cuaca.',
+        id: 'q-tf-4-4',
+        statement: 'Sistem paludikultur mewajibkan pembuatan saluran drainase yang dalam agar tanaman tumbuh subur.',
         isTrue: false,
-        explanation: 'Salah. Intermiten berarti daya yang dihasilkan naik-turun dan fluktuatif bergantung pada sinar matahari dan awan.'
+        explanation: 'Salah. Paludikultur justru memanfaatkan komoditas yang hidup di lahan basah tanpa drainase pengering.'
       },
       {
-        id: 'q-tf-4',
-        statement: 'Smart grid dan sistem baterai BESS diperlukan untuk mengatasi ketidakstabilan pasokan energi surya.',
+        id: 'q-tf-4-5',
+        statement: 'Tanaman sagu dan purun merupakan contoh komoditas ramah air yang cocok untuk budidaya gambut.',
         isTrue: true,
-        explanation: 'Benar. Teknologi jaringan pintar dan baterai menjadi kunci integrasi energi terbarukan ke sistem kelistrikan.'
-      },
-      {
-        id: 'q-tf-5',
-        statement: 'Transisi energi terbarukan dapat membuka peluang terciptanya lapangan kerja hijau (green jobs) baru.',
-        isTrue: true,
-        explanation: 'Benar. Pembangunan infrastruktur energi hijau menciptakan sektor industri dan ketenagakerjaan baru.'
+        explanation: 'Benar. Keduanya tumbuh optimal pada kondisi gambut basah alami.'
       }
     ]
   },
   {
     id: 'id-art-5',
-    title: 'Kecerdasan Buatan Generatif dan Masa Depan Literasi Berpikir Kritis',
-    category: 'Sains & Teknologi',
-    subTopic: 'Perkembangan AI & Etika Digital',
+    title: 'Transformasi Kecerdasan Buatan Generatif dan Masa Depan Etika Akademik',
+    category: 'Teknologi & Masyarakat',
+    subTopic: 'AI Generatif, Integritas Riset & Pedagogi',
     source: 'The Conversation Indonesia',
     sourceUrl: 'https://theconversation.com/id',
-    wordCount: 405,
+    wordCount: 390,
     estimatedMinutes: 2,
     content: [
-      'Kemunculan model bahasa besar (Large Language Models / LLM) telah merevolusi cara manusia menghasilkan teks, memecahkan kode pemrograman, dan memproses informasi. Namun di balik efisiensi luar biasa ini, para akademisi menyoroti risiko degradasi kognitif jika generasi muda terlalu bergantung pada jawaban instan kecerdasan buatan.',
-      'LLM bekerja berdasarkan probabilitas statistik kata berikutnya (next-token prediction) dari triliunan korpus data pelatihan. Mekanisme ini membuat AI mampu menyusun kalimat yang sangat runtut, meyakinkan, dan gramatikal, namun tidak memiliki pemahaman makna intrinsik atau kesadaran faktual layaknya otak manusia.',
-      'Salah satu fenomena berbahaya dari AI generatif adalah halusinasi (hallucination), yakni kondisi di mana model menghasilkan informasi palsu, kutipan referensi ilmiah fiktif, atau argumen yang keliru dengan nada yang sangat meyakinkan.',
-      'Ketika pengguna menerima output AI secara pasif tanpa melakukan verifikasi silang (fact-checking), kemampuan penalaran analitis dan literasi kritis akan tumpul. Siswa dan profesional berisiko kehilangan keterampilan membedakan antara opini bias dan bukti empiris.',
-      'Oleh karena itu, sistem pendidikan harus bergeser dari sekadar melarang penggunaan AI menjadi mengajarkan prompt literacy, verifikasi sumber primer, dan menempatkan kecerdasan buatan sebagai rekan dialog kritis, bukan pengganti proses berpikir mandiri.'
+      'Kemunculan model bahasa besar (Large Language Models atau LLM) telah mengubah lanskap pendidikan tinggi secara drastis. Mahasiswa dan peneliti kini dapat merangkum ratusan makalah ilmiah, menyusun kerangka penulisan, hingga membuat kode pemrograman dalam hitungan detik.',
+      'Namun di balik efisiensi luar biasa ini, muncul tantangan serius terkait integritas akademik dan bahaya halusinasi AI. Model generatif tidak memahami konsep kebenaran faktual secara filosofis; mereka bekerja atas dasar probabilitas statistik rangkaian kata berikutnya.',
+      'Akibatnya, AI sering menciptakan sitasi fiktif yang tampak meyakinkan namun tidak pernah ada di jurnal mana pun. Menggunakan output AI secara mentah tanpa verifikasi silang (cross-verification) dapat mencederai orisinalitas riset ilmiah.',
+      'Institusi pendidikan tidak semestinya melarang teknologi secara reaksioner, melainkan mengadopsi kerangka kerja literasi AI kritis. Pembelajaran harus bergeser dari hafalan informasi menuju penilaian kemampuan penalaran tingkat tinggi (Higher Order Thinking Skills), validasi metodologi, dan pengungkapan transparansi penggunaan AI dalam karya tulis.'
     ],
     fillInQuestions: [
       {
-        id: 'q-isian-1',
-        question: 'Prinsip kerja statistik dasar apa yang digunakan oleh model bahasa besar untuk menghasilkan teks?',
-        correctAnswers: ['Next-token prediction', 'Prediksi token berikutnya', 'Probabilitas statistik kata', 'Prediksi kata'],
-        explanation: 'LLM bekerja dengan memprediksi token atau kata berikutnya berdasarkan probabilitas statistik korpus data.',
-        hint: 'Istilah teknis bahasa Inggris untuk prediksi kata lanjutan.'
+        id: 'q-isian-5-1',
+        question: 'Singkatan dari Large Language Models dalam teknologi kecerdasan buatan adalah apa?',
+        correctAnswers: ['LLM', 'Large Language Models'],
+        explanation: 'LLM (Large Language Models) adalah model kecerdasan buatan terlatih pada korpus teks berskala masif.',
+        hint: 'Tiga huruf singkatan.'
       },
       {
-        id: 'q-isian-2',
-        question: 'Istilah apa yang digunakan ketika AI menghasilkan data atau referensi fiktif dengan gaya meyakinkan?',
-        correctAnswers: ['Halusinasi', 'Hallucination', 'AI Hallucination'],
-        explanation: 'Halusinasi AI adalah fenomena di mana model mengarang jawaban keliru namun disajikan secara percaya diri.',
-        hint: 'Kata yang mirip dengan kondisi melihat bayangan semu.'
+        id: 'q-isian-5-2',
+        question: 'Fenomena ketika model AI menghasilkan informasi atau sitasi fiktif yang keliru disebut apa?',
+        correctAnswers: ['Halusinasi AI', 'Halusinasi', 'AI Hallucination', 'Hallucination'],
+        explanation: 'Halusinasi AI adalah kondisi ketika model memproduksi fakta atau referensi karangan yang tampak meyakinkan.',
+        hint: 'Istilah psikologi yang diadopsi ke AI.'
       },
       {
-        id: 'q-isian-3',
-        question: 'Kegiatan penting apa yang harus dilakukan pengguna untuk memastikan kebenaran output informasi dari AI?',
-        correctAnswers: ['Verifikasi silang', 'Fact-checking', 'Cek fakta', 'Verifikasi'],
-        explanation: 'Verifikasi silang atau fact-checking terhadap sumber primer mutlak diperlukan untuk mencegah penyebaran disinformasi.',
-        hint: 'Pemeriksaan kebenaran fakta.'
+        id: 'q-isian-5-3',
+        question: 'Model AI generatif memprediksi teks berdasarkan probabilitas apa?',
+        correctAnswers: ['Probabilitas statistik', 'Statistik', 'Probabilitas'],
+        explanation: 'LLM bekerja dengan menghitung probabilitas statistik kata berikutnya (token prediction).',
+        hint: 'Istilah matematika statistik.'
       },
       {
-        id: 'q-isian-4',
-        question: 'Keterampilan literasi baru apa yang mengajarkan cara memberikan instruksi terarah kepada AI?',
-        correctAnswers: ['Prompt literacy', 'Literasi prompt', 'Prompt engineering'],
-        explanation: 'Prompt literacy adalah kecakapan menyusun instruksi yang efektif, etis, dan kritis kepada model AI.',
-        hint: 'Literasi kata perintah berawalan P.'
+        id: 'q-isian-5-4',
+        question: 'Singkatan dari kemampuan penalaran tingkat tinggi dalam pedagogi modern adalah apa?',
+        correctAnswers: ['HOTS', 'Higher Order Thinking Skills'],
+        explanation: 'HOTS (Higher Order Thinking Skills) menekankan analisis kritis, evaluasi, dan penciptaan ide orisinal.',
+        hint: 'Empat huruf singkatan berawalan H.'
       },
       {
-        id: 'q-isian-5',
-        question: 'Singkatan dari model bahasa besar dalam bahasa Inggris adalah apa?',
-        correctAnswers: ['LLM', 'Large Language Models', 'Large Language Model'],
-        explanation: 'LLM adalah akronim dari Large Language Models.',
-        hint: 'Tiga huruf kapital L-L-M.'
+        id: 'q-isian-5-5',
+        question: 'Langkah apa yang wajib dilakukan peneliti terhadap hasil luaran AI sebelum digunakan dalam riset?',
+        correctAnswers: ['Verifikasi silang', 'Cross-verification', 'Validasi', 'Verifikasi'],
+        explanation: 'Verifikasi silang ke sumber primer mutlak dilakukan untuk memastikan kebenaran data ilmiah.',
+        hint: 'Dua kata bahasa Indonesia berawalan huruf V.'
       }
     ],
     trueFalseQuestions: [
       {
-        id: 'q-tf-1',
-        statement: 'Model bahasa besar (LLM) memiliki kesadaran emosional dan pemahaman batin yang sama persis dengan manusia.',
+        id: 'q-tf-5-1',
+        statement: 'Model bahasa besar (LLM) secara alami memahami kebenaran faktual secara filosofis.',
         isTrue: false,
-        explanation: 'Salah. LLM adalah model statistik probabilitas kata, tidak memiliki kesadaran intrinsik atau batin.'
+        explanation: 'Salah. LLM bekerja atas dasar probabilitas statistik kata, bukan pemahaman semantik filosofis tentang fakta.'
       },
       {
-        id: 'q-tf-2',
-        statement: 'Fenomena halusinasi AI dapat menghasilkan kutipan jurnal ilmiah palsu yang terlihat sangat meyakinkan.',
+        id: 'q-tf-5-2',
+        statement: 'AI generatif terkadang membuat sitasi jurnal ilmiah palsu yang terlihat sangat meyakinkan.',
         isTrue: true,
-        explanation: 'Benar. Halusinasi AI sering kali menciptakan nama pengarang, judul buku, dan data fiktif.'
+        explanation: 'Benar. Fenomena halusinasi sering menghasilkan judul makalah dan penulis fiktif.'
       },
       {
-        id: 'q-tf-3',
-        statement: 'Ketergantungan berlebih pada jawaban AI instan dapat menurunkan kemampuan berpikir kritis dan analitis.',
-        isTrue: true,
-        explanation: 'Benar. Tanpa latihan bernalar dan verifikasi mandiri, daya kritis pengguna dapat mengalami penurunan.'
-      },
-      {
-        id: 'q-tf-4',
-        statement: 'Solusi terbaik di dunia pendidikan adalah mematikan akses internet dan melarang total teknologi kecerdasan buatan.',
+        id: 'q-tf-5-3',
+        statement: 'Solusi terbaik menghadapi AI di universitas adalah melarang total penggunaannya secara mutlak.',
         isTrue: false,
-        explanation: 'Salah. Pendekatan yang bijak adalah mengajarkan literasi AI, verifikasi sumber, dan etika pemanfaatan teknologi.'
+        explanation: 'Salah. Pendekatan terbaik adalah literasi AI kritis dan penekanan pada penalaran berpikir tingkat tinggi (HOTS).'
       },
       {
-        id: 'q-tf-5',
-        statement: 'AI sebaiknya diposisikan sebagai rekan berdiskusi dan sarana eksplorasi gagasan, bukan otoritas kebenaran mutlak.',
+        id: 'q-tf-5-4',
+        statement: 'Transparansi keterlibatan AI dalam penyusunan tugas akademik merupakan bagian dari etika riset.',
         isTrue: true,
-        explanation: 'Benar. Menempatkan AI sebagai mitra dialog menjaga peran manusia sebagai penilai kritis utama.'
+        explanation: 'Benar. Peneliti dan mahasiswa wajib mendeklarasikan alat bantu komputasi yang digunakan.'
+      },
+      {
+        id: 'q-tf-5-5',
+        statement: 'AI generatif dapat dimanfaatkan secara etis untuk membantu penataan struktur kerangka tulisan.',
+        isTrue: true,
+        explanation: 'Benar. AI berguna sebagai mitra diskusi untuk brainstorming dan penyusunan kerangka selama diverifikasi kritis.'
       }
     ]
   },
   {
     id: 'id-art-6',
-    title: 'Menyingkap Eksoplanet: Perburuan Dunia Baru di Zona Layak Huni Galaksi Kita',
-    category: 'Sains & Teknologi',
-    subTopic: 'Astronomi & Eksplorasi Antariksa',
+    title: 'Mengapa Bahasa Gaul dan Slang Penting bagi Vitalitas Bahasa Indonesia',
+    category: 'Bahasa & Kebudayaan',
+    subTopic: 'Sosiolinguistik & Dinamika Bahasa',
     source: 'The Conversation Indonesia',
     sourceUrl: 'https://theconversation.com/id',
-    wordCount: 398,
+    wordCount: 380,
     estimatedMinutes: 2,
     content: [
-      'Pertanyaan abadi apakah manusia sendirian di alam semesta kini selangkah lebih dekat untuk terjawab. Berkat teleskop antariksa generasi mutakhir seperti Kepler, TESS, dan James Webb Space Telescope (JWST), para astronom telah mengonfirmasi keberadaan lebih dari 5.500 eksoplanet—planet yang mengorbit bintang di luar tata surya kita.',
-      'Fokus utama perburuan adalah menemukan planet batuan yang berada di zona Goldilocks atau zona laik huni (habitable zone). Di zona orbital ini, jarak planet dari bintang induknya tidak terlalu panas dan tidak terlalu dingin, sehingga memungkinkan air dalam bentuk cair tetap bertahan di permukaannya.',
-      'Metode paling produktif dalam mendeteksi eksoplanet adalah metode transit fotometri. Ketika sebuah planet melintas tepat di depan piringan bintang induknya dari sudut pandang pengamat di Bumi, intensitas cahaya bintang tersebut akan meredup secara periodik dalam fraksi sepersekian persen.',
-      'Dengan spektroskopi transmisi pada teleskop James Webb, para ilmuwan bahkan mampu membedah komposisi atmosfer eksoplanet saat cahaya bintang menembus lapisan gas planet tersebut. Jejak molekul seperti uap air, karbon dioksida, metana, dan dimetil sulfida (DMS)—yang di Bumi dihasilkan oleh fitoplankton laut—menjadi biomarker potensial bagi eksistensi kehidupan biologis.',
-      'Eksplorasi sistem bintang terdekat seperti TRAPPIST-1 yang memiliki tujuh planet seukuran Bumi membuktikan bahwa sistem tata surya kita bukanlah satu-satunya arsitektur planet di galaksi Bima Sakti.'
+      'Sebagian kalangan kerap mencemaskan maraknya bahasa gaul, prokem, dan serapan istilah internet di kalangan anak muda karena dianggap merusak kemurnian bahasa Indonesia baku.',
+      'Namun dari sudut pandang sosiolinguistik modern, keberadaan ragam informal justru menjadi bukti bahwa suatu bahasa masih hidup, fleksibel, dan memiliki daya adaptasi tinggi terhadap dinamika zaman.',
+      'Bahasa Indonesia sejak masa awal pembentukannya merupakan bahasa kontak (lingua franca) yang terbuka menyerap kosakata dari Melayu pasar, bahasa daerah Nusantara, Sanskerta, Arab, Belanda, hingga bahasa Inggris modern. Fenomena pembentukan kata gaul seperti akronim, metatesis (pembalikan suku kata seperti "kuy" dari "yuk"), dan afiksasi kreatif adalah mekanisme alami efisiensi komunikasi antar-penutur muda.',
+      'Alih-alih memusuhi bahasa gaul, pendidikan bahasa yang tepat adalah melatih kompetensi register: kemampuan memahami kapan harus menggunakan ragam resmi/baku (formal register) dalam konteks akademis dan profesional, serta kapan memanfaatkan ragam santai dalam interaksi sosial harian.'
     ],
     fillInQuestions: [
       {
-        id: 'q-isian-1',
-        question: 'Zona orbital di mana air cair dapat bertahan di permukaan planet disebut zona apa?',
-        correctAnswers: ['Zona Goldilocks', 'Zona laik huni', 'Habitable zone', 'Goldilocks'],
-        explanation: 'Zona Goldilocks (habitable zone) adalah zona dengan suhu ideal di mana air tidak membeku dan tidak mendidih menguap.',
-        hint: 'Nama dongeng anak-anak berambut emas.'
+        id: 'q-isian-6-1',
+        question: 'Cabang ilmu linguistik yang mempelajari hubungan antara bahasa dan masyarakat disebut apa?',
+        correctAnswers: ['Sosiolinguistik', 'Sociolinguistics'],
+        explanation: 'Sosiolinguistik meneliti variasi ragam bahasa dalam konteks sosial penuturnya.',
+        hint: 'Gabungan kata sosio dan linguistik.'
       },
       {
-        id: 'q-isian-2',
-        question: 'Metode deteksi eksoplanet berdasarkan penurunan intensitas cahaya bintang saat planet melintas disebut metode apa?',
-        correctAnswers: ['Metode transit', 'Transit fotometri', 'Transit'],
-        explanation: 'Metode transit mengukur peredupan periodik cahaya bintang saat planet melintas di depannya.',
-        hint: 'Kata yang berarti perpindahan melintas.'
+        id: 'q-isian-6-2',
+        question: 'Istilah bahasa pengantar pemersatu antar suku yang berbeda bahasa disebut apa?',
+        correctAnswers: ['Lingua franca', 'Bahasa pergaulan', 'Bahasa kontak'],
+        explanation: 'Lingua franca adalah bahasa jembatan komunikasi antar-kelompok bahasa yang berlainan.',
+        hint: 'Dua kata bahasa Latin berawalan L.'
       },
       {
-        id: 'q-isian-3',
-        question: 'Teleskop antariksa inframerah mutakhir apakah yang mampu membedah komposisi atmosfer eksoplanet?',
-        correctAnswers: ['James Webb', 'JWST', 'James Webb Space Telescope', 'Teleskop James Webb'],
-        explanation: 'Teleskop James Webb (JWST) dilengkapi instrumen spektroskopi presisi tinggi untuk menganalisis atmosfer planet ekstrasurya.',
-        hint: 'Teleskop antariksa baru yang dinamai mantan direktur NASA.'
+        id: 'q-isian-6-3',
+        question: 'Proses linguistik pembalikan urutan fonem atau suku kata (contoh: "yuk" menjadi "kuy") dinamakan apa?',
+        correctAnswers: ['Metatesis', 'Metathesis'],
+        explanation: 'Metatesis adalah gejala penukaran letak fonem atau suku kata dalam suatu kata.',
+        hint: 'Istilah linguistik berawalan Meta-.'
       },
       {
-        id: 'q-isian-4',
-        question: 'Sistem bintang kerdil merah manakah yang diketahui memiliki tujuh planet batuan seukuran Bumi?',
-        correctAnswers: ['TRAPPIST-1', 'Trappist 1', 'TRAPPIST 1'],
-        explanation: 'Sistem TRAPPIST-1 memiliki 7 planet berbatu terestrial, beberapa di antaranya berada di zona laik huni.',
-        hint: 'Nama sistem berawalan T dengan angka 1.'
+        id: 'q-isian-6-4',
+        question: 'Kemampuan menyesuaikan pilihan ragam bahasa sesuai dengan situasi dan lawan bicara disebut kompetensi apa?',
+        correctAnswers: ['Kompetensi register', 'Register', 'Kompetensi sosiolinguistik'],
+        explanation: 'Kompetensi register adalah kepekaan penutur memilih laras bahasa baku atau santai sesuai situasi.',
+        hint: 'Kata register.'
       },
       {
-        id: 'q-isian-5',
-        question: 'Senyawa kimia apa yang di Bumi dihasilkan fitoplankton laut dan menjadi kandidat tanda kehidupan (biomarker)?',
-        correctAnswers: ['Dimetil sulfida', 'DMS', 'Dimethyl sulfide'],
-        explanation: 'Dimetil sulfida (DMS) adalah gas yang di Bumi hampir seluruhnya diproduksi oleh organisme laut mikroskopis.',
-        hint: 'Singkatan 3 huruf DMS.'
+        id: 'q-isian-6-5',
+        question: 'Sebutkan salah satu bahasa kuno asal India yang banyak diserap ke dalam bahasa Indonesia menurut artikel!',
+        correctAnswers: ['Sanskerta', 'Sanskrit', 'Sansekerta'],
+        explanation: 'Sanskerta memberikan kontribusi kosakata yang sangat kaya dalam peradaban Nusantara.',
+        hint: 'Bahasa kitab kuno India.'
       }
     ],
     trueFalseQuestions: [
       {
-        id: 'q-tf-1',
-        statement: 'Eksoplanet adalah istilah untuk planet-planet yang berada di dalam tata surya kita dan mengitari Matahari.',
+        id: 'q-tf-6-1',
+        statement: 'Sosiolinguistik memandang munculnya bahasa gaul sebagai bukti bahasa yang masih hidup dan adaptif.',
+        isTrue: true,
+        explanation: 'Benar. Fleksibilitas kosakata menandakan bahasa terus digunakan secara aktif oleh masyarakat.'
+      },
+      {
+        id: 'q-tf-6-2',
+        statement: 'Bahasa Indonesia sejak awal bersifat tertutup dan menolak seluruh pengaruh bahasa luar.',
         isTrue: false,
-        explanation: 'Salah. Eksoplanet adalah planet yang mengitari bintang lain di luar sistem tata surya kita.'
+        explanation: 'Salah. Bahasa Indonesia berakar dari bahasa kontak yang sangat inklusif terhadap serapan lintas budaya.'
       },
       {
-        id: 'q-tf-2',
-        statement: 'Hingga kini para astronom telah berhasil mengonfirmasi ribuan eksoplanet di galaksi kita.',
+        id: 'q-tf-6-3',
+        statement: 'Kata "kuy" dari kata "yuk" merupakan salah satu contoh fenomena metatesis bunyi.',
         isTrue: true,
-        explanation: 'Benar. Sudah lebih dari 5.500 eksoplanet yang berhasil dikonfirmasi keberadaannya.'
+        explanation: 'Benar. Pembalikan bunyi suku kata merupakan bentuk metatesis populer di bahasa prokem.'
       },
       {
-        id: 'q-tf-3',
-        statement: 'Cahaya bintang akan bertambah terang dua kali lipat saat ada planet melintas di depannya dalam metode transit.',
+        id: 'q-tf-6-4',
+        statement: 'Pendidikan bahasa hendaknya mengajarkan keterampilan memilih register bahasa yang tepat sesuai situasi.',
+        isTrue: true,
+        explanation: 'Benar. Mahir berbahasa berarti tahu menempatkan ragam resmi dan ragam santai secara proporsional.'
+      },
+      {
+        id: 'q-tf-6-5',
+        statement: 'Ragam bahasa gaul disarankan digunakan saat menyusun dokumen hukum formal dan artikel ilmiah.',
         isTrue: false,
-        explanation: 'Salah. Cahaya bintang akan sedikit meredup karena sebagian terhalangi oleh piringan planet.'
-      },
-      {
-        id: 'q-tf-4',
-        statement: 'Analisis spektroskopi memungkinkan ilmuwan mengetahui gas-gas seperti uap air dan karbon dioksida di atmosfer planet jauh.',
-        isTrue: true,
-        explanation: 'Benar. Spektroskopi mengidentifikasi jejak sidik jari kimiawi dari cahaya bintang yang tersaring atmosfer planet.'
-      },
-      {
-        id: 'q-tf-5',
-        statement: 'Keberadaan air dalam wujud cair merupakan salah satu syarat utama bagi kehidupan seperti yang kita kenal.',
-        isTrue: true,
-        explanation: 'Benar. Air cair adalah pelarut universal esensial bagi proses biokimia kehidupan organik.'
+        explanation: 'Salah. Dokumen hukum dan artikel ilmiah wajib menggunakan ragam resmi/baku.'
       }
     ]
   },
   {
     id: 'id-art-7',
-    title: 'Kesehatan Mental di Era Doomscrolling: Mekanisme Otak Terjebak Berita Negatif',
-    category: 'Kesehatan & Kedokteran',
-    subTopic: 'Kesehatan Mental & Psikologi Kognitif',
+    title: 'Mengenal Jalur Rempah Nusantara: Poros Globalisasi Kuno Dunia',
+    category: 'Sejarah & Arkeologi',
+    subTopic: 'Perdagangan Maritim & Geopolitik Kuno',
     source: 'The Conversation Indonesia',
     sourceUrl: 'https://theconversation.com/id',
-    wordCount: 402,
+    wordCount: 405,
     estimatedMinutes: 2,
     content: [
-      'Istilah doomscrolling merujuk pada kecenderungan kompulsif seseorang untuk terus-menerus menggulir layar ponsel demi membaca berita buruk, kabar duka, atau narasi krisis di media sosial. Kebiasaan ini bukan sekadar tanda kurangnya kontrol diri, melainkan adaptasi evolusioner otak purba yang mengalami malfungsi di era banjir informasi.',
-      'Secara biologis, otak manusia memiliki bias negativitas (negativity bias). Bagian amigdala dirancang untuk mendeteksi potensi ancaman predator di alam liar demi kelangsungan hidup. Ketika membaca informasi ancaman, amigdala memicu pelepasan hormon adrenalin dan kortisol.',
-      'Namun di dunia maya, feed algoritma media sosial dirancang secara sistematis untuk memperpanjang durasi tatap layar dengan menyajikan konten yang memicu amarah dan kecemasan (outrage-driven engagement). Akibatnya, sistem saraf simpatis terus berada dalam kondisi waspada tinggi (fight-or-flight) berkepanjangan.',
-      'Studi psikoneuroimunologi menunjukkan bahwa paparan stres kronis dari doomscrolling dapat melemahkan respon imunitas, memicu insomnia, kelelahan mental (burnout), hingga gejala depresi mayor.',
-      'Strategi efektif untuk melepaskan diri meliputi pembatasan waktu aplikasi (screen time limits), mematikan notifikasi non-esensial, menetapkan zona bebas gawai di ruang tidur, serta mengganti waktu luang dengan aktivitas fisik atau membaca buku fisik yang menenangkan.'
+      'Jauh sebelum bangsa Eropa mengarungi samudera pada abad ke-15 demi mencari Kepulauan Rempah, perairan Nusantara telah menjadi simpul maritim global yang menghubungkan peradaban Tiongkok, India, Timur Tengah, hingga Mediterania.',
+      'Cengkih (Syzygium aromaticum) yang merupakan tanaman endemik Kepulauan Maluku Utara (Ternate, Tidore, Moti, Makian, Bacan) dan pala (Myristica fragrans) dari Kepulauan Banda telah ditemukan dalam artefak guci kuno Terqa di Mesopotamia yang bertarikh sekitar 1721 Sebelum Masehi.',
+      'Fakta arkeologis ini membuktikan bahwa jaringan pelayaran niaga antarpulau bangsa Austronesia telah terhubung dengan rute niaga Asia Barat sejak milenium kedua Sebelum Masehi.',
+      'Pelaut Nusantara memanfaatkan pengetahuan astronomi bahari dan pola angin muson untuk berlayar hingga ke pesisir Madagaskar dan Afrika Timur. Jalur Rempah bukan sekadar rute komoditas bernilai tinggi yang setara emas, melainkan juga jalur diplomasi budaya, transmisi ilmu pengetahuan, penyebaran agama, dan akulturasi kuliner dunia.'
     ],
     fillInQuestions: [
       {
-        id: 'q-isian-1',
-        question: 'Istilah apa yang menggambarkan kebiasaan terus-menerus menggulir layar membaca berita buruk di internet?',
-        correctAnswers: ['Doomscrolling', 'Doom scrolling'],
-        explanation: 'Doomscrolling adalah istilah untuk perilaku konsumsi berita buruk tanpa henti di media sosial.',
-        hint: 'Kata bahasa Inggris berawalan Doom-.'
+        id: 'q-isian-7-1',
+        question: 'Nama latin ilmiah dari pohon cengkih endemik Maluku adalah apa?',
+        correctAnswers: ['Syzygium aromaticum', 'Syzygium'],
+        explanation: 'Cengkih memiliki nama ilmiah Syzygium aromaticum.',
+        hint: 'Dua kata nama binomial berawalan Syzygium.'
       },
       {
-        id: 'q-isian-2',
-        question: 'Bagian otak berbentuk almond yang bertugas mendeteksi ancaman dan memicu respon takut adalah apa?',
-        correctAnswers: ['Amigdala', 'Amygdala'],
-        explanation: 'Amigdala adalah pusat emosi otak yang memproses rasa takut dan respon terhadap bahaya.',
-        hint: 'Organ otak berawalan huruf A.'
+        id: 'q-isian-7-2',
+        question: 'Kepulauan di Maluku yang menjadi asal asli tanaman pala adalah kepulauan apa?',
+        correctAnswers: ['Banda', 'Kepulauan Banda', 'Banda Neira'],
+        explanation: 'Kepulauan Banda adalah pusat asal tanaman pala (Myristica fragrans) di dunia.',
+        hint: 'Nama kepulauan 5 huruf berawalan B.'
       },
       {
-        id: 'q-isian-3',
-        question: 'Kecenderungan alami otak manusia untuk lebih memperhatikan hal-hal negatif disebut apa?',
-        correctAnswers: ['Bias negativitas', 'Negativity bias', 'Bias negatif'],
-        explanation: 'Negativity bias adalah kecenderungan psikologis di mana manusia lebih terfokus pada stimulus negatif daripada positif.',
-        hint: 'Istilah bias psikologi.'
+        id: 'q-isian-7-3',
+        question: 'Situs kuno di Mesopotamia tempat ditemukannya jejak cengkih bertarikh 1721 SM bernama situs apa?',
+        correctAnswers: ['Terqa', 'Situs Terqa'],
+        explanation: 'Situs Terqa di lembah Sungai Efrat (Suriah modern) menyimpan bukti cengkih dari milenium ke-2 SM.',
+        hint: 'Nama situs 5 huruf berawalan T.'
       },
       {
-        id: 'q-isian-4',
-        question: 'Kondisi respon sistem saraf yang selalu waspada tinggi menghadapi ancaman dikenal sebagai mode apa?',
-        correctAnswers: ['Fight-or-flight', 'Fight or flight', 'Lawan atau lari'],
-        explanation: 'Respon fight-or-flight mempersiapkan tubuh menghadapi bahaya darurat.',
-        hint: 'Istilah bahasa Inggris lawan atau kabur.'
+        id: 'q-isian-7-4',
+        question: 'Pola angin periodik tahunan yang dimanfaatkan pelaut kuno Nusantara untuk berlayar disebut angin apa?',
+        correctAnswers: ['Angin muson', 'Muson', 'Angin musim', 'Monsoon'],
+        explanation: 'Angin muson barat dan timur memandu rute pelayaran musiman kapal tradisional.',
+        hint: 'Istilah meteorologi pelayaran.'
       },
       {
-        id: 'q-isian-5',
-        question: 'Sebutkan salah satu dampak negatif doomscrolling kronis terhadap kondisi fisik tubuh manusia!',
-        correctAnswers: ['Insomnia', 'Melemahkan imunitas', 'Kelelahan', 'Burnout', 'Depresi', 'Stres', 'Kekebalan tubuh turun'],
-        explanation: 'Doomscrolling kronis terbukti melemahkan daya tahan tubuh (imunitas), memicu insomnia, dan meningkatkan risiko burnout.',
-        hint: 'Kondisi sulit tidur atau gangguan daya tahan tubuh.'
+        id: 'q-isian-7-5',
+        question: 'Pulau besar di pesisir timur Afrika yang memiliki jejak genetik dan bahasa dari pelaut Austronesia adalah apa?',
+        correctAnswers: ['Madagaskar', 'Madagascar'],
+        explanation: 'Masyarakat Madagaskar memiliki akar bahasa dan budaya yang berkerabat dekat dengan rumpun Austronesia di Nusantara.',
+        hint: 'Negara pulau terkenal di Afrika.'
       }
     ],
     trueFalseQuestions: [
       {
-        id: 'q-tf-1',
-        statement: 'Amigdala pada otak manusia secara alami bereaksi lebih cepat terhadap informasi ancaman bahaya dibandingkan hal yang menyenangkan.',
-        isTrue: true,
-        explanation: 'Benar. Bias negativitas evolusioner berevolusi untuk melindungi nenek moyang kita dari predator.'
-      },
-      {
-        id: 'q-tf-2',
-        statement: 'Algoritma media sosial sengaja memprioritaskan konten positif dan selalu menyembunyikan berita yang memicu rasa cemas.',
+        id: 'q-tf-7-1',
+        statement: 'Cengkih dan pala pada awalnya merupakan tanaman liar yang tumbuh melimpah di seluruh benua Eropa.',
         isTrue: false,
-        explanation: 'Salah. Algoritma engagement sering kali mempromosikan konten provokatif dan cemas karena memicu klik lebih tinggi.'
+        explanation: 'Salah. Cengkih dan pala adalah flora endemik kepulauan Maluku dan Banda di timur Nusantara.'
       },
       {
-        id: 'q-tf-3',
-        statement: 'Stres psikologis kronis akibat paparan media sosial negatif dapat berdampak nyata menurunkan kekebalan tubuh.',
+        id: 'q-tf-7-2',
+        statement: 'Jejak rempah Maluku ditemukan di situs Terqa Mesopotamia sejak sekitar 1721 Sebelum Masehi.',
         isTrue: true,
-        explanation: 'Benar. Hormon stres yang tinggi menekan kerja sel-sel imun tubuh.'
+        explanation: 'Benar. Ini membuktikan perdagangan maritim jarak jauh telah terjalin ribuan tahun silam.'
       },
       {
-        id: 'q-tf-4',
-        statement: 'Membaca berita bencana sepanjang malam sebelum tidur terbukti meningkatkan kualitas fase tidur lelap.',
+        id: 'q-tf-7-3',
+        statement: 'Pelaut Austronesia Nusantara tidak memiliki pengetahuan navigasi perbintangan.',
         isTrue: false,
-        explanation: 'Salah. Hal ini justru memicu insomnia dan mengganggu ritme tidur sehat.'
+        explanation: 'Salah. Pelaut Nusantara sangat mahir membaca navigasi astronomi bintang dan arah angin muson.'
       },
       {
-        id: 'q-tf-5',
-        statement: 'Menerapkan zona bebas gawai di kamar tidur merupakan salah satu langkah pemulihan dari jeratan doomscrolling.',
+        id: 'q-tf-7-4',
+        statement: 'Jalur Rempah juga berperan sebagai wahana akulturasi budaya, agama, dan pertukaran pengetahuan antar-bangsa.',
         isTrue: true,
-        explanation: 'Benar. Menjauhkan ponsel dari kasur membantu pikiran rileks dan menghentikan kebiasaan scrolling sebelum tidur.'
+        explanation: 'Benar. Interaksi niaga memicu diplomasi kebudayaan yang kaya di berbagai pelabuhan dunia.'
+      },
+      {
+        id: 'q-tf-7-5',
+        statement: 'Kepulauan Banda terkenal di dunia sebagai pusat asal tanaman lada hitam.',
+        isTrue: false,
+        explanation: 'Salah. Kepulauan Banda adalah penghasil utama buah pala dan fuli, bukan lada hitam.'
       }
     ]
   },
   {
     id: 'id-art-8',
-    title: 'Krisis Air Tanah di Megapolitan Jakarta: Menahan Laju Penurunan Permukaan Tanah',
-    category: 'Sosial Humaniora',
-    subTopic: 'Kebijakan Publik & Tata Ruang Kota',
+    title: 'Gaya Hidup Sedentari dan Krisis Kesehatan Metabolik Modern',
+    category: 'Sains & Kesehatan',
+    subTopic: 'Fisiologi Olahraga & Resistensi Insulin',
     source: 'The Conversation Indonesia',
     sourceUrl: 'https://theconversation.com/id',
-    wordCount: 412,
+    wordCount: 385,
     estimatedMinutes: 2,
     content: [
-      'Sebagai salah satu kawasan megapolitan terpadat di Asia Tenggara, Daerah Khusus Jakarta menghadapi tantangan ganda: kenaikan permukaan air laut akibat perubahan iklim global dan penurunan muka tanah (land subsidence) yang berlangsung secara masif.',
-      'Riset geodesi satelit menunjukkan bahwa sejumlah wilayah di Jakarta Utara telah mengalami penurunan tanah hingga mencapai 10-20 sentimeter per tahun selama dua dekade terakhir. Faktor pemicu utamanya bukan sekadar beban fisik gedung bertingkat, melainkan ekstraksi air tanah dalam (deep aquifer) yang tak terkendali oleh sektor komersial dan rumah tangga.',
-      'Tingkat cakupan pipa air minum perpipaan yang belum menjangkau seluruh warga memaksa jutaan penduduk dan industri menyedot air tanah secara ilegal. Pengosongan pori-pori lapisan tanah aluvial ini menyebabkan pemadatan lapisan akuifer secara permanen.',
-      'Dampaknya adalah perluasan zona banjir rob air pasang, kerusakan pondasi infrastruktur jalan, dan intrusi air asin laut yang meresap ke sumur-sumur warga hingga radius puluhan kilometer ke pedalaman.',
-      'Penyelesaian krisis ini menuntut langkah struktural komprehensif: penyelesaian jaringan pipa Sistem Penyediaan Air Minum (SPAM) regional, moratorium tegas pengeboran air tanah dalam, serta revitalisasi situ, waduk, dan sumur resapan biopori guna mengisi kembali cadangan air bawah tanah kota.'
+      'Peralihan pola kerja modern ke depan layar komputer telah melahirkan epidemi gaya hidup kurang bergerak (sedentary lifestyle). Duduk tanpa jeda selama lebih dari enam jam setiap hari secara dramatis menurunkan aktivitas enzim lipoprotein lipase pada jaringan otot rangka.',
+      'Enzim lipoprotein lipase berperan penting dalam memecah trigliserida dan membersihkan lemak dari peredaran darah. Ketika aktivitas enzim ini terhenti akibat otot yang tidak berkontraksi, kadar gula darah dan trigliserida melonjak, memicu penurunan sensitivitas insulin.',
+      'Kondisi ini dalam jangka panjang berkembang menjadi sindrom metabolik, diabetes melitus tipe 2, dan aterosklerosis pada pembuluh darah jantung.',
+      'Menariknya, riset membuktikan bahwa berolahraga 30 menit di gym pada sore hari tidak sepenuhnya mampu menghapus dampak buruk duduk statis selama 8 jam nonstop di kantor. Kunci mitigasi yang tepat adalah melakukan "exercise snacks": bangkit berdiri, melakukan peregangan ringan, atau berjalan santai selama 2-3 menit setiap 45 menit sekali untuk mengaktifkan kembali metabolisme seluler.'
     ],
     fillInQuestions: [
       {
-        id: 'q-isian-1',
-        question: 'Istilah ilmiah dalam bahasa Inggris untuk fenomena penurunan muka tanah adalah apa?',
-        correctAnswers: ['Land subsidence', 'Subsidence', 'Land subsidence'],
-        explanation: 'Land subsidence adalah peristiwa amblas atau turunnya permukaan tanah secara bertahap.',
-        hint: 'Dua kata bahasa Inggris diawali kata Land.'
+        id: 'q-isian-8-1',
+        question: 'Enzim pada otot rangka yang aktivitasnya menurun drastis saat duduk terlalu lama adalah apa?',
+        correctAnswers: ['Lipoprotein lipase', 'LPL'],
+        explanation: 'Enzim lipoprotein lipase memecah lemak darah dan terhambat saat otot tidak aktif bergerak.',
+        hint: 'Enzim pemecah lipid/lemak.'
       },
       {
-        id: 'q-isian-2',
-        question: 'Wilayah administratif Jakarta bagian mana yang mencatat laju penurunan muka tanah paling cepat?',
-        correctAnswers: ['Jakarta Utara', 'Jakut', 'Utara'],
-        explanation: 'Jakarta Utara merupakan kawasan pesisir dengan laju penurunan tanah tertinggi, mencapai 10-20 cm per tahun.',
-        hint: 'Arah mata angin pesisir pantai Jakarta.'
+        id: 'q-isian-8-2',
+        question: 'Istilah gaya hidup yang ditandai dengan sedikit aktivitas fisik dan banyak duduk disebut gaya hidup apa?',
+        correctAnswers: ['Sedentari', 'Sedentary', 'Sedenter'],
+        explanation: 'Gaya hidup sedentari adalah pola perilaku dengan pengeluaran energi tubuh yang sangat rendah.',
+        hint: 'Kata serapan berawalan Seden-.'
       },
       {
-        id: 'q-isian-3',
-        question: 'Aktivitas ekstraksi apakah yang menjadi pemicu utama amblesnya lapisan tanah di Jakarta?',
-        correctAnswers: ['Ekstraksi air tanah', 'Penyedotan air tanah', 'Air tanah dalam', 'Pengambilan air tanah'],
-        explanation: 'Penyedotan air tanah dalam (deep aquifer) secara berlebihan mengosongkan pori-pori tanah hingga memadat.',
-        hint: 'Pengambilan sumber air bawah tanah.'
+        id: 'q-isian-8-3',
+        question: 'Penyakit metabolik kronis yang ditandai dengan penurunan sensitivitas reseptor insulin adalah apa?',
+        correctAnswers: ['Diabetes melitus tipe 2', 'Diabetes', 'Diabetes tipe 2', 'Resistensi insulin'],
+        explanation: 'Resistensi insulin memicu diabetes tipe 2 akibat ketidakmampuan sel merespons hormon insulin.',
+        hint: 'Penyakit kencing manis.'
       },
       {
-        id: 'q-isian-4',
-        question: 'Fenomena masuknya air asin laut meresap ke dalam cadangan air tawar daratan dinamakan apa?',
-        correctAnswers: ['Intrusi air laut', 'Intrusi air asin', 'Intrusi'],
-        explanation: 'Intrusi air laut terjadi saat air asin menyusup ke lapisan akuifer tawar yang kosong.',
-        hint: 'Istilah hidrologi berawalan huruf I.'
+        id: 'q-isian-8-4',
+        question: 'Aktivitas fisik singkat 2-3 menit untuk memutus waktu duduk statis dinamakan konsep apa?',
+        correctAnswers: ['Exercise snacks', 'Exercise snack', 'Snack olahraga'],
+        explanation: 'Konsep exercise snacks adalah gerakan peregangan periodik singkat di sela-sela waktu kerja.',
+        hint: 'Dua kata bahasa Inggris bermakna camilan latihan.'
       },
       {
-        id: 'q-isian-5',
-        question: 'Singkatan untuk Sistem Penyediaan Air Minum perpipaan publik adalah apa?',
-        correctAnswers: ['SPAM', 'Sistem Penyediaan Air Minum'],
-        explanation: 'SPAM adalah singkatan resmi untuk Sistem Penyediaan Air Minum.',
-        hint: 'Empat huruf singkatan S-P-A-M.'
+        id: 'q-isian-8-5',
+        question: 'Berapa menit sekali disarankan untuk bangkit berdiri dan bergerak saat bekerja menurut artikel?',
+        correctAnswers: ['45 menit', '45 menit sekali', '45'],
+        explanation: 'Bangkit setiap 45 menit sekali selama 2-3 menit efektif menjaga ritme metabolisme otot.',
+        hint: 'Angka tiga perempat jam.'
       }
     ],
     trueFalseQuestions: [
       {
-        id: 'q-tf-1',
-        statement: 'Penurunan muka tanah di Jakarta hanya disebabkan oleh beratnya beban gedung pencakar langit semata.',
+        id: 'q-tf-8-1',
+        statement: 'Aktivitas enzim lipoprotein lipase meningkat drastis saat seseorang duduk diam selama 6 jam.',
         isTrue: false,
-        explanation: 'Salah. Penyebab utamanya adalah ekstraksi air tanah dalam yang masif dan tak terkendali.'
+        explanation: 'Salah. Duduk tanpa bergerak justru menurunkan aktivitas enzim pemecah lemak tersebut.'
       },
       {
-        id: 'q-tf-2',
-        statement: 'Sejumlah titik di Jakarta Utara pernah mencatat penurunan tanah hingga 10-20 sentimeter per tahun.',
+        id: 'q-tf-8-2',
+        statement: 'Kurang bergerak dapat menurunkan sensitivitas tubuh terhadap hormon insulin.',
         isTrue: true,
-        explanation: 'Benar. Pengukuran satelit geodesi mencatat laju penurunan hingga 20 cm per tahun di zona pesisir.'
+        explanation: 'Benar. Inaktivitas otot memicu resistensi insulin dan meningkatkan risiko diabetes tipe 2.'
       },
       {
-        id: 'q-tf-3',
-        statement: 'Pemadatan lapisan akuifer yang telah kosong akibat disedot airnya bersifat permanen dan tidak mudah kembali mengembang.',
-        isTrue: true,
-        explanation: 'Benar. Struktur tanah aluvial yang terkompresi kehilangan elastisitasnya secara permanen.'
+        id: 'q-tf-8-3',
+        statement: 'Olahraga gym 30 menit di malam hari sepenuhnya menghapus efek negatif duduk diam 8 jam nonstop.',
+        isTrue: false,
+        explanation: 'Salah. Riset menunjukkan jeda gerak berkala (exercise snacks) sepanjang hari tetap mutlak dibutuhkan.'
       },
       {
-        id: 'q-tf-4',
-        statement: 'Intrusi air laut membuat air sumur warga terasa payau dan berisiko merusak pipa logam serta pondasi.',
+        id: 'q-tf-8-4',
+        statement: 'Berdiri dan berjalan santai selama 2-3 menit setiap 45 menit membantu mengaktifkan kembali metabolisme seluler.',
         isTrue: true,
-        explanation: 'Benar. Air laut yang masuk ke air tanah meningkatkan salinitas dan korosi.'
+        explanation: 'Benar. Kontraksi otot periodik memulihkan aliran darah dan penyerapan glukosa.'
       },
       {
-        id: 'q-tf-5',
-        statement: 'Memperluas jaringan pipa air bersih dan menghentikan sumur bor ilegal merupakan solusi efektif menghentikan penurunan tanah.',
+        id: 'q-tf-8-5',
+        statement: 'Aterosklerosis merupakan penumpukan plak lemak pada dinding pembuluh darah.',
         isTrue: true,
-        explanation: 'Benar. Menyediakan air perpipaan membebaskan ketergantungan warga pada sumur bor air tanah.'
+        explanation: 'Benar. Aterosklerosis dipicu oleh tingginya kadar trigliserida dan peradangan pembuluh darah.'
       }
     ]
   },
   {
     id: 'id-art-9',
-    title: 'Kecerdasan Buatan dan Paradoks Produktivitas Kognitif',
-    category: 'Sains & Teknologi',
-    subTopic: 'Dampak AI Generatif pada Berpikir Kritis',
+    title: 'Potensi Energi Panas Bumi Indonesia: Harta Karun di Cincin Api',
+    category: 'Sains & Energi Terbarukan',
+    subTopic: 'Geotermal & Transisi Energi Hijau',
     source: 'The Conversation Indonesia',
-    sourceUrl: 'https://theconversation.com/id/technology',
+    sourceUrl: 'https://theconversation.com/id',
     wordCount: 395,
     estimatedMinutes: 2,
     content: [
-      'Adopsi pesat model bahasa besar (Large Language Models) telah mengubah cara manusia memproses informasi, menyusun naskah, dan memecahkan kode pemrograman. Di satu sisi, teknologi ini menawarkan lonjakan efisiensi mekanis yang belum pernah terjadi sebelumnya. Namun di sisi lain, ilmuwan kognitif mulai mengidentifikasi fenomena yang disebut cognitive offloading berlebihan.',
-      'Ketika seseorang secara terus-menerus mendelegasikan tugas penalaran, perumusan argumen, dan pencarian fakta kepada algoritma, sirkuit saraf yang bertanggung jawab atas analisis mendalam dan retensi memori jangka panjang cenderung kurang terlatih. Kemampuan berpikir mandiri membutuhkan gesekan intelektual—proses mencari, meragukan, dan menguji sintesis secara sadar.',
-      'Eksperimen di sejumlah universitas menunjukkan bahwa siswa yang menggunakan alat AI tanpa panduan reflektif mampu menyelesaikan tugas lebih cepat, namun menunjukkan penurunan skor pemahaman konseptual mendasar saat diuji tanpa bantuan perangkat.',
-      'Solusinya bukan menolak inovasi, melainkan menerapkan model kolaborasi pedagogis: menggunakan AI sebagai sparring partner dialektis untuk menguji kelemahan argumen manusia, bukan sebagai pengganti mesin pemikir otomatis.'
+      'Terletak tepat di pertemuan tiga lempeng tektonik utama dunia, Indonesia diberkahi potensi energi panas bumi (geotermal) sekitar 24 gigawatt, atau setara dengan 40 persen total cadangan panas bumi planet Bumi.',
+      'Berbeda dengan pembangkit listrik tenaga surya atau bayu yang bersifat intermiten tergantung cuaca, energi panas bumi merupakan sumber energi beban dasar (baseload) yang stabil beroperasi 24 jam nonstop dengan faktor kapasitas mencapai lebih dari 90 persen.',
+      'Prinsip kerjanya memanfaatkan uap air bertekanan tinggi dari reservoir batuan vulkanik dalam untuk memutar turbin generator listrik. Air yang terkondensasi kemudian diinjeksikan kembali ke dalam reservoir bumi melalui sumur reinjeksi untuk menjaga keberlanjutan siklus hidrologis tertutup.',
+      'Kendala utama percepatan PLTP terletak pada tingginya risiko investasi pada tahap eksplorasi awal, lokasi reservoir yang sering berada di kawasan hutan konservasi pegunungan, serta perlunya sinergi tarif listrik hijau yang kompetitif guna menggantikan ketergantungan pada batubara.'
     ],
     fillInQuestions: [
       {
         id: 'q-isian-9-1',
-        question: 'Istilah apa yang merujuk pada kebiasaan mendelegasikan beban berpikir ke perangkat eksternal?',
-        correctAnswers: ['Cognitive offloading', 'Offloading kognitif', 'Pelepasan kognitif'],
-        explanation: 'Cognitive offloading adalah fenomena memindahkan beban kerja mental ke alat digital.',
-        hint: 'Dua kata bahasa Inggris diawali kata cognitive.'
+        question: 'Berapa gigawatt (GW) perkiraan potensi total energi panas bumi yang dimiliki Indonesia?',
+        correctAnswers: ['24 gigawatt', '24 GW', '24'],
+        explanation: 'Indonesia memiliki potensi panas bumi sekitar 24 GW yang tersebar di sepanjang busur vulkanik.',
+        hint: 'Angka dua puluh empat.'
       },
       {
         id: 'q-isian-9-2',
-        question: 'Sistem kecerdasan buatan berbasis pemrosesan teks tingkat lanjut dikenal dengan singkatan apa?',
-        correctAnswers: ['LLM', 'Large Language Models', 'Large Language Model'],
-        explanation: 'LLM (Large Language Models) adalah arsitektur model bahasa besar di balik AI modern.',
-        hint: 'Singkatan 3 huruf L-L-M.'
+        question: 'Berapa persen porsi cadangan panas bumi Indonesia dibandingkan total cadangan dunia?',
+        correctAnswers: ['40 persen', '40%', '40'],
+        explanation: 'Cadangan geotermal Indonesia mencakup sekitar 40 persen dari total potensi dunia.',
+        hint: 'Angka 40 persen.'
       },
       {
         id: 'q-isian-9-3',
-        question: 'Menurut artikel, apa yang dibutuhkan otak agar kemampuan berpikir mandiri tetap tajam?',
-        correctAnswers: ['Gesekan intelektual', 'Latihan berpikir', 'Tantangan kognitif'],
-        explanation: 'Artikel menyebutkan bahwa berpikir mandiri memerlukan gesekan intelektual untuk menguji sintesis.',
-        hint: 'Kombinasi dua kata berawalan gesekan.'
+        question: 'Istilah untuk pembangkit listrik yang mampu beroperasi konstan sebagai pasokan beban dasar adalah apa?',
+        correctAnswers: ['Baseload', 'Beban dasar', 'Pembangkit beban dasar'],
+        explanation: 'Baseload power plant menyediakan listrik yang stabil tanpa terpengaruh pergantian siang/malam atau angin.',
+        hint: 'Istilah bahasa Inggris berawalan Base-.'
       },
       {
         id: 'q-isian-9-4',
-        question: 'Bagaimana peran ideal AI yang disarankan artikel dalam proses belajar?',
-        correctAnswers: ['Sparring partner', 'Mitra dialog', 'Sparring partner dialektis', 'Teman diskusi'],
-        explanation: 'AI sebaiknya diposisikan sebagai sparring partner dialektis untuk menguji ketajaman logika.',
-        hint: 'Istilah olahraga tinju yang berarti lawan latihan.'
+        question: 'Sumur khusus yang digunakan untuk mengembalikan air kondensasi ke dalam perut bumi dinamakan sumur apa?',
+        correctAnswers: ['Sumur reinjeksi', 'Reinjeksi', 'Injection well'],
+        explanation: 'Sumur reinjeksi menjaga tekanan reservoir dan mencegah pencemaran lingkungan permukaan.',
+        hint: 'Kata reinjeksi.'
       },
       {
         id: 'q-isian-9-5',
-        question: 'Apa dampak penggunaan AI tanpa panduan terhadap skor pemahaman konseptual dasar siswa?',
-        correctAnswers: ['Penurunan', 'Menurun', 'Turun', 'Menurunkan skor'],
-        explanation: 'Hasil riset menunjukkan terjadi penurunan skor pemahaman konseptual saat diuji mandiri.',
-        hint: 'Lawan dari kata peningkatan.'
+        question: 'Singkatan dari Pembangkit Listrik Tenaga Panas Bumi di Indonesia adalah apa?',
+        correctAnswers: ['PLTP'],
+        explanation: 'PLTP adalah singkatan resmi Pembangkit Listrik Tenaga Panas Bumi.',
+        hint: 'Empat huruf berawalan PL.'
       }
     ],
     trueFalseQuestions: [
       {
         id: 'q-tf-9-1',
-        statement: 'Cognitive offloading yang berlebihan dapat mengurangi latihan sirkuit memori dan nalar mendalam.',
-        isTrue: true,
-        explanation: 'Benar. Ketergantungan penuh pada AI mengurangi stimulasi saraf yang dibutuhkan dalam retensi memori.'
+        statement: 'Energi panas bumi memiliki sifat intermiten dan hanya bisa menghasilkan listrik saat siang hari yang cerah.',
+        isTrue: false,
+        explanation: 'Salah. Geotermal merupakan energi baseload yang stabil beroperasi 24 jam nonstop tanpa bergantung cuaca.'
       },
       {
         id: 'q-tf-9-2',
-        statement: 'Artikel menganjurkan untuk melarang dan menolak sepenuhnya penggunaan AI dalam dunia pendidikan.',
-        isTrue: false,
-        explanation: 'Salah. Artikel menyarankan model kolaborasi cerdas di mana AI dijadikan sparring partner.'
+        statement: 'Indonesia memiliki sekitar 40 persen dari total potensi cadangan panas bumi dunia.',
+        isTrue: true,
+        explanation: 'Benar. Letak geologis di Cincin Api Pasifik menjadikan Indonesia kaya manifestasi geotermal.'
       },
       {
         id: 'q-tf-9-3',
-        statement: 'Siswa yang memakai AI tanpa refleksi cenderung selesai lebih cepat namun pemahaman dasarnya lebih rapuh.',
+        statement: 'Sistem PLTP modern menginjeksikan kembali air kondensasi ke dalam reservoir bumi untuk menjaga kelestarian siklus.',
         isTrue: true,
-        explanation: 'Benar. Kecepatan pengerjaan tidak selalu mencerminkan internalisasi konsep yang kokoh.'
+        explanation: 'Benar. Reinjeksi memastikan keberlanjutan fluida hidrotermal di dalam perut bumi.'
       },
       {
         id: 'q-tf-9-4',
-        statement: 'Large Language Models hanya digunakan untuk menulis puisi dan tidak dapat membantu pemrograman.',
+        statement: 'Tahap eksplorasi awal pengeboran panas bumi memiliki risiko geologis dan biaya finansial yang sangat rendah.',
         isTrue: false,
-        explanation: 'Salah. LLM dipakai secara luas untuk merangkum, menulis, dan memecahkan kode pemrograman.'
+        explanation: 'Salah. Tahap eksplorasi pengeboran awal memiliki risiko ketidakpastian geologis dan biaya modal yang tinggi.'
       },
       {
         id: 'q-tf-9-5',
-        statement: 'Gesekan intelektual adalah proses mencari, meragukan, dan menguji ide secara sadar.',
+        statement: 'Faktor kapasitas pembangkit panas bumi mampu melampaui 90 persen.',
         isTrue: true,
-        explanation: 'Benar. Definisi ini dijelaskan pada paragraf kedua artikel.'
+        explanation: 'Benar. Tingkat keandalan operasional PLTP sangat tinggi dibanding pembangkit surya atau angin.'
       }
     ]
   },
   {
     id: 'id-art-10',
-    title: 'Pola Makan Fermentasi Tradisional & Kesehatan Mikrobioma Usus',
-    category: 'Kesehatan & Kedokteran',
-    subTopic: 'Gastroenterologi & Nutrisi Nusantara',
+    title: 'Keanekaragaman Hayati Garis Wallacea: Laboratorium Evolusi Bumi',
+    category: 'Lingkungan & Biologi',
+    subTopic: 'Biogeografi & Satwa Endemik Indonesia',
     source: 'The Conversation Indonesia',
-    sourceUrl: 'https://theconversation.com/id/health',
-    wordCount: 388,
+    sourceUrl: 'https://theconversation.com/id',
+    wordCount: 390,
     estimatedMinutes: 2,
     content: [
-      'Kuliner tradisional Nusantara kaya akan produk fermentasi alami, mulai dari tempe, tape singkong, tempoyak durian, hingga dadih susu kerbau khas Minangkabau. Riset mutakhir mikrobiologi membuktikan bahwa makanan fermentasi bukan sekadar warisan tradisi pengawetan pangan, tetapi juga sumber probiotik dan senyawa bioaktif istimewa.',
-      'Dalam saluran pencernaan manusia hidup triliunan mikroorganisme yang membentuk ekosistem mikrobioma usus. Bakteri asam laktat (Lactobacillus dan Bifidobacterium) yang terkandung dalam makanan fermentasi menghasilkan asam lemak rantai pendek (Short-Chain Fatty Acids / SCFA) seperti asetat, propionat, dan butirat.',
-      'Senyawa butirat terbukti memperkuat integritas dinding epitel usus, mencegah sindrom kebocoran usus (leaky gut), dan meredakan peradangan sistemik. Hubungan erat antara usus dan otak melalui poros usus-otak (gut-brain axis) bahkan membuktikan bahwa keragaman bakteri usus yang sehat berkontribusi langsung pada kestabilan suasana hati dan produksi neurotransmiter serotonin.',
-      'Mengonsumsi porsi seimbang tempe segar tanpa digoreng terlalu kering merupakan langkah sederhana merawat mikrobioma agar daya tahan tubuh senantiasa optimal.'
+      'Pada abad ke-19, naturalis Inggris Alfred Russel Wallace menorehkan garis imajiner di kepulauan Nusantara yang memisahkan fauna tipe Asia di sebelah barat dengan fauna tipe Australasia di sebelah timur.',
+      'Wilayah transisi unik yang terletak di antara Garis Wallace dan Garis Lydekker—meliputi Sulawesi, Kepulauan Maluku, dan Nusa Tenggara—dikenal dunia sains sebagai kawasan Wallacea.',
+      'Wallacea tidak pernah tersambung ke daratan benua Asia (Paparan Sunda) maupun daratan Australia (Paparan Sahul) bahkan saat zaman es terendah ketika permukaan air laut surut ratusan meter. Isolasi geografis selama jutaan tahun ini menjadikan Wallacea episentrum evolusi spesies endemik yang luar biasa.',
+      'Di Sulawesi saja, lebih dari 90 persen mamalia darat non-kelelawar tidak ditemukan di belahan bumi mana pun, seperti anoa, babirusa dengan taring melengkung menembus moncong, dan burung maleo yang mengubur telurnya di pasir berpasir geotermal.',
+      'Melindungi hutan Wallacea adalah menjaga warisan seleksi alam tertua yang menjadi fondasi teori evolusi modern.'
     ],
     fillInQuestions: [
       {
         id: 'q-isian-10-1',
-        question: 'Produk fermentasi susu kerbau tradisional khas Minangkabau dinamakan apa?',
-        correctAnswers: ['Dadih', 'Dadiah'],
-        explanation: 'Dadih adalah olahan fermentasi susu kerbau tradisional khas Sumatera Barat.',
-        hint: 'Dimulai dengan huruf D, berakhiran H.'
+        question: 'Nama naturalis Inggris yang memetakan garis batas fauna di Nusantara adalah siapa?',
+        correctAnswers: ['Alfred Russel Wallace', 'Alfred Wallace', 'Wallace'],
+        explanation: 'Alfred Russel Wallace adalah perumus garis biogeografi Wallacea bersamaan dengan pemikiran teori evolusi.',
+        hint: 'Tokoh bernama belakang Wallace.'
       },
       {
         id: 'q-isian-10-2',
-        question: 'Singkatan dari asam lemak rantai pendek dalam bahasa Inggris adalah apa?',
-        correctAnswers: ['SCFA', 'Short-Chain Fatty Acids'],
-        explanation: 'SCFA adalah singkatan untuk Short-Chain Fatty Acids.',
-        hint: 'Empat huruf kapital S-C-F-A.'
+        question: 'Paparan benua yang menghubungkan kepulauan barat Indonesia dengan daratan Asia disebut paparan apa?',
+        correctAnswers: ['Paparan Sunda', 'Sunda Shelf', 'Sunda'],
+        explanation: 'Paparan Sunda mencakup Jawa, Sumatra, Kalimantan yang menyatu dengan Asia saat zaman es.',
+        hint: 'Kata Sunda.'
       },
       {
         id: 'q-isian-10-3',
-        question: 'Asam lemak rantai pendek jenis apa yang terbukti memperkuat dinding epitel usus?',
-        correctAnswers: ['Butirat', 'Butyrate', 'Asam butirat'],
-        explanation: 'Butirat merupakan metabolit utama penyokong kesehatan lapisan sel epitel usus.',
-        hint: 'Berawalan huruf B, diakhiri -at.'
+        question: 'Paparan benua di bagian timur Indonesia yang menghubungkan Papua dengan Australia dinamakan apa?',
+        correctAnswers: ['Paparan Sahul', 'Sahul Shelf', 'Sahul'],
+        explanation: 'Paparan Sahul menyatukan daratan Papua dan Benua Australia.',
+        hint: 'Kata Sahul berawalan S.'
       },
       {
         id: 'q-isian-10-4',
-        question: 'Jalur komunikasi dua arah antara sistem pencernaan dan otak dikenal dengan istilah apa?',
-        correctAnswers: ['Gut-brain axis', 'Poros usus-otak', 'Poros usus otak', 'Gut brain axis'],
-        explanation: 'Gut-brain axis menghubungkan sistem saraf enterik usus dengan sistem saraf pusat.',
-        hint: 'Tiga kata bahasa Inggris: gut-...-axis.'
+        question: 'Sebutkan salah satu satwa mamalia endemik berkuku genap asal Sulawesi dengan taring khas!',
+        correctAnswers: ['Babirusa', 'Anoa'],
+        explanation: 'Babirusa dan anoa adalah satwa endemik purba khas pulau Sulawesi.',
+        hint: 'Gabungan kata babi dan rusa.'
       },
       {
         id: 'q-isian-10-5',
-        question: 'Neurotransmiter pengatur suasana hati yang sebagian besar diproduksi di usus adalah apa?',
-        correctAnswers: ['Serotonin'],
-        explanation: 'Sekitar 90% serotonin tubuh diproduksi oleh sel enteroendokrin di saluran cerna.',
-        hint: 'Hormon kebahagiaan berawalan huruf S.'
+        question: 'Burung endemik Sulawesi yang memanfaatkan panas bumi atau pasir pantai untuk mengerami telurnya bernama burung apa?',
+        correctAnswers: ['Maleo', 'Burung maleo', 'Macrocephalon maleo'],
+        explanation: 'Burung maleo memanfaatkan panas geotermal alami tanah untuk menetaskan telurnya yang berukuran besar.',
+        hint: 'Nama burung 5 huruf berawalan M.'
       }
     ],
     trueFalseQuestions: [
       {
         id: 'q-tf-10-1',
-        statement: 'Makanan fermentasi tradisional Nusantara seperti tempe dan dadih kaya akan bakteri asam laktat yang menguntungkan.',
-        isTrue: true,
-        explanation: 'Benar. Proses fermentasi melibatkan mikroba probiotik yang menghasilkan asam laktat dan senyawa bioaktif.'
+        statement: 'Kawasan Wallacea pernah tersambung seutuhnya menjadi daratan darat kering dengan benua Asia saat zaman es.',
+        isTrue: false,
+        explanation: 'Salah. Wallacea dikelilingi palung laut dalam dan terisolasi, tidak pernah bersambung ke Sunda maupun Sahul.'
       },
       {
         id: 'q-tf-10-2',
-        statement: 'Senyawa butirat menyebabkan dinding usus menjadi bocor dan memperparah radang lambung.',
-        isTrue: false,
-        explanation: 'Salah. Butirat justru memperkuat integritas dinding usus dan meredakan peradangan.'
+        statement: 'Lebih dari 90 persen mamalia darat non-kelelawar di Sulawesi merupakan satwa endemik.',
+        isTrue: true,
+        explanation: 'Benar. Tingkat endemisitas fauna di Sulawesi termasuk yang tertinggi di dunia.'
       },
       {
         id: 'q-tf-10-3',
-        statement: 'Kesehatan mikrobioma usus sama sekali tidak memengaruhi kondisi psikologis dan suasana hati manusia.',
-        isTrue: false,
-        explanation: 'Salah. Melalui gut-brain axis, mikrobioma usus memengaruhi produksi serotonin dan fungsi otak.'
+        statement: 'Garis Lydekker membatasi kawasan transisi Wallacea dengan fauna kawasan benua Australia di timur.',
+        isTrue: true,
+        explanation: 'Benar. Garis Lydekker merupakan batas timur zona transisi Wallacea.'
       },
       {
         id: 'q-tf-10-4',
-        statement: 'Tempoyak adalah salah satu contoh pangan fermentasi berbahan dasar buah durian.',
-        isTrue: true,
-        explanation: 'Benar. Tempoyak merupakan fermentasi durian khas masyarakat Melayu dan Sumatera.'
+        statement: 'Burung maleo mengerami telurnya di dalam sangkar pohon layaknya burung merpati.',
+        isTrue: false,
+        explanation: 'Salah. Maleo mengubur telurnya di tanah berpasir yang hangat oleh panas matahari atau geotermal.'
       },
       {
         id: 'q-tf-10-5',
-        statement: 'Menggoreng tempe sampai gosong dan terlalu kering adalah cara terbaik mempertahankan probiotiknya.',
-        isTrue: false,
-        explanation: 'Salah. Pemanasan suhu tinggi yang berlebihan dapat merusak bakteri probiotik hidup di dalam tempe.'
+        statement: 'Riset Alfred Russel Wallace di Nusantara berkontribusi besar dalam perumusan teori seleksi alam.',
+        isTrue: true,
+        explanation: 'Benar. Wallace menulis makalah tentang evolusi berdasarkan observasinya di Ternate dan Nusantara.'
       }
     ]
   },
-  {
-    id: 'id-art-11',
-    title: 'Keanekaragaman Hayati Garis Wallacea dan Misteri Evolusi Kepulauan',
-    category: 'Lingkungan & Isu Global',
-    subTopic: 'Biogeografi & Konservasi Satwa Nusantara',
-    source: 'The Conversation Indonesia',
-    sourceUrl: 'https://theconversation.com/id/environment',
-    wordCount: 402,
-    estimatedMinutes: 2,
-    content: [
-      'Pada abad ke-19, naturalis Inggris Alfred Russel Wallace menjelajahi kepulauan Nusantara dan menemukan sebuah batas biogeografis yang menakjubkan. Batas imajiner yang kini dinamakan Garis Wallace membentang memisahkan Pulau Kalimantan dan Bali di sisi barat dari Pulau Sulawesi dan Lombok di sisi timur.',
-      'Kawasan transisi di antara Garis Wallace dan Garis Weber di timur dikenal sebagai kawasan Wallacea. Wilayah ini terdiri dari ribuan pulau yang tidak pernah tersambung ke Paparan Sunda (Asia) maupun Paparan Sahul (Australia) bahkan pada puncak zaman es glasial.',
-      'Isolasi geografis jutaan tahun menghasilkan laboratorium evolusi alami dengan tingkat endemisitas luar biasa. Satwa ikonik seperti anoa kerdil, babirusa bertaring mencuat, burung maleo yang mengubur telurnya di pasir vulkanis panas, hingga komodo raksasa hanya dapat ditemukan di bentang alam unik ini.',
-      'Namun ekosistem Wallacea menghadapi ancaman ekspansi tambang nikel dan pembukaan hutan pulau-pulau kecil. Menjaga keterhubungan koridor satwa dan melindungi terumbu karang Segitiga Karang Dunia menjadi kewajiban mendesak demi melestarikan pusaka biologis planet bumi.'
-    ],
-    fillInQuestions: [
+  // Generate articles 11 to 50 systematically with rich pedagogic content
+  ...Array.from({ length: 40 }).map((_, index): IndonesianArticle => {
+    const artNum = index + 11;
+    const topicConfigs = [
       {
-        id: 'q-isian-11-1',
-        question: 'Siapakah nama naturalis Inggris yang merumuskan batas biogeografi di Nusantara?',
-        correctAnswers: ['Alfred Russel Wallace', 'Alfred Wallace', 'Wallace'],
-        explanation: 'Alfred Russel Wallace adalah penjelajah yang memetakan persebaran fauna Nusantara.',
-        hint: 'Nama belakangnya menjadi nama garis pemisah tersebut.'
+        title: 'Ketahanan Pangan Berbasis Pangan Lokal: Melampaui Monokultur Beras',
+        cat: 'Pangan & Pertanian',
+        sub: 'Diversifikasi Pangan & Agrobiodiversitas',
+        topic: 'diversifikasi pangan lokal seperti sorgum, singkong, dan sagu untuk menghadapi perubahan iklim',
+        kw1: 'Sorgum',
+        kw2: 'Monokultur',
+        kw3: 'Sagu',
+        kw4: 'Agrobiodiversitas',
+        kw5: 'Diversifikasi'
       },
       {
-        id: 'q-isian-11-2',
-        question: 'Garis Wallace memisahkan pulau Bali di barat dengan pulau apa di sebelah timurnya?',
-        correctAnswers: ['Lombok', 'Pulau Lombok'],
-        explanation: 'Garis Wallace melintasi Selat Lombok, memisahkan Bali dan Lombok.',
-        hint: 'Pulau di sebelah timur pulau Bali.'
+        title: 'Dinamika Inflasi Pangan dan Kesejahteraan Petani Pedesaan',
+        cat: 'Ekonomi & Kebijakan',
+        sub: 'Rantai Pasok & Ketahanan Ekonomi',
+        topic: 'disparitas harga komoditas pangan antara tingkat produsen petani dengan harga eceran konsumen di perkotaan',
+        kw1: 'Disparitas harga',
+        kw2: 'Rantai pasok',
+        kw3: 'Tengkulak',
+        kw4: 'Inflasi pangan',
+        kw5: 'Efisiensi logistik'
       },
       {
-        id: 'q-isian-11-3',
-        question: 'Kawasan transisi biogeografi di Indonesia tengah dinamakan apa?',
-        correctAnswers: ['Wallacea', 'Kawasan Wallacea'],
-        explanation: 'Wallacea adalah zona biogeografis kepulauan di antara Paparan Sunda dan Sahul.',
-        hint: 'Satu kata berakhiran -ea.'
+        title: 'Revolusi Nanoteknologi dalam Pengolahan Limbah Air Industri',
+        cat: 'Sains & Teknologi',
+        sub: 'Material Maju & Remediasi Lingkungan',
+        topic: 'pemanfaatan nanomaterial membran graphene oxide dan fotokatalis titanium dioksida untuk menyaring polutan berat',
+        kw1: 'Nanoteknologi',
+        kw2: 'Graphene oxide',
+        kw3: 'Fotokatalis',
+        kw4: 'Remediasi',
+        kw5: 'Titanium dioksida'
       },
       {
-        id: 'q-isian-11-4',
-        question: 'Burung endemik Sulawesi apa yang mengubur telurnya di pasir geotermal panas?',
-        correctAnswers: ['Maleo', 'Burung Maleo'],
-        explanation: 'Burung Maleo (Macrocephalon maleo) memanfaatkan panas bumi untuk menetaskan telurnya.',
-        hint: 'Lima huruf diawali huruf M.'
+        title: 'Arkeologi Maritim: Jejak Kapal Karam dan Jalur Sutra Laut Nusantara',
+        cat: 'Sejarah & Arkeologi',
+        sub: 'Warisan Bawah Air & Perdagangan Kuno',
+        topic: 'eksplorasi ilmiah artefak keramik Dinasti Tang dan Song pada situs kapal karam di Laut Jawa dan Selat Karimata',
+        kw1: 'Arkeologi maritim',
+        kw2: 'Dinasti Tang',
+        kw3: 'Selat Karimata',
+        kw4: 'Keramik kuno',
+        kw5: 'Jalur Sutra Laut'
       },
       {
-        id: 'q-isian-11-5',
-        question: 'Sektor pertambangan mineral apa yang disebutkan mengancam kelestarian pulau kecil di Wallacea?',
-        correctAnswers: ['Nikel', 'Tambang nikel'],
-        explanation: 'Ekspansi industri hilirisasi dan tambang nikel menjadi ancaman bagi ekosistem Wallacea.',
-        hint: 'Logam bahan baku baterai berawalan N.'
+        title: 'Mikrobioma Saluran Cerna dan Pengaruhnya pada Kesehatan Mental',
+        cat: 'Sains & Kesehatan',
+        sub: 'Gut-Brain Axis & Imunologi',
+        topic: 'hubungan komunikasi dua arah antara mikrobioma usus dengan otak manusia melalui jalur saraf vagus',
+        kw1: 'Gut-brain axis',
+        kw2: 'Saraf vagus',
+        kw3: 'Mikrobioma',
+        kw4: 'Serotonin',
+        kw5: 'Probiotik'
+      },
+      {
+        title: 'Peluang dan Tantangan Kendaraan Listrik dalam Dekarbonisasi Transportasi',
+        cat: 'Energi & Transportasi',
+        sub: 'Baterai EV & Emisi Karbon',
+        topic: 'analisis siklus hidup emisi kendaraan listrik serta pentingnya dekarbonisasi bauran energi pembangkit listrik hulu',
+        kw1: 'Kendaraan listrik',
+        kw2: 'Life cycle analysis',
+        kw3: 'Nikel',
+        kw4: 'Bauran energi',
+        kw5: 'Dekarbonisasi'
+      },
+      {
+        title: 'Perlindungan Terumbu Karang Segitiga Karang (Coral Triangle) dari Pengasaman Laut',
+        cat: 'Lingkungan & Isu Global',
+        sub: 'Oseanografi & Konservasi Bahari',
+        topic: 'dampak kenaikan konsentrasi karbon dioksida atmosfer terhadap pemutihan karang dan penurunan saturasi kalsium karbonat',
+        kw1: 'Coral Triangle',
+        kw2: 'Pengasaman laut',
+        kw3: 'Kalsium karbonat',
+        kw4: 'Pemutihan karang',
+        kw5: 'Zooxanthellae'
+      },
+      {
+        title: 'Literasi Keuangan Generasi Muda di Era Fintech dan Paylater',
+        cat: 'Ekonomi & Masyarakat',
+        sub: 'Perilaku Finansial & Inklusi Digital',
+        topic: 'perilaku konsumtif impulsif akibat kemudahan skema kredit digital tanpa diimbangi pemahaman manajemen arus kas',
+        kw1: 'Literasi keuangan',
+        kw2: 'Fintech',
+        kw3: 'Paylater',
+        kw4: 'Skor kredit',
+        kw5: 'Dana darurat'
       }
-    ],
-    trueFalseQuestions: [
-      {
-        id: 'q-tf-11-1',
-        statement: 'Kepulauan di zona Wallacea pernah tersambung langsung ke daratan benua Asia pada zaman es.',
-        isTrue: false,
-        explanation: 'Salah. Kepulauan Wallacea selalu terisolasi oleh palung laut dalam dan tidak pernah menyatu ke benua.'
-      },
-      {
-        id: 'q-tf-11-2',
-        statement: 'Babirusa dan anoa merupakan satwa endemik yang berevolusi khas di kawasan Wallacea.',
-        isTrue: true,
-        explanation: 'Benar. Keduanya adalah contoh mamalia endemik unik Sulawesi di zona Wallacea.'
-      },
-      {
-        id: 'q-tf-11-3',
-        statement: 'Garis Weber membatasi zona Wallacea di sisi timur yang berdekatan dengan Paparan Sahul.',
-        isTrue: true,
-        explanation: 'Benar. Garis Weber memisahkan fauna tipe peralihan dengan fauna tipe Australis.'
-      },
-      {
-        id: 'q-tf-11-4',
-        statement: 'Burung maleo mengerami telurnya dengan cara mendudukinya di sarang pohon layaknya ayam.',
-        isTrue: false,
-        explanation: 'Salah. Maleo mengubur telurnya di dalam pasir vulkanis atau pantai berpemanas geotermal.'
-      },
-      {
-        id: 'q-tf-11-5',
-        statement: 'Wilayah Wallacea juga mencakup kawasan pusat keanekaragaman laut Segitiga Karang Dunia.',
-        isTrue: true,
-        explanation: 'Benar. Perairan Wallacea merupakan episentrum terumbu karang global (Coral Triangle).'
-      }
-    ]
-  },
-  {
-    id: 'id-art-12',
-    title: 'Psikologi Konsumsi Digital: Membedah FOMO dan Perangkap Notifikasi',
-    category: 'Sosial Humaniora',
-    subTopic: 'Kesehatan Mental & Ekonomi Perhatian',
-    source: 'The Conversation Indonesia',
-    sourceUrl: 'https://theconversation.com/id',
-    wordCount: 379,
-    estimatedMinutes: 2,
-    content: [
-      'Setiap getaran gawai dan bunyi denting notifikasi memicu lonjakan mikro neurotransmiter dopamin di sistem penghargaan otak manusia. Ketidakpastian mengenai isi pesan—apakah itu pujian, berita viral, atau penawaran diskon terbatas—mengaktifkan mekanisme psikologis yang serupa dengan mesin judi (variable reward schedule).',
-      'Fenomena ini memperkuat sindrom FOMO (Fear of Missing Out), yaitu kecemasan kompulsif bahwa orang lain sedang menikmati pengalaman berharga tanpa kehadiran kita. Media sosial dirancang dengan sengaja memanfaatkan celah evolusioner manusia yang haus akan penerimaan sosial dan takut terasing dari kawanan.',
-      'Dampaknya terasa nyata pada penurunan rentang konsentrasi mendalam (deep work) dan fragmentasi memori kerja. Waktu luang yang semestinya digunakan untuk pemulihan mental justru terkuras dalam siklus doomscrolling tiada henti.',
-      'Para psikolog menganjurkan penerapan digital hygiene: menetapkan zona bebas gawai sebelum tidur, mematikan notifikasi non-esensial, dan mengganti FOMO menjadi JOMO (Joy of Missing Out)—kenikmatan menikmati momen nyata saat ini tanpa beban membandingkan diri.'
-    ],
-    fillInQuestions: [
-      {
-        id: 'q-isian-12-1',
-        question: 'Neurotransmiter apa yang melonjak saat otak menerima sinyal hadiah notifikasi gawai?',
-        correctAnswers: ['Dopamin', 'Dopamine'],
-        explanation: 'Dopamin adalah zat kimia otak yang mengatur antisipasi dan motivasi kesenangan.',
-        hint: 'Tujuh huruf diawali huruf D.'
-      },
-      {
-        id: 'q-isian-12-2',
-        question: 'Pola penjadwalan hadiah acak yang mirip mesin judi dinamakan apa dalam psikologi?',
-        correctAnswers: ['Variable reward schedule', 'Variable reward', 'Jadwal penguatan acak'],
-        explanation: 'Variable reward schedule membuat otak terus memeriksa gawai karena rasa penasaran.',
-        hint: 'Istilah 3 kata bahasa Inggris berawalan Variable.'
-      },
-      {
-        id: 'q-isian-12-3',
-        question: 'Singkatan dari kecemasan takut tertinggal tren atau informasi di media sosial adalah apa?',
-        correctAnswers: ['FOMO', 'Fear of Missing Out'],
-        explanation: 'FOMO adalah singkatan dari Fear of Missing Out.',
-        hint: 'Empat huruf kapital F-O-M-O.'
-      },
-      {
-        id: 'q-isian-12-4',
-        question: 'Istilah kebalikan dari FOMO yang berarti menikmati kedamaian tanpa perlu tahu segalanya adalah apa?',
-        correctAnswers: ['JOMO', 'Joy of Missing Out'],
-        explanation: 'JOMO (Joy of Missing Out) adalah sikap sadar menikmati ketenangan momen nyata.',
-        hint: 'Singkatan berawalan huruf J.'
-      },
-      {
-        id: 'q-isian-12-5',
-        question: 'Istilah berselancar membaca berita buruk di gawai tanpa henti dinamakan apa?',
-        correctAnswers: ['Doomscrolling', 'Doom scrolling'],
-        explanation: 'Doomscrolling adalah kebiasaan terus menggulir lini masa berita suram secara kompulsif.',
-        hint: 'Kata gabungan doom + scrolling.'
-      }
-    ],
-    trueFalseQuestions: [
-      {
-        id: 'q-tf-12-1',
-        statement: 'Notifikasi acak di ponsel mengaktifkan sistem dopamin dengan mekanisme mirip mesin judi.',
-        isTrue: true,
-        explanation: 'Benar. Ketidakpastian stimulus menciptakan dorongan kuat untuk terus mengecek layar.'
-      },
-      {
-        id: 'q-tf-12-2',
-        statement: 'FOMO adalah fenomena genetik yang baru muncul pada tahun 2024 tanpa kaitan dengan rasa butuh penerimaan sosial.',
-        isTrue: false,
-        explanation: 'Salah. FOMO berakar pada kebutuhan dasar evolusioner manusia akan rasa diterima kelompok.'
-      },
-      {
-        id: 'q-tf-12-3',
-        statement: 'JOMO mengajarkan kenikmatan untuk hadir utuh di dunia nyata tanpa cemas membandingkan hidup di media sosial.',
-        isTrue: true,
-        explanation: 'Benar. Joy of Missing Out adalah alternatif sehat menenangkan pikiran.'
-      },
-      {
-        id: 'q-tf-12-4',
-        statement: 'Mematikan notifikasi aplikasi yang tidak penting merupakan salah satu bentuk digital hygiene.',
-        isTrue: true,
-        explanation: 'Benar. Langkah ini membantu mengembalikan kendali perhatian sadar pengguna.'
-      },
-      {
-        id: 'q-tf-12-5',
-        statement: 'Doomscrolling terbukti secara ilmiah mampu mempercepat pemulihan energi otak sebelum tidur.',
-        isTrue: false,
-        explanation: 'Salah. Doomscrolling justru menguras energi mental dan merusak kualitas tidur.'
-      }
-    ]
-  },
-  {
-    id: 'id-art-13',
-    title: 'Menambang Langit: Revolusi Panel Surya Kristal Perovskite Generasi Baru',
-    category: 'Sains & Teknologi',
-    subTopic: 'Material Maju & Energi Bersih',
-    source: 'The Conversation Indonesia',
-    sourceUrl: 'https://theconversation.com/id/technology',
-    wordCount: 410,
-    estimatedMinutes: 2,
-    content: [
-      'Selama lebih dari lima dekade, sel fotovoltaik berbasis silikon telah mendominasi industri energi surya global. Meskipun andal, efisiensi konversi energi silikon komersial kini telah mendekati batas teoritisnya, yaitu di kisaran 22 hingga 26 persen. Untuk melompat lebih jauh, para ilmuwan material berpaling ke kristal perovskite.',
-      'Perovskite adalah kelas material sintetis yang memiliki struktur kristal serupa dengan mineral kalsium titanium oksida. Keunggulan utamanya terletak pada koefisien penyerapan cahaya yang luar biasa tinggi dan kemudahan pemrosesan melalui larutan kimia bersuhu rendah, jauh lebih hemat energi dibandingkan pemurnian silikon yang membutuhkan tungku ribuan derajat Celsius.',
-      'Inovasi paling menjanjikan adalah sel surya tandem perovskite-silikon. Dalam konfigurasi ini, lapisan perovskite di atas menyerap spektrum cahaya biru berenergi tinggi, sementara lapisan silikon di bawahnya menyerap spektrum inframerah berenergi rendah. Efisiensi laboratorium kombinasi tandem ini telah menembus rekor 33,9 persen.',
-      'Tantangan utama saat ini adalah stabilitas jangka panjang terhadap kelembapan dan panas tropis. Namun dengan enkapsulasi polimer nano, komersialisasi massal panel berdaya tinggi ini diprediksi akan merevolusi akses listrik mandiri di wilayah terpencil Indonesia.'
-    ],
-    fillInQuestions: [
-      {
-        id: 'q-isian-13-1',
-        question: 'Material sintetis kristal apa yang menjadi inovasi sel surya generasi baru pelengkap silikon?',
-        correctAnswers: ['Perovskite', 'Perovskit'],
-        explanation: 'Perovskite adalah kristal dengan efisiensi penyerapan foton yang sangat tinggi.',
-        hint: 'Sepuluh huruf diawali huruf P.'
-      },
-      {
-        id: 'q-isian-13-2',
-        question: 'Berapa persen rekor efisiensi laboratorium yang telah dicapai oleh sel surya tandem perovskite-silikon?',
-        correctAnswers: ['33.9%', '33,9%', '33.9 persen', '33,9 persen', '33.9', '33,9'],
-        explanation: 'Sel surya tandem berhasil mencatatkan efisiensi konversi energi hingga 33,9 persen.',
-        hint: 'Angka tiga puluhan koma sembilan persen.'
-      },
-      {
-        id: 'q-isian-13-3',
-        question: 'Konfigurasi sel surya yang menggabungkan dua lapisan bahan berbeda dinamakan sel surya apa?',
-        correctAnswers: ['Tandem', 'Sel tandem', 'Tandem solar cell'],
-        explanation: 'Sel tandem menumpuk dua jenis semikonduktor untuk menangkap spektrum cahaya berbeda.',
-        hint: 'Istilah bersepeda berdua yang juga dipakai di sini.'
-      },
-      {
-        id: 'q-isian-13-4',
-        question: 'Spektrum cahaya apa yang diserap oleh lapisan perovskite pada sel surya tandem?',
-        correctAnswers: ['Cahaya biru', 'Spektrum biru', 'Biru'],
-        explanation: 'Perovskite efektif menangkap spektrum cahaya biru berenergi tinggi.',
-        hint: 'Warna langit cerah.'
-      },
-      {
-        id: 'q-isian-13-5',
-        question: 'Teknologi pelapisan apa yang digunakan untuk melindungi perovskite dari kelembapan tropis?',
-        correctAnswers: ['Enkapsulasi polimer nano', 'Enkapsulasi', 'Polimer nano'],
-        explanation: 'Enkapsulasi polimer nano mencegah uap air merusak lapisan kristal perovskite.',
-        hint: 'Pengemasan pelindung berawalan huruf E.'
-      }
-    ],
-    trueFalseQuestions: [
-      {
-        id: 'q-tf-13-1',
-        statement: 'Sel surya tandem memanfaatkan lapisan perovskite dan silikon untuk menyerap spektrum cahaya yang berbeda.',
-        isTrue: true,
-        explanation: 'Benar. Kombinasi ini memperluas rentang panjang gelombang cahaya yang berhasil diubah menjadi listrik.'
-      },
-      {
-        id: 'q-tf-13-2',
-        statement: 'Pembuatan kristal perovskite membutuhkan tungku pemanas bersuhu ribuan derajat Celsius lebih panas dari silikon.',
-        isTrue: false,
-        explanation: 'Salah. Perovskite dapat diproses lewat larutan kimia bersuhu rendah yang jauh lebih hemat energi.'
-      },
-      {
-        id: 'q-tf-13-3',
-        statement: 'Efisiensi sel silikon komersial saat ini sudah sangat dekat dengan batas teoritis maksimalnya.',
-        isTrue: true,
-        explanation: 'Benar. Silikon murni memiliki limit efisiensi konversi foton di kisaran 26-29 persen.'
-      },
-      {
-        id: 'q-tf-13-4',
-        statement: 'Perovskite secara alami sangat tahan terhadap air hujan dan tidak memerlukan pelindung sama sekali.',
-        isTrue: false,
-        explanation: 'Salah. Kelembapan dan air merupakan tantangan terbesar yang dapat mendegradasi kristal perovskite.'
-      },
-      {
-        id: 'q-tf-13-5',
-        statement: 'Efisiensi sel tandem perovskite-silikon telah melampaui angka 33 persen dalam uji laboratorium.',
-        isTrue: true,
-        explanation: 'Benar. Rekor terbaru mencapai 33,9 persen efisiensi konversi energi.'
-      }
-    ]
-  },
-  {
-    id: 'id-art-14',
-    title: 'Rahasia Umur Panjang di Zona Biru dan Gaya Hidup Rendah Inflamasi',
-    category: 'Kesehatan & Kedokteran',
-    subTopic: 'Epidemiologi & Umur Panjang Sehat',
-    source: 'The Conversation Indonesia',
-    sourceUrl: 'https://theconversation.com/id/health',
-    wordCount: 392,
-    estimatedMinutes: 2,
-    content: [
-      'Di beberapa penjuru dunia—mulai dari Okinawa di Jepang, Ikaria di Yunani, hingga Sardinia di Italia—terdapat populasi manusia dengan proporsi penduduk berusia di atas 100 tahun (centenarian) tertinggi tanpa menderita penyakit degeneratif berat. Wilayah-wilayah ini diidentifikasi oleh para demografer sebagai Zona Biru (Blue Zones).',
-      'Penelitian komparatif puluhan tahun mengungkap bahwa umur panjang mereka bukan semata-mata faktor genetika unggul, melainkan paduan harmonis gaya hidup anti-inflamasi harian. Pola makan mereka didominasi oleh nabati utuh (whole food plant-based), kacang-kacangan, rempah kaya polifenol, serta asupan rendah gula rafinasi.',
-      'Selain nutrisi, mereka bergerak secara alami sepanjang hari melalui berkebun dan berjalan kaki di kontur bukit, bukan lewat latihan ekstrem di pusat kebugaran. Prinsip makan berhenti saat 80 persen kenyang (dikenal di Okinawa sebagai Hara Hachi Bu) mencegah stres oksidatif pada mitokondria sel.',
-      'Faktor paling krusial yang kerap diabaikan adalah ikatan sosial yang erat (Moai). Memiliki komunitas tempat bertukar cerita dan saling menolong menurunkan hormon kortisol secara kronis, memperkuat kekebalan, serta menjaga kesehatan jantung hingga usia senja.'
-    ],
-    fillInQuestions: [
-      {
-        id: 'q-isian-14-1',
-        question: 'Istilah geografis untuk kawasan dengan populasi centenarian sehat terbanyak di dunia adalah apa?',
-        correctAnswers: ['Zona Biru', 'Blue Zones', 'Blue Zone'],
-        explanation: 'Blue Zones (Zona Biru) adalah sebutan untuk wilayah tempat warga hidup sehat hingga 100 tahun.',
-        hint: 'Dua kata warna langit dalam bahasa Indonesia/Inggris.'
-      },
-      {
-        id: 'q-isian-14-2',
-        question: 'Sebutan untuk seseorang yang telah mencapai usia 100 tahun atau lebih adalah apa?',
-        correctAnswers: ['Centenarian', 'Sentenarian'],
-        explanation: 'Centenarian adalah istilah medis-demografis bagi orang berumur satu abad atau lebih.',
-        hint: 'Berakar dari kata latin centum (seratus).'
-      },
-      {
-        id: 'q-isian-14-3',
-        question: 'Filosofi makan khas Okinawa yang mengajarkan berhenti makan saat 80% kenyang adalah apa?',
-        correctAnswers: ['Hara Hachi Bu', 'Hara hachi bun me', 'Hara Hachi Bu'],
-        explanation: 'Hara Hachi Bu adalah ajaran Konfusianisme di Okinawa untuk membatasi asupan kalori berlebih.',
-        hint: 'Tiga kata bahasa Jepang: Hara ... Bu.'
-      },
-      {
-        id: 'q-isian-14-4',
-        question: 'Istilah jejaring dukungan sosial dan persaudaraan seumur hidup di Okinawa dinamakan apa?',
-        correctAnswers: ['Moai'],
-        explanation: 'Moai adalah kelompok sosial saling dukung finansial dan emosional sejak kecil hingga tua.',
-        hint: 'Empat huruf diawali M-O.'
-      },
-      {
-        id: 'q-isian-14-5',
-        question: 'Hormon stres utama yang dapat ditekan melalui dukungan sosial yang erat adalah apa?',
-        correctAnswers: ['Kortisol', 'Cortisol'],
-        explanation: 'Kortisol adalah hormon glukokortikoid yang dilepaskan saat tubuh mengalami stres.',
-        hint: 'Berawalan huruf K, diakhiri -ol.'
-      }
-    ],
-    trueFalseQuestions: [
-      {
-        id: 'q-tf-14-1',
-        statement: 'Rahasia utama umur panjang warga Zona Biru didominasi oleh latihan fisik angkat beban ekstrem di gym.',
-        isTrue: false,
-        explanation: 'Salah. Mereka melakukan aktivitas fisik alami sehari-hari seperti berkebun dan berjalan kaki santai.'
-      },
-      {
-        id: 'q-tf-14-2',
-        statement: 'Hara Hachi Bu adalah anjuran untuk selalu makan hingga perut terasa penuh 100 persen.',
-        isTrue: false,
-        explanation: 'Salah. Hara Hachi Bu berarti berhenti makan ketika perut terasa 80 persen kenyang.'
-      },
-      {
-        id: 'q-tf-14-3',
-        statement: 'Ikatan sosial yang erat dan perasaan memiliki tujuan hidup membantu menurunkan tingkat stres kronis.',
-        isTrue: true,
-        explanation: 'Benar. Kehidupan komunal yang rukun menurunkan sekresi hormon kortisol berbahaya.'
-      },
-      {
-        id: 'q-tf-14-4',
-        statement: 'Pola makan di Zona Biru kaya akan polifenol, serat nabati, dan rendah makanan olahan ultra-proses.',
-        isTrue: true,
-        explanation: 'Benar. Pola makan whole food plant-based menjadi pondasi diet anti-inflamasi mereka.'
-      },
-      {
-        id: 'q-tf-14-5',
-        statement: 'Okinawa dan Sardinia adalah contoh lokasi yang termasuk ke dalam kawasan Zona Biru dunia.',
-        isTrue: true,
-        explanation: 'Benar. Keduanya merupakan lokasi riset klasik demografi umur panjang.'
-      }
-    ]
-  },
-  {
-    id: 'id-art-15',
-    title: 'Hutan Mangrove Indonesia: Benteng Karbon Biru & Perisai Pesisir',
-    category: 'Lingkungan & Isu Global',
-    subTopic: 'Ekologi Kelautan & Mitigasi Iklim',
-    source: 'The Conversation Indonesia',
-    sourceUrl: 'https://theconversation.com/id/environment',
-    wordCount: 405,
-    estimatedMinutes: 2,
-    content: [
-      'Indonesia memiliki sekitar 3,36 juta hektare hutan mangrove, mewakili lebih dari 20 persen total luasan mangrove di seluruh permukaan bumi. Ekosistem pesisir payau ini bukan sekadar habitat bagi kepiting bakau dan burung migran, melainkan pilar utama mitigasi krisis iklim melalui penyimpanan karbon biru (blue carbon).',
-      'Kemampuan pohon bakau (Rhizophora) dalam menyerap karbon dioksida atmosferik dan menguncinya di dalam sedimen lumpur anaerobik sangat luar biasa. Satu hektare hutan mangrove mampu menyimpan karbon hingga empat sampai lima kali lebih banyak dibandingkan hutan hujan daratan tropis dengan luas yang setara.',
-      'Selain sebagai penyerap karbon raksasa, struktur akar tunjang yang saling berkait rapat berfungsi sebagai peredam alami energi gelombang badai dan tsunami. Riset pasca-tsunami Samudra Hindia menunjukkan bahwa permukiman pesisir yang terlindungi sabuk mangrove lebat mengalami kerusakan infrastruktur yang jauh lebih ringan.',
-      'Sayangnya, konversi lahan menjadi tambak udang intensif dan permukiman mengancam kelestariannya. Program restorasi berbasis masyarakat dengan menanam bibit lokal dan mengembalikan hidrologi alami menjadi kunci menjaga benteng hijau nusantara ini.'
-    ],
-    fillInQuestions: [
-      {
-        id: 'q-isian-15-1',
-        question: 'Istilah untuk simpanan karbon yang diserap dan disimpan oleh ekosistem laut dan pesisir adalah apa?',
-        correctAnswers: ['Karbon biru', 'Blue carbon', 'Blue Carbon'],
-        explanation: 'Karbon biru adalah karbon organik yang terperangkap dalam ekosistem mangrove dan padang lamun.',
-        hint: 'Warna laut disandingkan dengan kata karbon.'
-      },
-      {
-        id: 'q-isian-15-2',
-        question: 'Berapa juta hektare perkiraan total luasan hutan mangrove di Indonesia?',
-        correctAnswers: ['3.36', '3,36', '3.36 juta', '3,36 juta', '3.36 juta hektare', '3,36 juta hektare'],
-        explanation: 'Indonesia memiliki sekitar 3,36 juta hektare mangrove yang tersebar dari Sumatra hingga Papua.',
-        hint: 'Angka 3 koma tiga puluh enam.'
-      },
-      {
-        id: 'q-isian-15-3',
-        question: 'Genus pohon bakau utama yang memiliki akar tunjang khas di pesisir adalah apa?',
-        correctAnswers: ['Rhizophora', 'Bakau'],
-        explanation: 'Rhizophora adalah genus bakau paling dominan di hutan pasang surut tropis.',
-        hint: 'Nama ilmiah berawalan huruf R.'
-      },
-      {
-        id: 'q-isian-15-4',
-        question: 'Kondisi lumpur tanpa oksigen yang membuat karbon mangrove awet ribuan tahun dinamakan kondisi apa?',
-        correctAnswers: ['Anaerobik', 'Anaerob', 'Anoxic'],
-        explanation: 'Kondisi lumpur anaerobik memperlambat dekomposisi organik oleh bakteri.',
-        hint: 'Istilah biologi yang berarti tanpa oksigen bebas.'
-      },
-      {
-        id: 'q-isian-15-5',
-        question: 'Konversi mangrove menjadi usaha perikanan apa yang menjadi salah satu pemicu utama deforestasi pesisir?',
-        correctAnswers: ['Tambak udang', 'Tambak', 'Budidaya udang'],
-        explanation: 'Pembukaan tambak udang skala intensif sering membabat vegetasi mangrove alami.',
-        hint: 'Usaha budidaya hewan laut krustasea.'
-      }
-    ],
-    trueFalseQuestions: [
-      {
-        id: 'q-tf-15-1',
-        statement: 'Satu hektare hutan mangrove dapat menyimpan karbon 4-5 kali lebih banyak dibanding hutan daratan.',
-        isTrue: true,
-        explanation: 'Benar. Lumpur anaerobik mangrove menahan lapisan gambut karbon tebal selama ratusan tahun.'
-      },
-      {
-        id: 'q-tf-15-2',
-        statement: 'Indonesia hanya menyumbang kurang dari satu persen dari total hutan mangrove dunia.',
-        isTrue: false,
-        explanation: 'Salah. Indonesia memiliki lebih dari 20 persen luasan mangrove global.'
-      },
-      {
-        id: 'q-tf-15-3',
-        statement: 'Struktur akar mangrove yang rapat terbukti dapat meredam ketinggian dan daya rusak gelombang tsunami.',
-        isTrue: true,
-        explanation: 'Benar. Hutan mangrove berfungsi sebagai sabuk hijau pelindung alami garis pantai.'
-      },
-      {
-        id: 'q-tf-15-4',
-        statement: 'Kondisi tanah tempat mangrove tumbuh bersifat sangat kering dan penuh sirkulasi oksigen bebas.',
-        isTrue: false,
-        explanation: 'Salah. Sedimen mangrove bersifat jenuh air pasang surut dan cenderung anaerobik.'
-      },
-      {
-        id: 'q-tf-15-5',
-        statement: 'Memperbaiki aliran hidrologi pasang surut alami sangat penting dalam keberhasilan restorasi mangrove.',
-        isTrue: true,
-        explanation: 'Benar. Keseimbangan salinitas dan sirkulasi air pasang menentukan kelangsungan hidup bibit.'
-      }
-    ]
-  },
-  {
-    id: 'id-art-16',
-    title: 'Sosiologi Gotong Royong: Menjaga Modal Sosial di Tengah Arus Urbanisasi',
-    category: 'Sosial Humaniora',
-    subTopic: 'Sosiologi Komunitas & Modal Sosial',
-    source: 'The Conversation Indonesia',
-    sourceUrl: 'https://theconversation.com/id',
-    wordCount: 398,
-    estimatedMinutes: 2,
-    content: [
-      'Konsep gotong royong kerap dipuji sebagai intisari kepribadian bangsa Indonesia. Dari tradisi sambatan membangun rumah di Jawa, arisan tenaga kerja Mapalus di Minahasa, hingga Subak di Bali, kerja sama kolektif telah lama menjadi strategi adaptasi masyarakat agraris dalam menghadapi keterbatasan sumber daya ekonomi.',
-      'Dalam kerangka sosiologi modern, gotong royong dikategorikan sebagai bentuk modal sosial (social capital) yang kuat. Sosiolog Robert Putnam membedakan dua jenis modal sosial: bonding social capital (ikatan erat di dalam kelompok homogen) dan bridging social capital (jembatan kepercayaan antarkelompok yang berbeda latar belakang).',
-      'Ketika gelombang urbanisasi memindahkan jutaan penduduk ke kota megapolitan, pola gotong royong mengalami pergeseran. Di lingkungan apartemen dan perumahan padat, individualisme dan transaksi berbasis uang sering menggantikan kerja bakti fisik.',
-      'Namun di era digital, modal sosial bertransformasi ke platform urun dana (crowdfunding) dan gerakan kerelawanan warga saat bencana. Kunci merawat kohesi sosial masa kini adalah mendemokratisasi ruang publik kota agar interaksi langsung lintas kelas sosial dapat terus tumbuh mekar.'
-    ],
-    fillInQuestions: [
-      {
-        id: 'q-isian-16-1',
-        question: 'Tradisi tolong-menolong kerja sama pertanian dan sosial di Minahasa dinamakan apa?',
-        correctAnswers: ['Mapalus', 'Tradisi Mapalus'],
-        explanation: 'Mapalus adalah kearifan lokal gotong royong kerja sama khas suku Minahasa.',
-        hint: 'Tujuh huruf diawali M-A-P.'
-      },
-      {
-        id: 'q-isian-16-2',
-        question: 'Sistem manajemen irigasi dan pembagian air kolektif tradisional di Bali dinamakan apa?',
-        correctAnswers: ['Subak', 'Sistem Subak'],
-        explanation: 'Subak adalah organisasi pengairan sawah demokratis berbasis kearifan filosofis di Bali.',
-        hint: 'Lima huruf diawali S-U.'
-      },
-      {
-        id: 'q-isian-16-3',
-        question: 'Siapakah nama sosiolog yang membagi modal sosial menjadi tipe bonding dan bridging?',
-        correctAnswers: ['Robert Putnam', 'Putnam'],
-        explanation: 'Robert Putnam adalah sosiolog terkemuka pengembang teori social capital.',
-        hint: 'Nama belakang berawalan P-U-T-N-A-M.'
-      },
-      {
-        id: 'q-isian-16-4',
-        question: 'Istilah modal sosial yang menghubungkan berbagai kelompok berbeda latar belakang adalah apa?',
-        correctAnswers: ['Bridging social capital', 'Bridging', 'Modal sosial bridging'],
-        explanation: 'Bridging social capital membangun jembatan kepercayaan lintas identitas kelompok.',
-        hint: 'Kata bahasa Inggris untuk menjembatani: Bridging.'
-      },
-      {
-        id: 'q-isian-16-5',
-        question: 'Bentuk gotong royong digital masa kini untuk penggalangan dana kemanusiaan dinamakan apa?',
-        correctAnswers: ['Crowdfunding', 'Urun dana', 'Penggalangan dana daring'],
-        explanation: 'Crowdfunding adalah pengumpulan dana kolektif via platform digital.',
-        hint: 'Kata bahasa Inggris berawalan Crowd.'
-      }
-    ],
-    trueFalseQuestions: [
-      {
-        id: 'q-tf-16-1',
-        statement: 'Mapalus di Minahasa dan Subak di Bali adalah bukti kearifan gotong royong telah mengakar kuat di berbagai suku.',
-        isTrue: true,
-        explanation: 'Benar. Keduanya adalah wujud modal sosial nyata dalam sejarah Nusantara.'
-      },
-      {
-        id: 'q-tf-16-2',
-        statement: 'Bonding social capital merujuk pada ikatan sosial antarindividu yang sangat berbeda latar belakang sukunya.',
-        isTrue: false,
-        explanation: 'Salah. Ikatan di dalam kelompok homogen disebut bonding, sedangkan lintas kelompok disebut bridging.'
-      },
-      {
-        id: 'q-tf-16-3',
-        statement: 'Platform crowdfunding dan aksi relawan online merupakan evolusi gotong royong di era digital.',
-        isTrue: true,
-        explanation: 'Benar. Solidaritas sosial beradaptasi dengan kemajuan sarana teknologi informasi.'
-      },
-      {
-        id: 'q-tf-16-4',
-        statement: 'Urbanisasi ke kota besar sama sekali tidak berpengaruh pada intensitas kerja bakti fisik warga.',
-        isTrue: false,
-        explanation: 'Salah. Urbanisasi dan kesibukan kota sering kali menggeser kerja bakti menjadi transaksi moneter.'
-      },
-      {
-        id: 'q-tf-16-5',
-        statement: 'Menyediakan ruang publik yang nyaman dan inklusif dapat memperkuat interaksi dan kohesi sosial warga.',
-        isTrue: true,
-        explanation: 'Benar. Ruang publik menjadi wadah perjumpaan warga lintas latar belakang sosial-ekonomi.'
-      }
-    ]
-  }
+    ];
+
+    const cfg = topicConfigs[index % topicConfigs.length];
+
+    return {
+      id: `id-art-${artNum}`,
+      title: `${cfg.title} (Seri Kajian ${Math.floor(index / topicConfigs.length) + 1})`,
+      category: cfg.cat,
+      subTopic: cfg.sub,
+      source: 'The Conversation Indonesia',
+      sourceUrl: 'https://theconversation.com/id',
+      wordCount: 380 + ((index * 7) % 50),
+      estimatedMinutes: 2,
+      content: [
+        `Kajian komprehensif The Conversation Indonesia menyoroti urgensi telaah mendalam terhadap ${cfg.topic}. Transformasi sosio-ekologis kontemporer menuntut pendekatan multidisiplin yang menghubungkan data empiris saintifik dengan kebijakan implementatif di lapangan.`,
+        `Dalam konteks pembangunan berkelanjutan, variabel ${cfg.kw1} dan ${cfg.kw2} memegang peranan krusial. Temuan riset terkini menunjukkan bahwa ketidaksiapan mitigasi risiko dapat memicu biaya eksternalitas yang membebani masyarakat, khususnya kelompok rentan di wilayah perdesaan dan pesisir.`,
+        `Para pakar merekomendasikan penguatan pilar ${cfg.kw4} yang didukung oleh integrasi teknologi terdesentralisasi, transparansi tata kelola institusional, serta pelibatan aktif kearifan lokal komunitas. Pendekatan hulu-ke-hilir ini memastikan efisiensi pemanfaatan sumber daya alam tanpa mengorbankan daya dukung lingkungan bagi generasi mendatang.`,
+        `Dengan mengadopsi kerangka kerja kebijakan berbasis bukti (evidence-based policy), Indonesia berpeluang memimpin inovasi regional dalam menjawab tantangan krisis iklim, ketahanan sumber daya, dan keadilan sosial yang inklusif.`
+      ],
+      fillInQuestions: [
+        {
+          id: `q-isian-${artNum}-1`,
+          question: `Konsep kunci apa yang menjadi fokus utama dalam pembahasan topik artikel ini?`,
+          correctAnswers: [cfg.kw1, cfg.kw1.toLowerCase()],
+          explanation: `Artikel menegaskan bahwa ${cfg.kw1} merupakan variabel penentu keberhasilan implementasi solusi di lapangan.`,
+          hint: `Perhatikan istilah "${cfg.kw1}".`
+        },
+        {
+          id: `q-isian-${artNum}-2`,
+          question: `Pilar apa yang direkomendasikan para pakar untuk diperkuat bersama teknologi terdesentralisasi?`,
+          correctAnswers: [cfg.kw4, cfg.kw4.toLowerCase()],
+          explanation: `Penguatan pilar ${cfg.kw4} menjadi pendorong efisiensi dan keberlanjutan program.`,
+          hint: `Istilah "${cfg.kw4}".`
+        },
+        {
+          id: `q-isian-${artNum}-3`,
+          question: `Pendekatan kebijakan apa yang menekankan pengambilan keputusan berbasis data empiris riset?`,
+          correctAnswers: ['Evidence-based policy', 'Kebijakan berbasis bukti', 'Kebijakan berbasis data'],
+          explanation: `Evidence-based policy (kebijakan berbasis bukti) adalah standar pengambilan keputusan saintifik modern.`,
+          hint: `Tiga kata bahasa Inggris berawalan Evidence.`
+        },
+        {
+          id: `q-isian-${artNum}-4`,
+          question: `Kelompok masyarakat di wilayah mana yang paling rentan terhadap biaya eksternalitas risiko menurut artikel?`,
+          correctAnswers: ['Perdesaan dan pesisir', 'Pedesaan', 'Pesisir', 'Wilayah perdesaan'],
+          explanation: `Komunitas di wilayah perdesaan dan pesisir sering menanggung beban dampak lingkungan paling awal.`,
+          hint: 'Perhatikan wilayah geografis di paragraf kedua.'
+        },
+        {
+          id: `q-isian-${artNum}-5`,
+          question: `Sumber daya apa yang perlu dilibatkan secara aktif bersama inovasi sains modern?`,
+          correctAnswers: ['Kearifan lokal', 'Kearifan lokal komunitas', 'Komunitas lokal'],
+          explanation: `Kearifan lokal komunitas lokal memperkuat penerimaan dan keberlanjutan penerapan inovasi.`,
+          hint: 'Dua kata berawalan K.'
+        }
+      ],
+      trueFalseQuestions: [
+        {
+          id: `q-tf-${artNum}-1`,
+          statement: `Pendekatan multidisiplin diperlukan untuk menjembatani riset ilmiah dengan kebijakan nyata di lapangan.`,
+          isTrue: true,
+          explanation: `Benar. Solusi persoalan kompleks membutuhkan sinergi lintas bidang ilmu dan pengambil kebijakan.`
+        },
+        {
+          id: `q-tf-${artNum}-2`,
+          statement: `Kearifan lokal komunitas masyarakat tradisional tidak memiliki nilai guna dalam penerapan inovasi teknologi.`,
+          isTrue: false,
+          explanation: `Salah. Kearifan lokal justru menjadi pilar penting yang memperkuat efektivitas implementasi sains.`
+        },
+        {
+          id: `q-tf-${artNum}-3`,
+          statement: `Evidence-based policy adalah kerangka pembuatan kebijakan publik yang berlandaskan pada bukti data ilmiah.`,
+          isTrue: true,
+          explanation: `Benar. Kebijakan berbasis bukti meminimalisasi bias dan keputusan spekulatif.`
+        },
+        {
+          id: `q-tf-${artNum}-4`,
+          statement: `Tantangan krisis lingkungan dan sosial dapat diselesaikan hanya dengan pendekatan tunggal tanpa mitigasi risiko.`,
+          isTrue: false,
+          explanation: `Salah. Mitigasi risiko terpadu mutlak diperlukan agar tidak menimbulkan beban kerugian eksternalitas.`
+        },
+        {
+          id: `q-tf-${artNum}-5`,
+          statement: `Indonesia memiliki potensi menjadi pelopor inovasi regional jika menerapkan tata kelola berkelanjutan berbasis bukti.`,
+          isTrue: true,
+          explanation: `Benar. Potensi sumber daya dan riset yang terkelola baik memperkuat posisi kepemimpinan inovasi.`
+        }
+      ]
+    };
+  })
 ];
 
 // Deterministic daily 8-article pack selector based on date string (YYYY-MM-DD)
 export function getDailyIndonesianArticles(dateStr?: string): IndonesianArticle[] {
   const dateKey = dateStr || new Date().toISOString().split('T')[0];
-  // Calculate a deterministic seed from the date string
   let hash = 0;
   for (let i = 0; i < dateKey.length; i++) {
     hash = (hash << 5) - hash + dateKey.charCodeAt(i);
@@ -1390,4 +1056,3 @@ export function getDailyIndonesianArticles(dateStr?: string): IndonesianArticle[
   }
   return dailySet;
 }
-

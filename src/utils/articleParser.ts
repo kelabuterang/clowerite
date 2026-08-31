@@ -1,278 +1,101 @@
 import { EnglishArticle, IndonesianArticle, IsianQuestion, MultipleChoiceQuestion, TrueFalseQuestion, VocabItem } from '../types';
-import * as pdfjsLib from 'pdfjs-dist';
 
-// Configure pdfjs worker safely for Vite / browser environment
-if (typeof window !== 'undefined') {
-  try {
-    // Prefer CDN worker matching version or relative URL to avoid Vite ?url bundle syntax issues
-    pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjsLib.version || '4.10.38'}/build/pdf.worker.min.mjs`;
-  } catch {
-    // fallback
-  }
-}
-
-/**
- * Fallback regex-based text extraction from raw PDF array buffer
- */
-function extractRawPdfTextFallback(buffer: ArrayBuffer): string {
-  try {
-    const bytes = new Uint8Array(buffer);
-    let str = '';
-    for (let i = 0; i < bytes.length; i++) {
-      const b = bytes[i];
-      // Printable ASCII or common whitespace
-      if ((b >= 32 && b <= 126) || b === 10 || b === 13 || b === 9) {
-        str += String.fromCharCode(b);
-      } else {
-        str += ' ';
-      }
-    }
-
-    // Extract text in parenthesis from PDF content stream (e.g. (Some text) Tj or [(Some) -20 (text)] TJ)
-    const textMatches = str.match(/\(([^()]{2,500})\)\s*T[jd]/g) || [];
-    const extractedWords: string[] = [];
-
-    for (const match of textMatches) {
-      const clean = match.replace(/^[(]/, '').replace(/\)\s*T[jd]$/, '').trim();
-      if (clean && !clean.startsWith('/') && !clean.includes('Font') && clean.length > 1) {
-        extractedWords.push(clean);
-      }
-    }
-
-    if (extractedWords.length > 10) {
-      return extractedWords.join(' ');
-    }
-
-    // Secondary fallback: Extract long consecutive alphanumeric strings
-    const readableChunks = str
-      .split(/[\r\n\x00-\x1f\x7f-\xff]+/)
-      .map(s => s.trim())
-      .filter(s => s.length > 25 && /[a-zA-Z]{3,}/.test(s) && !s.includes('xref') && !s.includes('trailer') && !s.includes('obj'));
-
-    return readableChunks.join('\n\n');
-  } catch {
-    return '';
-  }
-}
-
-/**
- * Extract raw text from an ArrayBuffer / File of PDF
- */
-export async function extractTextFromPdf(file: File | ArrayBuffer): Promise<string> {
-  let arrayBuffer: ArrayBuffer;
-  if (file instanceof File) {
-    arrayBuffer = await file.arrayBuffer();
-  } else {
-    arrayBuffer = file;
-  }
-
-  try {
-    const data = new Uint8Array(arrayBuffer);
-    const loadingTask = pdfjsLib.getDocument({
-      data,
-      useSystemFonts: true
-    });
-    const pdfDoc = await loadingTask.promise;
-    let fullText = '';
-
-    for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
-      const page = await pdfDoc.getPage(pageNum);
-      const textContent = await page.getTextContent();
-      const pageText = textContent.items
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .map((item: any) => item.str)
-        .join(' ');
-      fullText += `\n--- PAGE ${pageNum} ---\n` + pageText;
-    }
-
-    if (fullText.trim().length > 30) {
-      return fullText;
-    }
-  } catch (error) {
-    console.warn('PDF.js worker extraction encountered an issue, trying raw text fallback:', error);
-  }
-
-  // Fallback extraction
-  const fallback = extractRawPdfTextFallback(arrayBuffer);
-  if (fallback && fallback.trim().length > 30) {
-    return fallback;
-  }
-
-  throw new Error('Gagal mengekstrak teks dari PDF. Pastikan file PDF berisi teks dan tidak berupa gambar murni yang terkunci.');
-}
-
-/**
- * Auto-generate vocabulary items from text using frequency and semantic heuristics
- */
-export function autoGenerateVocabFromText(text: string, language: 'en' | 'id' = 'en'): VocabItem[] {
-  const words = text
-    .replace(/[^\w\s-]/g, ' ')
-    .split(/\s+/)
-    .filter(w => w.length > 5 && !/^\d+$/.test(w));
-
-  // Common English stop words
-  const stopWordsEn = new Set([
-    'because', 'between', 'through', 'another', 'without', 'against', 'before', 'during', 'several',
-    'people', 'should', 'according', 'become', 'however', 'whether', 'including', 'instead', 'rather'
-  ]);
-
-  const uniqueWords: string[] = [];
-  const seen = new Set<string>();
-
-  for (const raw of words) {
-    const clean = raw.toLowerCase();
-    if (!stopWordsEn.has(clean) && !seen.has(clean) && clean.length >= 6) {
-      seen.add(clean);
-      uniqueWords.push(raw.charAt(0).toUpperCase() + raw.slice(1).toLowerCase());
-      if (uniqueWords.length >= 10) break;
-    }
-  }
-
-  // Vocab definitions dictionary for common academic/news terms
-  const vocabDict: Record<string, { id: string; en: string; pos: string }> = {
-    Chimpanzees: { id: 'Simpanse (kera cerdas)', en: 'An intelligent great ape native to Africa', pos: 'noun' },
-    Sanctuary: { id: 'Suaka alam / tempat perlindungan satwa', en: 'A place of refuge or safety for animals', pos: 'noun' },
-    Exhibiting: { id: 'Menunjukkan / menampilkan perilaku', en: 'Manifesting or showing a behavior', pos: 'verb' },
-    Caregivers: { id: 'Pengasuh / perawat', en: 'Persons who care for others or animals', pos: 'noun' },
-    Strengthening: { id: 'Memperkuat / memperkokoh', en: 'Making stronger or more robust', pos: 'verb' },
-    Interspecies: { id: 'Antarspesies / lintas spesies', en: 'Arising or occurring between different species', pos: 'adjective' },
-    Supercharges: { id: 'Meningkatkan secara drastis / melipatgandakan', en: 'Significantly enhances or intensifies', pos: 'verb' },
-    Catastrophic: { id: 'Bencana dahsyat / malapetaka besar', en: 'Involving or causing great sudden disaster', pos: 'adjective' },
-    Pernicious: { id: 'Merusak secara halus dan berbahaya', en: 'Having a harmful effect, especially in a subtle way', pos: 'adjective' },
-    Unprecedented: { id: 'Belum pernah terjadi sebelumnya', en: 'Never done or known before', pos: 'adjective' },
-    Biodegradable: { id: 'Dapat terurai secara alami oleh mikroba', en: 'Capable of being decomposed by natural biological agents', pos: 'adjective' },
-    Microplastics: { id: 'Partikel plastik mikroskopis (<5mm)', en: 'Extremely small pieces of plastic in the environment', pos: 'noun' },
-    Microorganisms: { id: 'Mikroorganisme / jasad renik', en: 'Microscopic organisms such as bacteria or fungi', pos: 'noun' },
-    Bioremediation: { id: 'Bioremediasi / pembersihan polusi secara biologi', en: 'The use of living organisms to remove environmental contaminants', pos: 'noun' },
-    Degradation: { id: 'Degradasi / proses penguraian zat', en: 'The process of decaying or breaking down into smaller components', pos: 'noun' },
-    Endocrine: { id: 'Sistem endokrin / kelenjar hormon', en: 'Relating to glands that secrete hormones directly into the blood', pos: 'noun' },
-    Subsidence: { id: 'Penurunan / amblesnya muka tanah', en: 'The gradual caving in or sinking of an area of land', pos: 'noun' },
-    Aquifer: { id: 'Akuifer / lapisan batuan bawah tanah penampung air', en: 'A body of permeable rock that can contain groundwater', pos: 'noun' },
-    Demographic: { id: 'Demografi / struktur kependudukan', en: 'Relating to the structure of populations', pos: 'adjective' }
-  };
-
-  return uniqueWords.map(w => {
-    const found = vocabDict[w] || vocabDict[Object.keys(vocabDict).find(k => k.toLowerCase() === w.toLowerCase()) || ''];
-    return {
-      word: w,
-      phonetic: `/${w.toLowerCase()}/`,
-      partOfSpeech: found ? found.pos : (language === 'en' ? 'vocabulary' : 'nomina/verba'),
-      definitionId: found ? found.id : `Kosakata esensial dalam bacaan (${w})`,
-      definitionEn: found ? found.en : `Essential contextual term in the passage (${w})`,
-      exampleSentence: `The term "${w}" is highlighted as a focal concept within the passage.`
-    };
-  });
-}
-
-/**
- * Auto-generate comprehension questions (Isian & True/False or MCQ) from text paragraphs
- */
-export function autoGenerateQuestions(
-  title: string,
-  paragraphs: string[],
-  language: 'id' | 'en' = 'id'
-): {
-  fillInQuestions: IsianQuestion[];
-  trueFalseQuestions: TrueFalseQuestion[];
-  readingQuiz: MultipleChoiceQuestion[];
-} {
-  const sentences = paragraphs.join(' ').split(/(?<=[.?!])\s+/).filter(s => s.length > 25);
-
-  const fillInQuestions: IsianQuestion[] = [];
-  const trueFalseQuestions: TrueFalseQuestion[] = [];
-  const readingQuiz: MultipleChoiceQuestion[] = [];
-
-  // Generate 5 Fill-in Questions
-  for (let i = 0; i < Math.min(5, sentences.length); i++) {
-    const s = sentences[i * 2] || sentences[i];
-    fillInQuestions.push({
-      id: `q-gen-isian-${i + 1}`,
-      question: language === 'id'
-        ? `Berdasarkan naskah "${title}", apa informasi kunci yang dibahas pada kalimat berikut: "${s.slice(0, 80)}..."?`
-        : `Based on "${title}", what is the core factual premise in: "${s.slice(0, 80)}..."?`,
-      correctAnswers: [title, s.slice(0, 30), 'benar', 'sesuai'],
-      explanation: s,
-      hint: language === 'id' ? 'Tinjau kembali paragraf terkait di atas.' : 'Refer back to the corresponding paragraph above.'
-    });
-  }
-
-  // Generate 5 True/False Questions
-  for (let i = 0; i < 5; i++) {
-    const s = sentences[i] || `Naskah "${title}" membahas fenomena penting dalam bidang sains dan masyarakat.`;
-    const isTrue = i % 2 === 0;
-    trueFalseQuestions.push({
-      id: `q-gen-tf-${i + 1}`,
-      statement: isTrue
-        ? s
-        : (language === 'id'
-            ? `Naskah "${title}" menyatakan bahwa fenomena ini sama sekali tidak membawa dampak atau pengaruh apa pun.`
-            : `The text claims that this event has zero significant influence or consequence.`),
-      isTrue: isTrue,
-      explanation: isTrue
-        ? (language === 'id' ? 'Pernyataan ini sesuai dengan isi bacaan.' : 'This statement accurately reflects the passage.')
-        : (language === 'id' ? 'Pernyataan ini bertentangan dengan konteks naskah.' : 'This statement contradicts the context of the article.')
-    });
-  }
-
-  // Generate 5 Multiple Choice Questions
-  for (let i = 0; i < 5; i++) {
-    readingQuiz.push({
-      id: `q-gen-mcq-${i + 1}`,
-      question: language === 'id'
-        ? `Apa gagasan utama atau fakta penting yang dapat disimpulkan dari bagian ke-${i + 1} naskah?`
-        : `What is the primary takeaway or key finding conveyed in section ${i + 1}?`,
-      options: language === 'id'
-        ? [
-            `Analisis mendalam mengenai ${title}`,
-            'Penolakan terhadap seluruh data empiris yang ada',
-            'Cerita fiksi yang tidak berkaitan dengan tema',
-            'Informasi yang sudah kadaluwarsa'
-          ]
-        : [
-            `The comprehensive analysis regarding ${title}`,
-            'A total dismissal of empirical observations',
-            'An unrelated fictional narrative',
-            'Outdated and irrelevant information'
-          ],
-      correctIndex: 0,
-      explanation: language === 'id'
-        ? `Naskah secara eksplisit menguraikan dinamika ${title}.`
-        : `The passage systematically details the aspects of ${title}.`
-    });
-  }
-
-  return { fillInQuestions, trueFalseQuestions, readingQuiz };
-}
-
-/**
- * Split a large pasted multi-article text or PDF OCR into discrete articles
- */
-export function splitMultiArticleBundle(rawText: string): Array<{
+export interface SplitArticleResult {
   title: string;
   content: string[];
-  vocabRaw?: string[];
-  questionsRaw?: string[];
+  wordCount: number;
   language: 'id' | 'en';
   category: string;
-}> {
-  // Normalize linebreaks
+  sourceNote?: string;
+}
+
+export type SplitMode = 'auto' | 'headings' | 'words' | 'single';
+
+/**
+ * Filter out advertisements, "Read more / Baca juga", social sharing snippets, and cookie notices
+ */
+export function isNoiseOrAdParagraph(str: string): boolean {
+  const lower = str.toLowerCase().trim();
+  if (lower.length < 25) return true;
+  if (/^[\s\d.,©-]*$/.test(lower)) return true;
+
+  // Indonesian Read More / Ads / Social filters
+  if (/^(?:baca\s+juga|baca\s+selengkapnya|simak\s+juga|lihat\s+juga|artikel\s+terkait|berita\s+terkait|baca\s+berita|klik\s+di\s+sini|baca\s+kelanjutan|pilihan\s+editor)\s*[:\-–—]/i.test(lower)) return true;
+  if (/^(?:foto|photo|credit|image\s+credit|sumber\s+foto|ilustrasi|tangkapan\s+layar)\s*[:\-–—]/i.test(lower)) return true;
+  if (/dapatkan\s+update\s+berita|ikuti\s+saluran\s+whatsapp|gabung\s+kompas|download\s+aplikasi|unduh\s+aplikasi|ikuti\s+kami\s+di|bagikan\s+artikel\s+ini/i.test(lower)) return true;
+  if (/(?:iklan|advertisement|sponsored\s+content|pariwara|promoted\s+post|halaman\s+selanjutnya|next\s+page)/i.test(lower)) return true;
+  if (/artikel\s+ini\s+tayang\s+perdana|republished\s+from\s+the\s+conversation\s+under\s+creative\s+commons/i.test(lower)) return true;
+  if (/hak\s+cipta\s+dilindungi|all\s+rights\s+reserved|terms\s+of\s+service|privacy\s+policy|kebijakan\s+privasi|syarat\s+dan\s+ketentuan/i.test(lower)) return true;
+
+  // English Read More / Promo filters
+  if (/^(?:read\s+more|also\s+read|related\s+articles?|see\s+also|recommended\s+reading|suggested\s+reading|don['’]t\s+miss|read\s+next|continue\s+reading)\s*[:\-–—]/i.test(lower)) return true;
+  if (/sign\s+up\s+for\s+(?:our\s+)?newsletter|subscribe\s+to|follow\s+us\s+on|leave\s+a\s+comment|share\s+this\s+story/i.test(lower)) return true;
+
+  return false;
+}
+
+/**
+ * Clean text paragraph by removing inline "(Baca juga: ...)" or "[Read more: ...]"
+ */
+export function sanitizeParagraphText(text: string): string {
+  return text
+    .replace(/\[\s*(?:Baca\s+juga|Read\s+more|Simak\s+juga)[^\]]+\]/gi, '')
+    .replace(/\(\s*(?:Baca\s+juga|Read\s+more|Simak\s+juga)[^)]+\)/gi, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/**
+ * Detect language of given text sample
+ */
+export function detectLanguage(text: string): 'id' | 'en' {
+  const sample = text.toLowerCase().slice(0, 1500);
+  const indonesianWords = ['yang', 'dengan', 'dalam', 'untuk', 'pada', 'adalah', 'bahwa', 'tersebut', 'dari', 'oleh', 'tidak', 'akan', 'juga', 'karena', 'bisa', 'kita', 'mereka', 'sebuah'];
+  let idCount = 0;
+
+  for (const w of indonesianWords) {
+    const matches = sample.match(new RegExp(`\\b${w}\\b`, 'g'));
+    if (matches) idCount += matches.length;
+  }
+
+  return idCount >= 4 ? 'id' : 'en';
+}
+
+/**
+ * Clean and format paragraphs from a raw text section
+ */
+export function cleanParagraphs(rawSection: string): string[] {
+  return rawSection
+    .split(/\n\s*\n+/)
+    .map(p => sanitizeParagraphText(p.replace(/\s+/g, ' ').trim()))
+    .filter(p => {
+      if (p.length < 25) return false;
+      if (isNoiseOrAdParagraph(p)) return false;
+      if (/^(fill the words|answer questions|pertanyaan:|latihan soal|daftar pustaka)/i.test(p)) return false;
+      return true;
+    });
+}
+
+/**
+ * Split pasted text into discrete articles with configurable modes
+ */
+export function splitMultiArticleBundle(
+  rawText: string,
+  mode: SplitMode = 'auto',
+  targetWordCountPerChunk: number = 500
+): SplitArticleResult[] {
   const text = rawText
     .replace(/\r\n/g, '\n')
     .replace(/www\.alternatifa\.com/gi, '')
-    .replace(/www\.cloverait\.com/gi, '');
+    .replace(/www\.cloverait\.com/gi, '')
+    .trim();
 
-  const articles: Array<{
-    title: string;
-    content: string[];
-    vocabRaw?: string[];
-    questionsRaw?: string[];
-    language: 'id' | 'en';
-    category: string;
-  }> = [];
+  if (!text) return [];
 
-  // Detect explicit known titles or headings
-  const titlePatterns = [
-    // English PDF 1 Titles
+  const articles: SplitArticleResult[] = [];
+
+  // Known preset titles (Oxford & Curated articles support)
+  const knownTitlePatterns = [
     'Chimpanzees also like to follow trends, study shows',
     'Extreme heat is a killer. A recent heat wave shows how much more deadly it’s becoming',
     'China posts 5.2% GDP growth for Q2',
@@ -283,7 +106,6 @@ export function splitMultiArticleBundle(rawText: string): Array<{
     'Chinese swimmers dope-tested the most ahead of World Aquatics Championships',
     'Nvidia’s Jensen Huang says AI could lead to job losses ‘if the world runs out of ideas’',
     'Microplastics are choking our waters. Could a sponge made of squid bones help remove them?',
-    // Indonesian PDF 2 Titles
     'Dopamine Bukan Sekadar Hormon Bahagia',
     'Freon Ada di Dekat Kita',
     'Kenapa Kita Tidak Ingat Waktu Bayi?',
@@ -295,14 +117,30 @@ export function splitMultiArticleBundle(rawText: string): Array<{
     'Sejarah Panjang Gorden'
   ];
 
-  // Check if text matches multi-article bundle
-  const matchedTitles: { title: string; index: number }[] = [];
-  for (const t of titlePatterns) {
-    const idx = text.indexOf(t);
-    if (idx !== -1) {
-      matchedTitles.push({ title: t, index: idx });
-    }
+  // MODE: SINGLE DOCUMENT
+  if (mode === 'single') {
+    const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+    const title = lines[0] ? lines[0].replace(/^[#\-*\s]+/, '').slice(0, 80) : 'Dokumen Naskah Impor';
+    const paragraphs = cleanParagraphs(lines.slice(1).join('\n\n'));
+    const lang = detectLanguage(text);
+
+    return [{
+      title,
+      content: paragraphs.length > 0 ? paragraphs : [text],
+      wordCount: text.split(/\s+/).filter(Boolean).length,
+      language: lang,
+      category: lang === 'en' ? 'English Reading' : 'Literasi Indonesia'
+    }];
   }
+
+  // Check known titles
+  const matchedTitles: { title: string; index: number }[] = [];
+  knownTitlePatterns.forEach(pattern => {
+    const idx = text.indexOf(pattern);
+    if (idx !== -1) {
+      matchedTitles.push({ title: pattern, index: idx });
+    }
+  });
 
   if (matchedTitles.length >= 2) {
     matchedTitles.sort((a, b) => a.index - b.index);
@@ -311,37 +149,343 @@ export function splitMultiArticleBundle(rawText: string): Array<{
       const cur = matchedTitles[i];
       const nextIdx = i + 1 < matchedTitles.length ? matchedTitles[i + 1].index : text.length;
       const sectionText = text.substring(cur.index + cur.title.length, nextIdx).trim();
-
-      // Clean paragraphs
-      const paragraphs = sectionText
-        .split(/\n\s*\n/)
-        .map(p => p.trim())
-        .filter(p => p.length > 20 && !p.startsWith('Fill The Words') && !p.startsWith('Answer Questions') && !p.startsWith('Pertanyaan:'));
-
-      const isEnglish = /[a-zA-Z\s]{10,}/.test(cur.title) && !/[dD]alam|[dD]engan|[dD]an|[yY]ang|[bB]ahwa/.test(sectionText.slice(0, 200));
+      const paragraphs = cleanParagraphs(sectionText);
+      const isEnglish = detectLanguage(cur.title + ' ' + sectionText) === 'en';
 
       articles.push({
         title: cur.title.replace(/^[‘'"]|[’'"]$/g, ''),
         content: paragraphs.length > 0 ? paragraphs : [sectionText],
+        wordCount: sectionText.split(/\s+/).filter(Boolean).length,
         language: isEnglish ? 'en' : 'id',
         category: isEnglish ? 'Science & Global Perspectives' : 'Sains, Lingkungan & Sosial'
       });
     }
+    return articles;
+  }
+
+  // Dynamic Headings
+  const headingRegex = /(?:^|\n)(?:#+\s*([^\n]{3,90})|(?:Bab|Chapter|Bagian|Artikel|Cerpen|Section)\s+\d+[:.]?\s*([^\n]{0,80})|(?:Judul|Title):\s*([^\n]{3,90})|^([A-Z0-9\s,:'"–—]{5,80}))(?=\n\s*\n)/gm;
+  const dynamicHeadings: { title: string; index: number }[] = [];
+  let match: RegExpExecArray | null;
+
+  while ((match = headingRegex.exec(text)) !== null) {
+    const rawHeading = match[1] || match[2] || match[3] || match[4] || match[0];
+    const cleanHeading = rawHeading.replace(/^[#\-*\s]+/, '').replace(/^(Judul|Title):\s*/i, '').trim();
+
+    if (cleanHeading.length >= 4 && cleanHeading.length <= 100 && !/^(page|halaman|daftar isi|pendahuluan|bab|chapter)\s*$/i.test(cleanHeading)) {
+      dynamicHeadings.push({
+        title: cleanHeading,
+        index: match.index
+      });
+    }
+  }
+
+  if (dynamicHeadings.length >= 2) {
+    dynamicHeadings.sort((a, b) => a.index - b.index);
+
+    for (let i = 0; i < dynamicHeadings.length; i++) {
+      const cur = dynamicHeadings[i];
+      const nextIdx = i + 1 < dynamicHeadings.length ? dynamicHeadings[i + 1].index : text.length;
+      const sectionText = text.substring(cur.index, nextIdx).trim();
+      const paragraphs = cleanParagraphs(sectionText);
+
+      if (paragraphs.length > 0 || sectionText.length > 50) {
+        const lang = detectLanguage(cur.title + ' ' + sectionText);
+        articles.push({
+          title: cur.title,
+          content: paragraphs.length > 0 ? paragraphs : [sectionText],
+          wordCount: sectionText.split(/\s+/).filter(Boolean).length,
+          language: lang,
+          category: lang === 'en' ? 'English Reading' : 'Literasi Indonesia'
+        });
+      }
+    }
+
+    if (articles.length >= 2) {
+      return articles;
+    }
+  }
+
+  // Single article fallback
+  const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+  const title = lines[0] ? lines[0].replace(/^[#\-*\s]+/, '').slice(0, 80) : 'Naskah Bacaan Impor';
+  const paragraphs = cleanParagraphs(lines.slice(1).join('\n\n'));
+  const lang = detectLanguage(text);
+
+  return [{
+    title,
+    content: paragraphs.length > 0 ? paragraphs : [text],
+    wordCount: text.split(/\s+/).filter(Boolean).length,
+    language: lang,
+    category: lang === 'en' ? 'English Reading' : 'Literasi Indonesia'
+  }];
+}
+
+/**
+ * Fetch and extract clean article content from a web URL with anti-ad & anti-readmore stripping
+ */
+export async function fetchArticleFromUrl(url: string): Promise<{
+  title: string;
+  author?: string;
+  hostname: string;
+  sourceUrl: string;
+  paragraphs: string[];
+  wordCount: number;
+  language: 'id' | 'en';
+}> {
+  const cleanUrl = url.trim();
+  const parsedUrl = new URL(cleanUrl);
+
+  // Strategy 1: Local backend endpoint /api/fetch-article
+  try {
+    const res = await fetch(`/api/fetch-article?url=${encodeURIComponent(cleanUrl)}`, {
+      headers: { 'Accept': 'application/json' }
+    });
+    if (res.ok) {
+      const data = await res.json();
+      if (data.success && data.paragraphs && data.paragraphs.length > 0) {
+        const filteredP = data.paragraphs
+          .map((p: string) => sanitizeParagraphText(p))
+          .filter((p: string) => !isNoiseOrAdParagraph(p));
+
+        if (filteredP.length > 0) {
+          return {
+            title: data.title || `Artikel dari ${parsedUrl.hostname}`,
+            author: data.author,
+            hostname: data.hostname || parsedUrl.hostname,
+            sourceUrl: data.sourceUrl || cleanUrl,
+            paragraphs: filteredP,
+            wordCount: filteredP.join(' ').split(/\s+/).filter(Boolean).length,
+            language: data.language || detectLanguage(filteredP.join(' '))
+          };
+        }
+      }
+    }
+  } catch {
+    // fallback to proxy
+  }
+
+  // Strategy 2: CORS Proxies
+  const proxyEndpoints = [
+    `https://api.allorigins.win/raw?url=${encodeURIComponent(cleanUrl)}`,
+    `https://corsproxy.io/?url=${encodeURIComponent(cleanUrl)}`,
+    `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(cleanUrl)}`
+  ];
+
+  let rawHtml = '';
+  for (const proxyUrl of proxyEndpoints) {
+    try {
+      const res = await fetch(proxyUrl);
+      if (res.ok) {
+        rawHtml = await res.text();
+        if (rawHtml && rawHtml.length > 100) break;
+      }
+    } catch {
+      // try next proxy
+    }
+  }
+
+  if (!rawHtml) {
+    throw new Error(`Tidak dapat menghubungi link web "${parsedUrl.hostname}". Pastikan URL aktif atau tempel teks artikel secara manual.`);
+  }
+
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(rawHtml, 'text/html');
+
+  // Strip unwanted elements
+  const tagsToRemove = [
+    'script', 'style', 'noscript', 'svg', 'nav', 'header', 'footer', 'aside', 'iframe',
+    '.ads', '.advertisement', '.sidebar', '.menu', '.social-share', '.newsletter-box',
+    '.read-more', '.baca-juga', '.related-posts'
+  ];
+  tagsToRemove.forEach(selector => {
+    doc.querySelectorAll(selector).forEach(el => el.remove());
+  });
+
+  // Extract Title
+  let title = '';
+  const ogTitle = doc.querySelector('meta[property="og:title"]')?.getAttribute('content');
+  if (ogTitle) {
+    title = ogTitle.trim();
   } else {
-    // Single article parsing
-    const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
-    const title = lines[0] || 'Artikel Impor Cloverait';
-    const paragraphs = lines.slice(1).join('\n').split(/\n\s*\n/).filter(p => p.length > 15);
+    const docTitle = doc.querySelector('title')?.textContent || doc.querySelector('h1')?.textContent || '';
+    title = docTitle.trim();
+  }
+  title = title.replace(/\s*[-|–—]\s*[^|–—]+$/, '').trim() || `Artikel dari ${parsedUrl.hostname}`;
 
-    const isEnglish = !/[dD]alam|[dD]engan|[dD]an|[yY]ang|[bB]ahwa/.test(text.slice(0, 300));
+  // Extract Author
+  const author = doc.querySelector('meta[name="author"]')?.getAttribute('content')
+    || doc.querySelector('meta[property="article:author"]')?.getAttribute('content')
+    || doc.querySelector('.byline, .author-name, .author')?.textContent?.trim()
+    || undefined;
 
-    articles.push({
-      title,
-      content: paragraphs.length > 0 ? paragraphs : [text],
-      language: isEnglish ? 'en' : 'id',
-      category: isEnglish ? 'English Reading' : 'Literasi Indonesia'
+  // Extract Content
+  const contentRoot = doc.querySelector('article, main, .article-body, .entry-content, .post-content, .story-body') || doc.body;
+  const pElements = contentRoot.querySelectorAll('p');
+  const paragraphs: string[] = [];
+
+  pElements.forEach(p => {
+    const text = sanitizeParagraphText((p.textContent || '').replace(/\s+/g, ' ').trim());
+    if (text.length >= 30 && !isNoiseOrAdParagraph(text)) {
+      paragraphs.push(text);
+    }
+  });
+
+  if (paragraphs.length === 0) {
+    const bodyText = (contentRoot.textContent || '').replace(/\s+/g, ' ').trim();
+    const chunks = bodyText.split(/(?<=[.?!])\s+/).map(s => sanitizeParagraphText(s)).filter(c => c.length >= 35 && !isNoiseOrAdParagraph(c));
+    if (chunks.length > 0) {
+      paragraphs.push(...chunks.slice(0, 10));
+    }
+  }
+
+  if (paragraphs.length === 0) {
+    throw new Error('Halaman web berhasil diakses namun teks artikel utama tidak dapat diekstrak secara otomatis. Silakan salin & tempel teksnya di tab "Paste Teks".');
+  }
+
+  const fullText = paragraphs.join('\n\n');
+  const wordCount = fullText.split(/\s+/).filter(Boolean).length;
+  const language = detectLanguage(fullText);
+
+  return {
+    title,
+    author: author ? author.slice(0, 60) : undefined,
+    hostname: parsedUrl.hostname,
+    sourceUrl: cleanUrl,
+    paragraphs,
+    wordCount,
+    language
+  };
+}
+
+/**
+ * Auto-generate rich vocabulary items from text
+ */
+export function autoGenerateVocabFromText(text: string, language: 'en' | 'id' = 'en'): VocabItem[] {
+  const words = text
+    .replace(/[^\w\s-]/g, ' ')
+    .split(/\s+/)
+    .filter(w => w.length >= 5 && !/^\d+$/.test(w));
+
+  const stopWordsEn = new Set([
+    'because', 'between', 'through', 'another', 'without', 'against', 'before', 'during', 'several',
+    'people', 'should', 'according', 'become', 'however', 'whether', 'including', 'instead', 'rather',
+    'although', 'therefore', 'something', 'everything', 'different', 'important', 'possible', 'article'
+  ]);
+
+  const uniqueWords: string[] = [];
+  const seen = new Set<string>();
+
+  for (const w of words) {
+    const lower = w.toLowerCase();
+    if (!stopWordsEn.has(lower) && !seen.has(lower) && lower.length >= 6) {
+      seen.add(lower);
+      uniqueWords.push(w.charAt(0).toUpperCase() + w.slice(1).toLowerCase());
+      if (uniqueWords.length >= 6) break;
+    }
+  }
+
+  while (uniqueWords.length < 6) {
+    const defaults = ['Resilience', 'Empirical', 'Framework', 'Hypothesis', 'Phenomenon', 'Systemic'];
+    const pick = defaults[uniqueWords.length % defaults.length];
+    uniqueWords.push(pick);
+  }
+
+  return uniqueWords.slice(0, 6).map((word, idx) => {
+    return {
+      word,
+      phonetic: `/${word.toLowerCase()}/`,
+      partOfSpeech: idx % 2 === 0 ? 'noun' : 'adjective',
+      definitionId: `Istilah kosakata kunci terkait topik bacaan: ${word}`,
+      definitionEn: `Key conceptual vocabulary extracted from the imported context: ${word}`,
+      exampleSentence: `The passage highlighted the essential function of ${word.toLowerCase()} within the broader discussion.`
+    };
+  });
+}
+
+/**
+ * Auto-generate Fill-in, True/False, and Multiple Choice questions from text paragraphs
+ */
+export function autoGenerateQuestions(paragraphs: string[], language: 'id' | 'en' = 'id') {
+  const fullText = paragraphs.join(' ');
+  const sentences = fullText
+    .split(/(?<=[.?!])\s+/)
+    .map(s => s.trim())
+    .filter(s => s.length >= 35 && s.length <= 250);
+
+  const fillIns: IsianQuestion[] = [];
+  const trueFalses: TrueFalseQuestion[] = [];
+  const vocabQuizzes: MultipleChoiceQuestion[] = [];
+  const readingQuizzes: MultipleChoiceQuestion[] = [];
+
+  // Indonesian Fill-In Questions
+  for (let i = 0; i < Math.min(5, sentences.length); i++) {
+    const s = sentences[i];
+    const words = s.split(/\s+/).filter(w => w.length >= 5 && !/^[.,:;'"()]+$/.test(w));
+    const targetWord = words[Math.floor(words.length / 2)]?.replace(/[.,:;'"()]/g, '') || 'utama';
+
+    fillIns.push({
+      id: `q-gen-fill-${i + 1}`,
+      question: `Berdasarkan bacaan, apa istilah atau kata yang melengkapi pernyataan: "${s.replace(new RegExp(`\\b${targetWord}\\b`, 'i'), '_____')}"?`,
+      correctAnswers: [targetWord, targetWord.toLowerCase()],
+      explanation: `Dinyatakan dalam paragraf bacaan: "${s}"`,
+      hint: `Kata dimulai dengan huruf '${targetWord.charAt(0)}' dengan panjang ${targetWord.length} huruf.`
     });
   }
 
-  return articles;
+  // Indonesian True/False Questions
+  for (let i = 0; i < 5; i++) {
+    const s = sentences[(i + 2) % sentences.length] || 'Topik artikel memberikan wawasan faktual yang mendalam.';
+    const isTrue = i % 2 === 0;
+    const statement = isTrue ? s : `Berdasarkan teks, ${s.toLowerCase().replace(/adalah|merupakan|telah/i, 'sama sekali tidak')} terjadi.`;
+
+    trueFalses.push({
+      id: `q-gen-tf-${i + 1}`,
+      statement: statement.slice(0, 180),
+      isTrue,
+      explanation: isTrue ? 'Pernyataan ini selaras dengan fakta yang dipaparkan dalam artikel.' : 'Pernyataan ini bertentangan dengan informasi yang disajikan dalam teks naskah.'
+    });
+  }
+
+  // English Vocab True/False Quizzes (10 questions)
+  const vocabItems = autoGenerateVocabFromText(fullText, 'en');
+  const enVocabTrueFalse: TrueFalseQuestion[] = [];
+  
+  vocabItems.slice(0, 10).forEach((v, i) => {
+    const isTrue = i % 2 === 0;
+    enVocabTrueFalse.push({
+      id: `vq-gen-${i + 1}`,
+      statement: isTrue
+        ? `The term "${v.word}" in English academic writing denotes: ${v.definitionEn || v.definitionId}`
+        : `The term "${v.word}" is defined as an accidental error in physical hardware calculation.`,
+      isTrue,
+      explanation: isTrue
+        ? `Correct. "${v.word}" means: ${v.definitionEn || v.definitionId}`
+        : `False. "${v.word}" actually refers to: ${v.definitionEn || v.definitionId}`
+    });
+  });
+
+  for (let i = 0; i < 5; i++) {
+    const keySentence = sentences[(i * 2) % sentences.length] || 'The article explores systemic factors.';
+    readingQuizzes.push({
+      id: `rq-gen-${i + 1}`,
+      question: `According to the imported text, which statement is most accurate regarding the main findings?`,
+      options: [
+        keySentence.slice(0, 120),
+        'The entire phenomenon has zero impact on human society or environment',
+        'All empirical measurements were discontinued without conclusion',
+        'The passage strictly discusses ancient 12th-century architecture'
+      ],
+      correctIndex: 0,
+      explanation: `The text directly discusses: "${keySentence.slice(0, 100)}..."`
+    });
+  }
+
+  return {
+    fillIns,
+    trueFalses,
+    vocabList: vocabItems,
+    vocabQuiz: enVocabTrueFalse,
+    readingQuiz: readingQuizzes
+  };
 }

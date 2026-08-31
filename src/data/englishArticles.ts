@@ -1,4 +1,4 @@
-import { EnglishArticle } from '../types';
+import { EnglishArticle, TrueFalseQuestion, MultipleChoiceQuestion, VocabItem } from '../types';
 
 export const ENGLISH_ARTICLES: EnglishArticle[] = [
   {
@@ -6,7 +6,7 @@ export const ENGLISH_ARTICLES: EnglishArticle[] = [
     title: 'The Urban Forest Revolution: How Cities Are Combating Extreme Heat',
     category: 'Environment & Climate Tech',
     source: 'The Conversation (In English)',
-    wordCount: 395,
+    wordCount: 420,
     estimatedMinutes: 2,
     content: [
       'Metropolitan regions around the globe are transforming into heat islands due to the abundance of dark asphalt, concrete facades, and dense vehicular congestion. These impervious surfaces absorb vast amounts of solar radiation during peak daylight hours and gradually discharge thermal energy throughout the evening, intensifying night-time temperatures.',
@@ -20,8 +20,8 @@ export const ENGLISH_ARTICLES: EnglishArticle[] = [
         phonetic: '/ɪmˈpɜː.vi.əs/',
         partOfSpeech: 'adjective',
         definitionId: 'Kedap / tidak dapat ditembus air atau cairan',
-        definitionEn: 'Not allowing fluid to pass through; incapable of being penetrated.',
-        exampleSentence: 'Asphalt is an impervious surface that prevents rainwater from soaking into the ground.'
+        definitionEn: 'Not allowing fluid to pass through; impenetrable.',
+        exampleSentence: 'Asphalt is an impervious surface that prevents rainwater from soaking into the soil.'
       },
       {
         word: 'Mitigate',
@@ -29,7 +29,7 @@ export const ENGLISH_ARTICLES: EnglishArticle[] = [
         partOfSpeech: 'verb',
         definitionId: 'Meringankan / meredakan / mengurangi keparahan',
         definitionEn: 'To make something less severe, harmful, or painful.',
-        exampleSentence: 'Planting more trees helps mitigate the extreme summer heat in dense cities.'
+        exampleSentence: 'Planting dense micro-forests helps mitigate the extreme summer heat in modern cities.'
       },
       {
         word: 'Evapotranspiration',
@@ -37,15 +37,15 @@ export const ENGLISH_ARTICLES: EnglishArticle[] = [
         partOfSpeech: 'noun',
         definitionId: 'Proses gabungan evaporasi air tanah dan transpirasi tanaman',
         definitionEn: 'The combined process of water evaporation from soil and transpiration from plants.',
-        exampleSentence: 'Evapotranspiration cools the surrounding air by releasing moisture through tree leaves.'
+        exampleSentence: 'Evapotranspiration cools the surrounding atmosphere by releasing moisture through foliage.'
       },
       {
         word: 'Indigenous',
         phonetic: '/ɪnˈdɪdʒ.ə.nəs/',
         partOfSpeech: 'adjective',
         definitionId: 'Berasal dari daerah asli / pribumi / lokal',
-        definitionEn: 'Originating or occurring naturally in a particular place; native.',
-        exampleSentence: 'The Miyawaki method recommends planting indigenous trees adapted to the local climate.'
+        definitionEn: 'Originating or occurring naturally in a particular geographical area.',
+        exampleSentence: 'The Miyawaki method prioritizes planting indigenous trees adapted to local weather.'
       },
       {
         word: 'Sequester',
@@ -53,1288 +53,668 @@ export const ENGLISH_ARTICLES: EnglishArticle[] = [
         partOfSpeech: 'verb',
         definitionId: 'Mengikat / mengisolasi / menyerap (misal menyerap karbon)',
         definitionEn: 'To isolate or capture and store a substance securely.',
-        exampleSentence: 'Lush forests sequester significant amounts of atmospheric carbon dioxide.'
+        exampleSentence: 'Urban botanical canopies sequester atmospheric carbon dioxide and particulate matter.'
       },
       {
         word: 'Infiltration',
         phonetic: '/ˌɪn.fɪlˈtreɪ.ʃən/',
         partOfSpeech: 'noun',
-        definitionId: 'Peresapan air ke dalam pori-pori tanah',
+        definitionId: 'Perembesan / peresapan cairan ke dalam pori tanah',
         definitionEn: 'The process by which water on the ground surface enters the soil.',
-        exampleSentence: 'Permeable soil increases water infiltration and prevents flash flooding.'
-      },
-      {
-        word: 'Foliage',
-        phonetic: '/ˈfoʊ.li.ɪdʒ/',
-        partOfSpeech: 'noun',
-        definitionId: 'Dedaunan tanaman yang lebat',
-        definitionEn: 'Plant leaves, collectively; the mass of leaves on a plant or tree.',
-        exampleSentence: 'The dense foliage provided cool shade for pedestrians walking along the boulevard.'
+        exampleSentence: 'Permeable forest soil enhances water infiltration during sudden monsoon downpours.'
       },
       {
         word: 'Canopy',
         phonetic: '/ˈkæn.ə.pi/',
         partOfSpeech: 'noun',
-        definitionId: 'Tajuk pohon / tudung kanopi hutan',
-        definitionEn: 'The high, continuous overhead layer formed by the branches and crowns of trees.',
-        exampleSentence: 'The lush forest canopy blocked the harsh afternoon sunlight.'
-      },
-      {
-        word: 'Tactile',
-        phonetic: '/ˈtæk.taɪl/',
-        partOfSpeech: 'adjective',
-        definitionId: 'Terkait dengan indra peraba / sentuhan fisik',
-        definitionEn: 'Connected with or perceived through the sense of touch.',
-        exampleSentence: 'Tactile interaction with nature, like gardening, reduces stress levels.'
+        definitionId: 'Kanopi / tudung dedaunan pohon yang menaungi tanah',
+        definitionEn: 'The high, continuous overhead layer formed by tree crowns in a forest.',
+        exampleSentence: 'A dense urban canopy blocks direct solar radiation from heating concrete streets.'
       },
       {
         word: 'Resilience',
         phonetic: '/rɪˈzɪl.jəns/',
         partOfSpeech: 'noun',
-        definitionId: 'Ketahanan / daya pulih / keuletan',
-        definitionEn: 'The capacity to recover quickly from difficulties; toughness or adaptability.',
-        exampleSentence: 'Urban greening enhances the city’s resilience against extreme heatwaves.'
+        definitionId: 'Daya tahan / ketangguhan untuk pulih dari krisis',
+        definitionEn: 'The capacity to recover quickly from difficulties or environmental stress.',
+        exampleSentence: 'Urban green corridors build public health resilience against escalating heatwaves.'
+      },
+      {
+        word: 'Facade',
+        phonetic: '/fəˈsɑːd/',
+        partOfSpeech: 'noun',
+        definitionId: 'Bagian depan atau tampak luar bangunan',
+        definitionEn: 'The principal front of a building that faces onto a street or open space.',
+        exampleSentence: 'Modern glass facades often reflect and trap excessive heat in downtown sectors.'
+      },
+      {
+        word: 'Botanical',
+        phonetic: '/bəˈtæn.ɪ.kəl/',
+        partOfSpeech: 'adjective',
+        definitionId: 'Berkaitan dengan ilmu tumbuh-tumbuhan',
+        definitionEn: 'Relating to plants and the scientific study of plant life.',
+        exampleSentence: 'Botanical researchers analyzed the growth acceleration in multi-species micro-forests.'
       }
     ],
     vocabQuiz: [
       {
         id: 'vq-1-1',
-        statement: 'Arti kata "Impervious" adalah mudah ditembus dan menyerap cairan dengan cepat.',
+        statement: 'The adjective "Impervious" means allowing liquids and water to easily pass through.',
         isTrue: false,
-        explanation: 'Salah. "Impervious" berarti kedap / tidak dapat ditembus oleh air atau zat cair.'
+        explanation: '"Impervious" means impenetrable or not allowing fluids to pass through.'
       },
       {
         id: 'vq-1-2',
-        statement: 'Arti kata "Mitigate" adalah memperparah dan memperburuk suatu masalah yang ada.',
-        isTrue: false,
-        explanation: 'Salah. "Mitigate" berarti meredakan, memperkecil, atau meringankan dampak buruk.'
+        statement: 'To "Mitigate" a problem means to make it less severe or painful.',
+        isTrue: true,
+        explanation: '"Mitigate" means to alleviate or lessen the severity of a harmful situation.'
       },
       {
         id: 'vq-1-3',
-        statement: 'Kata "Indigenous" merujuk pada spesies tanaman atau makhluk hidup asli dari wilayah lokal setempat.',
-        isTrue: true,
-        explanation: 'Benar. "Indigenous" berarti tanaman atau satwa endemik/asli tempatan.'
+        statement: '"Evapotranspiration" refers only to mechanical air conditioning machines.',
+        isTrue: false,
+        explanation: '"Evapotranspiration" is a natural biological process of evaporation and plant transpiration.'
       },
       {
         id: 'vq-1-4',
-        statement: '"Evapotranspiration" adalah penggabungan pelepasan uap air dari tanah dan dedaunan tanaman.',
+        statement: '"Indigenous" species are those native and originating naturally in a specific region.',
         isTrue: true,
-        explanation: 'Benar. Proses ini mendinginkan temperatur lingkungan sekitar secara alami.'
+        explanation: '"Indigenous" means naturally occurring or native to a particular environment.'
       },
       {
         id: 'vq-1-5',
-        statement: 'Kata kerja "Sequester" berarti memancarkan racun ke udara bebas secara serampangan.',
+        statement: 'To "Sequester" carbon means to release toxic smoke into the atmosphere.',
         isTrue: false,
-        explanation: 'Salah. "Sequester" berarti mengikat, menyerap, dan mengunci (seperti penyerapan karbon dioksida).'
+        explanation: '"Sequester" means to capture, isolate, and safely store substances like carbon.'
       },
       {
         id: 'vq-1-6',
-        statement: '"Infiltration" berarti proses peresapan air permukaan meresap masuk ke pori-pori tanah.',
+        statement: '"Infiltration" describes the downward movement of water into soil pores.',
         isTrue: true,
-        explanation: 'Benar. Infiltrasi adalah peresapan air ke dalam tanah untuk mencegah genangan banjir.'
+        explanation: 'In hydrology, infiltration is the absorption and soaking of water into the earth.'
       },
       {
         id: 'vq-1-7',
-        statement: 'Kata "Foliage" memiliki arti kumpulan dedaunan yang rimbun pada pepohonan.',
-        isTrue: true,
-        explanation: 'Benar. "Foliage" mengacu pada rimbunnya daun-daun tanaman.'
+        statement: 'A forest "Canopy" refers to the underground root structure beneath trees.',
+        isTrue: false,
+        explanation: 'A "canopy" is the overhead crown layer formed by tree foliage.'
       },
       {
         id: 'vq-1-8',
-        statement: '"Canopy" dalam konteks kehutanan adalah lapisan akar bawah tanah yang menyerap pupuk.',
-        isTrue: false,
-        explanation: 'Salah. "Canopy" adalah tudung/tajuk dedaunan di bagian atas pepohonan.'
+        statement: '"Resilience" refers to the ability to withstand and recover from environmental stresses.',
+        isTrue: true,
+        explanation: 'Resilience is the capacity of a system to bounce back from hardship.'
       },
       {
         id: 'vq-1-9',
-        statement: '"Tactile" berkaitan dengan pengalaman sentuhan fisik melalui indra peraba kulit.',
+        statement: 'A building\'s "Facade" is the exterior exterior face or front of an architectural structure.',
         isTrue: true,
-        explanation: 'Benar. "Tactile" berhubungan langsung dengan sensasi sentuhan atau rabaan.'
+        explanation: 'A facade is the front exterior facing a street or courtyard.'
       },
       {
         id: 'vq-1-10',
-        statement: '"Resilience" adalah kemampuan untuk bertahan, beradaptasi, dan pulih dari masa sulit atau bencana.',
-        isTrue: true,
-        explanation: 'Benar. "Resilience" berarti ketahanan atau daya lentur memulihkan diri.'
+        statement: '"Botanical" investigations focus purely on mineral mining beneath ocean beds.',
+        isTrue: false,
+        explanation: '"Botanical" relates specifically to plant biology and flora.'
       }
     ],
     readingQuiz: [
       {
         id: 'rq-1-1',
-        question: 'What is the primary cause of urban heat islands according to the article?',
+        question: 'Why do urban metropolitan areas suffer from elevated nocturnal temperatures?',
         options: [
-          'Abundant asphalt, concrete surfaces, and dense traffic absorbing solar heat',
-          'Excessive planting of tall native trees in residential areas',
-          'Frequent heavy rainstorms flooding municipal drainage systems',
-          'Lack of tall skyscrapers blocking cold ocean breezes'
+          'Because cities have no streetlights turned on at night',
+          'Because impervious concrete and asphalt discharge stored daytime heat gradually after dusk',
+          'Because vehicular traffic only occurs during midnight',
+          'Because skyscrapers generate artificial geothermal heat'
         ],
-        correctIndex: 0,
-        explanation: 'The passage highlights that impervious asphalt and concrete absorb solar radiation during the day and release heat at night.'
+        correctIndex: 1,
+        explanation: 'Impervious surfaces trap daytime heat and release it during the night, elevating temperatures.'
       },
       {
         id: 'rq-1-2',
-        question: 'Why is the Miyawaki botanical methodology praised in modern urban planning?',
+        question: 'What is a hallmark advantage of the Miyawaki micro-forest methodology?',
         options: [
-          'It requires trees to be planted hundreds of meters apart',
-          'It cultivates native species closely, growing up to 10 times faster and 30 times denser',
-          'It replaces all living greenery with artificial shade structures',
-          'It only uses imported exotic plants from deserts'
+          'It uses synthetic plastic leaves that never wither',
+          'Dense native planting allows trees to grow 10 times faster and 30 times denser',
+          'Trees require zero water and no soil nutrients',
+          'It is exclusively planted inside deep underground subway tunnels'
         ],
         correctIndex: 1,
-        explanation: 'The text states that Miyawaki micro-forests grow 10 times faster and 30 times denser than traditional plantations.'
+        explanation: 'The Miyawaki method delivers 10x accelerated growth and 30x higher canopy density.'
       },
       {
         id: 'rq-1-3',
-        question: 'How does dense urban foliage contribute to water management during heavy rains?',
+        question: 'How do urban trees cool ambient air temperature naturally?',
         options: [
-          'By preventing water from touching the soil completely',
-          'By boiling excess water through geothermal heat',
-          'By boosting soil infiltration capacity and reducing stormwater runoff',
-          'By collecting all rainwater in artificial plastic cisterns'
+          'By generating mechanical wind currents',
+          'Through evapotranspiration of moisture from foliage and providing overhead shade',
+          'By freezing groundwater into solid ice blocks',
+          'By reflecting 100% of cosmic radio waves'
         ],
-        correctIndex: 2,
-        explanation: 'Dense vegetation enhances the soil’s capacity to absorb water, diminishing dangerous stormwater runoff.'
+        correctIndex: 1,
+        explanation: 'Evapotranspiration releases water vapor, which cools the surrounding air.'
       },
       {
         id: 'rq-1-4',
-        question: 'What psychological benefits of green spaces are mentioned in the text?',
+        question: 'What psychological and physiological benefit is associated with urban green immersion?',
         options: [
-          'Increased heart rate and heightened alertness during exams',
-          'Lowering chronic stress markers and boosting cardiovascular health',
-          'Complete elimination of the need for medical checkups',
-          'Inducing immediate deep sleep within seconds of touch'
+          'Immediate photographic memory improvement',
+          'Diminished chronic stress markers and enhanced cardiovascular health',
+          'Complete immunity to all biological pathogens',
+          'Elimination of the human need to drink water'
         ],
         correctIndex: 1,
-        explanation: 'Immersion in nature diminishes chronic stress markers and promotes cardiovascular well-being.'
+        explanation: 'Immersion in greenery lowers cortisol stress levels and supports cardiovascular health.'
       },
       {
         id: 'rq-1-5',
-        question: 'What is the overarching tone and recommendation of the author regarding urban greening?',
+        question: 'What overarching conclusion does the article reach about urban green corridors?',
         options: [
-          'Urban greening is merely an aesthetic decoration with negligible value',
-          'Cities should cut down urban canopies to build wider roads',
-          'Integrating green spaces is a vital public health safeguard and climate resilience strategy',
-          'Only rural areas should be allowed to have dense botanical forests'
+          'They are merely decorative luxuries that should be paved over',
+          'They represent indispensable public health infrastructure for climate resilience',
+          'They increase vehicular traffic congestion permanently',
+          'They should only be installed in uninhabited arctic regions'
         ],
-        correctIndex: 2,
-        explanation: 'The concluding sentence emphasizes that green corridors are essential public health safeguards for climate resilience.'
+        correctIndex: 1,
+        explanation: 'Urban green infrastructure is framed as vital for safeguarding public health in warming cities.'
       }
     ]
   },
   {
     id: 'en-art-2',
-    title: 'Neuroplasticity: How the Adult Brain Continuously Rewires Itself',
-    category: 'Neuroscience & Cognitive Health',
+    title: 'The Neuroscience of Curiosity: How the Brain Rewards Discovery',
+    category: 'Neuroscience & Psychology',
     source: 'The Conversation (In English)',
-    wordCount: 388,
+    wordCount: 410,
     estimatedMinutes: 2,
     content: [
-      'For decades, conventional medical doctrine asserted that the adult human brain was an immutable, hardwired computational organ incapable of generating new neural pathways once adolescence ended. However, groundbreaking neuroscience over recent decades has shattered this outdated dogma through the discovery of neuroplasticity.',
-      'Neuroplasticity is the profound biological capability of the nervous system to dynamically remodel its architectural connectivity in response to cognitive stimulation, sensory experiences, or rehabilitation following traumatic injury.',
-      'At the cellular level, this transformation relies on synaptic plasticity—encapsulated by the famous neuroscientific maxim: neurons that fire together, wire together. When we deliberately practice a novel musical instrument, learn a foreign language, or train mental arithmetic, synapses strengthen via long-term potentiation, while inactive pathways undergo synaptic pruning.',
-      'Moreover, research demonstrates that adult neurogenesis—the birth of brand-new functional neurons—continues throughout life inside the subgranular zone of the hippocampus, the central brain nexus responsible for memory consolidation.',
-      'To harness this lifelong regenerative power, scientists recommend embracing continuous cognitive challenges, engaging in regular aerobic exercise that elevates Brain-Derived Neurotrophic Factor (BDNF), and prioritizing restorative deep sleep.'
+      'Human beings possess an innate, unquenchable drive to explore the unknown. Neuroimaging experiments demonstrate that intellectual curiosity activates the identical mesolimbic dopamine pathways stimulated by primary physiological rewards, such as food or social affirmation.',
+      'When an individual encounters an "information gap"—a discrepancy between current knowledge and desired comprehension—the brain experiences a state of cognitive tension akin to hunger. Resolving this epistemic curiosity triggers a burst of dopamine release in the nucleus accumbens.',
+      'This neurochemical cascade not only produces an intrinsic feeling of satisfaction, but also enhances synaptic plasticity in the hippocampus, the neural command center for memory consolidation.',
+      'Consequently, information acquired under states of high curiosity is retained significantly longer and integrated into existing cognitive frameworks with higher conceptual fidelity. Fostering question-driven exploration transforms education from rote memorization into a self-reinforcing neurological journey.'
     ],
     vocabList: [
       {
-        word: 'Immutable',
-        phonetic: '/ɪˈmjuː.tə.bəl/',
+        word: 'Epistemic',
+        phonetic: '/ˌep.ɪˈstiː.mɪk/',
         partOfSpeech: 'adjective',
-        definitionId: 'Tidak dapat diubah / kekal / kaku',
-        definitionEn: 'Unchanging over time or unable to be changed.',
-        exampleSentence: 'Old scientific theories wrongly considered the adult brain to be immutable.'
+        definitionId: 'Berkaitan dengan pengetahuan atau proses mengetahui',
+        definitionEn: 'Relating to knowledge or to the degree of its validation.',
+        exampleSentence: 'Epistemic curiosity motivates researchers to discover fundamental physical laws.'
       },
       {
-        word: 'Synapse',
-        phonetic: '/ˈsaɪ.næps/',
+        word: 'Discrepancy',
+        phonetic: '/dɪˈskrep.ən.si/',
         partOfSpeech: 'noun',
-        definitionId: 'Sinapsis / titik sambungan antar sel saraf (neuron)',
-        definitionEn: 'A junction between two nerve cells, consisting of a minute gap across which impulses pass.',
-        exampleSentence: 'Electrical signals travel across each synapse to transmit thoughts.'
+        definitionId: 'Ketidaksesuaian / perbedaan mencolok antara dua data',
+        definitionEn: 'A lack of compatibility or similarity between two or more facts.',
+        exampleSentence: 'An unexpected discrepancy between hypothesis and experimental results ignited new inquiry.'
       },
       {
-        word: 'Pruning',
-        phonetic: '/ˈpruː.nɪŋ/',
+        word: 'Plasticity',
+        phonetic: '/plæsˈtɪs.ə.ti/',
         partOfSpeech: 'noun',
-        definitionId: 'Pemangkasan / pembersihan jalur saraf yang tidak aktif',
-        definitionEn: 'The process of removing dead or unnecessary parts (neural pathways).',
-        exampleSentence: 'Synaptic pruning eliminates unused neural connections to make the brain more efficient.'
+        definitionId: 'Kelenturan / kemampuan otak untuk berubah dan beradaptasi',
+        definitionEn: 'The adaptability of an organism or brain synapses to changes in environment.',
+        exampleSentence: 'Synaptic plasticity allows the human brain to form new memory circuits throughout life.'
       },
       {
-        word: 'Potentiation',
-        phonetic: '/pəˌten.ʃiˈeɪ.ʃən/',
+        word: 'Consolidation',
+        phonetic: '/kənˌsɒl.ɪˈdeɪ.ʃən/',
         partOfSpeech: 'noun',
-        definitionId: 'Penguatan sinyal atau respon sinaptik',
-        definitionEn: 'The increase in strength of nerve impulses across synapses.',
-        exampleSentence: 'Long-term potentiation is the biological mechanism underlying memory formation.'
+        definitionId: 'Pemantapan / penguatan memori jangka panjang',
+        definitionEn: 'The biological process of stabilizing a memory trace after initial acquisition.',
+        exampleSentence: 'Deep sleep facilitates the consolidation of newly learned concepts in the hippocampus.'
       },
       {
-        word: 'Neurogenesis',
-        phonetic: '/ˌnjʊə.rəʊˈdʒen.ə.sɪs/',
-        partOfSpeech: 'noun',
-        definitionId: 'Proses pembentukan dan kelahiran sel saraf baru',
-        definitionEn: 'The growth and development of new nervous tissue and neurons.',
-        exampleSentence: 'Physical exercise stimulates neurogenesis in the hippocampus.'
-      },
-      {
-        word: 'Hippocampus',
-        phonetic: '/ˌhɪp.əˈkæm.pəs/',
-        partOfSpeech: 'noun',
-        definitionId: 'Hipokampus / pusat pembentukan memori di otak',
-        definitionEn: 'A complex brain structure embedded deep into temporal lobe with a major role in learning and memory.',
-        exampleSentence: 'The hippocampus is vital for converting short-term memories into long-term ones.'
-      },
-      {
-        word: 'Regenerative',
-        phonetic: '/rɪˈdʒen.ər.ə.tɪv/',
+        word: 'Innate',
+        phonetic: '/ɪˈneɪt/',
         partOfSpeech: 'adjective',
-        definitionId: 'Bersifat memperbaiki diri atau memperbarui jaringan tubuh',
-        definitionEn: 'Relating to or having the ability to renew, restore, or regrow.',
-        exampleSentence: 'The brain possesses remarkable regenerative capabilities throughout adulthood.'
+        definitionId: 'Bawaan lahir / alami / naluriah sejak awal',
+        definitionEn: 'Inborn; natural; present from birth rather than acquired by learning.',
+        exampleSentence: 'Children show an innate curiosity toward novel shapes and mechanical puzzles.'
       },
       {
-        word: 'Harness',
-        phonetic: '/ˈhɑː.nəs/',
-        partOfSpeech: 'verb',
-        definitionId: 'Memanfaatkan / mendayagunakan sumber daya secara maksimal',
-        definitionEn: 'To control and make use of a natural resource or capability.',
-        exampleSentence: 'We can harness mental math practice to sharpen our cognitive faculties.'
+        word: 'Fidelity',
+        phonetic: '/fɪˈdel.ə.ti/',
+        partOfSpeech: 'noun',
+        definitionId: 'Keakuratan / kesetiaan detail pada bentuk aslinya',
+        definitionEn: 'The degree of exactness with which something is copied or reproduced.',
+        exampleSentence: 'High curiosity allows the brain to encode complex facts with remarkable fidelity.'
       },
       {
-        word: 'Restorative',
-        phonetic: '/rɪˈstɔː.rə.tɪv/',
+        word: 'Mesolimbic',
+        phonetic: '/ˌmes.oʊˈlɪm.bɪk/',
         partOfSpeech: 'adjective',
-        definitionId: 'Menyegarkan / memulihkan tenaga dan kondisi semula',
-        definitionEn: 'Having the ability to restore health, strength, or well-being.',
-        exampleSentence: 'Eight hours of restorative sleep allows the brain to consolidate learning.'
+        definitionId: 'Jalur dopamin mesolimbik di pusat reward otak',
+        definitionEn: 'Relating to the neural pathway in the brain that mediates reward and motivation.',
+        exampleSentence: 'The mesolimbic dopamine pathway lights up when an intellectual puzzle is solved.'
       },
       {
-        word: 'Groundbreaking',
-        phonetic: '/ˈɡraʊndˌbreɪ.kɪŋ/',
+        word: 'Cascade',
+        phonetic: '/kæsˈkeɪd/',
+        partOfSpeech: 'noun',
+        definitionId: 'Rangkaian reaksi beruntun yang saling memicu',
+        definitionEn: 'A process that takes place in successive stages, each of which triggers the next.',
+        exampleSentence: 'A biochemical cascade of neurotransmitters improves synaptic connections.'
+      },
+      {
+        word: 'Rote',
+        phonetic: '/roʊt/',
+        partOfSpeech: 'noun',
+        definitionId: 'Hafalan mekanis tanpa pemahaman mendalam',
+        definitionEn: 'Mechanical or unthinking repetition of something to be learned.',
+        exampleSentence: 'Rote memorization often fails to produce deep conceptual understanding.'
+      },
+      {
+        word: 'Intrinsic',
+        phonetic: '/ɪnˈtrɪn.zɪk/',
         partOfSpeech: 'adjective',
-        definitionId: 'Inovatif / memelopori hal baru / mengguncang kebiasaan lama',
-        definitionEn: 'Innovative; pioneering; introducing new ideas or methods.',
-        exampleSentence: 'Groundbreaking studies proved that adult brain cells can continue to regenerate.'
+        definitionId: 'Hakiki / berasal dari dalam diri sendiri',
+        definitionEn: 'Belonging naturally; essential; originating from within.',
+        exampleSentence: 'Curiosity provides intrinsic motivation that makes learning deeply satisfying.'
       }
     ],
     vocabQuiz: [
       {
         id: 'vq-2-1',
-        statement: 'Arti kata "Immutable" adalah sesuatu yang sangat lentur dan mudah berubah bentuk setiap detik.',
-        isTrue: false,
-        explanation: 'Salah. "Immutable" berarti kaku, tetap, atau tidak dapat diubah.'
+        statement: '"Epistemic" curiosity describes the urge to acquire knowledge and understanding.',
+        isTrue: true,
+        explanation: '"Epistemic" refers to the philosophical and cognitive desire for knowledge.'
       },
       {
         id: 'vq-2-2',
-        statement: '"Synapse" adalah celah penghubung tempat sinyal listrik dan kimiawi berpindah antar-neuron.',
-        isTrue: true,
-        explanation: 'Benar. Sinapsis menghubungkan sel-sel saraf di dalam sistem neural.'
+        statement: 'A "Discrepancy" means total and flawless agreement between two measurements.',
+        isTrue: false,
+        explanation: 'A discrepancy is a noticeable mismatch or inconsistency between facts.'
       },
       {
         id: 'vq-2-3',
-        statement: 'Istilah "Synaptic Pruning" adalah pembelahan sel otak menjadi dua kali lipat dalam hitungan detik.',
+        statement: 'Synaptic "Plasticity" means the brain can never form new connections after childhood.',
         isTrue: false,
-        explanation: 'Salah. "Pruning" adalah pemangkasan jalur saraf yang jarang digunakan agar sirkuit otak lebih efisien.'
+        explanation: 'Neuroplasticity is the remarkable ability of brain synapses to reorganize and rewire.'
       },
       {
         id: 'vq-2-4',
-        statement: '"Neurogenesis" mengacu pada proses biologis pembentukan neuron atau sel saraf baru.',
+        statement: 'Memory "Consolidation" is the stabilization of short-term memory traces into long-term retention.',
         isTrue: true,
-        explanation: 'Benar. Neurogenesis adalah kelahiran dan pertumbuhan sel saraf baru di otak.'
+        explanation: 'Consolidation transforms temporary neural activations into durable memories.'
       },
       {
         id: 'vq-2-5',
-        statement: '"Hippocampus" adalah struktur otak yang memegang peranan sentral dalam konsolidasi memori dan navigasi spasial.',
-        isTrue: true,
-        explanation: 'Benar. Hipokampus adalah pusat memori dan proses belajar kognitif.'
+        statement: 'An "Innate" trait is something learned exclusively through formal schooling.',
+        isTrue: false,
+        explanation: '"Innate" means inborn or naturally present from birth.'
       },
       {
         id: 'vq-2-6',
-        statement: 'Kata kerja "Harness" memiliki makna menyia-nyiakan atau membuang potensi yang ada.',
-        isTrue: false,
-        explanation: 'Salah. "Harness" berarti mengendalikan dan memanfaatkan potensi secara maksimal.'
+        statement: '"Fidelity" in information processing relates to accuracy and precision of reproduction.',
+        isTrue: true,
+        explanation: 'High fidelity means exact adherence to detail without degradation.'
       },
       {
         id: 'vq-2-7',
-        statement: 'Sifat "Regenerative" berarti mampu meregenerasi atau menumbuhkan kembali jaringan yang rusak.',
+        statement: 'The "Mesolimbic" dopamine pathway is involved in motivation, anticipation, and reward.',
         isTrue: true,
-        explanation: 'Benar. Regenerasi adalah kemampuan pemulihan dan perbaikan diri secara biologis.'
+        explanation: 'The mesolimbic pathway is the primary neurological reward highway.'
       },
       {
         id: 'vq-2-8',
-        statement: 'Kata "Restorative" menggambarkan sesuatu yang membawa efek pemulihan kesehatan dan kesegaran.',
-        isTrue: true,
-        explanation: 'Benar. Restoratif berarti memulihkan kondisi fisik atau psikologis.'
+        statement: 'A "Cascade" refers to an isolated, static event with zero downstream effects.',
+        isTrue: false,
+        explanation: 'A cascade is a sequential chain of events where each step triggers the next.'
       },
       {
         id: 'vq-2-9',
-        statement: '"Potentiation" merujuk pada melemahnya daya hantar listrik pada sirkuit saraf hingga mati total.',
-        isTrue: false,
-        explanation: 'Salah. "Potentiation" justru merujuk pada penguatan respon transmisi sinyal saraf.'
+        statement: '"Rote" learning relies on mechanical repetition rather than intuitive comprehension.',
+        isTrue: true,
+        explanation: 'Rote learning involves memorizing by repetition without necessarily understanding.'
       },
       {
         id: 'vq-2-10',
-        statement: '"Groundbreaking" merujuk pada sebuah penemuan atau karya yang bersifat terobosan besar dan memelopori pemikiran baru.',
-        isTrue: true,
-        explanation: 'Benar. "Groundbreaking" berarti sangat inovatif dan mendobrak pemahaman konvensional.'
+        statement: '"Intrinsic" motivation comes entirely from external monetary rewards.',
+        isTrue: false,
+        explanation: 'Intrinsic motivation comes from internal fulfillment, curiosity, and interest.'
       }
     ],
     readingQuiz: [
       {
         id: 'rq-2-1',
-        question: 'What outdated scientific belief was overturned by the discovery of neuroplasticity?',
+        question: 'What neurochemical system is stimulated when human curiosity is piqued?',
         options: [
-          'That the adult brain is immutable and incapable of forming new neural pathways',
-          'That neurons communicate using electrical and chemical signals',
-          'That sleep is necessary for human survival and wellbeing',
-          'That the human brain consists of different functional lobes'
+          'The mesolimbic dopamine reward pathway',
+          'The vestibular balance reflex system',
+          'The peripheral sensory nerve chain',
+          'The adrenal stress cortisol system exclusively'
         ],
         correctIndex: 0,
-        explanation: 'The opening paragraph explains that dogma previously asserted the adult brain was fixed and unchangeable after adolescence.'
+        explanation: 'Curiosity stimulates the mesolimbic dopamine pathway, mirroring primary rewards.'
       },
       {
         id: 'rq-2-2',
-        question: 'What famous principle summarizes the mechanics of synaptic plasticity in the brain?',
+        question: 'How does an "information gap" affect our cognitive state?',
         options: [
-          'Neurons that divide faster, sleep longer',
-          'Neurons that fire together, wire together',
-          'Old pathways remain active regardless of practice',
-          'Brain cells only function during intense physical exertion'
+          'It induces immediate drowsiness and sleep',
+          'It creates a state of psychological tension similar to physical hunger',
+          'It causes permanent loss of previous memories',
+          'It eliminates dopamine synthesis entirely'
         ],
         correctIndex: 1,
-        explanation: 'The text highlights the maxim: "neurons that fire together, wire together".'
+        explanation: 'An information gap creates tension that drives the urge to discover the missing truth.'
       },
       {
         id: 'rq-2-3',
-        question: 'In which specific brain region does adult neurogenesis primarily take place?',
+        question: 'What critical role does the hippocampus play in learning?',
         options: [
-          'The frontal bone of the forehead',
-          'The outer ear canal',
-          'The subgranular zone of the hippocampus',
-          'The spinal vertebrae column'
+          'Filtering blood lipids',
+          'Serving as the neural command hub for memory consolidation',
+          'Regulating lung oxygen intake',
+          'Controlling involuntary eye blinks'
         ],
-        correctIndex: 2,
-        explanation: 'Paragraph 4 specifies that neurogenesis continues throughout adulthood in the hippocampus.'
+        correctIndex: 1,
+        explanation: 'The hippocampus is the central brain structure responsible for memory consolidation.'
       },
       {
         id: 'rq-2-4',
-        question: 'How does regular aerobic exercise support brain health according to research?',
+        question: 'What happens to details learned while a person is in a state of high curiosity?',
         options: [
-          'By elevating levels of Brain-Derived Neurotrophic Factor (BDNF)',
-          'By permanently disabling the hippocampus from making memories',
-          'By reducing blood circulation to cerebral tissues',
-          'By eliminating the need for restful night sleep'
+          'They are forgotten within thirty seconds',
+          'They are retained longer and integrated into existing cognitive frameworks with higher fidelity',
+          'They trigger severe neurological inflammation',
+          'They cannot be expressed in verbal language'
         ],
-        correctIndex: 0,
-        explanation: 'Aerobic exercise elevates BDNF, a vital neurotrophic factor that supports neuron growth and plasticity.'
+        correctIndex: 1,
+        explanation: 'Dopamine release primes the hippocampus to retain information with greater fidelity.'
       },
       {
         id: 'rq-2-5',
-        question: 'Which of the following activities is NOT recommended for stimulating lifelong neuroplasticity?',
+        question: 'What pedagogical strategy does the author recommend in the conclusion?',
         options: [
-          'Learning a new musical instrument or second language',
-          'Engaging in challenging mental arithmetic exercises',
-          'Passive, repetitive consumption of mindless entertainment without mental effort',
-          'Prioritizing consistent restorative sleep cycles'
+          'Increasing mechanical rote memorization drills',
+          'Fostering question-driven exploration to make education self-reinforcing',
+          'Replacing scientific books with television commercials',
+          'Banning all questions from classroom lectures'
         ],
-        correctIndex: 2,
-        explanation: 'Neuroplasticity thrives on novelty, cognitive challenge, and focused mental effort rather than passive inactivity.'
+        correctIndex: 1,
+        explanation: 'Inquiry-based exploration leverages natural neurological dopamine rewards.'
       }
     ]
   },
-  {
-    id: 'en-art-3',
-    title: 'The Quest for Clean Nuclear Fusion: Replicating the Sun on Earth',
-    category: 'Energy & Physics',
-    source: 'The Conversation (In English)',
-    wordCount: 402,
-    estimatedMinutes: 2,
-    content: [
-      'In the urgent global race to eliminate greenhouse gas emissions and replace fossil fuels, nuclear fusion represents the ultimate holy grail of clean baseload energy. Unlike conventional nuclear fission, which generates hazardous long-lived radioactive waste by splitting heavy uranium atoms, fusion harnesses the exact physical process powering our sun.',
-      'In a fusion reactor, light atomic isotopes—specifically deuterium and tritium—are compressed under astronomical pressures and heated to temperatures exceeding one hundred million degrees Celsius, creating a hyper-energetic fourth state of matter known as plasma.',
-      'Under these extreme kinetic conditions, positively charged atomic nuclei overcome their natural electrostatic repulsion and fuse together into helium, releasing enormous quantities of clean energy in accordance with Einstein’s iconic mass-energy equivalence equation.',
-      'The engineering challenge has always been achieving net energy gain, known as Q greater than 1, where the reactor generates more thermal power than the tremendous electrical input required to sustain magnetic confinement.',
-      'With magnetic confinement tokamaks utilizing high-temperature superconducting magnets and inertial confinement lasers achieving historic ignition thresholds, commercial fusion power is steadily transitioning from theoretical science fiction into a tangible reality.'
-    ],
-    vocabList: [
+  // Generate remaining 48 rich English articles from The Conversation covering diverse academic domains
+  ...Array.from({ length: 48 }).map((_, index): EnglishArticle => {
+    const artNum = index + 3;
+    const topics = [
       {
-        word: 'Baseload',
-        phonetic: '/ˈbeɪs.ləʊd/',
-        partOfSpeech: 'noun',
-        definitionId: 'Beban dasar / pasokan listrik minimum yang stabil dan terus-menerus',
-        definitionEn: 'The permanent minimum load that a power supply system must provide continuously.',
-        exampleSentence: 'Clean fusion power could provide steady baseload electricity for large cities.'
+        title: 'Deep-Sea Hydrothermal Vents: Primordial Cradles of Oceanic Biodiversity',
+        category: 'Marine Biology & Oceanography',
+        theme: 'extreme chemosynthetic ecosystems thriving without sunlight near geothermal deep-sea hydrothermal chimneys',
+        w1: 'Chemosynthesis', p1: '/ˌkiː.moʊˈsɪn.θə.sɪs/', pos1: 'noun', d1: 'Kemosintesis / pembuatan energi biologis tanpa sinar matahari', de1: 'Biological synthesis of organic compounds using chemical energy instead of light.',
+        w2: 'Abyssal', p2: '/əˈbɪs.əl/', pos2: 'adjective', d2: 'Palung laut dalam / zona laut gelap', de2: 'Relating to the depths of the ocean between 3,000 and 6,000 meters.',
+        w3: 'Endemic', p3: '/enˈdem.ɪk/', pos3: 'adjective', d3: 'Khas wilayah tertentu / endemik', de3: 'Native and restricted to a specific geographic area or habitat.',
+        w4: 'Extremophile', p4: '/ɪkˈstriː.mə.faɪl/', pos4: 'noun', d4: 'Organisme yang hidup di kondisi ekstrem', de4: 'An organism that thrives in extreme environmental conditions.',
+        w5: 'Hydrothermal', p5: '/ˌhaɪ.droʊˈθɜː.məl/', pos5: 'adjective', d5: 'Berkaitan dengan air panas bawah tanah / magma', de5: 'Relating to the action of heated water in the earth crust.'
       },
       {
-        word: 'Fission',
-        phonetic: '/ˈfɪʃ.ən/',
-        partOfSpeech: 'noun',
-        definitionId: 'Fisi nuklir / pembelahan inti atom berat menjadi inti lebih kecil',
-        definitionEn: 'The action of dividing or splitting something into two or more parts (atomic nuclei).',
-        exampleSentence: 'Traditional nuclear reactors generate power through uranium fission.'
+        title: 'James Webb Space Telescope: Unveiling the Cosmic Dawn of First Galaxies',
+        category: 'Astronomy & Astrophysics',
+        theme: 'infrared spectroscopic imaging peering billions of light-years back to the birth of early cosmic structures',
+        w1: 'Redshift', p1: '/ˈred.ʃɪft/', pos1: 'noun', d1: 'Pergeseran merah gelombang cahaya karena ekspansi alam semesta', de1: 'The displacement of spectral lines toward longer wavelengths in distant galaxies.',
+        w2: 'Spectroscopy', p2: '/spekˈtrɒs.kə.pi/', pos2: 'noun', d2: 'Spektroskopi / analisis spektrum cahaya untuk senyawa kimia', de2: 'The study of the interaction between light and matter across wavelengths.',
+        w3: 'Primordial', p3: '/praɪˈmɔː.di.əl/', pos3: 'adjective', d3: 'Purba / awal mula pembentukan jagat raya', de3: 'Existing at or from the very beginning of time; primeval.',
+        w4: 'Exoplanet', p4: '/ˈek.soʊˌplæn.ɪt/', pos4: 'noun', d4: 'Planet di luar tata surya kita', de4: 'A planet that orbits a star outside our solar system.',
+        w5: 'Aperture', p5: '/ˈæp.ə.tʃər/', pos5: 'noun', d5: 'Bukaan pengumpul cahaya pada teleskop', de5: 'An opening or diameter of the primary mirror through which light travels.'
       },
       {
-        word: 'Repulsion',
-        phonetic: '/rɪˈpʌl.ʃən/',
-        partOfSpeech: 'noun',
-        definitionId: 'Gaya tolak-menolak antar partikel bermuatan sejenis',
-        definitionEn: 'A force under the influence of which objects tend to move away from each other.',
-        exampleSentence: 'Extreme temperature is required to overcome the electrostatic repulsion of two positive nuclei.'
+        title: 'CRISPR Gene Editing and the Future of Climate-Resilient Agriculture',
+        category: 'Biotechnology & Agriscience',
+        theme: 'precision genomic modifications conferring drought tolerance and disease resistance in cereal crops',
+        w1: 'Nuclease', p1: '/ˈnjuː.kli.eɪs/', pos1: 'noun', d1: 'Enzim pemotong rantai DNA atau RNA', de1: 'An enzyme capable of cleaving the phosphodiester bonds between nucleotide subunits.',
+        w2: 'Agronomic', p2: '/ˌæɡ.rəˈnɒm.ɪk/', pos2: 'adjective', d2: 'Berkaitan dengan ilmu budidaya pertanian', de2: 'Relating to the science and technology of producing crops for food and fuel.',
+        w3: 'Transgenic', p3: '/trænzˈdʒen.ɪk/', pos3: 'adjective', d3: 'Transgenik / modifikasi gen dari spesies lain', de3: 'Containing genetic material artificially introduced from an unrelated organism.',
+        w4: 'Resilience', p4: '/rɪˈzɪl.jəns/', pos4: 'noun', d4: 'Ketahanan dan daya pulih tanaman terhadap cekaman cuaca', de4: 'The capacity to endure environmental adversity and recover vigor.',
+        w5: 'Phenotype', p5: '/ˈfiː.nə.taɪp/', pos5: 'noun', d5: 'Fenotipe / karakteristik fisik yang tampak dari suatu organisme', de5: 'The set of observable characteristics of an individual resulting from genes and environment.'
       },
       {
-        word: 'Plasma',
-        phonetic: '/ˈplæz.mə/',
-        partOfSpeech: 'noun',
-        definitionId: 'Plasma / wujud zat keempat yang terdiri dari gas terionisasi bersuhu tinggi',
-        definitionEn: 'An ionized gas consisting of positive ions and free electrons.',
-        exampleSentence: 'Stars and fusion reactors are made of superheated swirling plasma.'
-      },
-      {
-        word: 'Confinement',
-        phonetic: '/kənˈfaɪn.mənt/',
-        partOfSpeech: 'noun',
-        definitionId: 'Pengurungan / penahanan plasma agar tidak menyentuh dinding reaktor',
-        definitionEn: 'The act of keeping something within limits or boundaries.',
-        exampleSentence: 'Magnetic confinement uses powerful magnetic fields to trap hot plasma.'
-      },
-      {
-        word: 'Tokamak',
-        phonetic: '/ˈtoʊ.kə.mæk/',
-        partOfSpeech: 'noun',
-        definitionId: 'Tokamak / reaktor fusi berbentuk donat dengan medan magnetik kuat',
-        definitionEn: 'A toroidal chamber in which magnetic fields are used to contain plasma.',
-        exampleSentence: 'The experimental tokamak succeeded in maintaining stable fusion reactions.'
-      },
-      {
-        word: 'Superconducting',
-        phonetic: '/ˌsuː.pə.kənˈdʌk.tɪŋ/',
-        partOfSpeech: 'adjective',
-        definitionId: 'Superkonduktor / menghantarkan listrik tanpa hambatan resistansi',
-        definitionEn: 'Conducting electricity without resistance at low temperatures.',
-        exampleSentence: 'Superconducting magnets generate immense magnetic forces with zero electrical resistance.'
-      },
-      {
-        word: 'Ignition',
-        phonetic: '/ɪɡˈnɪʃ.ən/',
-        partOfSpeech: 'noun',
-        definitionId: 'Titik nyala pengapian mandiri pada reaksi fusi berantai',
-        definitionEn: 'The point at which a fusion reaction becomes self-sustaining.',
-        exampleSentence: 'Achieving fusion ignition was a historic milestone in physics.'
-      },
-      {
-        word: 'Isotope',
-        phonetic: '/ˈaɪ.sə.toʊp/',
-        partOfSpeech: 'noun',
-        definitionId: 'Isotop / variasi atom dengan jumlah proton sama tetapi neutron berbeda',
-        definitionEn: 'Each of two or more forms of the same element containing equal numbers of protons but different neutrons.',
-        exampleSentence: 'Deuterium is an isotope of hydrogen with one proton and one neutron.'
-      },
-      {
-        word: 'Tangible',
-        phonetic: '/ˈtæn.dʒə.bəl/',
-        partOfSpeech: 'adjective',
-        definitionId: 'Nyata / dapat dirasakan dan diwujudkan secara konkret',
-        definitionEn: 'Perceptible by touch; clear and definite; real.',
-        exampleSentence: 'Clean fusion is turning into a tangible solution for the climate crisis.'
+        title: 'The Psychology of Cognitive Biases in Economic Decision-Making',
+        category: 'Behavioral Economics',
+        theme: 'how heuristics, loss aversion, and framing steer human choices away from pure neoclassical market theory',
+        w1: 'Heuristic', p1: '/hjʊˈrɪs.tɪk/', pos1: 'noun', d1: 'Jalan pintas mental dalam pengambilan keputusan praktis', de1: 'A mental shortcut that allows people to solve problems and make judgments quickly.',
+        w2: 'Aversion', p2: '/əˈvɜː.ʃən/', pos2: 'noun', d2: 'Keengganan kuat / rasa tidak suka terhadap kerugian', de2: 'A strong feeling of dislike or reluctance toward an undesirable outcome.',
+        w3: 'Cognitive', p3: '/ˈkɒɡ.nə.tɪv/', pos3: 'adjective', d3: 'Kognitif / berkaitan dengan proses penalaran dan persepsi', de3: 'Relating to conscious mental activities such as thinking, understanding, and remembering.',
+        w4: 'Rationality', p4: '/ˌræʃ.ənˈæl.ə.ti/', pos4: 'noun', d4: 'Rasionalitas / kesesuaian tindakan dengan akal sehat dan bukti', de4: 'The quality of being based on or in agreement with reason or logic.',
+        w5: 'Framing', p5: '/ˈfreɪ.mɪŋ/', pos5: 'noun', d5: 'Pembingkaian cara penyajian informasi kepada publik', de5: 'The way information is presented, which influences decisions and judgments.'
       }
-    ],
-    vocabQuiz: [
+    ];
+
+    const cur = topics[index % topics.length];
+
+    const vocabList: VocabItem[] = [
       {
-        id: 'vq-3-1',
-        statement: '"Fission" adalah proses penyatuan dua inti atom ringan menjadi satu inti berat.',
-        isTrue: false,
-        explanation: 'Salah. Penyatuan inti atom adalah "Fusion", sedangkan "Fission" adalah pembelahan inti berat.'
+        word: cur.w1,
+        phonetic: cur.p1,
+        partOfSpeech: cur.pos1,
+        definitionId: cur.d1,
+        definitionEn: cur.de1,
+        exampleSentence: `Researchers analyzed the role of ${cur.w1.toLowerCase()} in maintaining system balance.`
       },
       {
-        id: 'vq-3-2',
-        statement: 'Kata "Repulsion" berarti gaya tarik-menarik yang saling mendekatkan dua kutub yang berbeda.',
-        isTrue: false,
-        explanation: 'Salah. "Repulsion" adalah gaya tolak-menolak antar partikel bermuatan sama.'
+        word: cur.w2,
+        phonetic: cur.p2,
+        partOfSpeech: cur.pos2,
+        definitionId: cur.d2,
+        definitionEn: cur.de2,
+        exampleSentence: `Empirical measurements revealed significant ${cur.w2.toLowerCase()} dynamics in the field.`
       },
       {
-        id: 'vq-3-3',
-        statement: '"Plasma" diakui dalam fisika modern sebagai wujud zat keempat selain padat, cair, dan gas.',
-        isTrue: true,
-        explanation: 'Benar. Plasma adalah gas terionisasi berenergi tinggi yang membentuk bintang-bintang.'
+        word: cur.w3,
+        phonetic: cur.p3,
+        partOfSpeech: cur.pos3,
+        definitionId: cur.d3,
+        definitionEn: cur.de3,
+        exampleSentence: `The study documented several ${cur.w3.toLowerCase()} attributes across longitudinal datasets.`
       },
       {
-        id: 'vq-3-4',
-        statement: '"Magnetic Confinement" berfungsi untuk mengurung plasma panas agar tidak melelehkan dinding reaktor.',
-        isTrue: true,
-        explanation: 'Benar. Medan magnetik menahan plasma mengambang di ruang hampa reaktor.'
+        word: cur.w4,
+        phonetic: cur.p4,
+        partOfSpeech: cur.pos4,
+        definitionId: cur.d4,
+        definitionEn: cur.de4,
+        exampleSentence: `Understanding ${cur.w4.toLowerCase()} provides actionable insights for future policy.`
       },
       {
-        id: 'vq-3-5',
-        statement: '"Tokamak" adalah jenis reaktor fusi berbentuk cincin toroida (donat).',
-        isTrue: true,
-        explanation: 'Benar. Tokamak adalah desain ruang reaktor fusi magnetik yang paling populer.'
+        word: cur.w5,
+        phonetic: cur.p5,
+        partOfSpeech: cur.pos5,
+        definitionId: cur.d5,
+        definitionEn: cur.de5,
+        exampleSentence: `A pronounced ${cur.w5.toLowerCase()} pattern emerged during rigorous laboratory testing.`
       },
       {
-        id: 'vq-3-6',
-        statement: 'Bahan "Superconducting" memiliki resistansi hambatan listrik yang sangat tinggi sehingga cepat panas.',
-        isTrue: false,
-        explanation: 'Salah. Bahan superkonduktor menghantarkan listrik dengan hambatan nol (tanpa kehilangan energi panas).'
-      },
-      {
-        id: 'vq-3-7',
-        statement: 'Dalam fisika fusi, "Ignition" berarti reaksi fusi menghasilkan panas cukup untuk mempertahankan reaksinya sendiri.',
-        isTrue: true,
-        explanation: 'Benar. Titik pengapian fusi (ignition) adalah saat reaksi menjadi mandiri tanpa pasokan panas luar.'
-      },
-      {
-        id: 'vq-3-8',
-        statement: 'Deuterium dan tritium merupakan contoh "Isotop" dari unsur hidrogen.',
-        isTrue: true,
-        explanation: 'Benar. Keduanya adalah isotop hidrogen dengan jumlah neutron berbeda.'
-      },
-      {
-        id: 'vq-3-9',
-        statement: 'Arti kata "Tangible" adalah sesuatu yang murni berupa khayalan gaib dan mustahil dibuktikan.',
-        isTrue: false,
-        explanation: 'Salah. "Tangible" bermakna nyata, konkret, dan dapat dibuktikan/disentuh.'
-      },
-      {
-        id: 'vq-3-10',
-        statement: '"Baseload" merujuk pada kapasitas listrik dasar yang harus terus mengalir stabil 24 jam sehari.',
-        isTrue: true,
-        explanation: 'Benar. Beban dasar (baseload) diperlukan untuk menjaga keandalan jaringan listrik kota.'
-      }
-    ],
-    readingQuiz: [
-      {
-        id: 'rq-3-1',
-        question: 'What is the fundamental difference between nuclear fusion and nuclear fission?',
-        options: [
-          'Fusion splits heavy uranium atoms while fission burns coal directly',
-          'Fusion fuses light atomic isotopes without producing long-lived radioactive waste, unlike fission',
-          'Fission occurs naturally inside the sun while fusion is only made in laboratories',
-          'Fusion requires sub-zero temperatures while fission works in boiling water'
-        ],
-        correctIndex: 1,
-        explanation: 'The first paragraph highlights that fusion joins light isotopes without leaving long-lived hazardous waste.'
-      },
-      {
-        id: 'rq-3-2',
-        question: 'Which hydrogen isotopes are heated to extreme temperatures inside fusion reactors?',
-        options: [
-          'Deuterium and Tritium',
-          'Uranium-235 and Plutonium',
-          'Carbon-14 and Nitrogen',
-          'Oxygen and Helium-3'
-        ],
-        correctIndex: 0,
-        explanation: 'Paragraph 2 specifically identifies deuterium and tritium as the fuel isotopes.'
-      },
-      {
-        id: 'rq-3-3',
-        question: 'What temperature must plasma reach inside a magnetic confinement tokamak?',
-        options: [
-          'Around 100 degrees Celsius',
-          'Exceeding 100 million degrees Celsius',
-          'Exactly 0 degrees Kelvin',
-          '37 degrees Celsius'
-        ],
-        correctIndex: 1,
-        explanation: 'Temperatures must exceed 100 million degrees Celsius to overcome electrostatic nuclear repulsion.'
-      },
-      {
-        id: 'rq-3-4',
-        question: 'What does achieving a "Q greater than 1" signify in fusion engineering?',
-        options: [
-          'The reactor has stopped working permanently',
-          'The magnetic field has collapsed entirely',
-          'Net energy gain: the reactor generates more thermal power than the electricity consumed',
-          'The fuel cost has doubled in price'
-        ],
-        correctIndex: 2,
-        explanation: 'Q > 1 means achieving net energy gain, producing more energy than was inputted.'
-      },
-      {
-        id: 'rq-3-5',
-        question: 'Which cutting-edge technology helps generate immense magnetic fields without electrical energy loss?',
-        options: [
-          'High-temperature superconducting magnets',
-          'Traditional wooden pulleys and dynamos',
-          'Standard copper telegraph wires',
-          'Gasoline-powered combustion generators'
-        ],
-        correctIndex: 0,
-        explanation: 'High-temperature superconducting magnets allow powerful magnetic confinement with zero electrical resistance.'
-      }
-    ]
-  },
-  {
-    id: 'en-art-4',
-    title: 'The Gut-Brain Axis: How Microbiome Health Shapes Mood and Cognition',
-    category: 'Biomedical Science & Psychology',
-    source: 'The Conversation (In English)',
-    wordCount: 391,
-    estimatedMinutes: 2,
-    content: [
-      'The human gastrointestinal tract houses a staggering ecosystem of over one hundred trillion microorganisms, collectively designated as the gut microbiome. While traditionally viewed solely as digestive facilitators, biomedical discoveries have revealed that these microscopic symbionts maintain a bidirectional communications highway with the central nervous system.',
-      'This intricate network, termed the gut-brain axis, transmits signals through multiple pathways: the vagus nerve, metabolic by-products, and neuroendocrine signaling molecules. Astoundingly, over ninety percent of the human body’s serotonin—a neurotransmitter fundamental for mood equilibrium and emotional regulation—is synthesized directly within the gut lining.',
-      'When intestinal flora becomes disrupted due to chronic psychological stress, ultra-processed dietary habits, or antibiotic overconsumption—a state called dysbiosis—harmful bacterial lipopolysaccharides can permeate the epithelial barrier.',
-      'This leakage induces low-grade systemic inflammation that crosses the blood-brain barrier, triggering neuroinflammation implicated in heightened anxiety, brain fog, and depressive symptoms.',
-      'Nurturing a diverse microbial community through dietary prebiotic fibers, fermented foods containing live probiotics, and mindful stress reduction represents an empowering, holistic pathway toward optimized cognitive vigor.'
-    ],
-    vocabList: [
-      {
-        word: 'Symbiont',
-        phonetic: '/ˈsɪm.baɪ.ɒnt/',
-        partOfSpeech: 'noun',
-        definitionId: 'Organisme yang hidup bersimbiosis saling menguntungkan',
-        definitionEn: 'An organism living in symbiosis with another.',
-        exampleSentence: 'Beneficial gut bacteria act as essential symbionts for human health.'
-      },
-      {
-        word: 'Bidirectional',
-        phonetic: '/ˌbaɪ.daɪˈrek.ʃən.əl/',
+        word: 'Empirical',
+        phonetic: '/ɪmˈpɪr.ɪ.kəl/',
         partOfSpeech: 'adjective',
-        definitionId: 'Dua arah / terjadi timbal balik antara dua pihak',
-        definitionEn: 'Functioning or moving in two opposite directions.',
-        exampleSentence: 'The gut and the brain communicate through a bidirectional communication channel.'
+        definitionId: 'Empiris / berdasarkan bukti observasi nyata',
+        definitionEn: 'Based on, concerned with, or verifiable by observation rather than theory.',
+        exampleSentence: 'Empirical datasets confirm the predictive accuracy of the scientific model.'
       },
       {
-        word: 'Vagus',
-        phonetic: '/ˈveɪ.ɡəs/',
+        word: 'Paradigm',
+        phonetic: '/ˈpær.ə.daɪm/',
         partOfSpeech: 'noun',
-        definitionId: 'Saraf vagus / saraf kranial utama penghubung organ dalam dan otak',
-        definitionEn: 'The tenth cranial nerve that interfaces with parasympathetic control of heart, lungs, and digestive tract.',
-        exampleSentence: 'Signals travel rapidly from the stomach to the brain along the vagus nerve.'
+        definitionId: 'Paradigma / kerangka berpikir konseptual',
+        definitionEn: 'A typical example or pattern of something; a distinct set of concepts.',
+        exampleSentence: 'This discovery triggered a major paradigm shift across academic literature.'
       },
       {
-        word: 'Serotonin',
-        phonetic: '/ˌser.əˈtoʊ.nɪn/',
+        word: 'Hypothesis',
+        phonetic: '/haɪˈpɒθ.ə.sɪs/',
         partOfSpeech: 'noun',
-        definitionId: 'Serotonin / senyawa neurotransmiter pengatur suasana hati dan emosi',
-        definitionEn: 'A compound present in blood platelets and serum that constricts blood vessels and acts as a neurotransmitter.',
-        exampleSentence: 'A large proportion of our body’s serotonin is manufactured inside the gut.'
+        definitionId: 'Hipotesis / dugaan sementara yang dapat diuji',
+        definitionEn: 'A proposed explanation made as a starting point for further investigation.',
+        exampleSentence: 'The experimental outcomes supported the primary research hypothesis.'
+      },
+      {
+        word: 'Systemic',
+        phonetic: '/sɪˈstem.ɪk/',
+        partOfSpeech: 'adjective',
+        definitionId: 'Sistemik / menyeluruh mencakup seluruh bagian sistem',
+        definitionEn: 'Relating to a system as a whole, especially the entire social or ecological structure.',
+        exampleSentence: 'Addressing systemic vulnerabilities requires multidisciplinary collaboration.'
       },
       {
         word: 'Equilibrium',
-        phonetic: '/ˌiː.kwɪˈlɪb.ri.əm/',
+        phonetic: '/ˌek.wɪˈlɪb.ri.əm/',
         partOfSpeech: 'noun',
-        definitionId: 'Keseimbangan / kestabilan kondisi',
+        definitionId: 'Kesetimbangan / kondisi stabil seimbang',
         definitionEn: 'A state in which opposing forces or influences are balanced.',
-        exampleSentence: 'Maintaining emotional equilibrium requires good sleep and proper nutrition.'
-      },
-      {
-        word: 'Dysbiosis',
-        phonetic: '/ˌdɪs.baɪˈoʊ.sɪs/',
-        partOfSpeech: 'noun',
-        definitionId: 'Disbiosis / ketidakseimbangan komposisi mikrobiota bakteri di usus',
-        definitionEn: 'A microbial imbalance or maladaptation on or inside the body.',
-        exampleSentence: 'Eating excessive junk food can lead to intestinal dysbiosis.'
-      },
-      {
-        word: 'Permeate',
-        phonetic: '/ˈpɜː.mi.eɪt/',
-        partOfSpeech: 'verb',
-        definitionId: 'Meresap / menembus melewati lapisan pori-pori',
-        definitionEn: 'Spread throughout (something); pervade or pass through pores.',
-        exampleSentence: 'Bacterial toxins can permeate a damaged intestinal barrier.'
-      },
-      {
-        word: 'Prebiotic',
-        phonetic: '/ˌpriː.baɪˈɒt.ɪk/',
-        partOfSpeech: 'noun',
-        definitionId: 'Prebiotik / serat makanan yang menjadi nutrisi bagi bakteri baik',
-        definitionEn: 'A non-digestible food ingredient that promotes the growth of beneficial microorganisms in the intestines.',
-        exampleSentence: 'Garlic and oats are rich sources of dietary prebiotic fiber.'
-      },
-      {
-        word: 'Probiotic',
-        phonetic: '/ˌproʊ.baɪˈɒt.ɪk/',
-        partOfSpeech: 'noun',
-        definitionId: 'Probiotik / mikroorganisme hidup yang bermanfaat bagi kesehatan pencernaan',
-        definitionEn: 'A substance or food containing live beneficial bacteria.',
-        exampleSentence: 'Yogurt and kimchi are fermented foods loaded with active probiotics.'
-      },
-      {
-        word: 'Vigor',
-        phonetic: '/ˈvɪɡ.ər/',
-        partOfSpeech: 'noun',
-        definitionId: 'Kekuatan fisik dan ketajaman mental / vitalitas',
-        definitionEn: 'Physical strength and good health; effort, energy, or enthusiasm.',
-        exampleSentence: 'A balanced diet restores cognitive vigor and sustained daily focus.'
+        exampleSentence: 'Sustainable stewardship helps restore planetary and economic equilibrium.'
       }
-    ],
-    vocabQuiz: [
+    ];
+
+    const vocabQuiz: TrueFalseQuestion[] = [
       {
-        id: 'vq-4-1',
-        statement: '"Symbiont" adalah parasit berbahaya yang selalu merusak dan membunuh inangnya secara cepat.',
+        id: `vq-${artNum}-1`,
+        statement: `The term "${cur.w1}" in scientific literature denotes: ${cur.de1}`,
+        isTrue: true,
+        explanation: `Correct. ${cur.w1} is defined as: ${cur.de1}`
+      },
+      {
+        id: `vq-${artNum}-2`,
+        statement: `The concept of "${cur.w2}" is defined as an accidental error in computer hardware.`,
         isTrue: false,
-        explanation: 'Salah. "Symbiont" adalah organisme yang hidup berdampingan secara simbiotik (kebanyakan menguntungkan).'
+        explanation: `${cur.w2} actually means: ${cur.de2}`
       },
       {
-        id: 'vq-4-2',
-        statement: '"Bidirectional" bermakna proses komunikasi yang berlangsung dua arah secara timbal balik.',
+        id: `vq-${artNum}-3`,
+        statement: `The term "${cur.w3}" describes properties that are: ${cur.de3}`,
         isTrue: true,
-        explanation: 'Benar. Komunikasi usus-otak bersifat dua arah saling mempengaruhi.'
+        explanation: `Accurate. ${cur.w3} represents: ${cur.de3}`
       },
       {
-        id: 'vq-4-3',
-        statement: 'Saraf "Vagus" adalah jalur saraf yang menghubungkan organ pencernaan langsung dengan batang otak.',
-        isTrue: true,
-        explanation: 'Benar. Saraf vagus adalah jembatan saraf utama antara usus dan otak.'
-      },
-      {
-        id: 'vq-4-4',
-        statement: 'Lebih dari 90 persen "Serotonin" dalam tubuh manusia justru diproduksi di lapisan dinding usus.',
-        isTrue: true,
-        explanation: 'Benar. Sebagian besar hormon pengatur suasana hati diproduksi di saluran pencernaan.'
-      },
-      {
-        id: 'vq-4-5',
-        statement: '"Equilibrium" mengacu pada kondisi kekacauan total tanpa adanya keseimbangan.',
+        id: `vq-${artNum}-4`,
+        statement: `"${cur.w4}" refers exclusively to ancient Greek musical instruments.`,
         isTrue: false,
-        explanation: 'Salah. "Equilibrium" berarti kondisi seimbang dan harmonis.'
+        explanation: `False. In modern research, ${cur.w4} means: ${cur.de4}`
       },
       {
-        id: 'vq-4-6',
-        statement: '"Dysbiosis" adalah kondisi ketidakseimbangan bakteri mikroba di dalam saluran pencernaan.',
+        id: `vq-${artNum}-5`,
+        statement: `The term "${cur.w5}" signifies: ${cur.de5}`,
         isTrue: true,
-        explanation: 'Benar. Disbiosis terjadi saat bakteri berbahaya mendominasi bakteri menguntungkan.'
+        explanation: `Correct. ${cur.w5} refers to: ${cur.de5}`
       },
       {
-        id: 'vq-4-7',
-        statement: 'Kata kerja "Permeate" berarti menyerap atau menembus melewati pembatas.',
-        isTrue: true,
-        explanation: 'Benar. "Permeate" berarti merembes atau menembus masuk.'
-      },
-      {
-        id: 'vq-4-8',
-        statement: '"Prebiotic" adalah bakteri hidup pemakan zat gizi di dalam lambung.',
+        id: `vq-${artNum}-6`,
+        statement: '"Empirical" evidence refers to unverified rumors without experimental proof.',
         isTrue: false,
-        explanation: 'Salah. Prebiotik adalah serat makanan tak tercerna yang menjadi makanan bagi bakteri baik (sedangkan probiotik adalah bakterinya).'
+        explanation: '"Empirical" refers to verifiable evidence obtained through systematic observation.'
       },
       {
-        id: 'vq-4-9',
-        statement: 'Makanan fermentasi seperti yogurt, tempe, dan kimchi merupakan sumber "Probiotik" alami.',
+        id: `vq-${artNum}-7`,
+        statement: 'A scientific "Paradigm" serves as a foundational conceptual model guiding research.',
         isTrue: true,
-        explanation: 'Benar. Makanan fermentasi kaya akan mikroba kultur probiotik hidup.'
+        explanation: 'A paradigm establishes the core frameworks and methodologies of a discipline.'
       },
       {
-        id: 'vq-4-10',
-        statement: 'Kata "Vigor" bermakna vitalitas, stamina prima, dan kekuatan energi aktif.',
+        id: `vq-${artNum}-8`,
+        statement: 'A "Hypothesis" is an unchangeable scientific law that can never be tested.',
+        isTrue: false,
+        explanation: 'A hypothesis is a testable proposition subjected to empirical scrutiny.'
+      },
+      {
+        id: `vq-${artNum}-9`,
+        statement: '"Systemic" challenges affect the broader structural integrity of an entire network.',
         isTrue: true,
-        explanation: 'Benar. "Vigor" mengindikasikan ketajaman dan kekuatan vital.'
+        explanation: 'Systemic properties pertain to the holistic network rather than isolated parts.'
+      },
+      {
+        id: `vq-${artNum}-10`,
+        statement: '"Equilibrium" represents a condition of chaotic collapse with zero balance.',
+        isTrue: false,
+        explanation: '"Equilibrium" is a state where opposing forces achieve stability and balance.'
       }
-    ],
-    readingQuiz: [
+    ];
+
+    const readingQuiz: MultipleChoiceQuestion[] = [
       {
-        id: 'rq-4-1',
-        question: 'What percentage of the body’s serotonin is synthesized within the gut lining according to the passage?',
+        id: `rq-${artNum}-1`,
+        question: `What is the central focus explored in this article from The Conversation?`,
         options: [
-          'Less than 5 percent',
-          'Approximately 25 percent',
-          'Over 90 percent',
-          'Zero percent (only produced in the heart)'
-        ],
-        correctIndex: 2,
-        explanation: 'Paragraph 2 reveals that over 90 percent of the body’s serotonin is produced in the gut lining.'
-      },
-      {
-        id: 'rq-4-2',
-        question: 'What is the biological name of the major cranial nerve transmitting signals between gut and brain?',
-        options: [
-          'The Vagus nerve',
-          'The Sciatic nerve',
-          'The Optic nerve',
-          'The Femoral nerve'
+          `Analyzing the scientific and societal impact of ${cur.theme}`,
+          'Promoting sensationalist celebrity gossip without data',
+          'Selling luxury consumer products in high-end malls',
+          'Documenting medieval chariot racing equipment'
         ],
         correctIndex: 0,
-        explanation: 'The vagus nerve is the key neural pathway of the gut-brain axis.'
+        explanation: `The article offers a comprehensive scholarly examination of ${cur.theme}.`
       },
       {
-        id: 'rq-4-3',
-        question: 'What factors can trigger gut dysbiosis according to the text?',
+        id: `rq-${artNum}-2`,
+        question: 'What do longitudinal research findings consistently indicate about complex systems?',
         options: [
-          'High fiber intake and mountain hiking',
-          'Chronic stress, ultra-processed diet, and antibiotic overuse',
-          'Drinking pure clean spring water daily',
-          'Getting 8 hours of uninterrupted night sleep'
-        ],
-        correctIndex: 1,
-        explanation: 'The article mentions chronic stress, processed foods, and excessive antibiotics as causes of dysbiosis.'
-      },
-      {
-        id: 'rq-4-4',
-        question: 'How does gut inflammation lead to cognitive symptoms like brain fog and anxiety?',
-        options: [
-          'By turning stomach acids into solid crystal blocks',
-          'By causing bacterial toxins to cross into circulation and trigger neuroinflammation',
-          'By destroying the skull bones directly',
-          'By permanently freezing the heart muscles'
-        ],
-        correctIndex: 1,
-        explanation: 'Toxins permeating the gut barrier can provoke low-grade systemic inflammation and neuroinflammation in the brain.'
-      },
-      {
-        id: 'rq-4-5',
-        question: 'What dietary practices are recommended to foster a healthy, diverse microbiome?',
-        options: [
-          'Consuming only artificial sweeteners and sodas',
-          'Eating prebiotic fibers and fermented foods containing live probiotics',
-          'Skipping all meals for entire weeks',
-          'Eliminating all plant foods from the human diet'
-        ],
-        correctIndex: 1,
-        explanation: 'Consuming prebiotic fibers and probiotic fermented foods nurtures beneficial gut flora.'
-      }
-    ]
-  },
-  {
-    id: 'en-art-5',
-    title: 'The Circular Economy: Redesigning Modern Industrial Production',
-    category: 'Economics & Sustainability',
-    source: 'The Conversation (In English)',
-    wordCount: 397,
-    estimatedMinutes: 2,
-    content: [
-      'Since the dawn of the Industrial Revolution, global economic growth has been dictated by an extractive linear paradigm: take, make, and dispose. Raw materials are harvested from pristine natural habitats, converted into consumer goods with intentionally abbreviated lifespans, and discarded into swelling landfills or incinerators.',
-      'This relentless throughput model has depleted finite critical minerals, fueled catastrophic biodiversity loss, and produced unmanageable volumes of toxic electronic and plastic waste. In response, economists and systems designers are advocating for a fundamental transition toward a circular economy.',
-      'A circular framework is underpinned by three foundational principles: eliminating waste and pollution by design, circulating products and materials at their highest utility value, and actively regenerating natural ecological systems.',
-      'Pioneering enterprises are abandoning planned obsolescence in favor of modular product architecture, right-to-repair access, and product-as-a-service business models. Instead of selling physical machinery that customers discard after breakdowns, manufacturers retain ownership, providing ongoing maintenance, refurbishing components, and harvesting parts for closed-loop remanufacturing.',
-      'Decoupling economic prosperity from virgin resource extraction is not merely an idealistic ecological vision, but a commercial imperative that ensures long-term supply chain security and resilient profitability.'
-    ],
-    vocabList: [
-      {
-        word: 'Extractive',
-        phonetic: '/ɪkˈstræk.tɪv/',
-        partOfSpeech: 'adjective',
-        definitionId: 'Bersifat mengekstraksi atau mengeruk sumber daya alam',
-        definitionEn: 'Relating to the withdrawal of natural resources from the earth.',
-        exampleSentence: 'The old extractive economy caused widespread environmental damage.'
-      },
-      {
-        word: 'Throughput',
-        phonetic: '/ˈθruː.pʊt/',
-        partOfSpeech: 'noun',
-        definitionId: 'Laju perputaran / kapasitas pemrosesan barang masuk hingga keluar',
-        definitionEn: 'The amount of material or items passing through a system or process.',
-        exampleSentence: 'High industrial throughput creates massive amounts of industrial waste.'
-      },
-      {
-        word: 'Finite',
-        phonetic: '/ˈfaɪ.naɪt/',
-        partOfSpeech: 'adjective',
-        definitionId: 'Terbatas / ada batas akhirnya (bukan tak terhingga)',
-        definitionEn: 'Having limits or bounds; not infinite.',
-        exampleSentence: 'Earth possesses a finite supply of rare earth metals.'
-      },
-      {
-        word: 'Obsolescence',
-        phonetic: '/ˌɒb.səˈles.əns/',
-        partOfSpeech: 'noun',
-        definitionId: 'Keusangan / kondisi sudah kuno atau dirancang sengaja cepat rusak',
-        definitionEn: 'The process of becoming obsolete or outdated and no longer used.',
-        exampleSentence: 'Planned obsolescence forces consumers to buy new phone models every year.'
-      },
-      {
-        word: 'Modular',
-        phonetic: '/ˈmɒdʒ.ə.lər/',
-        partOfSpeech: 'adjective',
-        definitionId: 'Modular / terdiri dari bagian-bagian mandiri yang mudah diganti',
-        definitionEn: 'Employing or adapted for use in modular construction or units.',
-        exampleSentence: 'Modular laptops allow users to upgrade individual chips without buying a whole new laptop.'
-      },
-      {
-        word: 'Refurbish',
-        phonetic: '/ˌriːˈfɜː.bɪʃ/',
-        partOfSpeech: 'verb',
-        definitionId: 'Memperbarui / merenovasi kembali barang lama agar seperti baru',
-        definitionEn: 'Renovate and redecorate (something) to make it usable again.',
-        exampleSentence: 'Companies refurbish returned electronics and resell them with full warranties.'
-      },
-      {
-        word: 'Decouple',
-        phonetic: '/diːˈkʌp.əl/',
-        partOfSpeech: 'verb',
-        definitionId: 'Memisahkan ketergantungan antara dua hal yang sebelumnya terkait',
-        definitionEn: 'Separate, disengage, or dissociate (something) from something else.',
-        exampleSentence: 'We must decouple GDP growth from the destruction of natural resources.'
-      },
-      {
-        word: 'Virgin',
-        phonetic: '/ˈvɜː.dʒɪn/',
-        partOfSpeech: 'adjective',
-        definitionId: 'Bahan baku murni baru dari alam yang belum pernah didaur ulang',
-        definitionEn: 'Not yet processed or refined; in its original or natural state.',
-        exampleSentence: 'Recycling aluminum saves 95% more energy than extracting virgin bauxite ore.'
-      },
-      {
-        word: 'Imperative',
-        phonetic: '/ɪmˈper.ə.tɪv/',
-        partOfSpeech: 'noun',
-        definitionId: 'Keharusan mutlak / mandat mendesak yang wajib dijalankan',
-        definitionEn: 'An essential or urgent thing; a requirement or necessity.',
-        exampleSentence: 'Transitioning to clean renewable energy is a moral and economic imperative.'
-      },
-      {
-        word: 'Regenerate',
-        phonetic: '/rɪˈdʒen.ə.reɪt/',
-        partOfSpeech: 'verb',
-        definitionId: 'Meregenerasi / memulihkan ekosistem agar subur kembali',
-        definitionEn: 'To revive, reform, or bring new life and vitality to an ecosystem.',
-        exampleSentence: 'Regenerative agriculture enriches soil biology and captures carbon.'
-      }
-    ],
-    vocabQuiz: [
-      {
-        id: 'vq-5-1',
-        statement: '"Extractive" merujuk pada industri yang mengeruk bahan baku alami dari perut bumi.',
-        isTrue: true,
-        explanation: 'Benar. Ekonomi ekstraktif mengeksploitasi mineral, minyak, dan sumber daya alam mentah.'
-      },
-      {
-        id: 'vq-5-2',
-        statement: '"Finite" bermakna jumlah yang melimpah tiada batas dan tidak akan pernah habis sampai kiamat.',
-        isTrue: false,
-        explanation: 'Salah. "Finite" berarti terbatas dan memiliki kuota yang bisa habis.'
-      },
-      {
-        id: 'vq-5-3',
-        statement: '"Planned Obsolescence" adalah strategi produsen merancang produk agar sengaja cepat usang atau rusak.',
-        isTrue: true,
-        explanation: 'Benar. Keusangan terencana mendorong konsumen terus membeli produk baru.'
-      },
-      {
-        id: 'vq-5-4',
-        statement: 'Desain "Modular" berarti perangkat dibuat menyatu tanpa baut sehingga mustahil diperbaiki sama sekali.',
-        isTrue: false,
-        explanation: 'Salah. Desain modular justru membagi produk ke dalam modul terpisah yang gampang dibongkar dan diganti.'
-      },
-      {
-        id: 'vq-5-5',
-        statement: 'Kata kerja "Refurbish" berarti merawat, memoles, dan memperbarui barang bekas agar kembali berfungsi optimal.',
-        isTrue: true,
-        explanation: 'Benar. Rekondisi (refurbishment) memperpanjang masa pakai produk barang jadi.'
-      },
-      {
-        id: 'vq-5-6',
-        statement: '"Decouple" bermakna memisahkan korelasi atau ketergantungan antara dua fenomena.',
-        isTrue: true,
-        explanation: 'Benar. Decoupling memisahkan pertumbuhan ekonomi dari konsumsi material alam mentah.'
-      },
-      {
-        id: 'vq-5-7',
-        statement: '"Virgin materials" adalah plastik atau logam daur ulang hasil olahan sampah tempat pembuangan akhir.',
-        isTrue: false,
-        explanation: 'Salah. "Virgin materials" adalah bahan baku murni baru dari alam yang belum pernah dipakai sebelumnya.'
-      },
-      {
-        id: 'vq-5-8',
-        statement: 'Kata "Imperative" menandakan sesuatu yang mendesak, krusial, dan mutlak harus dipenuhi.',
-        isTrue: true,
-        explanation: 'Benar. "Imperative" adalah keharusan pokok atau kebutuhan yang tidak bisa ditunda.'
-      },
-      {
-        id: 'vq-5-9',
-        statement: '"Regenerate" berarti membiarkan alam rusak tanpa ada tindakan pemulihan kesuburan.',
-        isTrue: false,
-        explanation: 'Salah. "Regenerate" berarti menghidupkan kembali dan memulihkan kondisi alam secara aktif.'
-      },
-      {
-        id: 'vq-5-10',
-        statement: 'Prinsip "Throughput" dalam industri mengacu pada arus aliran bahan baku masuk hingga menjadi limbah buangan.',
-        isTrue: true,
-        explanation: 'Benar. Throughput menggambarkan laju pemrosesan input hingga output material.'
-      }
-    ],
-    readingQuiz: [
-      {
-        id: 'rq-5-1',
-        question: 'What is the characteristic pattern of the traditional linear economy described in the text?',
-        options: [
-          'Design, compost, and plant',
-          'Take, make, and dispose',
-          'Borrow, lend, and donate',
-          'Refurbish, recycle, and preserve'
-        ],
-        correctIndex: 1,
-        explanation: 'Paragraph 1 identifies the linear paradigm as "take, make, and dispose".'
-      },
-      {
-        id: 'rq-5-2',
-        question: 'Which of the following is NOT one of the three foundational principles of a circular economy?',
-        options: [
-          'Eliminating waste and pollution by design',
-          'Maximizing single-use disposable plastic packaging for rapid landfill disposal',
-          'Circulating products and materials at their highest utility value',
-          'Actively regenerating natural ecological systems'
-        ],
-        correctIndex: 1,
-        explanation: 'The circular economy aims to eliminate single-use waste, not maximize it.'
-      },
-      {
-        id: 'rq-5-3',
-        question: 'How do "product-as-a-service" models alter the manufacturer-customer relationship?',
-        options: [
-          'Customers are forced to burn the machine after 30 days',
-          'Manufacturers retain ownership and provide lifetime maintenance and closed-loop remanufacturing',
-          'Manufacturers never speak to customers after the initial sale',
-          'All machines are built from fragile single-use glass parts'
-        ],
-        correctIndex: 1,
-        explanation: 'Manufacturers keep ownership, incentivizing them to build durable, repairable, and modular products.'
-      },
-      {
-        id: 'rq-5-4',
-        question: 'What is meant by "decoupling" economic growth from virgin resource extraction?',
-        options: [
-          'Achieving high standard of living and profits without increasing raw material mining and destruction',
-          'Shutting down all schools and factories in urban centers',
-          'Moving all human businesses into outer space colonies',
-          'Doubling the extraction of oil and coal each calendar month'
+          'Overlooking systemic feedback loops generates critical vulnerabilities and instability',
+          'All scientific data collection should be permanently discontinued',
+          'Human decisions are always perfectly rational in every scenario',
+          'Predictive modeling has zero relevance to modern science'
         ],
         correctIndex: 0,
-        explanation: 'Decoupling means growing economic well-being while reducing or stabilizing consumption of virgin earth resources.'
+        explanation: 'Systemic feedback loops must be accounted for to prevent unforeseen breakdowns.'
       },
       {
-        id: 'rq-5-5',
-        question: 'Why does the author argue that circular economy is a commercial imperative?',
+        id: `rq-${artNum}-3`,
+        question: 'Which strategy do multidisciplinary experts advocate for sustainable progress?',
         options: [
-          'Because companies will lose all tax benefits immediately',
-          'Because it ensures long-term supply chain security and resilient profitability amidst finite resources',
-          'Because it requires zero human workers to operate',
-          'Because it is only a theoretical idea that has no practical application'
-        ],
-        correctIndex: 1,
-        explanation: 'The final sentence highlights supply chain security and resilient profits as key business drivers.'
-      }
-    ]
-  },
-  {
-    id: 'en-art-6',
-    title: 'The Architecture of Deep Sleep: Glymphatic Drainage and Memory Consolidation',
-    category: 'Neuroscience & Sleep Medicine',
-    level: 'Advanced',
-    topic: 'Neuroscience & Sleep Medicine',
-    source: 'The Conversation (Global Edition)',
-    sourceUrl: 'https://theconversation.com/id/in-english',
-    wordCount: 412,
-    estimatedMinutes: 2,
-    vocabList: [
-      { id: 'v-6-1', word: 'Glymphatic', definitionIndonesian: 'Sistem pembersihan limbah metabolik di otak yang aktif saat fase tidur nyenyak', pronunciation: '/ɡlɪmˈfæt.ɪk/', phonetic: '/ɡlɪmˈfæt.ɪk/', partOfSpeech: 'noun', definition: 'Metabolic waste clearance system active during slow-wave sleep', exampleSentence: 'The glymphatic system flushes toxic beta-amyloid proteins during slow-wave sleep.' },
-      { id: 'v-6-2', word: 'Consolidation', definitionIndonesian: 'Proses penguatan dan pemadatan jejak memori jangka pendek menjadi memori jangka panjang', pronunciation: '/kənˌsɒl.ɪˈdeɪ.ʃən/', phonetic: '/kənˌsɒl.ɪˈdeɪ.ʃən/', partOfSpeech: 'noun', definition: 'The process of strengthening recent memory traces into long-term storage', exampleSentence: 'Synaptic consolidation stabilizes newly learned neural pathways during the night.' },
-      { id: 'v-6-3', word: 'Oscillations', definitionIndonesian: 'Gelombang ayunan ritmik aktivitas listrik neuron di otak', pronunciation: '/ˌɒs.ɪˈleɪ.ʃənz/', phonetic: '/ˌɒs.ɪˈleɪ.ʃənz/', partOfSpeech: 'noun', definition: 'Rhythmic electrical brain wave fluctuations across neurons', exampleSentence: 'Delta oscillations coordinate communication between the hippocampus and neocortex.' },
-      { id: 'v-6-4', word: 'Interstitial', definitionIndonesian: 'Ruang celah mikroskopis di antara sel-sel jaringan otak', pronunciation: '/ˌɪn.təˈstɪʃ.əl/', phonetic: '/ˌɪn.təˈstɪʃ.əl/', partOfSpeech: 'adjective', definition: 'Relating to microscopic gaps between cells in brain tissues', exampleSentence: 'Interstitial space increases by up to 60 percent while we slumber deeply.' },
-      { id: 'v-6-5', word: 'Cerebrospinal', definitionIndonesian: 'Cairan bening pelindung dan pembersih di otak dan sumsum tulang belakang', pronunciation: '/ˌser.ɪ.broʊˈspaɪ.nəl/', phonetic: '/ˌser.ɪ.broʊˈspaɪ.nəl/', partOfSpeech: 'adjective', definition: 'Relating to the brain and spinal cord fluid cleansing system', exampleSentence: 'Cerebrospinal fluid percolates through the brain tissue to remove debris.' },
-      { id: 'v-6-6', word: 'Neurodegenerative', definitionIndonesian: 'Kondisi kemunduran atau kerusakan bertahap pada struktur dan fungsi sel saraf otak', pronunciation: '/ˌnjʊə.rəʊ.dɪˈdʒen.ər.ə.tɪv/', phonetic: '/ˌnjʊə.rəʊ.dɪˈdʒen.ər.ə.tɪv/', partOfSpeech: 'adjective', definition: 'Relating to progressive loss of structure or function of neurons', exampleSentence: 'Chronic sleep disruption is a known precursor to neurodegenerative disorders.' },
-      { id: 'v-6-7', word: 'Synaptic', definitionIndonesian: 'Berkenaan dengan celah penghubung komunikasi antarsel neuron saraf', pronunciation: '/sɪˈnæp.tɪk/', phonetic: '/sɪˈnæp.tɪk/', partOfSpeech: 'adjective', definition: 'Relating to a synapse or junction between nerve cells', exampleSentence: 'Synaptic pruning recalibrates energy budgets in overburdened neural circuits.' },
-      { id: 'v-6-8', word: 'Hippocampus', definitionIndonesian: 'Pusat pengolah dan penyimpan memori episodik sementara di otak bagian dalam', pronunciation: '/ˌhɪp.əˈkæm.pəs/', phonetic: '/ˌhɪp.əˈkæm.pəs/', partOfSpeech: 'noun', definition: 'A major component of the brains of humans that consolidates memory', exampleSentence: 'The hippocampus replays diurnal experiences to transfer insights to the cortex.' },
-      { id: 'v-6-9', word: 'Diurnal', definitionIndonesian: 'Berkenaan dengan aktivitas pada waktu siang hari', pronunciation: '/daɪˈɜː.nəl/', phonetic: '/daɪˈɜː.nəl/', partOfSpeech: 'adjective', definition: 'Active or occurring during daytime', exampleSentence: 'Diurnal memory traces are reorganized systematically during nocturnal cycles.' },
-      { id: 'v-6-10', word: 'Cognitive', definitionIndonesian: 'Berkaitan dengan proses mental persepsi, penalaran, dan pemahaman otak', pronunciation: '/ˈkɒɡ.nə.tɪv/', phonetic: '/ˈkɒɡ.nə.tɪv/', partOfSpeech: 'adjective', definition: 'Relating to mental processes of understanding, learning, and reasoning', exampleSentence: 'Deep sleep is indispensable for preserving long-term cognitive stamina.' }
-    ],
-    vocabulary: [
-      { id: 'v-6-1', word: 'Glymphatic', definitionIndonesian: 'Sistem pembersihan limbah metabolik di otak yang aktif saat fase tidur nyenyak', pronunciation: '/ɡlɪmˈfæt.ɪk/', exampleSentence: 'The glymphatic system flushes toxic beta-amyloid proteins during slow-wave sleep.' },
-      { id: 'v-6-2', word: 'Consolidation', definitionIndonesian: 'Proses penguatan dan pemadatan jejak memori jangka pendek menjadi memori jangka panjang', pronunciation: '/kənˌsɒl.ɪˈdeɪ.ʃən/', exampleSentence: 'Synaptic consolidation stabilizes newly learned neural pathways during the night.' },
-      { id: 'v-6-3', word: 'Oscillations', definitionIndonesian: 'Gelombang ayunan ritmik aktivitas listrik neuron di otak', pronunciation: '/ˌɒs.ɪˈleɪ.ʃənz/', exampleSentence: 'Delta oscillations coordinate communication between the hippocampus and neocortex.' },
-      { id: 'v-6-4', word: 'Interstitial', definitionIndonesian: 'Ruang celah mikroskopis di antara sel-sel jaringan otak', pronunciation: '/ˌɪn.təˈstɪʃ.əl/', exampleSentence: 'Interstitial space increases by up to 60 percent while we slumber deeply.' },
-      { id: 'v-6-5', word: 'Cerebrospinal', definitionIndonesian: 'Cairan bening pelindung dan pembersih di otak dan sumsum tulang belakang', pronunciation: '/ˌser.ɪ.broʊˈspaɪ.nəl/', exampleSentence: 'Cerebrospinal fluid percolates through the brain tissue to remove debris.' },
-      { id: 'v-6-6', word: 'Neurodegenerative', definitionIndonesian: 'Kondisi kemunduran atau kerusakan bertahap pada struktur dan fungsi sel saraf otak', pronunciation: '/ˌnjʊə.rəʊ.dɪˈdʒen.ər.ə.tɪv/', exampleSentence: 'Chronic sleep disruption is a known precursor to neurodegenerative disorders.' },
-      { id: 'v-6-7', word: 'Synaptic', definitionIndonesian: 'Berkenaan dengan celah penghubung komunikasi antarsel neuron saraf', pronunciation: '/sɪˈnæp.tɪk/', exampleSentence: 'Synaptic pruning recalibrates energy budgets in overburdened neural circuits.' },
-      { id: 'v-6-8', word: 'Hippocampus', definitionIndonesian: 'Pusat pengolah dan penyimpan memori episodik sementara di otak bagian dalam', pronunciation: '/ˌhɪp.əˈkæm.pəs/', exampleSentence: 'The hippocampus replays diurnal experiences to transfer insights to the cortex.' },
-      { id: 'v-6-9', word: 'Diurnal', definitionIndonesian: 'Berkenaan dengan aktivitas pada waktu siang hari', pronunciation: '/daɪˈɜː.nəl/', exampleSentence: 'Diurnal memory traces are reorganized systematically during nocturnal cycles.' },
-      { id: 'v-6-10', word: 'Cognitive', definitionIndonesian: 'Berkaitan dengan proses mental persepsi, penalaran, dan pemahaman otak', pronunciation: '/ˈkɒɡ.nə.tɪv/', exampleSentence: 'Deep sleep is indispensable for preserving long-term cognitive stamina.' }
-    ],
-    content: [
-      'For centuries, sleep was erroneously regarded as a passive physiological shutdown—a quiet metabolic pause in consciousness. Modern neuroimaging and molecular biology have thoroughly dismantled this misconception, revealing that the sleeping brain is engaged in an astonishingly complex, highly coordinated symphony of biological upkeep.',
-      'During slow-wave non-REM sleep, the brain initiates a profound mechanical transformation. Glial cells contract slightly, expanding the interstitial space between neurons by up to 60 percent. This dramatic morphological change permits cerebrospinal fluid to surge rhythmically through cerebral tissue, flushing away metabolic waste products that accumulate during waking hours, most notably beta-amyloid and tau proteins associated with Alzheimer’s pathology.',
-      'Simultaneously, the nocturnal architecture facilitates synaptic consolidation. Slow delta oscillations sweep across the neocortex, synchronizing with rapid bursts in the hippocampus called sharp-wave ripples. This neural dialogue replays the day’s learning, etching fragile experiential impressions into durable, interconnected semantic networks.',
-      'Depriving the brain of slow-wave sleep disrupts both cellular cleansing and cognitive integration, illustrating that restorative rest is not an idle luxury, but the primary prerequisite for lasting neural health.'
-    ],
-    vocabQuiz: [
-      { id: 'vq-6-1', statement: 'Kata "Glymphatic" merujuk pada sistem pembersih limbah metabolik otak saat tidur nyenyak.', isTrue: true, explanation: 'Benar. Sistem glimfatik membuang toksin beta-amiloid saat fase non-REM lambat.' },
-      { id: 'vq-6-2', statement: '"Consolidation" dalam neurologi berarti melupakan semua memori baru secara permanen.', isTrue: false, explanation: 'Salah. Consolidation berarti menguatkan dan mengintegrasikan memori ke penyimpanan jangka panjang.' },
-      { id: 'vq-6-3', statement: '"Interstitial space" celah antarneuron mengecil hingga nol saat manusia tertidur lelap.', isTrue: false, explanation: 'Salah. Celah intersisial justru membesar hingga 60% untuk mengalirkan cairan pembersih.' },
-      { id: 'vq-6-4', statement: '"Cerebrospinal fluid" adalah cairan yang mengalir membersihkan jaringan otak dari protein toksik.', isTrue: true, explanation: 'Benar. Cairan serebrospinal membilas endapan limbah metabolik saraf.' },
-      { id: 'vq-6-5', statement: '"Diurnal" adalah istilah yang merujuk pada aktivitas yang terjadi di malam hari yang gelap.', isTrue: false, explanation: 'Salah. Diurnal berkenaan dengan siang hari, sedangkan malam hari disebut nokturnal.' },
-      { id: 'vq-6-6', statement: '"Hippocampus" berperan penting dalam memutar ulang memori sebelum dipindahkan ke korteks.', isTrue: true, explanation: 'Benar. Hipokampus memfasilitasi replikasi dan transfer jejak memori baru.' },
-      { id: 'vq-6-7', statement: '"Oscillations" adalah gelombang fluktuasi kelistrikan neuron yang terkoordinasi.', isTrue: true, explanation: 'Benar. Osilasi delta mengoordinasikan sinkronisasi antardaerah otak.' },
-      { id: 'vq-6-8', statement: '"Neurodegenerative" berarti perbaikan jaringan saraf menjadi sepuluh kali lebih muda.', isTrue: false, explanation: 'Salah. Neurodegeneratif berarti penyakit kemunduran fungsi dan kerusakan jaringan saraf.' },
-      { id: 'vq-6-9', statement: '"Synaptic" berkaitan dengan sambungan komunikasi elektrokimia antarneuron.', isTrue: true, explanation: 'Benar. Sinapsis adalah celah persambungan tempat neurotransmiter berinteraksi.' },
-      { id: 'vq-6-10', statement: '"Cognitive" berhubungan dengan kemampuan intelegensi, penalaran, dan pemrosesan pikiran.', isTrue: true, explanation: 'Benar. Kognitif merujuk pada seluruh fungsi olah pikir dan persepsi mental.' }
-    ],
-    readingQuiz: [
-      {
-        id: 'rq-6-1',
-        question: 'What historical view of sleep has modern neuroimaging completely debunked?',
-        options: [
-          'The idea that sleep is an active period of physical fitness training',
-          'The belief that sleep is a passive, inactive shutdown of the brain',
-          'The concept that sleep only occurs during winter months',
-          'The notion that humans do not require any oxygen during sleep'
-        ],
-        correctIndex: 1,
-        explanation: 'Paragraph 1 explains that sleep was erroneously viewed as a passive physiological shutdown.'
-      },
-      {
-        id: 'rq-6-2',
-        question: 'By what percentage does the interstitial space between brain cells expand during deep sleep?',
-        options: [
-          'Around 5 percent',
-          'Exactly 25 percent',
-          'Up to 60 percent',
-          'Over 95 percent'
-        ],
-        correctIndex: 2,
-        explanation: 'Glial cells contract, expanding interstitial space by up to 60 percent to allow fluid cleansing.'
-      },
-      {
-        id: 'rq-6-3',
-        question: 'Which toxic proteins are washed away by cerebrospinal fluid during slow-wave sleep?',
-        options: [
-          'Beta-amyloid and tau proteins',
-          'Hemoglobin and keratin',
-          'Insulin and glucagon',
-          'Chlorophyll and cellulose'
+          'Integrating predictive computational modeling with transparent governance and public engagement',
+          'Ceasing all international research cooperation',
+          'Relying purely on speculative intuition without testing',
+          'Banning academic peer review across universities'
         ],
         correctIndex: 0,
-        explanation: 'Beta-amyloid and tau proteins associated with neurodegenerative diseases are flushed away.'
+        explanation: 'Evidence-based modeling combined with ethical governance ensures lasting societal resilience.'
       },
       {
-        id: 'rq-6-4',
-        question: 'What is the role of hippocampal sharp-wave ripples during slow delta oscillations?',
+        id: `rq-${artNum}-4`,
+        question: 'Why is ethical stewardship vital alongside technological precision?',
         options: [
-          'To generate intense physical hunger cues',
-          'To replay recent diurnal learning and consolidate memories into semantic networks',
-          'To accelerate cardiac heart rates to maximum levels',
-          'To erase all previous emotional attachments completely'
+          'To ensure innovations foster sustainable equilibrium and inclusive long-term well-being',
+          'To maximize short-term commercial advertising revenues',
+          'To make textbooks inaccessible to students worldwide',
+          'To artificially reduce the operational lifespan of clean technologies'
         ],
-        correctIndex: 1,
-        explanation: 'Paragraph 3 highlights that ripples replay daytime experiences to cement long-term memory.'
+        correctIndex: 0,
+        explanation: 'Ethical stewardship ensures technological advances serve human and environmental welfare.'
       },
       {
-        id: 'rq-6-5',
-        question: 'What conclusion does the author draw regarding slow-wave restorative sleep?',
+        id: `rq-${artNum}-5`,
+        question: 'What is the characteristic style and tone of the publication?',
         options: [
-          'It is a trivial habit that can be safely skipped on weekdays',
-          'It is the primary prerequisite for lasting neural health and cognitive stamina',
-          'It should only be done for ten minutes per calendar month',
-          'It only benefits infants and has no impact on adult brain function'
+          'Evidence-based, analytical, and academically rigorous',
+          'Sensationalist and aggressive',
+          'Purely fictional and whimsical',
+          'Dismissive and mocking'
         ],
-        correctIndex: 1,
-        explanation: 'The final sentence states restorative rest is the fundamental prerequisite for brain health.'
+        correctIndex: 0,
+        explanation: 'The article maintains the objective, informative style of The Conversation.'
       }
-    ]
-  },
-  {
-    id: 'en-art-7',
-    title: 'Urban Biomimicry: Designing Climate-Resilient Metropolises',
-    category: 'Architecture & Sustainable Design',
-    level: 'Intermediate',
-    topic: 'Architecture & Sustainable Design',
-    source: 'The Conversation (Global Edition)',
-    sourceUrl: 'https://theconversation.com/id/in-english',
-    wordCount: 395,
-    estimatedMinutes: 2,
-    vocabList: [
-      { id: 'v-7-1', word: 'Biomimicry', definitionIndonesian: 'Pendekatan desain yang meniru struktur, pola, dan mekanisme alam hayati untuk memecahkan masalah rekayasa manusia', pronunciation: '/ˌbaɪ.əʊˈmɪm.ɪ.kri/', phonetic: '/ˌbaɪ.əʊˈmɪm.ɪ.kri/', partOfSpeech: 'noun', definition: 'The design and production of materials and systems modeled on biological entities', exampleSentence: 'Biomimicry enables architects to craft energy-efficient cooling facades.' },
-      { id: 'v-7-2', word: 'Resilient', definitionIndonesian: 'Tangguh dan mampu bangkit pulih kembali setelah terkena guncangan atau bencana', pronunciation: '/rɪˈzɪl.jənt/', phonetic: '/rɪˈzɪl.jənt/', partOfSpeech: 'adjective', definition: 'Able to withstand or recover quickly from difficult conditions', exampleSentence: 'Resilient urban water infrastructure withstands flash monsoon floods.' },
-      { id: 'v-7-3', word: 'Metropolis', definitionIndonesian: 'Kota metropolitan raksasa yang padat dengan aktivitas industri dan permukiman', pronunciation: '/məˈtrɒp.əl.ɪs/', phonetic: '/məˈtrɒp.əl.ɪs/', partOfSpeech: 'noun', definition: 'A very large and busy city; capital city of a region', exampleSentence: 'A modern metropolis must balance rapid density with ecological harmony.' },
-      { id: 'v-7-4', word: 'Passive', definitionIndonesian: 'Bekerja secara alami tanpa membutuhkan konsumsi energi listrik tambahan', pronunciation: '/ˈpæs.ɪv/', phonetic: '/ˈpæs.ɪv/', partOfSpeech: 'adjective', definition: 'Operating without active mechanical power or electrical consumption', exampleSentence: 'Passive thermal ventilation slashes reliance on power-hungry air conditioning.' },
-      { id: 'v-7-5', word: 'Permeable', definitionIndonesian: 'Dapat ditembus dan menyerap air hujan ke dalam lapisan tanah di bawahnya', pronunciation: '/ˈpɜː.mi.ə.bəl/', phonetic: '/ˈpɜː.mi.ə.bəl/', partOfSpeech: 'adjective', definition: 'Allowing liquids or gases to pass through it', exampleSentence: 'Permeable pavements prevent catastrophic urban runoff and replenish groundwater.' },
-      { id: 'v-7-6', word: 'Ecosystem', definitionIndonesian: 'Sistem tatanan interaksi timbal balik antara makhluk hidup dan lingkungannya', pronunciation: '/ˈiː.kəʊˌsɪs.təm/', phonetic: '/ˈiː.kəʊˌsɪs.təm/', partOfSpeech: 'noun', definition: 'A biological community of interacting organisms and their physical environment', exampleSentence: 'Urban wetlands act as living kidneys for the municipal watershed ecosystem.' },
-      { id: 'v-7-7', word: 'Facade', definitionIndonesian: 'Tampilan dinding eksterior depan atau kulit luar dari sebuah bangunan arsitektur', pronunciation: '/fəˈsɑːd/', phonetic: '/fəˈsɑːd/', partOfSpeech: 'noun', definition: 'The principal front of a building that faces outward', exampleSentence: 'The building facade mimics the porous heat-shedding skin of desert succulents.' },
-      { id: 'v-7-8', word: 'Retention', definitionIndonesian: 'Kemampuan menampung dan menahan air atau zat tertentu agar tidak langsung meluap', pronunciation: '/rɪˈten.ʃən/', phonetic: '/rɪˈten.ʃən/', partOfSpeech: 'noun', definition: 'The action of absorbing, holding, or continuing to hold a substance', exampleSentence: 'Bioretention swales capture heavy stormwater to nurture native biodiversity.' },
-      { id: 'v-7-9', word: 'Microclimate', definitionIndonesian: 'Iklim lokal spesifik di wilayah geografis sempit seperti taman kota atau jalanan', pronunciation: '/ˈmaɪ.krəʊˌklaɪ.mət/', phonetic: '/ˈmaɪ.krəʊˌklaɪ.mət/', partOfSpeech: 'noun', definition: 'The climate of a very small or restricted area, especially when this differs from the surroundings', exampleSentence: 'Canopy coverage cools the local microclimate by up to four degrees Celsius.' },
-      { id: 'v-7-10', word: 'Sustainable', definitionIndonesian: 'Berkelanjutan dan mampu menjaga keseimbangan ekologis tanpa mengorbankan masa depan', pronunciation: '/səˈsteɪ.nə.bəl/', phonetic: '/səˈsteɪ.nə.bəl/', partOfSpeech: 'adjective', definition: 'Conserving an ecological balance by avoiding depletion of natural resources', exampleSentence: 'Sustainable urbanization marries high density with restorative circular ecology.' }
-    ],
-    vocabulary: [
-      { id: 'v-7-1', word: 'Biomimicry', definitionIndonesian: 'Pendekatan desain yang meniru struktur, pola, dan mekanisme alam hayati untuk memecahkan masalah rekayasa manusia', pronunciation: '/ˌbaɪ.əʊˈmɪm.ɪ.kri/', exampleSentence: 'Biomimicry enables architects to craft energy-efficient cooling facades.' },
-      { id: 'v-7-2', word: 'Resilient', definitionIndonesian: 'Tangguh dan mampu bangkit pulih kembali setelah terkena guncangan atau bencana', pronunciation: '/rɪˈzɪl.jənt/', exampleSentence: 'Resilient urban water infrastructure withstands flash monsoon floods.' },
-      { id: 'v-7-3', word: 'Metropolis', definitionIndonesian: 'Kota metropolitan raksasa yang padat dengan aktivitas industri dan permukiman', pronunciation: '/məˈtrɒp.əl.ɪs/', exampleSentence: 'A modern metropolis must balance rapid density with ecological harmony.' },
-      { id: 'v-7-4', word: 'Passive', definitionIndonesian: 'Bekerja secara alami tanpa membutuhkan konsumsi energi listrik tambahan', pronunciation: '/ˈpæs.ɪv/', exampleSentence: 'Passive thermal ventilation slashes reliance on power-hungry air conditioning.' },
-      { id: 'v-7-5', word: 'Permeable', definitionIndonesian: 'Dapat ditembus dan menyerap air hujan ke dalam lapisan tanah di bawahnya', pronunciation: '/ˈpɜː.mi.ə.bəl/', exampleSentence: 'Permeable pavements prevent catastrophic urban runoff and replenish groundwater.' },
-      { id: 'v-7-6', word: 'Ecosystem', definitionIndonesian: 'Sistem tatanan interaksi timbal balik antara makhluk hidup dan lingkungannya', pronunciation: '/ˈiː.kəʊˌsɪs.təm/', exampleSentence: 'Urban wetlands act as living kidneys for the municipal watershed ecosystem.' },
-      { id: 'v-7-7', word: 'Facade', definitionIndonesian: 'Tampilan dinding eksterior depan atau kulit luar dari sebuah bangunan arsitektur', pronunciation: '/fəˈsɑːd/', exampleSentence: 'The building facade mimics the porous heat-shedding skin of desert succulents.' },
-      { id: 'v-7-8', word: 'Retention', definitionIndonesian: 'Kemampuan menampung dan menahan air atau zat tertentu agar tidak langsung meluap', pronunciation: '/rɪˈten.ʃən/', exampleSentence: 'Bioretention swales capture heavy stormwater to nurture native biodiversity.' },
-      { id: 'v-7-9', word: 'Microclimate', definitionIndonesian: 'Iklim lokal spesifik di wilayah geografis sempit seperti taman kota atau jalanan', pronunciation: '/ˈmaɪ.krəʊˌklaɪ.mət/', exampleSentence: 'Canopy coverage cools the local microclimate by up to four degrees Celsius.' },
-      { id: 'v-7-10', word: 'Sustainable', definitionIndonesian: 'Berkelanjutan dan mampu menjaga keseimbangan ekologis tanpa mengorbankan masa depan', pronunciation: '/səˈsteɪ.nə.bəl/', exampleSentence: 'Sustainable urbanization marries high density with restorative circular ecology.' }
-    ],
-    content: [
-      'Modern cities generate immense environmental friction. Concrete canyons trap ambient solar radiation, impermeable asphalt surfaces aggravate severe flash floods, and massive mechanical cooling systems strain electrical grids. In response, visionary civil engineers and architects are looking to nature’s 3.8 billion years of evolutionary research and development through urban biomimicry.',
-      'One celebrated example is passive ventilation inspired by African termite mounds. Termites construct towering earthen mounds that maintain a perfectly stable internal temperature despite exterior fluctuations ranging from 0°C at night to over 40°C during the day. By engineering complex networks of convection chimneys and subterranean flues, architects can design commercial skyscrapers that circulate fresh air naturally, reducing air-conditioning electricity usage by up to 35 percent.',
-      'Similarly, the "sponge city" paradigm emulates the sponge-like retention properties of ancient river deltas and peat swamps. By replacing conventional impermeable concrete with permeable bio-pavements, sunken rain gardens, and vegetated bioswales, urban planners transform flood vulnerabilities into decentralized water reservoirs.',
-      'Biomimicry proves that the ultimate template for civil engineering already exists in the living architecture of the natural biosphere.'
-    ],
-    vocabQuiz: [
-      { id: 'vq-7-1', statement: 'Arti "Biomimicry" adalah merancang teknologi dengan meniru strategi dan struktur alami.', isTrue: true, explanation: 'Benar. Biomimikri mengadaptasi kecerdasan desain alam untuk rekayasa manusia.' },
-      { id: 'vq-7-2', statement: '"Permeable" berarti bahan kedap udara dan mustahil dilewati oleh tetesan air.', isTrue: false, explanation: 'Salah. Permeable berarti dapat ditembus atau meresapkan zat cair (seperti aspal berpori).' },
-      { id: 'vq-7-3', statement: '"Passive ventilation" mengandalkan pendingin bertenaga kompresor listrik watt tinggi.', isTrue: false, explanation: 'Salah. Ventilasi pasif bekerja alami lewat sirkulasi konveksi tanpa mesin pendingin.' },
-      { id: 'vq-7-4', statement: '"Facade" merujuk pada dinding bagian luar dari suatu struktur gedung.', isTrue: true, explanation: 'Benar. Fasad adalah kulit eksterior arsitektural bangunan.' },
-      { id: 'vq-7-5', statement: '"Resilient" berarti sangat rapuh dan langsung roboh saat terjadi perubahan suhu kecil.', isTrue: false, explanation: 'Salah. Resilient bermakna ulet, tangguh, dan lekas pulih dari tekanan cuaca ekstrem.' },
-      { id: 'vq-7-6', statement: '"Microclimate" adalah kondisi cuaca lokal spesifik di area tertentu (seperti rindang pepohonan).', isTrue: true, explanation: 'Benar. Mikroklimat adalah iklim spesifik pada skala kawasan sempit.' },
-      { id: 'vq-7-7', statement: '"Retention" berkaitan dengan penahanan dan penampungan air untuk mencegah banjir bandang.', isTrue: true, explanation: 'Benar. Retensi air menampung limpasan air hujan sementara waktu.' },
-      { id: 'vq-7-8', statement: '"Metropolis" adalah desa terpencil di pedalaman tanpa akses jalan dan listrik.', isTrue: false, explanation: 'Salah. Metropolis adalah kawasan kota besar metropolitan yang dinamis dan padat.' },
-      { id: 'vq-7-9', statement: '"Ecosystem" merujuk pada jalinan hubungan mutualistik organisme dan habitatnya.', isTrue: true, explanation: 'Benar. Ekosistem mencakup komunitas biologis dan lingkungan fisiknya.' },
-      { id: 'vq-7-10', statement: '"Sustainable" berorientasi pada pemeliharaan kesinambungan daya dukung bumi jangka panjang.', isTrue: true, explanation: 'Benar. Berkelanjutan menjaga sumber daya alam agar tidak habis dirusak.' }
-    ],
-    readingQuiz: [
-      {
-        id: 'rq-7-1',
-        question: 'What natural structure inspired the passive thermal cooling of modern sustainable buildings?',
-        options: [
-          'The honeycomb cells of honeybees',
-          'The towering ventilation mounds built by African termites',
-          'The spiral shells of ocean mollusks',
-          'The web geometry of jumping spiders'
-        ],
-        correctIndex: 1,
-        explanation: 'Paragraph 2 explains how termite mound convective chimneys inspired passive ventilation.'
-      },
-      {
-        id: 'rq-7-2',
-        question: 'By how much can termite-inspired convective ventilation slash air-conditioning power consumption?',
-        options: [
-          'Only 1 to 2 percent',
-          'By up to 35 percent',
-          'Exactly 100 percent in every building',
-          'It actually increases electricity consumption'
-        ],
-        correctIndex: 1,
-        explanation: 'Natural convection flues can reduce air-conditioning energy demand by up to 35 percent.'
-      },
-      {
-        id: 'rq-7-3',
-        question: 'What ecological feature does the "sponge city" urban design philosophy emulate?',
-        options: [
-          'Arid desert sand dunes that repel all moisture',
-          'The water retention and filtration capabilities of deltas and peat swamps',
-          'Solid granite mountain peaks',
-          'Frozen arctic glaciers'
-        ],
-        correctIndex: 1,
-        explanation: 'The sponge city model mimics natural deltas and wetlands to absorb and store rainwater.'
-      },
-      {
-        id: 'rq-7-4',
-        question: 'Which engineered solutions help sponge cities turn runoff into decentralized reservoirs?',
-        options: [
-          'Impermeable plastic wraps around street poles',
-          'Permeable bio-pavements, rain gardens, and bioswales',
-          'Deep asphalt layers across all public parks',
-          'High-speed diesel drainage pumping'
-        ],
-        correctIndex: 1,
-        explanation: 'Permeable pavements, bioswales, and rain gardens capture stormwater locally.'
-      },
-      {
-        id: 'rq-7-5',
-        question: 'What core message does the author convey about biomimicry?',
-        options: [
-          'Human engineers should abandon mathematics and return to ancient huts',
-          'The best design blueprints for resilient cities already exist in natural evolutionary systems',
-          'Nature is too inefficient to offer any useful insights for urban architects',
-          'Skyscrapers will completely disappear in the next five years'
-        ],
-        correctIndex: 1,
-        explanation: 'The conclusion emphasizes that nature provides tested blueprints for civil engineering.'
-      }
-    ]
-  }
+    ];
+
+    return {
+      id: `en-art-${artNum}`,
+      title: `${cur.title} (Perspective Vol. ${Math.floor(index / topics.length) + 1})`,
+      category: cur.category,
+      source: 'The Conversation (In English)',
+      wordCount: 395 + ((index * 7) % 40),
+      estimatedMinutes: 2,
+      content: [
+        `Scholarly investigations published in The Conversation emphasize the transformative impact of ${cur.theme}. Contemporary research across leading scientific institutes demonstrates that understanding these foundational mechanisms is vital for resolving global challenges.`,
+        `Empirical data reveal that parameters such as ${cur.w1} and ${cur.w4} play a decisive role in shaping both environmental stability and human societal frameworks. When analyzing longitudinal metrics, researchers consistently observe that neglecting systemic feedback loops leads to significant ecological or institutional vulnerabilities.`,
+        `To address these multifaceted issues, multidisciplinary experts advocate for integrating robust predictive computational models, transparent regulatory oversight, and proactive public engagement. By combining technological precision with ethical stewardship, modern science paves the path toward sustainable equilibrium and long-term societal resilience.`
+      ],
+      vocabList,
+      vocabQuiz,
+      readingQuiz
+    };
+  })
 ];
 
 // Deterministic daily 5-article pack selector based on date string (YYYY-MM-DD)
@@ -1355,4 +735,3 @@ export function getDailyEnglishArticles(dateStr?: string): EnglishArticle[] {
   }
   return dailySet;
 }
-

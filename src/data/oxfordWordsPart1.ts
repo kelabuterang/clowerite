@@ -1,3 +1,2 @@
-import { DictionaryEntry } from '../types';
-
-export const OXFORD_ENTRIES_A_D: DictionaryEntry[] = [];
+export * from './oxfordPart1';
+export { default } from './oxfordPart1';

@@ -3,6 +3,7 @@ import { Sparkles, CheckCircle2, XCircle, ArrowRight, RotateCcw, BookOpen, Flame
 import { SINONIM_ANTONIM_LIST } from '../data/sinonimAntonimData';
 import { CloverMascot } from './CloverMascot';
 import { SinonimAntonimItem } from '../types';
+import { useHabit } from '../context/HabitContext';
 import confetti from 'canvas-confetti';
 
 export type QuizType = 'mix' | 'sinonim' | 'antonim';
@@ -16,6 +17,9 @@ interface QuestionState {
 }
 
 export const SinonimAntonimQuiz: React.FC<{ onBack?: () => void }> = () => {
+  const { theme } = useHabit();
+  const isCoastal = theme === 'coastal';
+
   const [quizMode, setQuizMode] = useState<QuizType>('mix');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -168,36 +172,56 @@ export const SinonimAntonimQuiz: React.FC<{ onBack?: () => void }> = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
       {/* Header Bento Card */}
-      <div className="bg-[#E9EDC9] border-2 border-[#283618] rounded-2xl p-6 sm:p-8 shadow-[4px_4px_0px_0px_#283618] flex flex-col md:flex-row items-center justify-between gap-6">
+      <div className={`border-2 rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 ${
+        isCoastal
+          ? 'bg-[#EBF1F5] border-slate-700 shadow-[4px_4px_0px_0px_rgba(51,65,85,1)]'
+          : 'bg-[#E9EDC9] border-[#283618] shadow-[4px_4px_0px_0px_#283618]'
+      }`}>
         <div className="space-y-2 text-left flex-1">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-white border border-[#283618] text-xs font-black tracking-widest uppercase text-[#3A5A40]">
-            <Sparkles className="w-3.5 h-3.5 text-[#588157] stroke-[2.5]" />
+          <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-md border text-xs font-black tracking-widest uppercase ${
+            isCoastal
+              ? 'bg-white border-slate-700 text-[#2C4A6F]'
+              : 'bg-white border-[#283618] text-[#3A5A40]'
+          }`}>
+            <Sparkles className={`w-3.5 h-3.5 stroke-[2.5] ${isCoastal ? 'text-[#3A6B88]' : 'text-[#588157]'}`} />
             DRILLING SINONIM & ANTONIM • KAMUS LENGKAP
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black text-[#283618] tracking-tight uppercase">
+          <h1 className={`text-2xl sm:text-3xl font-black tracking-tight uppercase ${
+            isCoastal ? 'text-slate-800' : 'text-[#283618]'
+          }`}>
             Quiz Sinonim & Antonim Indonesia
           </h1>
-          <p className="text-xs sm:text-sm text-[#3A5A40] font-bold max-w-xl leading-relaxed">
+          <p className={`text-xs sm:text-sm font-bold max-w-xl leading-relaxed ${
+            isCoastal ? 'text-slate-600' : 'text-[#3A5A40]'
+          }`}>
             Tingkatkan kekayaan diksi dan pemahaman relasi makna kata bahasa Indonesia. Latihan acak tanpa batas dengan penjelasan semantik & contoh kalimat.
           </p>
 
           {/* Quick Stats Pill */}
           <div className="flex items-center gap-2 sm:gap-3 pt-2 flex-wrap">
-            <div className="bg-white px-3 py-1.5 border-2 border-[#283618] rounded-xl shadow-[2px_2px_0px_0px_#283618] flex items-center gap-1.5 text-xs font-black text-[#283618]">
-              <Flame className="w-4 h-4 text-[#DDA15E] fill-[#DDA15E]" />
+            <div className={`bg-white px-3 py-1.5 border-2 rounded-xl flex items-center gap-1.5 text-xs font-black ${
+              isCoastal ? 'border-slate-700 shadow-[2px_2px_0px_0px_rgba(51,65,85,1)] text-slate-800' : 'border-[#283618] shadow-[2px_2px_0px_0px_#283618] text-[#283618]'
+            }`}>
+              <Flame className={`w-4 h-4 ${isCoastal ? 'text-amber-500 fill-amber-500' : 'text-[#DDA15E] fill-[#DDA15E]'}`} />
               <span>Streak: {streak}</span>
               <span className="text-[10px] text-slate-500 font-bold">(Rekor: {highestStreak})</span>
             </div>
 
-            <div className="bg-white px-3 py-1.5 border-2 border-[#283618] rounded-xl shadow-[2px_2px_0px_0px_#283618] flex items-center gap-1.5 text-xs font-black text-[#3A5A40]">
-              <Award className="w-4 h-4 text-[#709752]" />
+            <div className={`bg-white px-3 py-1.5 border-2 rounded-xl flex items-center gap-1.5 text-xs font-black ${
+              isCoastal ? 'border-slate-700 shadow-[2px_2px_0px_0px_rgba(51,65,85,1)] text-[#2C4A6F]' : 'border-[#283618] shadow-[2px_2px_0px_0px_#283618] text-[#3A5A40]'
+            }`}>
+              <Award className={`w-4 h-4 ${isCoastal ? 'text-[#3A6B88]' : 'text-[#709752]'}`} />
               <span>Skor: {score} / {totalAnswered}</span>
-              <span className="font-mono text-[#BC6C25] font-bold">({accuracy}%)</span>
+              <span className={`font-mono font-bold ${isCoastal ? 'text-blue-700' : 'text-[#BC6C25]'}`}>({accuracy}%)</span>
             </div>
 
             <button
               onClick={handleShuffle}
-              className="px-3 py-1.5 bg-white hover:bg-[#FAEDCD] rounded-xl border-2 border-[#283618] shadow-[2px_2px_0px_0px_#283618] text-xs font-black text-[#283618] cursor-pointer flex items-center gap-1 active:translate-y-0.5"
+              className={`px-3 py-1.5 bg-white rounded-xl border-2 text-xs font-black cursor-pointer flex items-center gap-1 active:translate-y-0.5 transition-all ${
+                isCoastal
+                  ? 'border-slate-700 shadow-[2px_2px_0px_0px_rgba(51,65,85,1)] text-slate-800 hover:bg-slate-100'
+                  : 'border-[#283618] shadow-[2px_2px_0px_0px_#283618] text-[#283618] hover:bg-[#FAEDCD]'
+              }`}
               title="Acak Soal"
             >
               <Shuffle className="w-3.5 h-3.5" /> Acak
@@ -205,7 +229,11 @@ export const SinonimAntonimQuiz: React.FC<{ onBack?: () => void }> = () => {
 
             <button
               onClick={handleResetStats}
-              className="px-3 py-1.5 bg-white hover:bg-rose-100 rounded-xl border-2 border-[#283618] shadow-[2px_2px_0px_0px_#283618] text-xs font-black text-[#283618] cursor-pointer flex items-center gap-1 active:translate-y-0.5"
+              className={`px-3 py-1.5 bg-white rounded-xl border-2 text-xs font-black cursor-pointer flex items-center gap-1 active:translate-y-0.5 transition-all ${
+                isCoastal
+                  ? 'border-slate-700 shadow-[2px_2px_0px_0px_rgba(51,65,85,1)] text-slate-800 hover:bg-rose-50'
+                  : 'border-[#283618] shadow-[2px_2px_0px_0px_#283618] text-[#283618] hover:bg-rose-100'
+              }`}
               title="Reset Statistik"
             >
               <RotateCcw className="w-3.5 h-3.5" /> Reset
@@ -214,17 +242,21 @@ export const SinonimAntonimQuiz: React.FC<{ onBack?: () => void }> = () => {
         </div>
 
         <div className="shrink-0">
-          <div className="p-2 bg-white rounded-2xl border-2 border-[#283618] shadow-[3px_3px_0px_0px_#283618]">
+          <div className={`p-2 bg-white rounded-2xl border-2 ${
+            isCoastal ? 'border-slate-700 shadow-[3px_3px_0px_0px_rgba(51,65,85,1)]' : 'border-[#283618] shadow-[3px_3px_0px_0px_#283618]'
+          }`}>
             <CloverMascot type="kata-baku" size={100} />
           </div>
         </div>
       </div>
 
       {/* Mode Switcher Tabs */}
-      <div className="bg-white p-2 rounded-2xl border-2 border-[#283618] shadow-[3px_3px_0px_0px_#283618] flex flex-wrap items-center justify-between gap-3">
+      <div className={`bg-white p-2 rounded-2xl border-2 flex flex-wrap items-center justify-between gap-3 ${
+        isCoastal ? 'border-slate-700 shadow-[3px_3px_0px_0px_rgba(51,65,85,1)]' : 'border-[#283618] shadow-[3px_3px_0px_0px_#283618]'
+      }`}>
         <div className="flex items-center gap-2">
-          <span className="text-xs font-black uppercase text-[#283618] px-2">Mode Kuis:</span>
-          <div className="flex bg-[#FAEDCD] p-1 rounded-xl border border-[#283618]">
+          <span className={`text-xs font-black uppercase px-2 ${isCoastal ? 'text-slate-800' : 'text-[#283618]'}`}>Mode Kuis:</span>
+          <div className={`flex p-1 rounded-xl border ${isCoastal ? 'bg-[#F1F5F9] border-slate-300' : 'bg-[#FAEDCD] border-[#283618]'}`}>
             <button
               onClick={() => {
                 setQuizMode('mix');
@@ -234,8 +266,12 @@ export const SinonimAntonimQuiz: React.FC<{ onBack?: () => void }> = () => {
               }}
               className={`px-3 py-1.5 rounded-lg text-xs font-black uppercase transition-all cursor-pointer ${
                 quizMode === 'mix'
-                  ? 'bg-[#709752] text-white border border-[#283618] shadow-[1px_1px_0px_0px_#283618]'
-                  : 'text-[#574332] hover:text-[#283618]'
+                  ? isCoastal
+                    ? 'bg-[#3A6B88] text-white border border-slate-700 shadow-[1px_1px_0px_0px_rgba(51,65,85,1)]'
+                    : 'bg-[#709752] text-white border border-[#283618] shadow-[1px_1px_0px_0px_#283618]'
+                  : isCoastal
+                    ? 'text-slate-600 hover:text-slate-900'
+                    : 'text-[#574332] hover:text-[#283618]'
               }`}
             >
               🔀 Acak / Campuran
@@ -249,8 +285,12 @@ export const SinonimAntonimQuiz: React.FC<{ onBack?: () => void }> = () => {
               }}
               className={`px-3 py-1.5 rounded-lg text-xs font-black uppercase transition-all cursor-pointer ${
                 quizMode === 'sinonim'
-                  ? 'bg-[#709752] text-white border border-[#283618] shadow-[1px_1px_0px_0px_#283618]'
-                  : 'text-[#574332] hover:text-[#283618]'
+                  ? isCoastal
+                    ? 'bg-[#3A6B88] text-white border border-slate-700 shadow-[1px_1px_0px_0px_rgba(51,65,85,1)]'
+                    : 'bg-[#709752] text-white border border-[#283618] shadow-[1px_1px_0px_0px_#283618]'
+                  : isCoastal
+                    ? 'text-slate-600 hover:text-slate-900'
+                    : 'text-[#574332] hover:text-[#283618]'
               }`}
             >
               = Sinonim (Persamaan)
@@ -264,8 +304,12 @@ export const SinonimAntonimQuiz: React.FC<{ onBack?: () => void }> = () => {
               }}
               className={`px-3 py-1.5 rounded-lg text-xs font-black uppercase transition-all cursor-pointer ${
                 quizMode === 'antonim'
-                  ? 'bg-[#709752] text-white border border-[#283618] shadow-[1px_1px_0px_0px_#283618]'
-                  : 'text-[#574332] hover:text-[#283618]'
+                  ? isCoastal
+                    ? 'bg-[#3A6B88] text-white border border-slate-700 shadow-[1px_1px_0px_0px_rgba(51,65,85,1)]'
+                    : 'bg-[#709752] text-white border border-[#283618] shadow-[1px_1px_0px_0px_#283618]'
+                  : isCoastal
+                    ? 'text-slate-600 hover:text-slate-900'
+                    : 'text-[#574332] hover:text-[#283618]'
               }`}
             >
               ≠ Antonim (Lawan Kata)
@@ -275,7 +319,7 @@ export const SinonimAntonimQuiz: React.FC<{ onBack?: () => void }> = () => {
 
         {/* Category selector */}
         <div className="flex items-center gap-2 text-xs">
-          <span className="font-bold text-[#574332]">Kategori:</span>
+          <span className={`font-bold ${isCoastal ? 'text-slate-600' : 'text-[#574332]'}`}>Kategori:</span>
           <select
             value={selectedCategory}
             onChange={e => {
@@ -284,7 +328,11 @@ export const SinonimAntonimQuiz: React.FC<{ onBack?: () => void }> = () => {
               setSelectedOption(null);
               setIsAnswered(false);
             }}
-            className="px-3 py-1.5 rounded-xl border border-[#283618] bg-[#FAF6EE] text-xs font-bold text-[#283618] focus:outline-none focus:ring-1 focus:ring-[#709752]"
+            className={`px-3 py-1.5 rounded-xl border text-xs font-bold focus:outline-none ${
+              isCoastal
+                ? 'border-slate-300 bg-white text-slate-800 focus:ring-1 focus:ring-[#3A6B88]'
+                : 'border-[#283618] bg-[#FAF6EE] text-[#283618] focus:ring-1 focus:ring-[#709752]'
+            }`}
           >
             {categories.map(c => (
               <option key={c} value={c}>
@@ -296,13 +344,19 @@ export const SinonimAntonimQuiz: React.FC<{ onBack?: () => void }> = () => {
       </div>
 
       {/* Main Question Card */}
-      <div className="bg-white border-2 border-[#283618] rounded-2xl p-6 sm:p-8 shadow-[4px_4px_0px_0px_#283618] space-y-6">
+      <div className={`bg-white border-2 rounded-2xl p-6 sm:p-8 space-y-6 ${
+        isCoastal ? 'border-slate-700 shadow-[4px_4px_0px_0px_rgba(51,65,85,1)]' : 'border-[#283618] shadow-[4px_4px_0px_0px_#283618]'
+      }`}>
         <div className="flex items-center justify-between border-b-2 border-slate-100 pb-3 flex-wrap gap-2">
           <div className="flex items-center gap-2">
             <span className={`text-xs font-black uppercase tracking-wider px-3 py-1 rounded-lg border ${
-              currentQuestion.questionType === 'sinonim'
-                ? 'bg-[#E9EDC9] text-[#3A5A40] border-[#A3B18A]'
-                : 'bg-[#FAEDCD] text-[#BC6C25] border-[#DDA15E]'
+              isCoastal
+                ? currentQuestion.questionType === 'sinonim'
+                  ? 'bg-[#EBF1F5] text-[#2C4A6F] border-[#CBD5E1]'
+                  : 'bg-[#F1F5F9] text-slate-700 border-slate-300'
+                : currentQuestion.questionType === 'sinonim'
+                  ? 'bg-[#E9EDC9] text-[#3A5A40] border-[#A3B18A]'
+                  : 'bg-[#FAEDCD] text-[#BC6C25] border-[#DDA15E]'
             }`}>
               {currentQuestion.questionType === 'sinonim' ? 'Persamaan Kata (Sinonim)' : 'Lawan Kata (Antonim)'}
             </span>
@@ -310,18 +364,26 @@ export const SinonimAntonimQuiz: React.FC<{ onBack?: () => void }> = () => {
               #{currentIndex + 1}
             </span>
           </div>
-          <span className="text-xs font-bold text-[#574332]">
+          <span className={`text-xs font-bold ${isCoastal ? 'text-slate-600' : 'text-[#574332]'}`}>
             {currentQuestion.targetItem.category} • {currentQuestion.targetItem.partOfSpeech}
           </span>
         </div>
 
         {/* Big Word Prompt */}
         <div className="text-center py-4 space-y-3">
-          <p className="text-xs sm:text-sm font-black text-[#8C6B4F] uppercase tracking-wider">
+          <p className={`text-xs sm:text-sm font-black uppercase tracking-wider ${
+            isCoastal ? 'text-slate-500' : 'text-[#8C6B4F]'
+          }`}>
             {currentQuestion.questionType === 'sinonim' ? 'Cari Persamaan Kata dari:' : 'Cari Lawan Kata dari:'}
           </p>
-          <div className="inline-block bg-[#FEFAE0] border-2 border-[#283618] px-8 py-3 rounded-2xl shadow-[3px_3px_0px_0px_#283618]">
-            <h2 className="text-3xl sm:text-4xl font-black text-[#283618] tracking-tight">
+          <div className={`inline-block border-2 px-8 py-3 rounded-2xl ${
+            isCoastal
+              ? 'bg-[#F8FAFC] border-slate-700 shadow-[3px_3px_0px_0px_rgba(51,65,85,1)]'
+              : 'bg-[#FEFAE0] border-[#283618] shadow-[3px_3px_0px_0px_#283618]'
+          }`}>
+            <h2 className={`text-3xl sm:text-4xl font-black tracking-tight ${
+              isCoastal ? 'text-slate-800' : 'text-[#283618]'
+            }`}>
               {currentQuestion.targetItem.word}
             </h2>
           </div>
@@ -336,13 +398,19 @@ export const SinonimAntonimQuiz: React.FC<{ onBack?: () => void }> = () => {
             const isCorrect = option === currentQuestion.correctAnswer;
             const isChosen = selectedOption === option;
 
-            let btnStyle = 'bg-[#FAF6EE] text-[#283618] border-[#283618] hover:bg-[#E9EDC9] shadow-[3px_3px_0px_0px_#283618]';
+            let btnStyle = isCoastal
+              ? 'bg-[#F8FAFC] text-slate-800 border-slate-700 hover:bg-[#EBF1F5] shadow-[3px_3px_0px_0px_rgba(51,65,85,1)]'
+              : 'bg-[#FAF6EE] text-[#283618] border-[#283618] hover:bg-[#E9EDC9] shadow-[3px_3px_0px_0px_#283618]';
 
             if (isAnswered) {
               if (isCorrect) {
-                btnStyle = 'bg-[#709752] text-white border-[#283618] shadow-[3px_3px_0px_0px_#283618]';
+                btnStyle = isCoastal
+                  ? 'bg-[#3A6B88] text-white border-slate-700 shadow-[3px_3px_0px_0px_rgba(51,65,85,1)]'
+                  : 'bg-[#709752] text-white border-[#283618] shadow-[3px_3px_0px_0px_#283618]';
               } else if (isChosen && !isCorrect) {
-                btnStyle = 'bg-[#E63946] text-white border-[#283618] shadow-[3px_3px_0px_0px_#283618]';
+                btnStyle = isCoastal
+                  ? 'bg-[#E11D48] text-white border-slate-700 shadow-[3px_3px_0px_0px_rgba(51,65,85,1)]'
+                  : 'bg-[#E63946] text-white border-[#283618] shadow-[3px_3px_0px_0px_#283618]';
               } else {
                 btnStyle = 'bg-slate-100 text-slate-400 border-slate-300 opacity-60';
               }
@@ -384,15 +452,23 @@ export const SinonimAntonimQuiz: React.FC<{ onBack?: () => void }> = () => {
         {isAnswered && (
           <div className="space-y-4 pt-4 border-t-2 border-slate-100 animate-fadeIn">
             <div
-              className={`p-5 rounded-2xl border-2 border-[#283618] shadow-[3px_3px_0px_0px_#283618] ${
-                selectedOption === currentQuestion.correctAnswer ? 'bg-[#E9EDC9]' : 'bg-[#FFE5D9]'
+              className={`p-5 rounded-2xl border-2 ${
+                isCoastal
+                  ? selectedOption === currentQuestion.correctAnswer
+                    ? 'bg-[#EBF1F5] border-slate-700 shadow-[3px_3px_0px_0px_rgba(51,65,85,1)]'
+                    : 'bg-[#FFF1F2] border-slate-700 shadow-[3px_3px_0px_0px_rgba(51,65,85,1)]'
+                  : selectedOption === currentQuestion.correctAnswer
+                    ? 'bg-[#E9EDC9] border-[#283618] shadow-[3px_3px_0px_0px_#283618]'
+                    : 'bg-[#FFE5D9] border-[#283618] shadow-[3px_3px_0px_0px_#283618]'
               }`}
             >
               <div className="flex items-center justify-between flex-wrap gap-2 mb-3">
-                <span className="text-sm font-black text-[#283618] flex items-center gap-1.5">
+                <span className={`text-sm font-black flex items-center gap-1.5 ${
+                  isCoastal ? 'text-slate-800' : 'text-[#283618]'
+                }`}>
                   {selectedOption === currentQuestion.correctAnswer ? (
                     <>
-                      <CheckCircle2 className="w-4 h-4 text-[#709752]" />
+                      <CheckCircle2 className={`w-4 h-4 ${isCoastal ? 'text-[#3A6B88]' : 'text-[#709752]'}`} />
                       JAWABAN TEPAT! 🎉
                     </>
                   ) : (
@@ -402,34 +478,38 @@ export const SinonimAntonimQuiz: React.FC<{ onBack?: () => void }> = () => {
                     </>
                   )}
                 </span>
-                <span className="text-xs font-bold text-[#574332]">
+                <span className={`text-xs font-bold ${isCoastal ? 'text-slate-600' : 'text-[#574332]'}`}>
                   Kaidah: {currentQuestion.questionType === 'sinonim' ? 'Persamaan Makna' : 'Perlawanan Makna'}
                 </span>
               </div>
 
-              <div className="space-y-2.5 text-xs sm:text-sm text-[#283618]">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 bg-white/80 p-3.5 rounded-xl border border-[#283618]/20">
+              <div className={`space-y-2.5 text-xs sm:text-sm ${isCoastal ? 'text-slate-800' : 'text-[#283618]'}`}>
+                <div className={`grid grid-cols-1 sm:grid-cols-2 gap-2 bg-white/80 p-3.5 rounded-xl border ${
+                  isCoastal ? 'border-slate-300' : 'border-[#283618]/20'
+                }`}>
                   <div>
-                    <span className="font-bold text-[#3A5A40] block mb-1">
+                    <span className={`font-bold block mb-1 ${isCoastal ? 'text-[#2C4A6F]' : 'text-[#3A5A40]'}`}>
                       ✓ Daftar Sinonim ({currentQuestion.targetItem.word}):
                     </span>
-                    <p className="font-medium text-[#283618]">
+                    <p className="font-medium text-slate-800">
                       {currentQuestion.targetItem.sinonim.join(', ')}
                     </p>
                   </div>
                   <div>
-                    <span className="font-bold text-[#BC6C25] block mb-1">
+                    <span className={`font-bold block mb-1 ${isCoastal ? 'text-[#3A6B88]' : 'text-[#BC6C25]'}`}>
                       ≠ Daftar Antonim ({currentQuestion.targetItem.word}):
                     </span>
-                    <p className="font-medium text-[#283618]">
+                    <p className="font-medium text-slate-800">
                       {currentQuestion.targetItem.antonim.join(', ')}
                     </p>
                   </div>
                 </div>
 
-                <div className="bg-white/80 p-3 rounded-xl border border-[#283618]/20 space-y-1">
-                  <span className="font-bold text-[#574332] block">Contoh Kalimat:</span>
-                  <p className="italic text-[#283618] font-serif">
+                <div className={`bg-white/80 p-3 rounded-xl border space-y-1 ${
+                  isCoastal ? 'border-slate-300' : 'border-[#283618]/20'
+                }`}>
+                  <span className={`font-bold block ${isCoastal ? 'text-slate-600' : 'text-[#574332]'}`}>Contoh Kalimat:</span>
+                  <p className="italic text-slate-800 font-serif">
                     "{currentQuestion.targetItem.exampleSentence}"
                   </p>
                 </div>
@@ -440,7 +520,11 @@ export const SinonimAntonimQuiz: React.FC<{ onBack?: () => void }> = () => {
             <div className="flex justify-end pt-1">
               <button
                 onClick={handleNext}
-                className="py-3 px-6 bg-[#709752] hover:bg-[#588157] text-white font-black uppercase text-xs sm:text-sm rounded-xl border-2 border-[#283618] shadow-[3px_3px_0px_0px_#283618] active:translate-y-0.5 active:shadow-none flex items-center gap-2 cursor-pointer transition-all"
+                className={`py-3 px-6 font-black uppercase text-xs sm:text-sm rounded-xl border-2 active:translate-y-0.5 active:shadow-none flex items-center gap-2 cursor-pointer transition-all ${
+                  isCoastal
+                    ? 'bg-[#3A6B88] hover:bg-[#2C4A6F] text-white border-slate-700 shadow-[3px_3px_0px_0px_rgba(51,65,85,1)]'
+                    : 'bg-[#709752] hover:bg-[#588157] text-white border-[#283618] shadow-[3px_3px_0px_0px_#283618]'
+                }`}
               >
                 <span>Soal Selanjutnya</span>
                 <ArrowRight className="w-4 h-4 stroke-[3]" />
@@ -451,16 +535,22 @@ export const SinonimAntonimQuiz: React.FC<{ onBack?: () => void }> = () => {
       </div>
 
       {/* Source Reference Footer */}
-      <div className="bg-[#FAF6EE] border-2 border-[#283618] rounded-2xl p-4 shadow-[3px_3px_0px_0px_#283618] text-xs text-[#574332] flex items-center justify-between flex-wrap gap-2">
+      <div className={`border-2 rounded-2xl p-4 text-xs flex items-center justify-between flex-wrap gap-2 ${
+        isCoastal
+          ? 'bg-[#F8FAFC] border-slate-700 shadow-[3px_3px_0px_0px_rgba(51,65,85,1)] text-slate-600'
+          : 'bg-[#FAF6EE] border-[#283618] shadow-[3px_3px_0px_0px_#283618] text-[#574332]'
+      }`}>
         <div className="flex items-center gap-2 font-bold">
-          <BookOpen className="w-4 h-4 text-[#709752]" />
+          <BookOpen className={`w-4 h-4 ${isCoastal ? 'text-[#3A6B88]' : 'text-[#709752]'}`} />
           <span>Sumber Rujukan: Kamus Lengkap Sinonim dan Antonim Bahasa Indonesia</span>
         </div>
         <a
           href="https://www.ledsulbar.id/2022/05/kumpulan-kamus-lengkap-sinonim-dan.html#gsc.tab=0"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-[#709752] hover:underline font-black flex items-center gap-1"
+          className={`font-black flex items-center gap-1 hover:underline ${
+            isCoastal ? 'text-[#2C4A6F]' : 'text-[#709752]'
+          }`}
         >
           <span>Buka Tautan Ledsulbar</span>
           <ExternalLink className="w-3.5 h-3.5" />
