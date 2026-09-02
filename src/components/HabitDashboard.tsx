@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-import { Sparkles, ArrowRight, CheckCircle2, Clock, BookOpen, Layers, Trophy, RotateCcw, Flame, Check, Download, Upload, HelpCircle, FileText, Heart } from 'lucide-react';
+import { Sparkles, ArrowRight, CheckCircle2, Clock, BookOpen, Layers, Trophy, RotateCcw, Flame, Check, HelpCircle, FileText, Heart } from 'lucide-react';
 import { CloverMascot } from './CloverMascot';
 import { useHabit } from '../context/HabitContext';
 import { ProgressHabitView } from './ProgressHabitView';
-import { ExportModal } from './ExportModal';
-import { ImportArticleModal } from './ImportArticleModal';
-import { ThemeSwitch } from './ThemeSwitch';
 import { HabitId } from '../types';
 
 interface HabitDashboardProps {
@@ -15,8 +12,6 @@ interface HabitDashboardProps {
 
 export const HabitDashboard: React.FC<HabitDashboardProps> = ({ onStartHabit, onNavigateTab }) => {
   const [activeSubTab, setActiveSubTab] = useState<'today' | 'progress'>('today');
-  const [isExportOpen, setIsExportOpen] = useState(false);
-  const [isImportOpen, setIsImportOpen] = useState(false);
   const {
     theme,
     isHabitCompletedToday,
@@ -37,18 +32,18 @@ export const HabitDashboard: React.FC<HabitDashboardProps> = ({ onStartHabit, on
   return (
     <div className="max-w-5xl mx-auto px-3 sm:px-4 py-4 sm:py-6 space-y-5 sm:space-y-6">
       {/* Top Hero Bento Card */}
-      <div className={`${isCoastal ? 'bg-[#E0F2FE] border-[#1E293B]' : 'bg-[#FEF3C7] border-[#2D2319]'} border-2 rounded-2xl sm:rounded-3xl p-5 sm:p-6 md:p-7 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.85)] flex flex-col space-y-4 transition-colors duration-300`}>
+      <div className={`${isCoastal ? 'bg-[#E8EFF4] border-[#1E293B]' : 'bg-[#FEF3C7] border-[#2D2319]'} border-2 rounded-2xl sm:rounded-3xl p-5 sm:p-6 md:p-7 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.85)] flex flex-col space-y-4 transition-colors duration-300`}>
         <div className="flex flex-col md:flex-row items-center justify-between gap-5 sm:gap-6">
           <div className="space-y-2 text-left flex-1 min-w-0">
-            <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border-2 ${isCoastal ? 'border-[#1E293B] text-[#1E40AF]' : 'border-[#2D2319] text-[#047857]'} shadow-[2px_2px_0px_0px_rgba(0,0,0,0.8)] text-[10px] sm:text-xs font-black tracking-wider uppercase`}>
-              <Sparkles className={`w-3.5 h-3.5 ${isCoastal ? 'fill-[#2563EB] text-[#2563EB]' : 'fill-[#10B981] text-[#10B981]'} shrink-0`} />
+            <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border-2 ${isCoastal ? 'border-[#1E293B] text-[#244260]' : 'border-[#2D2319] text-[#047857]'} shadow-[2px_2px_0px_0px_rgba(0,0,0,0.8)] text-[10px] sm:text-xs font-black tracking-wider uppercase`}>
+              <Sparkles className={`w-3.5 h-3.5 ${isCoastal ? 'fill-[#3B6D8C] text-[#3B6D8C]' : 'fill-[#10B981] text-[#10B981]'} shrink-0`} />
               <span>CLOVERAIT HABIT ENGINE</span>
             </div>
             <h1 className={`text-xl sm:text-2xl md:text-3xl font-black ${isCoastal ? 'text-[#1E293B]' : 'text-[#2D2319]'} tracking-tight break-words`}>
               Tingkatkan WPM, KEM & Kelincahan Mental Math
             </h1>
             <p className={`text-xs sm:text-sm ${isCoastal ? 'text-slate-700' : 'text-[#574332]'} font-semibold max-w-xl leading-relaxed break-words`}>
-              Selesaikan 3 modul habit harian: <strong>Getah Sanubari</strong> (8/8 artikel ID), <strong>Ranting Kata</strong> (5/5 artikel EN), dan <strong>Lingkar Tahun</strong> (10/10 latihan logika hitung cepat).
+              Selesaikan 3 modul habit harian: <strong>Getah Sanubari</strong> (5/5 artikel ID), <strong>Ranting Kata</strong> (5/5 artikel EN), dan <strong>Lingkar Tahun</strong> (10/10 latihan logika hitung cepat).
             </p>
 
             {/* Quick Progress Bar in Bento Style */}
@@ -59,7 +54,7 @@ export const HabitDashboard: React.FC<HabitDashboardProps> = ({ onStartHabit, on
               </div>
               <div className={`w-full bg-white h-3.5 rounded-full border-2 ${isCoastal ? 'border-[#1E293B]' : 'border-[#2D2319]'} overflow-hidden p-0.5`}>
                 <div
-                  className={`${isCoastal ? 'bg-[#2563EB]' : 'bg-[#10B981]'} h-full rounded-full transition-all duration-500`}
+                  className={`${isCoastal ? 'bg-[#3B6D8C]' : 'bg-[#10B981]'} h-full rounded-full transition-all duration-500`}
                   style={{ width: `${(completedCountToday / 3) * 100}%` }}
                 />
               </div>
@@ -75,7 +70,7 @@ export const HabitDashboard: React.FC<HabitDashboardProps> = ({ onStartHabit, on
 
         {/* Elongated Full-Width Motivational Quote Banner */}
         <div className={`w-full bg-white/95 border-2 ${isCoastal ? 'border-[#1E293B] shadow-[3px_3px_0px_0px_#1E293B]' : 'border-[#2D2319] shadow-[3px_3px_0px_0px_#2D2319]'} rounded-2xl p-3.5 sm:p-4 flex items-center gap-3 transition-all min-w-0`}>
-          <div className={`p-2 ${isCoastal ? 'bg-[#DBEAFE] border-[#1E293B] shadow-[1.5px_1.5px_0px_0px_#1E293B]' : 'bg-[#FEF3C7] border-[#2D2319] shadow-[1.5px_1.5px_0px_0px_#2D2319]'} rounded-xl border-2 shrink-0`}>
+          <div className={`p-2 ${isCoastal ? 'bg-[#DDE7EF] border-[#1E293B] shadow-[1.5px_1.5px_0px_0px_#1E293B]' : 'bg-[#FEF3C7] border-[#2D2319] shadow-[1.5px_1.5px_0px_0px_#2D2319]'} rounded-xl border-2 shrink-0`}>
             <Heart className="w-4 h-4 text-rose-500 fill-rose-500" />
           </div>
           <p className={`text-xs sm:text-sm font-bold ${isCoastal ? 'text-[#1E293B]' : 'text-[#2D2319]'} leading-relaxed break-words flex-1 min-w-0`}>
@@ -90,7 +85,7 @@ export const HabitDashboard: React.FC<HabitDashboardProps> = ({ onStartHabit, on
           onClick={() => setActiveSubTab('today')}
           className={`flex-1 flex items-center justify-center gap-2 py-2 px-4 rounded-xl text-xs sm:text-sm font-black uppercase tracking-tight transition-all cursor-pointer ${
             activeSubTab === 'today'
-              ? (isCoastal ? 'bg-[#2563EB] text-white border-2 border-[#1E293B] shadow-[2px_2px_0px_0px_#1E293B]' : 'bg-[#10B981] text-white border-2 border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319]')
+              ? (isCoastal ? 'bg-[#3B6D8C] text-white border-2 border-[#1E293B] shadow-[2px_2px_0px_0px_#1E293B]' : 'bg-[#10B981] text-white border-2 border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319]')
               : (isCoastal ? 'text-slate-600 hover:text-slate-900' : 'text-[#574332] hover:text-[#2D2319]')
           }`}
         >
@@ -102,7 +97,7 @@ export const HabitDashboard: React.FC<HabitDashboardProps> = ({ onStartHabit, on
           onClick={() => setActiveSubTab('progress')}
           className={`flex-1 flex items-center justify-center gap-2 py-2 px-4 rounded-xl text-xs sm:text-sm font-black uppercase tracking-tight transition-all cursor-pointer ${
             activeSubTab === 'progress'
-              ? (isCoastal ? 'bg-[#2563EB] text-white border-2 border-[#1E293B] shadow-[2px_2px_0px_0px_#1E293B]' : 'bg-[#10B981] text-white border-2 border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319]')
+              ? (isCoastal ? 'bg-[#3B6D8C] text-white border-2 border-[#1E293B] shadow-[2px_2px_0px_0px_#1E293B]' : 'bg-[#10B981] text-white border-2 border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319]')
               : (isCoastal ? 'text-slate-600 hover:text-slate-900' : 'text-[#574332] hover:text-[#2D2319]')
           }`}
         >
@@ -114,9 +109,6 @@ export const HabitDashboard: React.FC<HabitDashboardProps> = ({ onStartHabit, on
       {/* Subtab 1: HABIT HARI INI */}
       {activeSubTab === 'today' && (
         <div className="space-y-6">
-          <ExportModal isOpen={isExportOpen} onClose={() => setIsExportOpen(false)} />
-          <ImportArticleModal isOpen={isImportOpen} onClose={() => setIsImportOpen(false)} />
-
           {/* Header Row: Actions & Export/Import Controls */}
           <div className="flex items-center justify-between px-1 flex-wrap gap-2">
             <div>
@@ -129,32 +121,6 @@ export const HabitDashboard: React.FC<HabitDashboardProps> = ({ onStartHabit, on
             </div>
 
             <div className="flex items-center gap-2 flex-wrap">
-              <ThemeSwitch compact={true} showLabel={false} />
-
-              <button
-                type="button"
-                onClick={() => setIsImportOpen(true)}
-                className={`flex items-center gap-1.5 text-xs font-black uppercase ${
-                  isCoastal
-                    ? 'bg-[#D0E1F0] hover:bg-[#BFDBFE] text-[#1E40AF] border-[#1E293B] shadow-[2px_2px_0px_0px_#1E293B]'
-                    : 'bg-[#ECFDF5] hover:bg-emerald-100 text-[#047857] border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319]'
-                } px-3.5 py-1.5 rounded-xl border-2 cursor-pointer transition-all active:translate-y-0.5`}
-              >
-                <Upload className="w-3.5 h-3.5" /> Impor Link / Naskah
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setIsExportOpen(true)}
-                className={`flex items-center gap-1.5 text-xs font-black uppercase ${
-                  isCoastal
-                    ? 'bg-[#E0E7FF] hover:bg-[#C7D2FE] text-[#3730A3] border-[#1E293B] shadow-[2px_2px_0px_0px_#1E293B]'
-                    : 'bg-[#FEF3C7] hover:bg-amber-100 text-[#92400E] border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319]'
-                } px-3.5 py-1.5 rounded-xl border-2 cursor-pointer transition-all active:translate-y-0.5`}
-              >
-                <Download className="w-3.5 h-3.5" /> Eksport PDF
-              </button>
-
               <div className={`bg-white border-2 ${isCoastal ? 'border-[#1E293B] text-[#1E293B] shadow-[2px_2px_0px_0px_#1E293B]' : 'border-[#2D2319] text-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319]'} px-3.5 py-1.5 rounded-xl text-xs font-black`}>
                 {completedCountToday}/3 Selesai
               </div>
@@ -172,18 +138,18 @@ export const HabitDashboard: React.FC<HabitDashboardProps> = ({ onStartHabit, on
           {/* 3 Bento Habit Cards Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {/* Habit Card 1: RANTING KATA (English Reading & Vocab) */}
-            <div className={`${isCoastal ? 'bg-[#E0F2FE] border-[#1E293B] shadow-[4px_4px_0px_0px_#1E293B]' : 'bg-[#FFFBEB] border-[#2D2319] shadow-[4px_4px_0px_0px_#2D2319]'} border-2 rounded-2xl p-5 flex flex-col justify-between space-y-4 transition-colors duration-300`}>
+            <div className={`${isCoastal ? 'bg-[#EBF2F7] border-[#1E293B] shadow-[4px_4px_0px_0px_#1E293B]' : 'bg-[#FFFBEB] border-[#2D2319] shadow-[4px_4px_0px_0px_#2D2319]'} border-2 rounded-2xl p-5 flex flex-col justify-between space-y-4 transition-colors duration-300`}>
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className={`${isCoastal ? 'bg-[#DBEAFE] text-[#1E40AF] border-[#1E293B]' : 'bg-[#FEF3C7] text-[#92400E] border-[#2D2319]'} text-[10px] font-black uppercase px-2.5 py-0.5 rounded-md border`}>
+                  <span className={`${isCoastal ? 'bg-[#DDE7F0] text-[#244260] border-[#1E293B]' : 'bg-[#FEF3C7] text-[#92400E] border-[#2D2319]'} text-[10px] font-black uppercase px-2.5 py-0.5 rounded-md border`}>
                     English Track ({dailyEnglishProgress.completedCount}/5)
                   </span>
                   {isHabitCompletedToday('ranting-kata') ? (
-                    <span className={`inline-flex items-center gap-1 text-[11px] font-black ${isCoastal ? 'text-[#1E40AF] bg-white border-[#1E293B]' : 'text-[#047857] bg-[#ECFDF5] border-[#2D2319]'} px-2 py-0.5 rounded-md border`}>
+                    <span className={`inline-flex items-center gap-1 text-[11px] font-black ${isCoastal ? 'text-[#244260] bg-white border-[#1E293B]' : 'text-[#047857] bg-[#ECFDF5] border-[#2D2319]'} px-2 py-0.5 rounded-md border`}>
                       <Check className="w-3 h-3 stroke-[3]" /> DONE
                     </span>
                   ) : (
-                    <span className={`text-[11px] font-black ${isCoastal ? 'text-[#1E3A8A] bg-[#BFDBFE] border-[#1E293B]' : 'text-[#92400E] bg-[#FDE68A] border-[#2D2319]'} px-2 py-0.5 rounded-md border`}>
+                    <span className={`text-[11px] font-black ${isCoastal ? 'text-[#244260] bg-[#D0DFEB] border-[#1E293B]' : 'text-[#92400E] bg-[#FDE68A] border-[#2D2319]'} px-2 py-0.5 rounded-md border`}>
                       AVAILABLE
                     </span>
                   )}
@@ -195,7 +161,7 @@ export const HabitDashboard: React.FC<HabitDashboardProps> = ({ onStartHabit, on
                   </div>
                   <div>
                     <h3 className={`text-lg font-black ${isCoastal ? 'text-[#1E293B]' : 'text-[#2D2319]'}`}>Ranting Kata</h3>
-                    <p className={`text-[11px] font-bold ${isCoastal ? 'text-[#2563EB]' : 'text-[#B45309]'} uppercase tracking-tight`}>Vocab & English Reading</p>
+                    <p className={`text-[11px] font-bold ${isCoastal ? 'text-[#3B6D8C]' : 'text-[#B45309]'} uppercase tracking-tight`}>Vocab & English Reading</p>
                   </div>
                 </div>
 
@@ -205,23 +171,42 @@ export const HabitDashboard: React.FC<HabitDashboardProps> = ({ onStartHabit, on
 
                 <div className={`space-y-1.5 text-[11px] font-bold ${isCoastal ? 'text-[#334155]' : 'text-[#574332]'} pt-1`}>
                   <div className="flex items-center gap-1.5">
-                    <BookOpen className={`w-3.5 h-3.5 ${isCoastal ? 'text-[#2563EB]' : 'text-[#B45309]'}`} />
+                    <BookOpen className={`w-3.5 h-3.5 ${isCoastal ? 'text-[#3B6D8C]' : 'text-[#B45309]'}`} />
                     <span>Target 5 Artikel Berlanjut</span>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <Layers className={`w-3.5 h-3.5 ${isCoastal ? 'text-[#0284C7]' : 'text-[#047857]'}`} />
+                    <Layers className={`w-3.5 h-3.5 ${isCoastal ? 'text-[#4A7C9B]' : 'text-[#047857]'}`} />
                     <span>Kuis Kosakata & Pemahaman</span>
                   </div>
                   {customEnglishArticles.length > 0 && (
-                    <div className={`flex items-center gap-1.5 ${isCoastal ? 'text-[#1E40AF] bg-blue-100/90 border-blue-300' : 'text-amber-700 bg-amber-100/80 border-amber-300'} px-2 py-0.5 rounded-md border`}>
+                    <div className={`flex items-center gap-1.5 ${isCoastal ? 'text-[#244260] bg-[#DDE7F0] border-[#B9CEDF]' : 'text-amber-700 bg-amber-100/80 border-amber-300'} px-2 py-0.5 rounded-md border`}>
                       <span>🌊</span>
-                      <span>{customEnglishArticles.length} Naskah PDF/Link Tersimpan</span>
+                      <span>{customEnglishArticles.length} Naskah Link/Teks Tersimpan</span>
                     </div>
                   )}
                 </div>
               </div>
 
-              <div className={`space-y-2 pt-2 border-t-2 ${isCoastal ? 'border-[#93C5FD]/40' : 'border-[#D97706]/30'}`}>
+              {/* Progress Bar & Action Button */}
+              <div className={`space-y-3 pt-3 border-t-2 ${isCoastal ? 'border-[#B9CEDF]/50' : 'border-[#D97706]/30'}`}>
+                {/* Outer Progress Bar above button */}
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between text-[11px] font-black">
+                    <span className={isCoastal ? 'text-[#334155]' : 'text-[#574332]'}>
+                      Progres Harian
+                    </span>
+                    <span className={`font-mono ${isCoastal ? 'text-[#3B6D8C]' : 'text-[#B45309]'}`}>
+                      {dailyEnglishProgress.completedCount}/5 Selesai ({Math.min(100, Math.round((dailyEnglishProgress.completedCount / 5) * 100))}%)
+                    </span>
+                  </div>
+                  <div className={`w-full ${isCoastal ? 'bg-white border-[#1E293B]' : 'bg-white border-[#2D2319]'} h-3 rounded-full border-2 overflow-hidden p-0.5 shadow-xs`}>
+                    <div
+                      className={`${isCoastal ? 'bg-[#3B6D8C]' : 'bg-[#F59E0B]'} h-full rounded-full transition-all duration-500`}
+                      style={{ width: `${Math.min(100, (dailyEnglishProgress.completedCount / 5) * 100)}%` }}
+                    />
+                  </div>
+                </div>
+
                 <button
                   onClick={() => onStartHabit('ranting-kata')}
                   className={`w-full py-2.5 px-4 rounded-xl text-xs font-black uppercase tracking-tight transition-all border-2 ${
@@ -230,7 +215,7 @@ export const HabitDashboard: React.FC<HabitDashboardProps> = ({ onStartHabit, on
                     isCoastal
                       ? (isHabitCompletedToday('ranting-kata')
                           ? 'bg-white hover:bg-slate-100 text-[#1E293B]'
-                          : 'bg-[#2563EB] hover:bg-[#1D4ED8] text-white')
+                          : 'bg-[#3B6D8C] hover:bg-[#2F5770] text-white')
                       : (isHabitCompletedToday('ranting-kata')
                           ? 'bg-white hover:bg-slate-100 text-[#2D2319]'
                           : 'bg-[#F59E0B] hover:bg-[#D97706] text-[#2D2319]')
@@ -243,18 +228,18 @@ export const HabitDashboard: React.FC<HabitDashboardProps> = ({ onStartHabit, on
             </div>
 
             {/* Habit Card 2: LINGKAR TAHUN (Mental Math & Logic) */}
-            <div className={`${isCoastal ? 'bg-[#E6F4F1] border-[#1E293B] shadow-[4px_4px_0px_0px_#1E293B]' : 'bg-[#FAF6EE] border-[#2D2319] shadow-[4px_4px_0px_0px_#2D2319]'} border-2 rounded-2xl p-5 flex flex-col justify-between space-y-4 transition-colors duration-300`}>
+            <div className={`${isCoastal ? 'bg-[#EBF3F3] border-[#1E293B] shadow-[4px_4px_0px_0px_#1E293B]' : 'bg-[#FAF6EE] border-[#2D2319] shadow-[4px_4px_0px_0px_#2D2319]'} border-2 rounded-2xl p-5 flex flex-col justify-between space-y-4 transition-colors duration-300`}>
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className={`${isCoastal ? 'bg-[#CCFBF1] text-[#0F766E] border-[#1E293B]' : 'bg-[#F1EAD9] text-[#78350F] border-[#2D2319]'} text-[10px] font-black uppercase px-2.5 py-0.5 rounded-md border`}>
+                  <span className={`${isCoastal ? 'bg-[#DBEBEB] text-[#1E4D4D] border-[#1E293B]' : 'bg-[#F1EAD9] text-[#78350F] border-[#2D2319]'} text-[10px] font-black uppercase px-2.5 py-0.5 rounded-md border`}>
                     Math & Logic ({dailyMentalMathProgress.completedCount}/10)
                   </span>
                   {isHabitCompletedToday('lingkar-tahun') ? (
-                    <span className={`inline-flex items-center gap-1 text-[11px] font-black ${isCoastal ? 'text-[#0F766E] bg-white border-[#1E293B]' : 'text-[#047857] bg-[#ECFDF5] border-[#2D2319]'} px-2 py-0.5 rounded-md border`}>
+                    <span className={`inline-flex items-center gap-1 text-[11px] font-black ${isCoastal ? 'text-[#1E4D4D] bg-white border-[#1E293B]' : 'text-[#047857] bg-[#ECFDF5] border-[#2D2319]'} px-2 py-0.5 rounded-md border`}>
                       <Check className="w-3 h-3 stroke-[3]" /> DONE
                     </span>
                   ) : (
-                    <span className={`text-[11px] font-black ${isCoastal ? 'text-[#115E59] bg-[#99F6E4] border-[#1E293B]' : 'text-[#78350F] bg-[#FDE68A] border-[#2D2319]'} px-2 py-0.5 rounded-md border`}>
+                    <span className={`text-[11px] font-black ${isCoastal ? 'text-[#1E4D4D] bg-[#CFE4E4] border-[#1E293B]' : 'text-[#78350F] bg-[#FDE68A] border-[#2D2319]'} px-2 py-0.5 rounded-md border`}>
                       AVAILABLE
                     </span>
                   )}
@@ -266,7 +251,7 @@ export const HabitDashboard: React.FC<HabitDashboardProps> = ({ onStartHabit, on
                   </div>
                   <div>
                     <h3 className={`text-lg font-black ${isCoastal ? 'text-[#1E293B]' : 'text-[#2D2319]'}`}>Lingkar Tahun</h3>
-                    <p className={`text-[11px] font-bold ${isCoastal ? 'text-[#0D9488]' : 'text-[#8C6B4F]'} uppercase tracking-tight`}>Refleks Mental Math</p>
+                    <p className={`text-[11px] font-bold ${isCoastal ? 'text-[#2D6A67]' : 'text-[#8C6B4F]'} uppercase tracking-tight`}>Refleks Mental Math</p>
                   </div>
                 </div>
 
@@ -276,7 +261,7 @@ export const HabitDashboard: React.FC<HabitDashboardProps> = ({ onStartHabit, on
 
                 <div className={`space-y-1.5 text-[11px] font-bold ${isCoastal ? 'text-[#334155]' : 'text-[#574332]'} pt-1`}>
                   <div className="flex items-center gap-1.5">
-                    <Trophy className={`w-3.5 h-3.5 ${isCoastal ? 'text-[#0D9488]' : 'text-[#B45309]'}`} />
+                    <Trophy className={`w-3.5 h-3.5 ${isCoastal ? 'text-[#2D6A67]' : 'text-[#B45309]'}`} />
                     <span>10 Tangga Soal Harian (10/10)</span>
                   </div>
                   <div className="flex items-center gap-1.5">
@@ -286,7 +271,26 @@ export const HabitDashboard: React.FC<HabitDashboardProps> = ({ onStartHabit, on
                 </div>
               </div>
 
-              <div className={`space-y-2 pt-2 border-t-2 ${isCoastal ? 'border-[#5EEAD4]/40' : 'border-[#8C6B4F]/30'}`}>
+              {/* Progress Bar & Action Button */}
+              <div className={`space-y-3 pt-3 border-t-2 ${isCoastal ? 'border-[#B8D8D8]/50' : 'border-[#8C6B4F]/30'}`}>
+                {/* Outer Progress Bar above button */}
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between text-[11px] font-black">
+                    <span className={isCoastal ? 'text-[#334155]' : 'text-[#574332]'}>
+                      Progres Harian
+                    </span>
+                    <span className={`font-mono ${isCoastal ? 'text-[#2D6A67]' : 'text-[#B45309]'}`}>
+                      {dailyMentalMathProgress.completedCount}/10 Soal ({Math.min(100, Math.round((dailyMentalMathProgress.completedCount / 10) * 100))}%)
+                    </span>
+                  </div>
+                  <div className={`w-full ${isCoastal ? 'bg-white border-[#1E293B]' : 'bg-white border-[#2D2319]'} h-3 rounded-full border-2 overflow-hidden p-0.5 shadow-xs`}>
+                    <div
+                      className={`${isCoastal ? 'bg-[#367B78]' : 'bg-[#B45309]'} h-full rounded-full transition-all duration-500`}
+                      style={{ width: `${Math.min(100, (dailyMentalMathProgress.completedCount / 10) * 100)}%` }}
+                    />
+                  </div>
+                </div>
+
                 <button
                   onClick={() => onStartHabit('lingkar-tahun')}
                   className={`w-full py-2.5 px-4 rounded-xl text-xs font-black uppercase tracking-tight transition-all border-2 ${
@@ -295,7 +299,7 @@ export const HabitDashboard: React.FC<HabitDashboardProps> = ({ onStartHabit, on
                     isCoastal
                       ? (isHabitCompletedToday('lingkar-tahun')
                           ? 'bg-white hover:bg-slate-100 text-[#1E293B]'
-                          : 'bg-[#0D9488] hover:bg-[#0F766E] text-white')
+                          : 'bg-[#367B78] hover:bg-[#28605D] text-white')
                       : (isHabitCompletedToday('lingkar-tahun')
                           ? 'bg-white hover:bg-slate-100 text-[#2D2319]'
                           : 'bg-[#B45309] hover:bg-[#92400E] text-white')
@@ -308,18 +312,18 @@ export const HabitDashboard: React.FC<HabitDashboardProps> = ({ onStartHabit, on
             </div>
 
             {/* Habit Card 3: GETAH SANUBARI (Indonesian Reading WPM & KEM) */}
-            <div className={`${isCoastal ? 'bg-[#E0F7FA] border-[#1E293B] shadow-[4px_4px_0px_0px_#1E293B]' : 'bg-[#ECFDF5] border-[#2D2319] shadow-[4px_4px_0px_0px_#2D2319]'} border-2 rounded-2xl p-5 flex flex-col justify-between space-y-4 transition-colors duration-300`}>
+            <div className={`${isCoastal ? 'bg-[#ECF3F6] border-[#1E293B] shadow-[4px_4px_0px_0px_#1E293B]' : 'bg-[#ECFDF5] border-[#2D2319] shadow-[4px_4px_0px_0px_#2D2319]'} border-2 rounded-2xl p-5 flex flex-col justify-between space-y-4 transition-colors duration-300`}>
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className={`bg-white ${isCoastal ? 'text-[#0284C7] border-[#1E293B]' : 'text-[#047857] border-[#2D2319]'} text-[10px] font-black uppercase px-2.5 py-0.5 rounded-md border`}>
-                    WPM & KEM ({dailyIndonesianProgress.completedCount}/8)
+                  <span className={`bg-white ${isCoastal ? 'text-[#234B63] border-[#1E293B]' : 'text-[#047857] border-[#2D2319]'} text-[10px] font-black uppercase px-2.5 py-0.5 rounded-md border`}>
+                    WPM & KEM ({dailyIndonesianProgress.completedCount}/5)
                   </span>
                   {isHabitCompletedToday('getah-sanubari') ? (
-                    <span className={`inline-flex items-center gap-1 text-[11px] font-black ${isCoastal ? 'text-[#0284C7] bg-white border-[#1E293B]' : 'text-[#047857] bg-white border-[#2D2319]'} px-2 py-0.5 rounded-md border`}>
+                    <span className={`inline-flex items-center gap-1 text-[11px] font-black ${isCoastal ? 'text-[#356B88] bg-white border-[#1E293B]' : 'text-[#047857] bg-white border-[#2D2319]'} px-2 py-0.5 rounded-md border`}>
                       <Check className="w-3 h-3 stroke-[3]" /> DONE
                     </span>
                   ) : (
-                    <span className={`text-[11px] font-black ${isCoastal ? 'text-[#0369A1] bg-[#BAE6FD] border-[#1E293B]' : 'text-[#047857] bg-[#A7F3D0] border-[#2D2319]'} px-2 py-0.5 rounded-md border`}>
+                    <span className={`text-[11px] font-black ${isCoastal ? 'text-[#234B63] bg-[#D2E4ED] border-[#1E293B]' : 'text-[#047857] bg-[#A7F3D0] border-[#2D2319]'} px-2 py-0.5 rounded-md border`}>
                       AVAILABLE
                     </span>
                   )}
@@ -331,25 +335,25 @@ export const HabitDashboard: React.FC<HabitDashboardProps> = ({ onStartHabit, on
                   </div>
                   <div>
                     <h3 className={`text-lg font-black ${isCoastal ? 'text-[#1E293B]' : 'text-[#2D2319]'}`}>Getah Sanubari</h3>
-                    <p className={`text-[11px] font-bold ${isCoastal ? 'text-[#0284C7]' : 'text-[#047857]'} uppercase tracking-tight`}>Literasi Indonesia</p>
+                    <p className={`text-[11px] font-bold ${isCoastal ? 'text-[#356B88]' : 'text-[#047857]'} uppercase tracking-tight`}>Literasi Indonesia</p>
                   </div>
                 </div>
 
                 <p className={`text-xs ${isCoastal ? 'text-[#334155]' : 'text-[#574332]'} font-medium leading-relaxed`}>
-                  8 artikel kurasi berlanjut (sains, lingkungan, kesehatan, sosial budaya) + evaluasi isian & benar/salah (target 8/8 per hari).
+                  5 artikel kurasi berlanjut (sains, lingkungan, kesehatan, sosial budaya) + evaluasi isian & benar/salah (target 5/5 per hari).
                 </p>
 
                 <div className={`space-y-1.5 text-[11px] font-bold ${isCoastal ? 'text-[#334155]' : 'text-[#574332]'} pt-1`}>
                   <div className="flex items-center gap-1.5">
-                    <BookOpen className={`w-3.5 h-3.5 ${isCoastal ? 'text-[#0284C7]' : 'text-[#047857]'}`} />
-                    <span>Target 8 Artikel Berlanjut</span>
+                    <BookOpen className={`w-3.5 h-3.5 ${isCoastal ? 'text-[#356B88]' : 'text-[#047857]'}`} />
+                    <span>Target 5 Artikel Berlanjut</span>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <Layers className={`w-3.5 h-3.5 ${isCoastal ? 'text-[#0EA5E9]' : 'text-[#10B981]'}`} />
+                    <Layers className={`w-3.5 h-3.5 ${isCoastal ? 'text-[#4A7C9B]' : 'text-[#10B981]'}`} />
                     <span>Kuis Isian + Benar/Salah</span>
                   </div>
                   {customIndonesianArticles.length > 0 && (
-                    <div className={`flex items-center gap-1.5 ${isCoastal ? 'text-sky-800 bg-sky-100/90 border-sky-300' : 'text-emerald-800 bg-emerald-100/90 border-emerald-300'} px-2 py-0.5 rounded-md border`}>
+                    <div className={`flex items-center gap-1.5 ${isCoastal ? 'text-[#234B63] bg-[#DEEBF1] border-[#B8D4E3]' : 'text-emerald-800 bg-emerald-100/90 border-emerald-300'} px-2 py-0.5 rounded-md border`}>
                       <span>🌊</span>
                       <span>{customIndonesianArticles.length} Naskah PDF/Link Tersimpan</span>
                     </div>
@@ -357,7 +361,26 @@ export const HabitDashboard: React.FC<HabitDashboardProps> = ({ onStartHabit, on
                 </div>
               </div>
 
-              <div className={`space-y-2 pt-2 border-t-2 ${isCoastal ? 'border-[#38BDF8]/40' : 'border-[#10B981]/30'}`}>
+              {/* Progress Bar & Action Button */}
+              <div className={`space-y-3 pt-3 border-t-2 ${isCoastal ? 'border-[#B8D4E3]/50' : 'border-[#10B981]/30'}`}>
+                {/* Outer Progress Bar above button */}
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between text-[11px] font-black">
+                    <span className={isCoastal ? 'text-[#334155]' : 'text-[#574332]'}>
+                      Progres Harian
+                    </span>
+                    <span className={`font-mono ${isCoastal ? 'text-[#356B88]' : 'text-[#047857]'}`}>
+                      {dailyIndonesianProgress.completedCount}/5 Selesai ({Math.min(100, Math.round((dailyIndonesianProgress.completedCount / 5) * 100))}%)
+                    </span>
+                  </div>
+                  <div className={`w-full ${isCoastal ? 'bg-white border-[#1E293B]' : 'bg-white border-[#2D2319]'} h-3 rounded-full border-2 overflow-hidden p-0.5 shadow-xs`}>
+                    <div
+                      className={`${isCoastal ? 'bg-[#356B88]' : 'bg-[#10B981]'} h-full rounded-full transition-all duration-500`}
+                      style={{ width: `${Math.min(100, (dailyIndonesianProgress.completedCount / 5) * 100)}%` }}
+                    />
+                  </div>
+                </div>
+
                 <button
                   onClick={() => onStartHabit('getah-sanubari')}
                   className={`w-full py-2.5 px-4 rounded-xl text-xs font-black uppercase tracking-tight transition-all border-2 ${
@@ -366,7 +389,7 @@ export const HabitDashboard: React.FC<HabitDashboardProps> = ({ onStartHabit, on
                     isCoastal
                       ? (isHabitCompletedToday('getah-sanubari')
                           ? 'bg-white hover:bg-slate-100 text-[#1E293B]'
-                          : 'bg-[#0284C7] hover:bg-[#0369A1] text-white')
+                          : 'bg-[#356B88] hover:bg-[#27536A] text-white')
                       : (isHabitCompletedToday('getah-sanubari')
                           ? 'bg-white hover:bg-slate-100 text-[#2D2319]'
                           : 'bg-[#10B981] hover:bg-[#059669] text-white')
@@ -382,9 +405,9 @@ export const HabitDashboard: React.FC<HabitDashboardProps> = ({ onStartHabit, on
           {/* Mini-Games & Vocabulary Launchers Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* Kata Baku Mini-Game Banner */}
-            <div className={`${isCoastal ? 'bg-[#E0F2FE] border-[#1E293B] shadow-[4px_4px_0px_0px_#1E293B]' : 'bg-[#FEF3C7] border-[#2D2319] shadow-[4px_4px_0px_0px_#2D2319]'} border-2 rounded-2xl p-5 flex items-center justify-between gap-4 transition-colors duration-300`}>
+            <div className={`${isCoastal ? 'bg-[#EBF2F7] border-[#1E293B] shadow-[4px_4px_0px_0px_#1E293B]' : 'bg-[#FEF3C7] border-[#2D2319] shadow-[4px_4px_0px_0px_#2D2319]'} border-2 rounded-2xl p-5 flex items-center justify-between gap-4 transition-colors duration-300`}>
               <div className="space-y-1">
-                <span className={`text-[10px] font-black uppercase tracking-wider ${isCoastal ? 'text-[#1E40AF] bg-white border-[#1E293B]' : 'text-[#047857] bg-white border-[#2D2319]'} px-2 py-0.5 rounded border`}>
+                <span className={`text-[10px] font-black uppercase tracking-wider ${isCoastal ? 'text-[#244260] bg-white border-[#1E293B]' : 'text-[#047857] bg-white border-[#2D2319]'} px-2 py-0.5 rounded border`}>
                   MINI-GAME KBBI
                 </span>
                 <h4 className={`text-base font-black ${isCoastal ? 'text-[#1E293B]' : 'text-[#2D2319]'}`}>Quiz Kata Baku vs Tidak Baku</h4>
@@ -393,7 +416,7 @@ export const HabitDashboard: React.FC<HabitDashboardProps> = ({ onStartHabit, on
                 </p>
                 <button
                   onClick={() => onNavigateTab && onNavigateTab('kata-baku')}
-                  className={`mt-2 py-1.5 px-4 bg-white ${isCoastal ? 'hover:bg-blue-50 text-[#1E40AF] border-[#1E293B] shadow-[2px_2px_0px_0px_#1E293B]' : 'hover:bg-emerald-50 text-[#047857] border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319]'} text-xs font-black uppercase rounded-xl border-2 cursor-pointer flex items-center gap-1.5 transition-all active:translate-y-0.5`}
+                  className={`mt-2 py-1.5 px-4 bg-white ${isCoastal ? 'hover:bg-slate-50 text-[#244260] border-[#1E293B] shadow-[2px_2px_0px_0px_#1E293B]' : 'hover:bg-emerald-50 text-[#047857] border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319]'} text-xs font-black uppercase rounded-xl border-2 cursor-pointer flex items-center gap-1.5 transition-all active:translate-y-0.5`}
                 >
                   <span>Mainkan Quiz</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -405,9 +428,9 @@ export const HabitDashboard: React.FC<HabitDashboardProps> = ({ onStartHabit, on
             </div>
 
             {/* Sinonim & Antonim Quiz Banner */}
-            <div className={`${isCoastal ? 'bg-[#E0E7FF] border-[#1E293B] shadow-[4px_4px_0px_0px_#1E293B]' : 'bg-[#E9EDC9] border-[#2D2319] shadow-[4px_4px_0px_0px_#2D2319]'} border-2 rounded-2xl p-5 flex items-center justify-between gap-4 transition-colors duration-300`}>
+            <div className={`${isCoastal ? 'bg-[#ECEFF5] border-[#1E293B] shadow-[4px_4px_0px_0px_#1E293B]' : 'bg-[#E9EDC9] border-[#2D2319] shadow-[4px_4px_0px_0px_#2D2319]'} border-2 rounded-2xl p-5 flex items-center justify-between gap-4 transition-colors duration-300`}>
               <div className="space-y-1">
-                <span className={`text-[10px] font-black uppercase tracking-wider ${isCoastal ? 'text-[#3730A3] bg-white border-[#1E293B]' : 'text-[#3A5A40] bg-white border-[#2D2319]'} px-2 py-0.5 rounded border`}>
+                <span className={`text-[10px] font-black uppercase tracking-wider ${isCoastal ? 'text-[#2D3E6B] bg-white border-[#1E293B]' : 'text-[#3A5A40] bg-white border-[#2D2319]'} px-2 py-0.5 rounded border`}>
                   SEMANTIK BAHASA
                 </span>
                 <h4 className={`text-base font-black ${isCoastal ? 'text-[#1E293B]' : 'text-[#2D2319]'}`}>Quiz Sinonim & Antonim</h4>
@@ -416,7 +439,7 @@ export const HabitDashboard: React.FC<HabitDashboardProps> = ({ onStartHabit, on
                 </p>
                 <button
                   onClick={() => onNavigateTab && onNavigateTab('sinonim-antonim')}
-                  className={`mt-2 py-1.5 px-4 bg-white ${isCoastal ? 'hover:bg-indigo-50 text-[#3730A3] border-[#1E293B] shadow-[2px_2px_0px_0px_#1E293B]' : 'hover:bg-[#FAEDCD] text-[#3A5A40] border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319]'} text-xs font-black uppercase rounded-xl border-2 cursor-pointer flex items-center gap-1.5 transition-all active:translate-y-0.5`}
+                  className={`mt-2 py-1.5 px-4 bg-white ${isCoastal ? 'hover:bg-slate-50 text-[#2D3E6B] border-[#1E293B] shadow-[2px_2px_0px_0px_#1E293B]' : 'hover:bg-[#FAEDCD] text-[#3A5A40] border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319]'} text-xs font-black uppercase rounded-xl border-2 cursor-pointer flex items-center gap-1.5 transition-all active:translate-y-0.5`}
                 >
                   <span>Mulai Quiz</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -428,9 +451,9 @@ export const HabitDashboard: React.FC<HabitDashboardProps> = ({ onStartHabit, on
             </div>
 
             {/* English-Indonesian Dictionary & My Vocab Banner */}
-            <div className={`${isCoastal ? 'bg-[#CCFBF1] border-[#1E293B] shadow-[4px_4px_0px_0px_#1E293B]' : 'bg-[#CCD5AE] border-[#2D2319] shadow-[4px_4px_0px_0px_#2D2319]'} border-2 rounded-2xl p-5 flex items-center justify-between gap-4 transition-colors duration-300`}>
+            <div className={`${isCoastal ? 'bg-[#EBF3F3] border-[#1E293B] shadow-[4px_4px_0px_0px_#1E293B]' : 'bg-[#CCD5AE] border-[#2D2319] shadow-[4px_4px_0px_0px_#2D2319]'} border-2 rounded-2xl p-5 flex items-center justify-between gap-4 transition-colors duration-300`}>
               <div className="space-y-1">
-                <span className={`text-[10px] font-black uppercase tracking-wider ${isCoastal ? 'text-[#0F766E] bg-white border-[#1E293B]' : 'text-[#283618] bg-white border-[#2D2319]'} px-2 py-0.5 rounded border`}>
+                <span className={`text-[10px] font-black uppercase tracking-wider ${isCoastal ? 'text-[#1E4D4D] bg-white border-[#1E293B]' : 'text-[#283618] bg-white border-[#2D2319]'} px-2 py-0.5 rounded border`}>
                   DICTIONARY & VOCAB
                 </span>
                 <h4 className={`text-base font-black ${isCoastal ? 'text-[#1E293B]' : 'text-[#2D2319]'}`}>Kamus Inggris - Indonesia & My Vocab</h4>
@@ -439,7 +462,7 @@ export const HabitDashboard: React.FC<HabitDashboardProps> = ({ onStartHabit, on
                 </p>
                 <button
                   onClick={() => onNavigateTab && onNavigateTab('dictionary')}
-                  className={`mt-2 py-1.5 px-4 bg-white ${isCoastal ? 'hover:bg-teal-50 text-[#0F766E] border-[#1E293B] shadow-[2px_2px_0px_0px_#1E293B]' : 'hover:bg-[#FAEDCD] text-[#283618] border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319]'} text-xs font-black uppercase rounded-xl border-2 cursor-pointer flex items-center gap-1.5 transition-all active:translate-y-0.5`}
+                  className={`mt-2 py-1.5 px-4 bg-white ${isCoastal ? 'hover:bg-slate-50 text-[#1E4D4D] border-[#1E293B] shadow-[2px_2px_0px_0px_#1E293B]' : 'hover:bg-[#FAEDCD] text-[#283618] border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319]'} text-xs font-black uppercase rounded-xl border-2 cursor-pointer flex items-center gap-1.5 transition-all active:translate-y-0.5`}
                 >
                   <span>Buka Kamus</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -451,9 +474,9 @@ export const HabitDashboard: React.FC<HabitDashboardProps> = ({ onStartHabit, on
             </div>
 
             {/* Sentence Drill Mini-Game Banner */}
-            <div className={`${isCoastal ? 'bg-[#E0F2FE] border-[#1E293B] shadow-[4px_4px_0px_0px_#1E293B]' : 'bg-[#ECFDF5] border-[#2D2319] shadow-[4px_4px_0px_0px_#2D2319]'} border-2 rounded-2xl p-5 flex items-center justify-between gap-4 transition-colors duration-300`}>
+            <div className={`${isCoastal ? 'bg-[#ECF3F6] border-[#1E293B] shadow-[4px_4px_0px_0px_#1E293B]' : 'bg-[#ECFDF5] border-[#2D2319] shadow-[4px_4px_0px_0px_#2D2319]'} border-2 rounded-2xl p-5 flex items-center justify-between gap-4 transition-colors duration-300`}>
               <div className="space-y-1">
-                <span className={`text-[10px] font-black uppercase tracking-wider ${isCoastal ? 'text-[#1E40AF] bg-white border-[#1E293B]' : 'text-[#92400E] bg-white border-[#2D2319]'} px-2 py-0.5 rounded border`}>
+                <span className={`text-[10px] font-black uppercase tracking-wider ${isCoastal ? 'text-[#234B63] bg-white border-[#1E293B]' : 'text-[#92400E] bg-white border-[#2D2319]'} px-2 py-0.5 rounded border`}>
                   GRAMMAR & DRILL
                 </span>
                 <h4 className={`text-base font-black ${isCoastal ? 'text-[#1E293B]' : 'text-[#2D2319]'}`}>Latihan Buat Kalimat Inggris</h4>
@@ -462,7 +485,7 @@ export const HabitDashboard: React.FC<HabitDashboardProps> = ({ onStartHabit, on
                 </p>
                 <button
                   onClick={() => onNavigateTab && onNavigateTab('sentence-drill')}
-                  className={`mt-2 py-1.5 px-4 bg-white ${isCoastal ? 'hover:bg-blue-50 text-[#1E40AF] border-[#1E293B] shadow-[2px_2px_0px_0px_#1E293B]' : 'hover:bg-amber-50 text-[#92400E] border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319]'} text-xs font-black uppercase rounded-xl border-2 cursor-pointer flex items-center gap-1.5 transition-all active:translate-y-0.5`}
+                  className={`mt-2 py-1.5 px-4 bg-white ${isCoastal ? 'hover:bg-slate-50 text-[#234B63] border-[#1E293B] shadow-[2px_2px_0px_0px_#1E293B]' : 'hover:bg-amber-50 text-[#92400E] border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319]'} text-xs font-black uppercase rounded-xl border-2 cursor-pointer flex items-center gap-1.5 transition-all active:translate-y-0.5`}
                 >
                   <span>Latihan Kalimat</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -478,20 +501,20 @@ export const HabitDashboard: React.FC<HabitDashboardProps> = ({ onStartHabit, on
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className={`bg-white border-2 ${isCoastal ? 'border-[#1E293B] shadow-[3px_3px_0px_0px_#1E293B]' : 'border-[#2D2319] shadow-[3px_3px_0px_0px_#2D2319]'} rounded-2xl p-4`}>
               <p className="text-[10px] font-black uppercase text-slate-500">Rata-Rata WPM</p>
-              <p className={`text-2xl font-black ${isCoastal ? 'text-[#1E293B]' : 'text-[#2D2319]'} font-mono mt-0.5`}>342 <span className="text-xs font-bold text-slate-600">KPM</span></p>
-              <p className={`text-[11px] font-bold ${isCoastal ? 'text-[#2563EB]' : 'text-[#047857]'} mt-1`}>↑ Kecepatan membaca optimal</p>
+              <p className={`text-2xl font-black ${isCoastal ? 'text-[#3B6D8C]' : 'text-[#2D2319]'} font-mono mt-0.5`}>342 <span className="text-xs font-bold text-slate-600">KPM</span></p>
+              <p className={`text-[11px] font-bold ${isCoastal ? 'text-[#3B6D8C]' : 'text-[#047857]'} mt-1`}>↑ Kecepatan membaca optimal</p>
             </div>
 
             <div className={`bg-white border-2 ${isCoastal ? 'border-[#1E293B] shadow-[3px_3px_0px_0px_#1E293B]' : 'border-[#2D2319] shadow-[3px_3px_0px_0px_#2D2319]'} rounded-2xl p-4`}>
               <p className="text-[10px] font-black uppercase text-slate-500">Akurasi Soal</p>
-              <p className={`text-2xl font-black ${isCoastal ? 'text-[#0D9488]' : 'text-[#047857]'} font-mono mt-0.5`}>{overallAccuracy}%</p>
+              <p className={`text-2xl font-black ${isCoastal ? 'text-[#2D6A67]' : 'text-[#047857]'} font-mono mt-0.5`}>{overallAccuracy}%</p>
               <p className="text-[11px] font-bold text-slate-500 mt-1">Skor pemahaman materi</p>
             </div>
 
             <div className={`bg-white border-2 ${isCoastal ? 'border-[#1E293B] shadow-[3px_3px_0px_0px_#1E293B]' : 'border-[#2D2319] shadow-[3px_3px_0px_0px_#2D2319]'} rounded-2xl p-4`}>
               <p className="text-[10px] font-black uppercase text-slate-500">Koleksi Bacaan</p>
-              <p className={`text-2xl font-black ${isCoastal ? 'text-[#1E293B]' : 'text-[#2D2319]'} font-mono mt-0.5`}>{totalArticlesRead} <span className="text-xs font-bold text-slate-600">Artikel</span></p>
-              <p className={`text-[11px] font-bold ${isCoastal ? 'text-[#0284C7]' : 'text-[#B45309]'} mt-1`}>Indonesia & English Universal</p>
+              <p className={`text-2xl font-black ${isCoastal ? 'text-[#356B88]' : 'text-[#2D2319]'} font-mono mt-0.5`}>{totalArticlesRead} <span className="text-xs font-bold text-slate-600">Artikel</span></p>
+              <p className={`text-[11px] font-bold ${isCoastal ? 'text-[#356B88]' : 'text-[#B45309]'} mt-1`}>Indonesia & English Universal</p>
             </div>
           </div>
         </div>

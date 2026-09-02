@@ -148,8 +148,8 @@ export const KataBakuQuiz: React.FC = () => {
               onClick={handleResetStats}
               className={`p-1.5 bg-white rounded-xl border-2 text-xs font-black cursor-pointer flex items-center gap-1 transition-all ${
                 isCoastal
-                  ? 'border-slate-700 shadow-[2px_2px_0px_0px_rgba(51,65,85,1)] text-slate-800 hover:bg-rose-50'
-                  : 'border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319] text-[#2D2319] hover:bg-rose-100'
+                  ? 'border-slate-700 shadow-[2px_2px_0px_0px_rgba(51,65,85,1)] text-slate-800 hover:bg-[#DDE7F0]'
+                  : 'border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319] text-[#2D2319] hover:bg-[#E9EDC9]'
               }`}
               title="Reset Statistik"
             >

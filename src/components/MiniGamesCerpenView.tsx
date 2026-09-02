@@ -5,7 +5,8 @@ import { useHabit } from '../context/HabitContext';
 import { ImportArticleModal } from './ImportArticleModal';
 
 export const MiniGamesCerpenView: React.FC = () => {
-  const { recordSession, allCerpenArticles, deleteCustomArticle } = useHabit();
+  const { recordSession, allCerpenArticles, deleteCustomArticle, theme } = useHabit();
+  const isCoastal = theme === 'coastal';
   const [activeLang, setActiveLang] = useState<'id' | 'en'>('id');
   const [selectedCerpen, setSelectedCerpen] = useState<CerpenItem | null>(null);
   const [isImportOpen, setIsImportOpen] = useState(false);
@@ -115,16 +116,16 @@ export const MiniGamesCerpenView: React.FC = () => {
     return (
       <div className="max-w-5xl mx-auto px-4 py-6 space-y-6">
         {/* Banner */}
-        <div className="bg-[#CCD5AE] text-[#283618] rounded-2xl p-6 sm:p-8 border-2 border-[#283618] shadow-[4px_4px_0px_0px_#283618] flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className={`${isCoastal ? 'bg-[#D0E1F0] text-[#1E293B] border-[#1E293B] shadow-[4px_4px_0px_0px_#1E293B]' : 'bg-[#CCD5AE] text-[#283618] border-[#283618] shadow-[4px_4px_0px_0px_#283618]'} rounded-2xl p-6 sm:p-8 border-2 flex flex-col md:flex-row items-center justify-between gap-6`}>
           <div className="space-y-2 max-w-xl">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-white border border-[#283618] text-xs font-black tracking-widest uppercase text-[#3A5A40]">
-              <Gamepad2 className="w-3.5 h-3.5 text-[#588157] stroke-[2.5]" />
+            <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-white border ${isCoastal ? 'border-[#1E293B] text-[#1E40AF]' : 'border-[#283618] text-[#3A5A40]'} text-xs font-black tracking-widest uppercase`}>
+              <Gamepad2 className={`w-3.5 h-3.5 ${isCoastal ? 'text-[#2563EB]' : 'text-[#588157]'} stroke-[2.5]`} />
               MINI GAMES LITERASI SASTRA
             </div>
-            <h1 className="text-2xl sm:text-3xl font-black leading-snug uppercase tracking-tight text-[#283618]">
+            <h1 className={`text-2xl sm:text-3xl font-black leading-snug uppercase tracking-tight ${isCoastal ? 'text-[#1E293B]' : 'text-[#283618]'}`}>
               Cerpen Pilihan & Quiz 5 Soal
             </h1>
-            <p className="text-xs sm:text-sm text-[#3A5A40] font-bold leading-relaxed">
+            <p className={`text-xs sm:text-sm ${isCoastal ? 'text-[#334155]' : 'text-[#3A5A40]'} font-bold leading-relaxed`}>
               Nikmati teks sastra pendek dan uji kemampuan menganalisis Ide Pokok, Sinonim Kata, Makna Kosakata, Inferensi, dan Tema Cerita.
             </p>
           </div>
@@ -132,7 +133,7 @@ export const MiniGamesCerpenView: React.FC = () => {
           <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0">
             <button
               onClick={() => setIsImportOpen(true)}
-              className="bg-[#709752] hover:bg-[#588157] text-white font-black text-xs sm:text-sm px-4 py-3 rounded-xl border-2 border-[#283618] shadow-[3px_3px_0px_0px_#283618] uppercase flex items-center gap-2 cursor-pointer active:translate-y-0.5 transition-all"
+              className={`${isCoastal ? 'bg-[#2563EB] hover:bg-blue-700 border-[#1E293B] shadow-[3px_3px_0px_0px_#1E293B]' : 'bg-[#709752] hover:bg-[#588157] border-[#283618] shadow-[3px_3px_0px_0px_#283618]'} text-white font-black text-xs sm:text-sm px-4 py-3 rounded-xl border-2 uppercase flex items-center gap-2 cursor-pointer active:translate-y-0.5 transition-all`}
             >
               <Plus className="w-4 h-4" />
               Impor Cerpen (PDF/Link)
@@ -141,13 +142,13 @@ export const MiniGamesCerpenView: React.FC = () => {
         </div>
 
         {/* Language Tabs */}
-        <div className="flex items-center justify-center p-1.5 bg-[#FAEDCD] rounded-xl max-w-xs mx-auto border-2 border-[#283618] shadow-[3px_3px_0px_0px_#283618]">
+        <div className={`flex items-center justify-center p-1.5 ${isCoastal ? 'bg-[#EBF3F5] border-[#1E293B] shadow-[3px_3px_0px_0px_#1E293B]' : 'bg-[#FAEDCD] border-[#283618] shadow-[3px_3px_0px_0px_#283618]'} rounded-xl max-w-xs mx-auto border-2`}>
           <button
             onClick={() => setActiveLang('id')}
             className={`flex-1 py-2 rounded-lg text-xs font-black uppercase transition-all cursor-pointer ${
               activeLang === 'id'
-                ? 'bg-[#709752] text-white border-2 border-[#283618] shadow-[1px_1px_0px_0px_#283618]'
-                : 'text-[#283618] hover:bg-white/60'
+                ? (isCoastal ? 'bg-[#2563EB] text-white border-2 border-[#1E293B] shadow-[1px_1px_0px_0px_#1E293B]' : 'bg-[#709752] text-white border-2 border-[#283618] shadow-[1px_1px_0px_0px_#283618]')
+                : (isCoastal ? 'text-[#1E293B] hover:bg-white/60' : 'text-[#283618] hover:bg-white/60')
             }`}
           >
             🇮🇩 Cerpen Indonesia ({allCerpenArticles.filter(c => c.language === 'id').length})
@@ -156,8 +157,8 @@ export const MiniGamesCerpenView: React.FC = () => {
             onClick={() => setActiveLang('en')}
             className={`flex-1 py-2 rounded-lg text-xs font-black uppercase transition-all cursor-pointer ${
               activeLang === 'en'
-                ? 'bg-[#709752] text-white border-2 border-[#283618] shadow-[1px_1px_0px_0px_#283618]'
-                : 'text-[#283618] hover:bg-white/60'
+                ? (isCoastal ? 'bg-[#2563EB] text-white border-2 border-[#1E293B] shadow-[1px_1px_0px_0px_#1E293B]' : 'bg-[#709752] text-white border-2 border-[#283618] shadow-[1px_1px_0px_0px_#283618]')
+                : (isCoastal ? 'text-[#1E293B] hover:bg-white/60' : 'text-[#283618] hover:bg-white/60')
             }`}
           >
             🇬🇧 English Stories ({allCerpenArticles.filter(c => c.language === 'en').length})
@@ -171,11 +172,11 @@ export const MiniGamesCerpenView: React.FC = () => {
             return (
               <div
                 key={cerpen.id}
-                className="bg-white rounded-2xl p-5 border-2 border-[#283618] shadow-[4px_4px_0px_0px_#283618] flex flex-col justify-between space-y-4 hover:-translate-y-1 transition-all"
+                className={`bg-white rounded-2xl p-5 border-2 ${isCoastal ? 'border-[#1E293B] shadow-[4px_4px_0px_0px_#1E293B]' : 'border-[#283618] shadow-[4px_4px_0px_0px_#283618]'} flex flex-col justify-between space-y-4 hover:-translate-y-1 transition-all`}
               >
                 <div className="space-y-2">
                   <div className="flex items-center justify-between gap-2">
-                    <span className="text-[10px] font-black uppercase text-[#3A5A40] bg-[#E9EDC9] px-2.5 py-0.5 rounded-md border border-[#A3B18A]">
+                    <span className={`text-[10px] font-black uppercase ${isCoastal ? 'text-[#1E40AF] bg-[#E0EBF5] border-[#93C5FD]' : 'text-[#3A5A40] bg-[#E9EDC9] border-[#A3B18A]'} px-2.5 py-0.5 rounded-md border`}>
                       {cerpen.author}
                     </span>
                     <div className="flex items-center gap-1.5">
@@ -191,24 +192,24 @@ export const MiniGamesCerpenView: React.FC = () => {
                           <Trash2 className="w-3.5 h-3.5" />
                         </button>
                       )}
-                      <span className="text-[10px] font-bold text-[#8C6B4F]">
+                      <span className={`text-[10px] font-bold ${isCoastal ? 'text-[#475569]' : 'text-[#8C6B4F]'}`}>
                         {cerpen.wordCount} Kata
                       </span>
                     </div>
                   </div>
 
-                  <h3 className="text-base font-black text-[#283618] line-clamp-2">
+                  <h3 className={`text-base font-black ${isCoastal ? 'text-[#1E293B]' : 'text-[#283618]'} line-clamp-2`}>
                     {cerpen.title}
                   </h3>
 
-                  <p className="text-xs text-[#574332] line-clamp-3 font-medium leading-relaxed">
+                  <p className={`text-xs ${isCoastal ? 'text-[#475569]' : 'text-[#574332]'} line-clamp-3 font-medium leading-relaxed`}>
                     {cerpen.synopsis}
                   </p>
                 </div>
 
                 <button
                   onClick={() => handleSelectCerpen(cerpen)}
-                  className="w-full bg-[#FAEDCD] hover:bg-[#E9EDC9] text-[#283618] font-black text-xs uppercase py-3 rounded-xl border-2 border-[#283618] shadow-[2px_2px_0px_0px_#283618] flex items-center justify-center gap-2 cursor-pointer active:translate-y-0.5 transition-all"
+                  className={`w-full ${isCoastal ? 'bg-[#D0E1F0] hover:bg-[#BFDBFE] text-[#1E293B] border-[#1E293B] shadow-[2px_2px_0px_0px_#1E293B]' : 'bg-[#FAEDCD] hover:bg-[#E9EDC9] text-[#283618] border-[#283618] shadow-[2px_2px_0px_0px_#283618]'} font-black text-xs uppercase py-3 rounded-xl border-2 flex items-center justify-center gap-2 cursor-pointer active:translate-y-0.5 transition-all`}
                 >
                   <BookOpen className="w-3.5 h-3.5" />
                   Mulai Membaca & Kuis
@@ -228,24 +229,24 @@ export const MiniGamesCerpenView: React.FC = () => {
     return (
       <div className="max-w-3xl mx-auto px-4 py-6 space-y-6">
         {/* Floating Top Bar */}
-        <div className="bg-white rounded-2xl p-4 border-2 border-[#283618] shadow-[4px_4px_0px_0px_#283618] flex items-center justify-between gap-4 sticky top-4 z-20">
+        <div className={`bg-white rounded-2xl p-4 border-2 ${isCoastal ? 'border-[#1E293B] shadow-[4px_4px_0px_0px_#1E293B]' : 'border-[#283618] shadow-[4px_4px_0px_0px_#283618]'} flex items-center justify-between gap-4 sticky top-4 z-20`}>
           <button
             onClick={() => setMode('browse')}
-            className="flex items-center gap-1.5 text-xs font-black uppercase text-[#283618] hover:text-[#588157] cursor-pointer"
+            className={`flex items-center gap-1.5 text-xs font-black uppercase ${isCoastal ? 'text-[#1E293B] hover:text-[#2563EB]' : 'text-[#283618] hover:text-[#588157]'} cursor-pointer`}
           >
             <ArrowLeft className="w-4 h-4" />
             Kembali
           </button>
 
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1.5 bg-[#E9EDC9] text-[#3A5A40] px-3 py-1 rounded-lg border border-[#A3B18A] font-mono text-xs font-black">
+            <div className={`flex items-center gap-1.5 ${isCoastal ? 'bg-[#E0EBF5] text-[#1E40AF] border-[#93C5FD]' : 'bg-[#E9EDC9] text-[#3A5A40] border-[#A3B18A]'} px-3 py-1 rounded-lg border font-mono text-xs font-black`}>
               <Clock className="w-3.5 h-3.5" />
               <span>{formatTime(readingSeconds)}</span>
             </div>
 
             <button
               onClick={handleFinishReading}
-              className="bg-[#709752] hover:bg-[#588157] text-white font-black text-xs uppercase px-4 py-2 rounded-xl border-2 border-[#283618] shadow-[2px_2px_0px_0px_#283618] cursor-pointer active:translate-y-0.5 flex items-center gap-1.5 transition-all"
+              className={`${isCoastal ? 'bg-[#2563EB] hover:bg-blue-700 border-[#1E293B] shadow-[2px_2px_0px_0px_#1E293B]' : 'bg-[#709752] hover:bg-[#588157] border-[#283618] shadow-[2px_2px_0px_0px_#283618]'} text-white font-black text-xs uppercase px-4 py-2 rounded-xl border-2 cursor-pointer active:translate-y-0.5 flex items-center gap-1.5 transition-all`}
             >
               <span>Selesai Baca & Lanjut Kuis</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -254,20 +255,20 @@ export const MiniGamesCerpenView: React.FC = () => {
         </div>
 
         {/* Reading Content */}
-        <div className="bg-[#FAF6EE] rounded-3xl p-6 sm:p-10 border-2 border-[#283618] shadow-[6px_6px_0px_0px_#283618] space-y-6">
+        <div className={`${isCoastal ? 'bg-[#F8FAFC] border-[#1E293B] shadow-[6px_6px_0px_0px_#1E293B]' : 'bg-[#FAF6EE] border-[#283618] shadow-[6px_6px_0px_0px_#283618]'} rounded-3xl p-6 sm:p-10 border-2 space-y-6`}>
           <div className="border-b-2 border-slate-200 pb-4 space-y-1">
-            <span className="text-[10px] font-black uppercase text-[#3A5A40] bg-[#E9EDC9] px-2.5 py-0.5 rounded-md border border-[#A3B18A]">
+            <span className={`text-[10px] font-black uppercase ${isCoastal ? 'text-[#1E40AF] bg-[#E0EBF5] border-[#93C5FD]' : 'text-[#3A5A40] bg-[#E9EDC9] border-[#A3B18A]'} px-2.5 py-0.5 rounded-md border`}>
               Karya: {selectedCerpen.author}
             </span>
-            <h1 className="text-2xl sm:text-3xl font-black text-[#283618] pt-1">
+            <h1 className={`text-2xl sm:text-3xl font-black ${isCoastal ? 'text-[#1E293B]' : 'text-[#283618]'} pt-1`}>
               {selectedCerpen.title}
             </h1>
-            <p className="text-xs text-[#8C6B4F] font-bold">
+            <p className={`text-xs ${isCoastal ? 'text-[#475569]' : 'text-[#8C6B4F]'} font-bold`}>
               Sumber: {selectedCerpen.source} • {selectedCerpen.wordCount} Kata
             </p>
           </div>
 
-          <div className="space-y-4 text-sm sm:text-base leading-relaxed text-[#283618] font-serif">
+          <div className={`space-y-4 text-sm sm:text-base leading-relaxed ${isCoastal ? 'text-[#1E293B]' : 'text-[#283618]'} font-serif`}>
             {selectedCerpen.content.map((p, idx) => (
               <p key={idx} className="indent-6 text-justify">
                 {p}
@@ -279,7 +280,7 @@ export const MiniGamesCerpenView: React.FC = () => {
           <div className="pt-6 border-t-2 border-slate-200 text-center">
             <button
               onClick={handleFinishReading}
-              className="bg-[#709752] hover:bg-[#588157] text-white font-black text-sm uppercase px-8 py-3.5 rounded-xl border-2 border-[#283618] shadow-[3px_3px_0px_0px_#283618] cursor-pointer active:translate-y-0.5 inline-flex items-center gap-2 transition-all"
+              className={`${isCoastal ? 'bg-[#2563EB] hover:bg-blue-700 border-[#1E293B] shadow-[3px_3px_0px_0px_#1E293B]' : 'bg-[#709752] hover:bg-[#588157] border-[#283618] shadow-[3px_3px_0px_0px_#283618]'} text-white font-black text-sm uppercase px-8 py-3.5 rounded-xl border-2 cursor-pointer active:translate-y-0.5 inline-flex items-center gap-2 transition-all`}
             >
               <span>Saya Sudah Selesai Membaca, Mulai Kuis (5 Soal)</span>
               <ArrowRight className="w-4 h-4" />
@@ -297,17 +298,17 @@ export const MiniGamesCerpenView: React.FC = () => {
     return (
       <div className="max-w-3xl mx-auto px-4 py-6 space-y-6">
         {/* Header */}
-        <div className="bg-white rounded-2xl p-4 sm:p-5 border-2 border-[#283618] shadow-[4px_4px_0px_0px_#283618] flex items-center justify-between">
+        <div className={`bg-white rounded-2xl p-4 sm:p-5 border-2 ${isCoastal ? 'border-[#1E293B] shadow-[4px_4px_0px_0px_#1E293B]' : 'border-[#283618] shadow-[4px_4px_0px_0px_#283618]'} flex items-center justify-between`}>
           <div>
-            <h2 className="text-sm sm:text-base font-black text-[#283618] uppercase tracking-tight">
+            <h2 className={`text-sm sm:text-base font-black ${isCoastal ? 'text-[#1E293B]' : 'text-[#283618]'} uppercase tracking-tight`}>
               Quiz Pemahaman Cerpen: {selectedCerpen.title}
             </h2>
-            <p className="text-xs text-[#574332] font-semibold">
+            <p className={`text-xs ${isCoastal ? 'text-[#475569]' : 'text-[#574332]'} font-semibold`}>
               5 Soal: Ide Pokok, Sinonim, Kosakata, Inferensi, & Tema
             </p>
           </div>
 
-          <div className="flex items-center gap-1.5 bg-[#FAEDCD] text-[#8C6B4F] px-3 py-1 rounded-lg border border-[#DDA15E] font-mono text-xs font-black">
+          <div className={`flex items-center gap-1.5 ${isCoastal ? 'bg-[#E0EBF5] text-[#1E40AF] border-[#93C5FD]' : 'bg-[#FAEDCD] text-[#8C6B4F] border-[#DDA15E]'} px-3 py-1 rounded-lg border font-mono text-xs font-black`}>
             <Clock className="w-3.5 h-3.5" />
             <span>{formatTime(quizSeconds)}</span>
           </div>
@@ -318,13 +319,13 @@ export const MiniGamesCerpenView: React.FC = () => {
           {selectedCerpen.quiz.map((q, qIdx) => (
             <div
               key={q.id}
-              className="bg-white rounded-2xl p-5 sm:p-6 border-2 border-[#283618] shadow-[4px_4px_0px_0px_#283618] space-y-4"
+              className={`bg-white rounded-2xl p-5 sm:p-6 border-2 ${isCoastal ? 'border-[#1E293B] shadow-[4px_4px_0px_0px_#1E293B]' : 'border-[#283618] shadow-[4px_4px_0px_0px_#283618]'} space-y-4`}
             >
               <div className="flex items-start gap-2.5">
-                <span className="w-6 h-6 rounded-lg bg-[#283618] text-white font-black text-xs flex items-center justify-center shrink-0 mt-0.5">
+                <span className={`w-6 h-6 rounded-lg ${isCoastal ? 'bg-[#1E293B]' : 'bg-[#283618]'} text-white font-black text-xs flex items-center justify-center shrink-0 mt-0.5`}>
                   {qIdx + 1}
                 </span>
-                <h4 className="text-xs sm:text-sm font-black text-[#283618] leading-snug">
+                <h4 className={`text-xs sm:text-sm font-black ${isCoastal ? 'text-[#1E293B]' : 'text-[#283618]'} leading-snug`}>
                   {q.question}
                 </h4>
               </div>
@@ -338,7 +339,7 @@ export const MiniGamesCerpenView: React.FC = () => {
                       onClick={() => setAnswers(prev => ({ ...prev, [q.id]: optIdx }))}
                       className={`p-3 rounded-xl border-2 text-left text-xs font-bold transition-all cursor-pointer ${
                         isSelected
-                          ? 'bg-[#E9EDC9] text-[#283618] border-[#283618] shadow-[2px_2px_0px_0px_#283618]'
+                          ? (isCoastal ? 'bg-[#D0E1F0] text-[#1E293B] border-[#1E293B] shadow-[2px_2px_0px_0px_#1E293B]' : 'bg-[#E9EDC9] text-[#283618] border-[#283618] shadow-[2px_2px_0px_0px_#283618]')
                           : 'bg-slate-50 text-slate-700 border-slate-300 hover:bg-slate-100'
                       }`}
                     >
@@ -357,7 +358,7 @@ export const MiniGamesCerpenView: React.FC = () => {
           <button
             onClick={handleSubmitQuiz}
             disabled={!isAllAnswered}
-            className="w-full bg-[#709752] hover:bg-[#588157] text-white font-black py-4 rounded-xl border-2 border-[#283618] shadow-[4px_4px_0px_0px_#283618] uppercase text-sm flex items-center justify-center gap-2 cursor-pointer active:translate-y-0.5 transition-all disabled:opacity-50"
+            className={`w-full ${isCoastal ? 'bg-[#2563EB] hover:bg-blue-700 border-[#1E293B] shadow-[4px_4px_0px_0px_#1E293B]' : 'bg-[#709752] hover:bg-[#588157] border-[#283618] shadow-[4px_4px_0px_0px_#283618]'} text-white font-black py-4 rounded-xl border-2 uppercase text-sm flex items-center justify-center gap-2 cursor-pointer active:translate-y-0.5 transition-all disabled:opacity-50`}
           >
             <Check className="w-4 h-4 stroke-[3]" />
             Submit Jawaban & Lihat Analisis Skor
@@ -372,44 +373,44 @@ export const MiniGamesCerpenView: React.FC = () => {
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-8 space-y-6">
-      <div className="bg-white rounded-3xl p-6 sm:p-8 border-2 border-[#283618] shadow-[6px_6px_0px_0px_#283618] text-center space-y-6">
-        <div className="w-16 h-16 bg-[#CCD5AE] rounded-2xl border-2 border-[#283618] shadow-[3px_3px_0px_0px_#283618] flex items-center justify-center mx-auto">
-          <Award className="w-8 h-8 text-[#588157]" />
+      <div className={`bg-white rounded-3xl p-6 sm:p-8 border-2 ${isCoastal ? 'border-[#1E293B] shadow-[6px_6px_0px_0px_#1E293B]' : 'border-[#283618] shadow-[6px_6px_0px_0px_#283618]'} text-center space-y-6`}>
+        <div className={`w-16 h-16 ${isCoastal ? 'bg-[#D0E1F0] border-[#1E293B] shadow-[3px_3px_0px_0px_#1E293B]' : 'bg-[#CCD5AE] border-[#283618] shadow-[3px_3px_0px_0px_#283618]'} rounded-2xl border-2 flex items-center justify-center mx-auto`}>
+          <Award className={`w-8 h-8 ${isCoastal ? 'text-[#2563EB]' : 'text-[#588157]'}`} />
         </div>
 
         <div className="space-y-1">
-          <h2 className="text-2xl sm:text-3xl font-black text-[#283618] uppercase tracking-tight">
+          <h2 className={`text-2xl sm:text-3xl font-black ${isCoastal ? 'text-[#1E293B]' : 'text-[#283618]'} uppercase tracking-tight`}>
             Hasil Analisis Sastra Selesai!
           </h2>
-          <p className="text-xs sm:text-sm text-[#574332] font-bold">
+          <p className={`text-xs sm:text-sm ${isCoastal ? 'text-[#475569]' : 'text-[#574332]'} font-bold`}>
             {selectedCerpen?.title} ({selectedCerpen?.author})
           </p>
         </div>
 
         {/* Stats Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <div className="bg-[#E9EDC9] p-3 rounded-xl border-2 border-[#283618]">
-            <div className="text-[10px] font-black uppercase text-[#3A5A40]">Akurasi</div>
-            <div className="text-2xl font-mono font-black text-[#283618] mt-1">{stats.accuracy}%</div>
+          <div className={`${isCoastal ? 'bg-[#E0EBF5] border-[#1E293B]' : 'bg-[#E9EDC9] border-[#283618]'} p-3 rounded-xl border-2`}>
+            <div className={`text-[10px] font-black uppercase ${isCoastal ? 'text-[#1E40AF]' : 'text-[#3A5A40]'}`}>Akurasi</div>
+            <div className={`text-2xl font-mono font-black ${isCoastal ? 'text-[#1E293B]' : 'text-[#283618]'} mt-1`}>{stats.accuracy}%</div>
           </div>
-          <div className="bg-[#FAEDCD] p-3 rounded-xl border-2 border-[#283618]">
-            <div className="text-[10px] font-black uppercase text-[#8C6B4F]">Benar</div>
-            <div className="text-2xl font-mono font-black text-[#283618] mt-1">{stats.correctCount}/5</div>
+          <div className={`${isCoastal ? 'bg-[#D0E1F0] border-[#1E293B]' : 'bg-[#FAEDCD] border-[#283618]'} p-3 rounded-xl border-2`}>
+            <div className={`text-[10px] font-black uppercase ${isCoastal ? 'text-[#1E40AF]' : 'text-[#8C6B4F]'}`}>Benar</div>
+            <div className={`text-2xl font-mono font-black ${isCoastal ? 'text-[#1E293B]' : 'text-[#283618]'} mt-1`}>{stats.correctCount}/5</div>
           </div>
-          <div className="bg-[#CCD5AE] p-3 rounded-xl border-2 border-[#283618]">
-            <div className="text-[10px] font-black uppercase text-[#3A5A40]">Waktu Baca</div>
-            <div className="text-2xl font-mono font-black text-[#283618] mt-1">{formatTime(readingSeconds)}</div>
+          <div className={`${isCoastal ? 'bg-[#E2E8F0] border-[#1E293B]' : 'bg-[#CCD5AE] border-[#283618]'} p-3 rounded-xl border-2`}>
+            <div className={`text-[10px] font-black uppercase ${isCoastal ? 'text-[#334155]' : 'text-[#3A5A40]'}`}>Waktu Baca</div>
+            <div className={`text-2xl font-mono font-black ${isCoastal ? 'text-[#1E293B]' : 'text-[#283618]'} mt-1`}>{formatTime(readingSeconds)}</div>
           </div>
-          <div className="bg-[#F4F1DE] p-3 rounded-xl border-2 border-[#283618]">
-            <div className="text-[10px] font-black uppercase text-[#574332]">Waktu Kuis</div>
-            <div className="text-2xl font-mono font-black text-[#283618] mt-1">{formatTime(quizSeconds)}</div>
+          <div className={`${isCoastal ? 'bg-[#F1F5F9] border-[#1E293B]' : 'bg-[#F4F1DE] border-[#283618]'} p-3 rounded-xl border-2`}>
+            <div className={`text-[10px] font-black uppercase ${isCoastal ? 'text-[#475569]' : 'text-[#574332]'}`}>Waktu Kuis</div>
+            <div className={`text-2xl font-mono font-black ${isCoastal ? 'text-[#1E293B]' : 'text-[#283618]'} mt-1`}>{formatTime(quizSeconds)}</div>
           </div>
         </div>
 
         {/* Quiz Explanations Breakdown */}
         {selectedCerpen && (
           <div className="text-left space-y-3 pt-2">
-            <h4 className="text-xs font-black text-[#283618] uppercase tracking-wider">
+            <h4 className={`text-xs font-black ${isCoastal ? 'text-[#1E293B]' : 'text-[#283618]'} uppercase tracking-wider`}>
               Pembahasan Kunci Jawaban:
             </h4>
             <div className="space-y-2">
@@ -417,19 +418,19 @@ export const MiniGamesCerpenView: React.FC = () => {
                 const userAns = answers[q.id];
                 const isCorrect = userAns === q.correctIndex;
                 return (
-                  <div key={q.id} className={`p-3 rounded-xl border-2 border-[#283618] text-xs space-y-1 ${
-                    isCorrect ? 'bg-[#E9EDC9]' : 'bg-red-50'
+                  <div key={q.id} className={`p-3 rounded-xl border-2 ${isCoastal ? 'border-[#1E293B]' : 'border-[#283618]'} text-xs space-y-1 ${
+                    isCorrect ? (isCoastal ? 'bg-[#E0EBF5]' : 'bg-[#E9EDC9]') : 'bg-red-50'
                   }`}>
                     <div className="flex items-center justify-between font-black">
                       <span>{idx + 1}. {q.question}</span>
-                      <span className={isCorrect ? 'text-[#709752]' : 'text-red-600'}>
+                      <span className={isCorrect ? (isCoastal ? 'text-[#2563EB]' : 'text-[#709752]') : 'text-red-600'}>
                         {isCorrect ? '✓ Benar' : '✗ Salah'}
                       </span>
                     </div>
-                    <div className="text-[#574332]">
+                    <div className={isCoastal ? 'text-[#334155]' : 'text-[#574332]'}>
                       <strong>Kunci:</strong> {q.options[q.correctIndex]}
                     </div>
-                    <p className="text-[11px] text-[#283618]">
+                    <p className={`text-[11px] ${isCoastal ? 'text-[#1E293B]' : 'text-[#283618]'}`}>
                       {q.explanation}
                     </p>
                   </div>
@@ -443,7 +444,7 @@ export const MiniGamesCerpenView: React.FC = () => {
         <div className="pt-2">
           <button
             onClick={() => setMode('browse')}
-            className="w-full bg-[#709752] hover:bg-[#588157] text-white font-black text-xs sm:text-sm py-3.5 rounded-xl border-2 border-[#283618] shadow-[3px_3px_0px_0px_#283618] uppercase flex items-center justify-center gap-2 cursor-pointer active:translate-y-0.5 transition-all"
+            className={`w-full ${isCoastal ? 'bg-[#2563EB] hover:bg-blue-700 border-[#1E293B] shadow-[3px_3px_0px_0px_#1E293B]' : 'bg-[#709752] hover:bg-[#588157] border-[#283618] shadow-[3px_3px_0px_0px_#283618]'} text-white font-black text-xs sm:text-sm py-3.5 rounded-xl border-2 uppercase flex items-center justify-center gap-2 cursor-pointer active:translate-y-0.5 transition-all`}
           >
             <ArrowLeft className="w-4 h-4" />
             Kembali ke Daftar Cerpen

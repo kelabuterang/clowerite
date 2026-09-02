@@ -34,7 +34,7 @@ function AppContent() {
   };
 
   return (
-    <div className={`min-h-screen ${isCoastal ? 'bg-[#F0F6F8] text-[#1E293B] selection:bg-[#BFDBFE] selection:text-[#1E3A8A]' : 'bg-[#FFFDF9] text-[#2D2319] selection:bg-[#FEF3C7] selection:text-[#78350F]'} flex flex-col font-sans transition-colors duration-300`}>
+    <div className={`min-h-screen ${isCoastal ? 'bg-[#F2F5F8] text-[#1E293B] selection:bg-[#D6E2EC] selection:text-[#1E3A5F]' : 'bg-[#FFFDF9] text-[#2D2319] selection:bg-[#FEF3C7] selection:text-[#78350F]'} flex flex-col font-sans transition-colors duration-300`}>
       {/* Top Navbar */}
       <Navbar
         activeTab={activeTab}
@@ -130,7 +130,7 @@ function AppContent() {
       </main>
 
       {/* Bento Grid Styled Footer */}
-      <footer className={`border-t-2 ${isCoastal ? 'border-[#1E293B] bg-[#E6F0F2] text-[#334155]' : 'border-[#2D2319] bg-white text-[#574332]'} py-6 text-center text-xs space-y-1.5 mt-auto transition-colors duration-300`}>
+      <footer className={`border-t-2 ${isCoastal ? 'border-[#1E293B] bg-[#E8EEF3] text-[#334155]' : 'border-[#2D2319] bg-white text-[#574332]'} py-6 text-center text-xs space-y-1.5 mt-auto transition-colors duration-300`}>
         <div className={`flex items-center justify-center gap-2 font-mono font-black uppercase ${isCoastal ? 'text-[#1E293B]' : 'text-[#2D2319]'}`}>
           <span>{isCoastal ? '🌊' : '🍀'}</span> Cloverait Habit & SpeedMind Engine
         </div>

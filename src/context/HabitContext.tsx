@@ -78,9 +78,9 @@ export const HabitProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [theme, setThemeState] = useState<AppTheme>(() => {
     try {
       const saved = localStorage.getItem(THEME_STORAGE_KEY);
-      return (saved === 'coastal' || saved === 'forest') ? saved : 'forest';
+      return (saved === 'coastal' || saved === 'forest') ? saved : 'coastal';
     } catch {
-      return 'forest';
+      return 'coastal';
     }
   });
 
@@ -251,7 +251,7 @@ export const HabitProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         const existing = prev.dailyIndonesianCompletedIds || [];
         if (!existing.includes(articleId)) {
           const updated = [...existing, articleId];
-          const habitComplete = updated.length >= 8;
+          const habitComplete = updated.length >= 5;
           const completedHabits = habitComplete && !prev.completedHabitsToday.includes('getah-sanubari') && !prev.completedHabitsToday.includes('obat-fokus')
             ? [...prev.completedHabitsToday, 'getah-sanubari']
             : prev.completedHabitsToday;
@@ -331,7 +331,7 @@ export const HabitProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         newDailyMmCount = 10;
       }
 
-      const isGetahComplete = newDailyIdCompleted.length >= 8;
+      const isGetahComplete = newDailyIdCompleted.length >= 5;
       const isRantingComplete = newDailyEnCompleted.length >= 5;
       const isLingkarComplete = newDailyMmCount >= 10;
 
@@ -372,7 +372,7 @@ export const HabitProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const isHabitCompletedToday = (habitId: HabitId): boolean => {
     if (habitId === 'getah-sanubari' || habitId === 'obat-fokus') {
-      return (progress.dailyIndonesianCompletedIds?.length || 0) >= 8 || progress.completedHabitsToday.includes('getah-sanubari') || progress.completedHabitsToday.includes('obat-fokus');
+      return (progress.dailyIndonesianCompletedIds?.length || 0) >= 5 || progress.completedHabitsToday.includes('getah-sanubari') || progress.completedHabitsToday.includes('obat-fokus');
     }
     if (habitId === 'ranting-kata' || habitId === 'balon-helium') {
       return (progress.dailyEnglishCompletedIds?.length || 0) >= 5 || progress.completedHabitsToday.includes('ranting-kata') || progress.completedHabitsToday.includes('balon-helium');
@@ -388,7 +388,7 @@ export const HabitProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const dailyIndonesianProgress = {
     completedCount: progress.dailyIndonesianCompletedIds?.length || 0,
-    target: 8,
+    target: 5,
     completedIds: progress.dailyIndonesianCompletedIds || []
   };
 

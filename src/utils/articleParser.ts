@@ -16,31 +16,38 @@ export type SplitMode = 'auto' | 'headings' | 'words' | 'single';
  */
 export function isNoiseOrAdParagraph(str: string): boolean {
   const lower = str.toLowerCase().trim();
-  if (lower.length < 25) return true;
-  if (/^[\s\d.,©-]*$/.test(lower)) return true;
+  if (lower.length < 20) return true;
+  if (/^[\s\d.,©\-–—•|*#~]*$/.test(lower)) return true;
 
   // Indonesian Read More / Ads / Social filters
-  if (/^(?:baca\s+juga|baca\s+selengkapnya|simak\s+juga|lihat\s+juga|artikel\s+terkait|berita\s+terkait|baca\s+berita|klik\s+di\s+sini|baca\s+kelanjutan|pilihan\s+editor)\s*[:\-–—]/i.test(lower)) return true;
-  if (/^(?:foto|photo|credit|image\s+credit|sumber\s+foto|ilustrasi|tangkapan\s+layar)\s*[:\-–—]/i.test(lower)) return true;
-  if (/dapatkan\s+update\s+berita|ikuti\s+saluran\s+whatsapp|gabung\s+kompas|download\s+aplikasi|unduh\s+aplikasi|ikuti\s+kami\s+di|bagikan\s+artikel\s+ini/i.test(lower)) return true;
-  if (/(?:iklan|advertisement|sponsored\s+content|pariwara|promoted\s+post|halaman\s+selanjutnya|next\s+page)/i.test(lower)) return true;
-  if (/artikel\s+ini\s+tayang\s+perdana|republished\s+from\s+the\s+conversation\s+under\s+creative\s+commons/i.test(lower)) return true;
-  if (/hak\s+cipta\s+dilindungi|all\s+rights\s+reserved|terms\s+of\s+service|privacy\s+policy|kebijakan\s+privasi|syarat\s+dan\s+ketentuan/i.test(lower)) return true;
+  if (/^(?:baca\s+juga|baca\s+selengkapnya|simak\s+juga|lihat\s+juga|artikel\s+terkait|berita\s+terkait|baca\s+berita|klik\s+di\s+sini|baca\s+kelanjutan|pilihan\s+editor|topik\s+terkait|rekomendasi\s+bacaan|selengkapnya\s+baca|tonton\s+video)\s*[:\-–—]/i.test(lower)) return true;
+  if (/^(?:baca\s+juga|simak\s+juga|lihat\s+juga|baca\s+selengkapnya)\s+[A-Z0-9"“']/i.test(str.trim())) return true;
+  if (/^(?:foto|photo|credit|image\s+credit|sumber\s+foto|ilustrasi|tangkapan\s+layar|infografis|grafis)\s*[:\-–—]/i.test(lower)) return true;
+  if (/dapatkan\s+update\s+berita|ikuti\s+saluran\s+whatsapp|gabung\s+kompas|download\s+aplikasi|unduh\s+aplikasi|ikuti\s+kami\s+di|bagikan\s+artikel\s+ini|tulis\s+komentar|baca\s+juga\s+artikel/i.test(lower)) return true;
+  if (/(?:iklan|advertisement|sponsored\s+content|pariwara|promoted\s+post|halaman\s+selanjutnya|next\s+page|baca\s+halaman\s+selanjutnya|geser\s+ke\s+atas)/i.test(lower)) return true;
+  if (/artikel\s+ini\s+tayang\s+perdana|republished\s+from\s+the\s+conversation\s+under\s+creative\s+commons|artikel\s+ini\s+sudah\s+tayang\s+di/i.test(lower)) return true;
+  if (/hak\s+cipta\s+dilindungi|all\s+rights\s+reserved|terms\s+of\s+service|privacy\s+policy|kebijakan\s+privasi|syarat\s+dan\s+ketentuan|pedoman\s+media\s+siber/i.test(lower)) return true;
+  if (/^(?:sumber|penulis|editor|reporter|redaktur)\s*[:\-–—]\s*[a-zA-Z\s.,]+$/i.test(lower)) return true;
 
   // English Read More / Promo filters
-  if (/^(?:read\s+more|also\s+read|related\s+articles?|see\s+also|recommended\s+reading|suggested\s+reading|don['’]t\s+miss|read\s+next|continue\s+reading)\s*[:\-–—]/i.test(lower)) return true;
-  if (/sign\s+up\s+for\s+(?:our\s+)?newsletter|subscribe\s+to|follow\s+us\s+on|leave\s+a\s+comment|share\s+this\s+story/i.test(lower)) return true;
+  if (/^(?:read\s+more|also\s+read|related\s+articles?|related\s+stories?|see\s+also|recommended\s+reading|suggested\s+reading|don['’]t\s+miss|read\s+next|continue\s+reading|must\s+read|editors['’]?\s+pick)\s*[:\-–—]/i.test(lower)) return true;
+  if (/^(?:read\s+more|also\s+read|see\s+also)\s+[A-Z0-9"“']/i.test(str.trim())) return true;
+  if (/sign\s+up\s+for\s+(?:our\s+)?newsletter|subscribe\s+to|follow\s+us\s+on|leave\s+a\s+comment|share\s+this\s+story|listen\s+to\s+the\s+podcast|download\s+the\s+app/i.test(lower)) return true;
+  if (/this\s+article\s+was\s+originally\s+published\s+on|republished\s+with\s+permission|disclosure\s+statement|the\s+conversation\s+uk|the\s+conversation\s+africa/i.test(lower)) return true;
+  if (/(?:advertisement|sponsored|promoted\s+content|affiliate\s+links?|cookies?\s+policy)/i.test(lower)) return true;
 
   return false;
 }
 
 /**
- * Clean text paragraph by removing inline "(Baca juga: ...)" or "[Read more: ...]"
+ * Clean text paragraph by removing inline "(Baca juga: ...)" or "[Read more: ...]" or promotional snippets
  */
 export function sanitizeParagraphText(text: string): string {
   return text
-    .replace(/\[\s*(?:Baca\s+juga|Read\s+more|Simak\s+juga)[^\]]+\]/gi, '')
-    .replace(/\(\s*(?:Baca\s+juga|Read\s+more|Simak\s+juga)[^)]+\)/gi, '')
+    .replace(/\[\s*(?:Baca\s+juga|Read\s+more|Simak\s+juga|Lihat\s+juga|Also\s+read|Related)[^\]]+\]/gi, '')
+    .replace(/\(\s*(?:Baca\s+juga|Read\s+more|Simak\s+juga|Lihat\s+juga|Also\s+read|Related)[^)]+\)/gi, '')
+    .replace(/\|\s*(?:Baca\s+juga|Simak\s+juga|Read\s+more).*$/gi, '')
+    .replace(/[-–—]\s*(?:Baca\s+juga|Simak\s+juga|Read\s+more).*$/gi, '')
     .replace(/\s+/g, ' ')
     .trim();
 }
@@ -294,12 +301,19 @@ export async function fetchArticleFromUrl(url: string): Promise<{
 
   // Strip unwanted elements
   const tagsToRemove = [
-    'script', 'style', 'noscript', 'svg', 'nav', 'header', 'footer', 'aside', 'iframe',
-    '.ads', '.advertisement', '.sidebar', '.menu', '.social-share', '.newsletter-box',
-    '.read-more', '.baca-juga', '.related-posts'
+    'script', 'style', 'noscript', 'svg', 'nav', 'header', 'footer', 'aside', 'iframe', 'form', 'button', 'input',
+    '.ads', '.ad', '.advertisement', '.adv', '[id*="google_ads"]', '[id*="ad-"]', '[class*="ad-slot"]', '[class*="advert"]',
+    '.sidebar', '.menu', '.social-share', '.share-box', '.share-buttons', '.newsletter', '.newsletter-box', '.subscribe', '.subscription',
+    '.read-more', '.baca-juga', '.related-posts', '.related-articles', '.related-news', '.recommended', '.trending-widget',
+    '.tag-list', '.tags', '.comment-section', '.comments', '.disclaimer', '.copyright',
+    '[data-ad]', '[data-ad-unit]', '[data-ad-slot]', '[data-readmore]', '[data-component="advertisement"]'
   ];
   tagsToRemove.forEach(selector => {
-    doc.querySelectorAll(selector).forEach(el => el.remove());
+    try {
+      doc.querySelectorAll(selector).forEach(el => el.remove());
+    } catch {
+      // ignore invalid selector
+    }
   });
 
   // Extract Title

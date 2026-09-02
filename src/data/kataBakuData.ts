@@ -520,5 +520,925 @@ export const KATA_BAKU_LIST: KataBakuItem[] = [
     category: 'Penyerapan Arab & Huruf z',
     explanation: 'Berasal dari bahasa Arab "khizaanah" (خزانة) diserap dengan konsonan "z": "khazanah".',
     exampleSentence: 'Sastra Nusantara memperkaya khazanah kebudayaan bangsa.'
+  },
+  {
+    id: 'kb-66',
+    baku: 'Advokat',
+    tidakBaku: 'Adpokat',
+    category: 'Penyerapan Belanda/Inggris & Konsonan v',
+    explanation: 'Berasal dari bahasa Belanda "advocaat" (Inggris advocate). Bentuk baku menggunakan konsonan "v", bukan "p".',
+    exampleSentence: 'Seorang advokat bertugas memberikan bantuan hukum profesional kepada kliennya.'
+  },
+  {
+    id: 'kb-67',
+    baku: 'Akta',
+    tidakBaku: 'Akte',
+    category: 'Penyerapan Belanda & Vokal Akhir -a',
+    explanation: 'Berasal dari bahasa Belanda "acte". Dalam penyerapan bahasa Indonesia diakhiri vokal "a": "akta" (akta kelahiran, akta notaris).',
+    exampleSentence: 'Setiap warga negara berhak memiliki akta kelahiran resmi dari dinas kependudukan.'
+  },
+  {
+    id: 'kb-68',
+    baku: 'Ambulans',
+    tidakBaku: 'Ambulan',
+    category: 'Penyerapan Bahasa Asing & Konsonan Akhir',
+    explanation: 'Berasal dari bahasa Inggris "ambulance" atau Belanda "ambulance". Bentuk baku bahasa Indonesia mempertahankan konsonan "s" di akhir: "ambulans".',
+    exampleSentence: 'Mobil ambulans melaju cepat dengan membunyikan sirine darurat di jalan protokol.'
+  },
+  {
+    id: 'kb-69',
+    baku: 'Ambeien',
+    tidakBaku: 'Ambeyen',
+    category: 'Vokal & Ejaan Medis',
+    explanation: 'Berasal dari serapan Belanda "aambeien". Bentuk baku menggunakan vokal "i": "ambeien" (wasir).',
+    exampleSentence: 'Konsumsi makanan berserat tinggi membantu mencegah timbulnya gangguan ambeien.'
+  },
+  {
+    id: 'kb-70',
+    baku: 'Asas',
+    tidakBaku: 'Azas',
+    category: 'Penyerapan Arab & Konsonan s',
+    explanation: 'Berasal dari kata Arab "asaas" (أساس) yang diserap dengan huruf "s": "asas" (asas praduga tak bersalah, berasaskan).',
+    exampleSentence: 'Keadilan sosial merupakan salah satu asas pokok dalam konstitusi negara.'
+  },
+  {
+    id: 'kb-71',
+    baku: 'Atlet',
+    tidakBaku: 'Atlit',
+    category: 'Penyerapan Belanda/Inggris & Vokal e',
+    explanation: 'Berasal dari bahasa Inggris "athlete" atau Belanda "atleet". Bentuk baku menggunakan "e": "atlet" (atletik, bukan atlitik).',
+    exampleSentence: 'Para atlet nasional menjalani latihan intensif menjelang kejuaraan olimpiade.'
+  },
+  {
+    id: 'kb-72',
+    baku: 'Baterai',
+    tidakBaku: 'Batere',
+    category: 'Diftong -ai & Penyerapan Belanda',
+    explanation: 'Berasal dari serapan Belanda "batterij" yang diserap dengan diftong baku "-ai": "baterai".',
+    exampleSentence: 'Kendaraan listrik ramah lingkungan mengandalkan teknologi baterai berkapasitas besar.'
+  },
+  {
+    id: 'kb-73',
+    baku: 'Berpikir',
+    tidakBaku: 'Berfikir',
+    category: 'Kaidah Konsonan p & Kata Dasar Pikir',
+    explanation: 'Berasal dari kata dasar baku "pikir" (pemikiran, berpikir), bukan "fikir". Penyerapan dari Arab "fikr" diserap menjadi p.',
+    exampleSentence: 'Kemampuan berpikir kritis sangat dibutuhkan untuk memecahkan persoalan rumit.'
+  },
+  {
+    id: 'kb-74',
+    baku: 'Bus',
+    tidakBaku: 'Bis',
+    category: 'Penyerapan Belanda/Inggris & Vokal u',
+    explanation: 'Berasal dari bahasa Belanda/Inggris "bus". Ejaan baku dalam KBBI menggunakan huruf "u": "bus" (bukan bis).',
+    exampleSentence: 'Ratusan penumpang menunggu kedatangan bus antarkota di terminal terpadu.'
+  },
+  {
+    id: 'kb-75',
+    baku: 'Cedera',
+    tidakBaku: 'Cidera',
+    category: 'Vokal Pepet e & Istilah Medis Olahraga',
+    explanation: 'Berasal dari bahasa Sanskerta "chidra". Dalam bahasa Indonesia bentuk baku adalah "cedera" (mencederai, tercedera).',
+    exampleSentence: 'Pemain sayap itu terpaksa beristirahat panjang akibat cedera lutut saat latihan.'
+  },
+  {
+    id: 'kb-76',
+    baku: 'Cendekiawan',
+    tidakBaku: 'Cendikiawan',
+    category: 'Vokal Pepet e & Morfologi',
+    explanation: 'Berasal dari kata dasar "cendekia" dengan akhiran bentuk terikat "-wan": "cendekiawan" (kaum intelek), bukan "cendikiawan".',
+    exampleSentence: 'Para cendekiawan berkumpul merumuskan gagasan strategis pemulihan ekonomi bangsa.'
+  },
+  {
+    id: 'kb-77',
+    baku: 'Cenderawasih',
+    tidakBaku: 'Cendrawasih',
+    category: 'Vokal Pepet e & Flora/Fauna',
+    explanation: 'Bentuk baku dalam KBBI mempertahankan vokal pepet: "cenderawasih" (burung khas Papua).',
+    exampleSentence: 'Burung cenderawasih dikenal di seluruh dunia karena keindahan warna bulunya yang memikat.'
+  },
+  {
+    id: 'kb-78',
+    baku: 'Debit',
+    tidakBaku: 'Debet',
+    category: 'Penyerapan Belanda & Akuntansi/Hidrologi',
+    explanation: 'Berasal dari serapan "debet/debit". KBBI menetapkan bentuk baku dengan vokal "i": "debit" (debit air, kartu debit).',
+    exampleSentence: 'Curah hujan lebat di hulu sungai meningkatkan debit air bendungan secara drastis.'
+  },
+  {
+    id: 'kb-79',
+    baku: 'Definisi',
+    tidakBaku: 'Difinisi',
+    category: 'Penyerapan Latin/Inggris & Vokal e',
+    explanation: 'Berasal dari bahasa Inggris "definition" (Latin definitio). Ejaan baku memakai huruf "e" pada suku kata pertama: "definisi".',
+    exampleSentence: 'Kamus memberikan definisi yang lugas dan tepat untuk istilah-istilah ilmiah baru.'
+  },
+  {
+    id: 'kb-80',
+    baku: 'Detergen',
+    tidakBaku: 'Deterjen',
+    category: 'Penyerapan Konsonan g & Kimia',
+    explanation: 'Berasal dari serapan bahasa Inggris "detergent". Huruf "g" dipertahankan sebagai konsonan "g": "detergen".',
+    exampleSentence: 'Formula detergen ramah lingkungan terurai lebih cepat tanpa mencemari perairan sungai.'
+  },
+  {
+    id: 'kb-81',
+    baku: 'Diagnosis',
+    tidakBaku: 'Diagnosa',
+    category: 'Penyerapan Yunani/Inggris & Akhiran -is',
+    explanation: 'Berasal dari bahasa Inggris "diagnosis" (Yunani diagnosis). Penyerapan baku mempertahankan akhiran "-is": "diagnosis" (mendiagnosis).',
+    exampleSentence: 'Dokter spesialis menetapkan diagnosis yang akurat setelah memeriksa hasil pemindaian MRI.'
+  },
+  {
+    id: 'kb-82',
+    baku: 'Durian',
+    tidakBaku: 'Duren',
+    category: 'Vokal Diftong & Ragam Bahasa Daerah',
+    explanation: 'Berasal dari kata dasar "duri" dengan sufiks "-an". Ejaan baku resmi adalah "durian", sedangkan "duren" merupakan ragam cakapan daerah.',
+    exampleSentence: 'Aroma khas buah durian montong semerbak memenuhi lapak pasar buah musiman.'
+  },
+  {
+    id: 'kb-83',
+    baku: 'Efektivitas',
+    tidakBaku: 'Efektifitas',
+    category: 'Penyerapan Sufiks -ity Menjadi -itas',
+    explanation: 'Berasal dari kata serapan bahasa Inggris "effectiveness" / "effectivity". Konsonan "v" digunakan pada pembentukan nomina "-itas": "efektivitas".',
+    exampleSentence: 'Kajian empiris membuktikan efektivitas metode pembelajaran aktif terhadap pemahaman siswa.'
+  },
+  {
+    id: 'kb-84',
+    baku: 'Elite',
+    tidakBaku: 'Elit',
+    category: 'Penyerapan Prancis/Inggris & Huruf Akhir e',
+    explanation: 'Diserap dari kata Prancis/Inggris "elite". Ejaan resmi KBBI mencantumkan huruf "e" di akhir kata: "elite".',
+    exampleSentence: 'Penyelenggara mengundang kelompok elite profesional dalam forum dialog investasi.'
+  },
+  {
+    id: 'kb-85',
+    baku: 'Embus',
+    tidakBaku: 'Hembus',
+    category: 'Kata Dasar Tanpa Konsonan Awal h',
+    explanation: 'Kata dasar baku bahasa Indonesia tidak menggunakan huruf "h" di awal: "embus" (mengembus, berembus, embusan).',
+    exampleSentence: 'Angin laut berembus sepoi-sepoi menemani matahari terbenam di ufuk barat.'
+  },
+  {
+    id: 'kb-86',
+    baku: 'Fondasi',
+    tidakBaku: 'Pondasi',
+    category: 'Penyerapan Belanda & Konsonan f',
+    explanation: 'Berasal dari bahasa Belanda "fundatie" diserap menjadi "fondasi" menggunakan konsonan "f", bukan "p".',
+    exampleSentence: 'Fondasi yang kokoh menjamin ketahanan struktur gedung bertingkat terhadap getaran gempa.'
+  },
+  {
+    id: 'kb-87',
+    baku: 'Formal',
+    tidakBaku: 'Formil',
+    category: 'Penyerapan Sufiks Latin/Inggris -al',
+    explanation: 'Berasal dari serapan bahasa Inggris "formal" (Belanda formeel). Kaidah penyerapan serapan modern membakukan sufiks "-al": "formal".',
+    exampleSentence: 'Surat dinas harus disusun menggunakan ragam bahasa resmi dalam format formal.'
+  },
+  {
+    id: 'kb-88',
+    baku: 'Foto',
+    tidakBaku: 'Photo',
+    category: 'Penyesuaian Grafem ph Menjadi f',
+    explanation: 'Gugus konsonan asing "ph" diserap menjadi huruf "f": "foto" (fotografi, fotografer), bukan "photo".',
+    exampleSentence: 'Pameran galeri seni memajang ratusan karya foto dokumenter bertema kearifan lokal.'
+  },
+  {
+    id: 'kb-89',
+    baku: 'Frasa',
+    tidakBaku: 'Frase',
+    category: 'Penyerapan Linguistik & Vokal Akhir -a',
+    explanation: 'Diserap dari kata serapan linguistik "phrase". Bentuk baku dalam istilah tata bahasa adalah "frasa" (frasa nominal, frasa verbal).',
+    exampleSentence: 'Kombinasi dua kata yang tidak melampaui batas fungsi klausa dinamakan frasa.'
+  },
+  {
+    id: 'kb-90',
+    baku: 'Gladi',
+    tidakBaku: 'Geladi / Gladhi',
+    category: 'Ejaan Baku Istilah Latihan',
+    explanation: 'KBBI menetapkan bentuk baku "gladi" (gladi resik, gladi bersih) sebagai latihan persiapan terakhir menjelang pertunjukan.',
+    exampleSentence: 'Seluruh pengisi acara mengikuti gladi bersih upacara kemerdekaan di halaman istana.'
+  },
+  {
+    id: 'kb-91',
+    baku: 'Gua',
+    tidakBaku: 'Goa',
+    category: 'Vokal u & Bentuk Dasar Geografi',
+    explanation: 'Bentuk baku geografi menurut KBBI adalah "gua" dengan huruf "u", bukan "goa".',
+    exampleSentence: 'Para peneliti menemukan lukisan cadas purbakala di dinding gua karst Maros.'
+  },
+  {
+    id: 'kb-92',
+    baku: 'Hafiz',
+    tidakBaku: 'Hafidz',
+    category: 'Penyerapan Huruf Arab dz/z Menjadi z',
+    explanation: 'Berasal dari bahasa Arab "haafizh" (حافظ) yang diserap dengan huruf tunggal "z": "hafiz".',
+    exampleSentence: 'Pemuda itu berhasil menghafal seluruh juz Al-Qur\'an dan dinobatkan sebagai hafiz berprestasi.'
+  },
+  {
+    id: 'kb-93',
+    baku: 'Halalbihalal',
+    tidakBaku: 'Halal bihalal',
+    category: 'Gabungan Kata Senyawa Ditulis Serangkai',
+    explanation: 'Sebagai ungkapan serapan yang sudah senyawa padu, KBBI menuliskan "halalbihalal" serangkai tanpa spasi.',
+    exampleSentence: 'Keluarga besar menyelenggarakan acara halalbihalal untuk mempererat tali silaturahmi pasca-Lebaran.'
+  },
+  {
+    id: 'kb-94',
+    baku: 'Hektare',
+    tidakBaku: 'Hektar',
+    category: 'Satuan Luas Internasional & Huruf Akhir e',
+    explanation: 'Berasal dari kata serapan metrik internasional "hectare". Ejaan baku mempertahankan huruf "e": "hektare".',
+    exampleSentence: 'Pemerintah merestorasi ribuan hektare hutan bakau di kawasan pesisir nusantara.'
+  },
+  {
+    id: 'kb-95',
+    baku: 'Higienis',
+    tidakBaku: 'Higenis',
+    category: 'Penyerapan Belanda/Inggris & Diftong -ie-',
+    explanation: 'Berasal dari kata serapan "hygienic" (Belanda hygiënisch). Ejaan baku bahasa Indonesia mempertahankan vokal "i-e": "higienis".',
+    exampleSentence: 'Dapur restoran modern wajib menjaga pengolahan santapan agar selalu bersih dan higienis.'
+  },
+  {
+    id: 'kb-96',
+    baku: 'Hipotesis',
+    tidakBaku: 'Hipotesa',
+    category: 'Penyerapan Akhiran Asing -is',
+    explanation: 'Berasal dari bahasa Inggris "hypothesis" (Yunani hypothesis). Bentuk baku berakhiran "-is": "hipotesis".',
+    exampleSentence: 'Uji statistik regresi dilakukan untuk membuktikan kebenaran hipotesis penelitian.'
+  },
+  {
+    id: 'kb-97',
+    baku: 'Indra',
+    tidakBaku: 'Indera',
+    category: 'Kata Dasar Sanskerta Tanpa e Pepet',
+    explanation: 'Berasal dari bahasa Sanskerta "indriya". Bentuk baku resmi adalah "indra" (pancaindra, indra penciuman).',
+    exampleSentence: 'Manusia memanfaatkan kelima indra untuk mengenali dan beradaptasi dengan lingkungan sekitar.'
+  },
+  {
+    id: 'kb-98',
+    baku: 'Insaf',
+    tidakBaku: 'Insyaf',
+    category: 'Penyerapan Arab & Huruf Tunggal s',
+    explanation: 'Berasal dari kata Arab "inshaaf" (إنصاف) diserap dengan konsonan tunggal "s": "insaf" (menginsafi, keinsafan).',
+    exampleSentence: 'Ia mulai insaf akan pentingnya menjaga kebugaran tubuh setelah jatuh sakit.'
+  },
+  {
+    id: 'kb-99',
+    baku: 'Isyarat',
+    tidakBaku: 'Isarat',
+    category: 'Penyerapan Huruf Sy & Istilah Komunikasi',
+    explanation: 'Berasal dari bahasa Arab "isyaarah" (إشارة) yang diserap dengan huruf rangkap "sy": "isyarat" (bahasa isyarat, berisyarat).',
+    exampleSentence: 'Petugas lalu lintas memberikan isyarat tangan agar kendaraan memperlambat lajunya.'
+  },
+  {
+    id: 'kb-100',
+    baku: 'Jenazah',
+    tidakBaku: 'Jenajah / Djenazah',
+    category: 'Penyerapan Arab & Konsonan z',
+    explanation: 'Berasal dari bahasa Arab "janaazah" (جنازة) yang diserap dengan huruf "z": "jenazah".',
+    exampleSentence: 'Warga desa bergotong-royong mengantarkan jenazah ke tempat peristirahatan terakhir.'
+  },
+  {
+    id: 'kb-101',
+    baku: 'Jenderal',
+    tidakBaku: 'Jendral',
+    category: 'Penyerapan Belanda & Vokal Pepet e',
+    explanation: 'Berasal dari bahasa Belanda "generaal". Bentuk baku menggunakan vokal "e" pepet: "jenderal".',
+    exampleSentence: 'Pemerintah menganugerahi gelar pahlawan nasional kepada sang jenderal yang berjasa besar.'
+  },
+  {
+    id: 'kb-102',
+    baku: 'Kafe',
+    tidakBaku: 'Cafe',
+    category: 'Penyerapan Huruf c Menjadi k & Ejaan Asing',
+    explanation: 'Diserap dari kata Prancis/Inggris "café". Huruf "c" diserap menjadi "k": "kafe".',
+    exampleSentence: 'Banyak pekerja lepas menyelesaikan tugas harian di kafe yang tenang dan nyaman.'
+  },
+  {
+    id: 'kb-103',
+    baku: 'Kanker',
+    tidakBaku: 'Kangker',
+    category: 'Penyerapan Medis & Gugus Konsonan nk',
+    explanation: 'Berasal dari serapan bahasa Belanda "kanker" (Latin cancer). Penulisan baku tidak menambahkan huruf "g": "kanker".',
+    exampleSentence: 'Pola makan kaya antioksidan membantu meminimalkan risiko timbulnya sel kanker.'
+  },
+  {
+    id: 'kb-104',
+    baku: 'Karisma',
+    tidakBaku: 'Kharisma',
+    category: 'Penyerapan Huruf ch/kh Menjadi k',
+    explanation: 'Berasal dari bahasa Yunani/Inggris "charisma". Gugus "ch" diserap menjadi konsonan tunggal "k": "karisma" (karismatik).',
+    exampleSentence: 'Pemimpin muda itu memiliki karisma tinggi yang memotivasi semangat seluruh anggotanya.'
+  },
+  {
+    id: 'kb-105',
+    baku: 'Kategori',
+    tidakBaku: 'Katagori',
+    category: 'Penyerapan Latin/Inggris & Vokal e',
+    explanation: 'Berasal dari serapan bahasa Inggris "category". Vokal suku kata kedua adalah "e": "kategori" (mengkategorikan).',
+    exampleSentence: 'Panitia mengelompokkan peserta lomba ke dalam tiga kategori usia yang berbeda.'
+  },
+  {
+    id: 'kb-106',
+    baku: 'Kolomnis',
+    tidakBaku: 'Kolumnis',
+    category: 'Penyerapan Belanda/Inggris & Vokal o',
+    explanation: 'Berasal dari serapan kata "columnist". Dalam KBBI ditetapkan bentuk baku "kolomnis" (penulis kolom surat kabar).',
+    exampleSentence: 'Tulisan tajam dari kolomnis senior tersebut selalu dinantikan para pembaca surat kabar.'
+  },
+  {
+    id: 'kb-107',
+    baku: 'Komoditas',
+    tidakBaku: 'Komoditi',
+    category: 'Penyerapan Sufiks -ity Menjadi -itas',
+    explanation: 'Berasal dari bahasa Inggris "commodity". Bentuk baku serapan nomina berakhiran "-itas": "komoditas".',
+    exampleSentence: 'Minyak kelapa sawit dan kopi merupakan komoditas ekspor andalan perkebunan tropis.'
+  },
+  {
+    id: 'kb-108',
+    baku: 'Konfirmasi',
+    tidakBaku: 'Komfirmasi',
+    category: 'Prefiks Serapan Con- Menjadi Kon-',
+    explanation: 'Berasal dari bahasa Inggris "confirmation". Prefiks baku menggunakan konsonan "n": "konfirmasi" (mengonfirmasi).',
+    exampleSentence: 'Pihak maskapai meminta penumpang untuk segera melakukan konfirmasi jadwal penerbangan.'
+  },
+  {
+    id: 'kb-109',
+    baku: 'Kreativitas',
+    tidakBaku: 'Kreatifitas',
+    category: 'Penyerapan Sufiks -itas & Konsonan v',
+    explanation: 'Berasal dari kata serapan "creativity". Bentuk nomina berakhiran "-itas" mengubah sifat "kreatif" menjadi "kreativitas".',
+    exampleSentence: 'Inovasi teknologi digital memicu kreativitas anak muda dalam menciptakan lapangan kerja baru.'
+  },
+  {
+    id: 'kb-110',
+    baku: 'Kuesioner',
+    tidakBaku: 'Kuisioner',
+    category: 'Penyerapan Prancis/Inggris & Diftong -ue-',
+    explanation: 'Berasal dari bahasa Prancis "questionnaire" (Inggris questionnaire). Ejaan baku mempertahankan gugus "ue": "kuesioner".',
+    exampleSentence: 'Para responden diminta mengisi kuesioner daring untuk mengukur tingkat kepuasan layanan publik.'
+  },
+  {
+    id: 'kb-111',
+    baku: 'Legalisasi',
+    tidakBaku: 'Legalisir',
+    category: 'Penyerapan Sufiks -ation Menjadi -asi',
+    explanation: 'Berasal dari bahasa Belanda "legalisatie" atau Inggris "legalization". Bentuk nomina baku berakhiran "-asi": "legalisasi" (melegalisasi).',
+    exampleSentence: 'Mahasiswa baru wajib menyerahkan salinan ijazah yang telah mendapatkan legalisasi resmi dari pihak sekolah.'
+  },
+  {
+    id: 'kb-112',
+    baku: 'Linear',
+    tidakBaku: 'Linier',
+    category: 'Penyerapan Asing & Diftong -ea-',
+    explanation: 'Berasal dari kata serapan bahasa Inggris "linear". Ejaan baku menurut KBBI adalah "linear", bukan "linier".',
+    exampleSentence: 'Pertumbuhan pendapatan perusahaan menunjukkan tren kenaikan yang linear sepanjang tahun.'
+  },
+  {
+    id: 'kb-113',
+    baku: 'Manajemen',
+    tidakBaku: 'Managemen',
+    category: 'Penyerapan Konsonan j & Huruf Asing',
+    explanation: 'Berasal dari serapan bahasa Inggris "management". Huruf "g" diserap menjadi konsonan "j": "manajemen".',
+    exampleSentence: 'Manajemen waktu yang disiplin merupakan kunci utama keberhasilan seorang profesional.'
+  },
+  {
+    id: 'kb-114',
+    baku: 'Manajer',
+    tidakBaku: 'Manager',
+    category: 'Penyerapan Jabatan & Konsonan j',
+    explanation: 'Diserap dari kata bahasa Inggris "manager". Sesuai kaidah fonologi serapan diserap menjadi "manajer".',
+    exampleSentence: 'Manajer proyek memimpin rapat koordinasi mingguan bersama tim lintas divisi.'
+  },
+  {
+    id: 'kb-115',
+    baku: 'Memesona',
+    tidakBaku: 'Mempesona',
+    category: 'Kaidah Peluluhan Imbuhan meN- + Huruf p',
+    explanation: 'Kata dasar "pesona" yang diawali fonem /p/ luluh saat mendapat awalan meN-, sehingga bentuk bakunya adalah "memesona".',
+    exampleSentence: 'Pemandangan matahari terbit di puncak gunung Bromo tampak begitu memesona.'
+  },
+  {
+    id: 'kb-116',
+    baku: 'Memengaruhi',
+    tidakBaku: 'Mempengaruhi',
+    category: 'Kaidah Peluluhan Imbuhan meN- + Huruf p',
+    explanation: 'Kata dasar "pengaruh" diawali konsonan /p/ yang luluh menjadi /m/ saat diberi prefiks meN-: "memengaruhi".',
+    exampleSentence: 'Pola tidur yang teratur sangat memengaruhi konsentrasi dan stamina kerja.'
+  },
+  {
+    id: 'kb-117',
+    baku: 'Menyosialisasikan',
+    tidakBaku: 'Mensosialisasikan',
+    category: 'Kaidah Peluluhan Imbuhan meN- + Huruf s',
+    explanation: 'Kata dasar "sosialisasi" diawali konsonan /s/ yang luluh menjadi /ny/ saat diberi awalan meN- dan akhiran -kan: "menyosialisasikan".',
+    exampleSentence: 'Dinas kesehatan gencar menyosialisasikan pentingnya imunisasi lengkap bagi balita.'
+  },
+  {
+    id: 'kb-118',
+    baku: 'Pascasarjana',
+    tidakBaku: 'Pasca sarjana',
+    category: 'Bentuk Terikat Pasca- Ditulis Serangkai',
+    explanation: 'Unsur "pasca-" merupakan bentuk terikat yang wajib ditulis serangkai dengan kata dasar berikutnya: "pascasarjana".',
+    exampleSentence: 'Ia memutuskan melanjutkan studi jenjang pascasarjana di bidang ilmu data.'
+  },
+  {
+    id: 'kb-119',
+    baku: 'Sintesis',
+    tidakBaku: 'Sintesa',
+    category: 'Penyerapan Yunani/Inggris & Akhiran -is',
+    explanation: 'Berasal dari bahasa Yunani "synthesis" (Inggris synthesis). Akhiran diserap menjadi "-is": "sintesis", bukan "-a".',
+    exampleSentence: 'Bab penutup karya ilmiah menyajikan sintesis komprehensif dari temuan-temuan sebelumnya.'
+  },
+  {
+    id: 'kb-120',
+    baku: 'Respons',
+    tidakBaku: 'Respon',
+    category: 'Penyerapan Asing & Konsonan Akhir -ns',
+    explanation: 'Berasal dari bahasa Inggris "response". Ejaan baku menurut KBBI mempertahankan konsonan ganda di akhir: "respons" (merespons, responsif).',
+    exampleSentence: 'Petugas tanggap bencana memberikan respons cepat terhadap laporan warga terdampak banjir.'
+  },
+  {
+    id: 'kb-121',
+    baku: 'Zaman',
+    tidakBaku: 'Jaman',
+    category: 'Penyerapan Konsonan z',
+    explanation: 'Berasal dari bahasa Arab "zaman" (زمان). Sesuai kaidah KBBI, diserap dengan huruf z, bukan j.',
+    exampleSentence: 'Perkembangan teknologi di zaman modern menuntut adaptasi yang serbacepat.'
+  },
+  {
+    id: 'kb-122',
+    baku: 'Hakikat',
+    tidakBaku: 'Hakekat',
+    category: 'Penyerapan Vokal i & Arab',
+    explanation: 'Berasal dari bahasa Arab "haqiqah" (حقيقة). Fonem vokal kedua diserap menjadi huruf i: "hakikat", bukan "hakekat".',
+    exampleSentence: 'Hakikat dari pendidikan adalah memanusiakan manusia secara utuh.'
+  },
+  {
+    id: 'kb-123',
+    baku: 'Hierarki',
+    tidakBaku: 'Hirarki',
+    category: 'Diftong & Penyerapan Asing',
+    explanation: 'Diserap dari bahasa Belanda "hiërarchie" atau bahasa Inggris "hierarchy". Gugus huruf ie tetap dipertahankan: "hierarki".',
+    exampleSentence: 'Struktur hierarki kepemimpinan di perusahaan tersebut tersusun secara transparan.'
+  },
+  {
+    id: 'kb-124',
+    baku: 'Karier',
+    tidakBaku: 'Karir',
+    category: 'Penyerapan Vokal ie & Belanda',
+    explanation: 'Diserap dari bahasa Belanda "carrière". Bentuk baku dalam KBBI menggunakan huruf e di tengah: "karier".',
+    exampleSentence: 'Ia membangun perjalanan karier profesionalnya mulai dari staf pemula.'
+  },
+  {
+    id: 'kb-125',
+    baku: 'Silakan',
+    tidakBaku: 'Silahkan',
+    category: 'Kata Dasar & Morfologi',
+    explanation: 'Kata dasarnya adalah "sila" (meminta dengan hormat). Karena tidak ada kata dasar "silah", bentuk bakunya adalah "silakan" tanpa huruf h.',
+    exampleSentence: 'Silakan masuk dan menempati kursi yang telah disediakan panitia.'
+  },
+  {
+    id: 'kb-126',
+    baku: 'Sekadar',
+    tidakBaku: 'Sekedar',
+    category: 'Kata Dasar & Prefiks se-',
+    explanation: 'Berasal dari kata dasar "kadar" yang diberi awalan "se-". Oleh sebab itu, bentuk bakunya adalah "sekadar", bukan "sekedar".',
+    exampleSentence: 'Pemberitahuan ini sekadar mengingatkan jadwal tenggat laporan.'
+  },
+  {
+    id: 'kb-127',
+    baku: 'Risiko',
+    tidakBaku: 'Resiko',
+    category: 'Penyerapan Vokal i & Belanda',
+    explanation: 'Diserap dari bahasa Belanda "risico". Sesuai kaidah KBBI, vokal awal yang baku adalah i: "risiko", bukan "resiko".',
+    exampleSentence: 'Setiap keputusan investasi selalu diiringi oleh perhitungan risiko yang matang.'
+  },
+  {
+    id: 'kb-128',
+    baku: 'Praktik',
+    tidakBaku: 'Praktek',
+    category: 'Penyerapan Akhiran -ic / -iek',
+    explanation: 'Diserap dari bahasa Belanda "praktijk". Akhiran -ijk diserap menjadi -ik: "praktik" (praktikum, praktisi).',
+    exampleSentence: 'Dokter spesialis itu membuka jadwal praktik setiap hari kerja.'
+  },
+  {
+    id: 'kb-129',
+    baku: 'Fondasi',
+    tidakBaku: 'Pondasi',
+    category: 'Penyerapan Konsonan f & Belanda',
+    explanation: 'Diserap dari bahasa Belanda "fundatie" atau Inggris "foundation". Huruf awal diserap sebagai f: "fondasi", bukan p.',
+    exampleSentence: 'Karakter integritas adalah fondasi utama bagi generasi muda.'
+  },
+  {
+    id: 'kb-130',
+    baku: 'Konkret',
+    tidakBaku: 'Kongkrit / Konkrit',
+    category: 'Penyerapan Ejaan & Belanda',
+    explanation: 'Diserap dari bahasa Belanda "concreet". Ejaan baku mempertahankan vokal e di suku kata kedua: "konkret".',
+    exampleSentence: 'Pemerintah merancang langkah konkret untuk menekan angka stunting.'
+  },
+  {
+    id: 'kb-131',
+    baku: 'Kualitas',
+    tidakBaku: 'Kwalitas',
+    category: 'Penyerapan Gugus Konsonan ku-',
+    explanation: 'Kata asing dengan awalan "qua-" diserap menjadi "kua-": "kualitas" (Inggris quality, Belanda kwaliteit).',
+    exampleSentence: 'Peningkatan kualitas layanan publik menjadi prioritas reformasi birokrasi.'
+  },
+  {
+    id: 'kb-132',
+    baku: 'Kuantitas',
+    tidakBaku: 'Kwantitas',
+    category: 'Penyerapan Gugus Konsonan ku-',
+    explanation: 'Diserap dari "quantity". Huruf w tidak digunakan dalam serapan gugus "qua-", melainkan diganti vokal u: "kuantitas".',
+    exampleSentence: 'Hasil panen tahun ini melonjak baik dari segi kuantitas maupun mutu.'
+  },
+  {
+    id: 'kb-133',
+    baku: 'Kuitansi',
+    tidakBaku: 'Kwitansi',
+    category: 'Penyerapan Diftong ui-',
+    explanation: 'Diserap dari bahasa Belanda "kwitantie". Sesuai kaidah ejaan KBBI, konsonan w diganti u: "kuitansi".',
+    exampleSentence: 'Simpanlah bukti kuitansi pembayaran resmi untuk keperluan audit keuangan.'
+  },
+  {
+    id: 'kb-134',
+    baku: 'Jadwal',
+    tidakBaku: 'Jadual',
+    category: 'Penyerapan Arab & Diftong -wa-',
+    explanation: 'Diserap dari bahasa Arab "jadwal" (جدول). Menggunakan huruf w di tengah: "jadwal", bukan "jadual".',
+    exampleSentence: 'Jadwal keberangkatan kereta api dapat dipantau melalui aplikasi seluler.'
+  },
+  {
+    id: 'kb-135',
+    baku: 'Jenderal',
+    tidakBaku: 'Jendral',
+    category: 'Penyerapan Vokal e Pepet',
+    explanation: 'Diserap dari bahasa Belanda "generaal" / Inggris "general". Vokal e kedua tetap ditulis: "jenderal", bukan "jendral".',
+    exampleSentence: 'Gubernur jenderal pada masa kolonial memiliki wewenang administratif tertinggi.'
+  },
+  {
+    id: 'kb-136',
+    baku: 'Cenderamata',
+    tidakBaku: 'Cinderamata',
+    category: 'Vokal e Pepet & Kata Majemuk',
+    explanation: 'Kata baku menurut KBBI menggunakan huruf e: "cenderamata", bukan "cinderamata". Ditulis serangkai.',
+    exampleSentence: 'Peserta seminar menerima cenderamata khas daerah berupa ukiran kayu.'
+  },
+  {
+    id: 'kb-137',
+    baku: 'Standardisasi',
+    tidakBaku: 'Standarisasi',
+    category: 'Penyerapan Akhiran -ization',
+    explanation: 'Diserap dari "standardization". Huruf "d" pada kata dasar "standard" dipertahankan sebelum sufiks -isasi: "standardisasi".',
+    exampleSentence: 'Badan Standardisasi Nasional menetapkan mutu kelayakan produk industri.'
+  },
+  {
+    id: 'kb-138',
+    baku: 'Telanjur',
+    tidakBaku: 'Terlanjur',
+    category: 'Morfologi Awalan te-',
+    explanation: 'Kata dasar "lanjur" mendapat prefiks "te-", bukan awalan "ter-". Bentuk bakunya adalah "telanjur".',
+    exampleSentence: 'Nasi sudah telanjur menjadi bubur, yang penting adalah evaluasi ke depan.'
+  },
+  {
+    id: 'kb-139',
+    baku: 'Napas',
+    tidakBaku: 'Nafas',
+    category: 'Penyerapan Konsonan p & Arab',
+    explanation: 'Diserap dari bahasa Arab "nafas" (نفس) menjadi konsonan p menurut kaidah KBBI: "napas" (bernapas, pernapasan).',
+    exampleSentence: 'Latihan menarik napas dalam membantu meredakan ketegangan mental.'
+  },
+  {
+    id: 'kb-140',
+    baku: 'Nasihat',
+    tidakBaku: 'Nasehat',
+    category: 'Penyerapan Vokal i & Arab',
+    explanation: 'Diserap dari bahasa Arab "nasiha" (نصيحة). Bentuk baku menggunakan huruf i: "nasihat" (menasihati, penasihat).',
+    exampleSentence: 'Nasihat bijak dari kakek selalu menjadi pegangan dalam menjalani hidup.'
+  },
+  {
+    id: 'kb-141',
+    baku: 'Orisinal',
+    tidakBaku: 'Original / Orisinil',
+    category: 'Penyerapan Sufiks -al & Belanda',
+    explanation: 'Diserap dari bahasa Belanda "origineel" atau Inggris "original" diserap menjadi "orisinal" (keorisinalan).',
+    exampleSentence: 'Karya ilmiah ini memuat analisis yang orisinal dan belum pernah dipublikasikan.'
+  },
+  {
+    id: 'kb-142',
+    baku: 'Cendekiawan',
+    tidakBaku: 'Cendikiawan',
+    category: 'Vokal e Pepet & Sufiks -wan',
+    explanation: 'Kata dasarnya adalah "cendekia" (cerdik pandai). Suku kata kedua menggunakan e pepet: "cendekiawan".',
+    exampleSentence: 'Ikatan Cendekiawan Muslim Indonesia menggelar simposium pembangunan berkelanjutan.'
+  },
+  {
+    id: 'kb-143',
+    baku: 'Ekstrem',
+    tidakBaku: 'Ekstrim',
+    category: 'Penyerapan Vokal e & Asing',
+    explanation: 'Diserap dari bahasa Belanda "extreem" / Inggris "extreme". Bentuk baku menggunakan e taling: "ekstrem".',
+    exampleSentence: 'Cuaca ekstrem melanda wilayah pesisir dengan gelombang setinggi empat meter.'
+  },
+  {
+    id: 'kb-144',
+    baku: 'Meterai',
+    tidakBaku: 'Materai',
+    category: 'Vokal e Pepet & Asing',
+    explanation: 'Kata baku menurut KBBI menggunakan huruf e di suku kata pertama: "meterai", bukan "materai".',
+    exampleSentence: 'Dokumen perjanjian kerja sama wajib dibubuhi meterai sepuluh ribu rupiah.'
+  },
+  {
+    id: 'kb-145',
+    baku: 'Persen',
+    tidakBaku: 'Prosen',
+    category: 'Penyerapan Vokal e & Belanda',
+    explanation: 'Diserap dari bahasa Belanda "procent". Bentuk baku bahasa Indonesia adalah "persen" (persentase).',
+    exampleSentence: 'Tingkat kelulusan siswa tahun ini meningkat sepuluh persen dibanding tahun lalu.'
+  },
+  {
+    id: 'kb-146',
+    baku: 'Debitor',
+    tidakBaku: 'Debitur',
+    category: 'Penyerapan Sufiks -or',
+    explanation: 'Sesuai kaidah serapan bahasa Latin/Belanda dengan akhiran pelaku: "debitor" (bukan "debitur"), sebagaimana kreditor.',
+    exampleSentence: 'Pihak bank memberikan restrukturisasi pinjaman bagi debitor berkinerja baik.'
+  },
+  {
+    id: 'kb-147',
+    baku: 'Kreditor',
+    tidakBaku: 'Kreditur',
+    category: 'Penyerapan Sufiks -or',
+    explanation: 'Pihak yang memberikan kredit atau pinjaman secara baku ditulis "kreditor" menurut KBBI.',
+    exampleSentence: 'Para kreditor menghadiri sidang mediasi terkait penyelesaian kewajiban utang.'
+  },
+  {
+    id: 'kb-148',
+    baku: 'Autentik',
+    tidakBaku: 'Otentik',
+    category: 'Diftong au- & Penyerapan Asing',
+    explanation: 'Diserap dari bahasa Belanda "authentiek" / Inggris "authentic". Diftong au di awal tetap dipertahankan: "autentik".',
+    exampleSentence: 'Naskah kuno tersebut dipastikan autentik setelah melalui uji karbon penanggalan.'
+  },
+  {
+    id: 'kb-149',
+    baku: 'Frasa',
+    tidakBaku: 'Frase',
+    category: 'Penyerapan Vokal Akhir -a',
+    explanation: 'Diserap dari kata bahasa Belanda "phrase" atau Inggris "phrase". Akhiran kata diserap menjadi vokal a: "frasa".',
+    exampleSentence: 'Frasa nominal dalam kalimat tersebut menduduki fungsi sebagai subjek utama.'
+  },
+  {
+    id: 'kb-150',
+    baku: 'Teoretis',
+    tidakBaku: 'Teoritis',
+    category: 'Penyerapan Vokal e & Belanda',
+    explanation: 'Diserap dari bahasa Belanda "theoretisch". Vokal kedua adalah e: "teoretis", bukan "teoritis".',
+    exampleSentence: 'Kerangka teoretis pada bab dua memberikan landasan konseptual bagi penelitian.'
+  },
+  {
+    id: 'kb-151',
+    baku: 'Hipotesis',
+    tidakBaku: 'Hipotesa',
+    category: 'Penyerapan Akhiran -is & Yunani',
+    explanation: 'Berasal dari bahasa Yunani "hypothesis" (Inggris hypothesis). Akhiran diserap menjadi -is: "hipotesis".',
+    exampleSentence: 'Peneliti merumuskan hipotesis kerja sebelum melakukan pengambilan sampel di lapangan.'
+  },
+  {
+    id: 'kb-152',
+    baku: 'Ambulans',
+    tidakBaku: 'Ambulan',
+    category: 'Penyerapan Konsonan Akhir -ns',
+    explanation: 'Diserap dari bahasa Inggris "ambulance" atau Belanda "ambulance". Huruf s di akhir dipertahankan: "ambulans".',
+    exampleSentence: 'Mobil ambulans melaju dengan membunyikan sirine di jalan protokol kota.'
+  },
+  {
+    id: 'kb-153',
+    baku: 'Cengkerama',
+    tidakBaku: 'Cengkrama',
+    category: 'Vokal e Pepet di Antara Gugus Konsonan',
+    explanation: 'Kata baku menurut KBBI menyisipkan e pepet di antara konsonan ng dan k: "cengkerama" (bercengkerama).',
+    exampleSentence: 'Keluarga besar itu asyik bercengkerama di ruang tengah saat liburan akhir tahun.'
+  },
+  {
+    id: 'kb-154',
+    baku: 'Khotbah',
+    tidakBaku: 'Khutbah',
+    category: 'Penyerapan Vokal o & Arab',
+    explanation: 'Diserap dari bahasa Arab "khutbah" (خطبة). Ejaan baku bahasa Indonesia menggunakan vokal o: "khotbah" (pengkhotbah).',
+    exampleSentence: 'Khotbah salat Jumat hari ini bertema pentingnya menjaga kebersihan lingkungan.'
+  },
+  {
+    id: 'kb-155',
+    baku: 'Khazanah',
+    tidakBaku: 'Khasanah',
+    category: 'Penyerapan Digraf kh & z Arab',
+    explanation: 'Diserap dari bahasa Arab "khizanah" (خزانة). Menggunakan huruf z, bukan s: "khazanah".',
+    exampleSentence: 'Koleksi manuskrip kuno di perpustakaan nasional memperkaya khazanah budaya bangsa.'
+  },
+  {
+    id: 'kb-156',
+    baku: 'Mukjizat',
+    tidakBaku: 'Mujizat / Mukzijat',
+    category: 'Penyerapan Konsonan k Hamzah & Arab',
+    explanation: 'Diserap dari bahasa Arab "mu\'jizah" (معجزة). Tanda ain/hamzah diserap menjadi konsonan k: "mukjizat".',
+    exampleSentence: 'Keselamatan para penumpang dari kecelakaan tragis itu dianggap sebagai sebuah mukjizat.'
+  },
+  {
+    id: 'kb-157',
+    baku: 'Rezeki',
+    tidakBaku: 'Rejeki / Rizki',
+    category: 'Penyerapan Konsonan z & Arab',
+    explanation: 'Diserap dari bahasa Arab "rizq" (رزق). Bentuk baku menurut KBBI adalah "rezeki" dengan konsonan z dan vokal e.',
+    exampleSentence: 'Setiap makhluk hidup telah dijamin rezeki dan keberkahannya oleh Tuhan yang Maha Esa.'
+  },
+  {
+    id: 'kb-158',
+    baku: 'Saraf',
+    tidakBaku: 'Syaraf',
+    category: 'Penyerapan Huruf s & Arab',
+    explanation: 'Diserap dari bahasa Arab "a\'shab" atau "sharaf". Dalam KBBI istilah anatomi biologis adalah "saraf" (bukan syaraf).',
+    exampleSentence: 'Jaringan sel saraf otak bertanggung jawab menghantarkan impuls sensorik dan motorik.'
+  },
+  {
+    id: 'kb-159',
+    baku: 'Sahih',
+    tidakBaku: 'Shohih',
+    category: 'Penyerapan Fonem Arab shad ke s',
+    explanation: 'Berasal dari bahasa Arab "shahih" (صحيح). Huruf shad diserap menjadi s dalam ejaan baku bahasa Indonesia: "sahih".',
+    exampleSentence: 'Hadis tersebut diklasifikasikan berstatus sahih oleh mayoritas ulama perawi.'
+  },
+  {
+    id: 'kb-160',
+    baku: 'Salat',
+    tidakBaku: 'Sholat / Shalat',
+    category: 'Penyerapan Fonem Arab shad ke s',
+    explanation: 'Diserap dari bahasa Arab "shalah" (صلاة). Ejaan resmi baku bahasa Indonesia menurut KBBI adalah "salat".',
+    exampleSentence: 'Jamaah berduyun-duyun menuju masjid untuk menunaikan salat berjamaah.'
+  },
+  {
+    id: 'kb-161',
+    baku: 'Surga',
+    tidakBaku: 'Sorga',
+    category: 'Penyerapan Vokal u & Sanskerta',
+    explanation: 'Diserap dari bahasa Sanskerta "svarga" (स्वर्ग). Ejaan baku bahasa Indonesia menggunakan huruf u: "surga".',
+    exampleSentence: 'Keindahan bawah laut Raja Ampat kerap dijuluki surga bahari khatulistiwa.'
+  },
+  {
+    id: 'kb-162',
+    baku: 'Kaidah',
+    tidakBaku: 'Kaedah',
+    category: 'Penyerapan Vokal i & Arab',
+    explanation: 'Diserap dari bahasa Arab "qa\'idah" (قاعدة). Suku kata kedua menggunakan huruf i: "kaidah".',
+    exampleSentence: 'Penulisan laporan ilmiah wajib mematuhi kaidah tata bahasa dan tata cetak yang berlaku.'
+  },
+  {
+    id: 'kb-163',
+    baku: 'Kaus',
+    tidakBaku: 'Kaos',
+    category: 'Penyerapan Vokal u & Belanda',
+    explanation: 'Diserap dari bahasa Belanda "kous". Ejaan baku dalam KBBI menggunakan huruf u: "kaus" (kaus kaki, kaus oblong).',
+    exampleSentence: 'Ia mengenakan kaus katun polos saat berolahraga jogging di pagi hari.'
+  },
+  {
+    id: 'kb-164',
+    baku: 'Kompleks',
+    tidakBaku: 'Komplek',
+    category: 'Penyerapan Konsonan Gugus -ks',
+    explanation: 'Diserap dari bahasa Belanda "complex" / Inggris "complex". Huruf x diserap menjadi gugus konsonan -ks: "kompleks".',
+    exampleSentence: 'Permasalahan kemacetan di kota metropolitan merupakan persoalan sistemik yang sangat kompleks.'
+  },
+  {
+    id: 'kb-165',
+    baku: 'Kreativitas',
+    tidakBaku: 'Kreatifitas',
+    category: 'Penyerapan Sufiks -ity ke -itas',
+    explanation: 'Diserap dari bahasa Inggris "creativity". Berakhiran "-itas" dengan huruf v: "kreativitas", meskipun kata dasarnya "kreatif".',
+    exampleSentence: 'Proyek seni ini menantang daya kreativitas siswa dalam mendaur ulang limbah plastik.'
+  },
+  {
+    id: 'kb-166',
+    baku: 'Produktivitas',
+    tidakBaku: 'Produktifitas',
+    category: 'Penyerapan Sufiks -ity ke -itas',
+    explanation: 'Diserap dari "productivity". Mengikuti kaidah serapan berakhiran "-itas" dengan huruf v: "produktivitas".',
+    exampleSentence: 'Penerapan teknologi otomatisasi di pabrik mampu mendongkrak angka produktivitas kerja.'
+  },
+  {
+    id: 'kb-167',
+    baku: 'Efektivitas',
+    tidakBaku: 'Efektifitas',
+    category: 'Penyerapan Sufiks -ity ke -itas',
+    explanation: 'Diserap dari "effectiveness" / "effectiviteit". Bentuk baku nomina serapannya adalah "efektivitas" dengan v.',
+    exampleSentence: 'Uji klinis tahap tiga dilakukan guna memastikan efektivitas vaksin baru tersebut.'
+  },
+  {
+    id: 'kb-168',
+    baku: 'Mengubah',
+    tidakBaku: 'Merubah',
+    category: 'Morfologi Awalan meN- + Kata Dasar ubah',
+    explanation: 'Kata dasarnya adalah "ubah", bukan "rubah". Awalan meN- + ubah menjadi "mengubah" (merubah berarti menjadi hewan rubah).',
+    exampleSentence: 'Kemauan untuk terus belajar mampu mengubah masa depan seseorang menjadi lebih cerah.'
+  },
+  {
+    id: 'kb-169',
+    baku: 'Mengesampingkan',
+    tidakBaku: 'Menyampingkan',
+    category: 'Morfologi Awalan meN- + Dasar samping',
+    explanation: 'Kata dasarnya adalah "ke samping" yang dilekatkan awalan meN- dan akhiran -kan menjadi "mengesampingkan".',
+    exampleSentence: 'Para pemimpin sepakat mengesampingkan perbedaan politik demi penanganan bencana alam.'
+  },
+  {
+    id: 'kb-170',
+    baku: 'Mengakomodasi',
+    tidakBaku: 'Mengakomodir',
+    category: 'Penyerapan Sufiks -ate / -atie ke -asi',
+    explanation: 'Diserap dari "accommodate" / "accommodatie". Bahasa Indonesia menyerap verba asing dengan akhiran "-asi": "mengakomodasi".',
+    exampleSentence: 'Pemerintah berupaya mengakomodasi seluruh aspirasi masyarakat dalam penyusunan regulasi.'
+  },
+  {
+    id: 'kb-171',
+    baku: 'Mengoordinasikan',
+    tidakBaku: 'Mengkoordinasikan',
+    category: 'Kaidah Peluluhan Fonem k pada meN-',
+    explanation: 'Kata dasar "koordinasi" diawali konsonan /k/. Saat mendapat prefiks meN-, fonem k luluh menjadi /ng/: "mengoordinasikan".',
+    exampleSentence: 'Sekretaris jenderal bertugas mengoordinasikan jadwal pertemuan antardelegasi.'
+  },
+  {
+    id: 'kb-172',
+    baku: 'Memerhatikan',
+    tidakBaku: 'Memperhatikan',
+    category: 'Kaidah Peluluhan Fonem p pada meN-',
+    explanation: 'Kata dasar "hati" diberi imbuhan per-an menjadi "perhatian". Fonem awal /p/ luluh saat diberi prefiks meN-: "memerhatikan".',
+    exampleSentence: 'Guru meminta semua siswa memerhatikan penjelasan di papan tulis secara seksama.'
+  },
+  {
+    id: 'kb-173',
+    baku: 'Mengonsumsi',
+    tidakBaku: 'Mengkonsumsi',
+    category: 'Kaidah Peluluhan Fonem k pada meN-',
+    explanation: 'Kata dasar "konsumsi" diawali fonem /k/ yang diikuti vokal /o/. Fonem k wajib luluh menjadi /ng/: "mengonsumsi".',
+    exampleSentence: 'Disarankan mengonsumsi buah dan sayuran segar setiap hari untuk menjaga daya tahan tubuh.'
+  },
+  {
+    id: 'kb-174',
+    baku: 'Mengkritik',
+    tidakBaku: 'Menkritik',
+    category: 'Pengecualian Gugus Konsonan Rangkap (kr)',
+    explanation: 'Kata dasar "kritik" diawali gugus konsonan rangkap /kr/. Fonem k tidak luluh jika diikuti konsonan lain: "mengkritik".',
+    exampleSentence: 'Pengamat politik berhak mengkritik kebijakan publik secara objektif dan konstruktif.'
+  },
+  {
+    id: 'kb-175',
+    baku: 'Memproduksi',
+    tidakBaku: 'Memroduksi',
+    category: 'Pengecualian Gugus Konsonan Rangkap (pr)',
+    explanation: 'Kata dasar "produksi" diawali kluster konsonan rangkap /pr/. Fonem /p/ tidak luluh jika diikuti konsonan: "memproduksi".',
+    exampleSentence: 'Pabrik tekstil tersebut mampu memproduksi ribuan meter kain bermutu tinggi setiap harinya.'
+  },
+  {
+    id: 'kb-176',
+    baku: 'Menargetkan',
+    tidakBaku: 'Mentargetkan',
+    category: 'Kaidah Peluluhan Fonem t pada meN-',
+    explanation: 'Kata dasar "target" diawali konsonan /t/ yang diikuti vokal /a/. Fonem t luluh menjadi /n/: "menargetkan".',
+    exampleSentence: 'Perusahaan menargetkan pertumbuhan laba bersih sebesar lima belas persen tahun ini.'
+  },
+  {
+    id: 'kb-177',
+    baku: 'Cedera',
+    tidakBaku: 'Cidera',
+    category: 'Vokal e Pepet di Suku Pertama',
+    explanation: 'Berasal dari kata Melayu klasik. Ejaan baku menurut KBBI menggunakan vokal e: "cedera", bukan "cidera".',
+    exampleSentence: 'Pemain penyerang itu mengalami cedera ligamen pergelangan kaki saat pertandingan final.'
+  },
+  {
+    id: 'kb-178',
+    baku: 'Gerebek',
+    tidakBaku: 'Grebek / Grebek',
+    category: 'Vokal e Pepet & Morfologi',
+    explanation: 'Kata baku menurut KBBI adalah "gerebek" (menggerebek, penggerebekan) dengan dua huruf e di suku awal.',
+    exampleSentence: 'Aparat kepolisian menggerebek gudang penyimpanan barang selundupan di dermaga.'
+  },
+  {
+    id: 'kb-179',
+    baku: 'Khusyuk',
+    tidakBaku: 'Khusu / Khusyu',
+    category: 'Penyerapan Konsonan Akhir -k Arab',
+    explanation: 'Diserap dari bahasa Arab "khusyu\'" (خشوع). Huruf ain di akhir diserap menjadi konsonan k: "khusyuk".',
+    exampleSentence: 'Suasana hening tercipta ketika para jamaah berdoa dengan penuh khusyuk di dalam masjid.'
+  },
+  {
+    id: 'kb-180',
+    baku: 'Hak',
+    tidakBaku: 'Haq',
+    category: 'Penyerapan Konsonan q ke k Arab',
+    explanation: 'Diserap dari bahasa Arab "haqq" (حق). Huruf qaf diserap menjadi k dalam ejaan bahasa Indonesia: "hak" (berhak).',
+    exampleSentence: 'Setiap warga negara memiliki hak konstitusional yang sama di hadapan hukum.'
   }
 ];

@@ -235,7 +235,7 @@ export const ProgressHabitView: React.FC = () => {
                 ? 'bg-[#EBF1F5] text-[#2C4A6F] border-[#CBD5E1]'
                 : 'bg-[#E9EDC9] text-[#3A5A40] border-[#A3B18A]'
             }`}>
-              Literasi ID ({dailyIndonesianProgress.completedCount}/8)
+              Literasi ID ({dailyIndonesianProgress.completedCount}/5)
             </span>
           </div>
 

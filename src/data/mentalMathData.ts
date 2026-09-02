@@ -1,4 +1,6 @@
 import { MentalMathGuideTopic, MentalMathQuestion } from '../types';
+import { ADDITIONAL_MM_SETS_50 } from './additionalMentalMathSets';
+import { ADDITIONAL_MM_SETS_50_PART2 } from './additionalMentalMathSetsPart2';
 
 export const MENTAL_MATH_GUIDES: MentalMathGuideTopic[] = [
   {
@@ -1200,7 +1202,9 @@ export const MENTAL_MATH_QUESTION_SETS: MentalMathQuestion[][] = [
       trickExplanation: '65 × 2 = 130.',
       category: 'Persentase Cepat'
     }
-  ]
+  ],
+  ...ADDITIONAL_MM_SETS_50,
+  ...ADDITIONAL_MM_SETS_50_PART2
 ];
 
 /**

@@ -311,7 +311,9 @@ export const EnglishArticleReader: React.FC<Props> = ({ onBack, onNavigateToDict
                   </span>
                 )}
                 {custom && (
-                  <span className="text-xs font-black uppercase px-2.5 py-0.5 rounded-lg bg-rose-200 text-rose-950 border border-slate-900">
+                  <span className={`text-xs font-black uppercase px-2.5 py-0.5 rounded-lg border border-slate-900 ${
+                    isCoastal ? 'bg-[#DDE7F0] text-[#1E3A5F]' : 'bg-[#E9EDC9] text-[#283618]'
+                  }`}>
                     {custom.partOfSpeech || 'Vocabulary'}
                   </span>
                 )}
@@ -396,8 +398,12 @@ export const EnglishArticleReader: React.FC<Props> = ({ onBack, onNavigateToDict
               )}
 
               {entry.antonyms.length > 0 && (
-                <div className="bg-[#FFE4E6] border-2 border-slate-900 rounded-2xl p-3.5 space-y-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-                  <div className="text-[10px] font-black uppercase text-rose-900">
+                <div className={`border-2 border-slate-900 rounded-2xl p-3.5 space-y-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] ${
+                  isCoastal ? 'bg-[#E2E8F0]' : 'bg-[#FAEDCD]'
+                }`}>
+                  <div className={`text-[10px] font-black uppercase ${
+                    isCoastal ? 'text-slate-800' : 'text-[#574332]'
+                  }`}>
                     Antonim (Lawan Kata):
                   </div>
                   <div className="flex flex-wrap gap-1.5">
@@ -405,7 +411,9 @@ export const EnglishArticleReader: React.FC<Props> = ({ onBack, onNavigateToDict
                       <button
                         key={idx}
                         onClick={() => handleOpenWordInDict(ant, undefined)}
-                        className="text-xs font-bold px-2.5 py-1 bg-white hover:bg-rose-100 rounded-lg border border-slate-900 shadow-xs cursor-pointer active:scale-95"
+                        className={`text-xs font-bold px-2.5 py-1 bg-white rounded-lg border border-slate-900 shadow-xs cursor-pointer active:scale-95 ${
+                          isCoastal ? 'hover:bg-[#DDE7F0]' : 'hover:bg-[#E9EDC9]'
+                        }`}
                       >
                         {ant}
                       </button>
@@ -533,18 +541,26 @@ export const EnglishArticleReader: React.FC<Props> = ({ onBack, onNavigateToDict
               <Download className="w-3.5 h-3.5" /> Eksport PDF / Link
             </button>
 
-            <span className="text-xs font-black uppercase bg-rose-100 text-rose-900 px-3.5 py-2 rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319]">
+            <span className={`text-xs font-black uppercase px-3.5 py-2 rounded-xl border-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.8)] ${
+              isCoastal
+                ? 'bg-[#DDE7F0] text-[#1E3A5F] border-[#1E293B]'
+                : 'bg-[#E9EDC9] text-[#283618] border-[#2D2319]'
+            }`}>
               Progres: {dailyEnglishProgress.completedCount} / 5 Selesai
             </span>
           </div>
         </div>
 
         {/* Bento Header */}
-        <div className="bg-white rounded-2xl p-6 border-2 border-[#2D2319] shadow-[4px_4px_0px_0px_#2D2319] space-y-3">
+        <div className={`bg-white rounded-2xl p-6 border-2 space-y-3 ${
+          isCoastal ? 'border-slate-700 shadow-[4px_4px_0px_0px_rgba(51,65,85,1)]' : 'border-[#2D2319] shadow-[4px_4px_0px_0px_#2D2319]'
+        }`}>
           <div className="flex items-center justify-between flex-wrap gap-3">
             <div>
-              <div className="text-xs font-black text-rose-600 uppercase tracking-wider flex items-center gap-1">
-                <Sparkles className="w-3.5 h-3.5 fill-rose-400" /> Habit Ranting Kata (5 English Articles Berlanjut)
+              <div className={`text-xs font-black uppercase tracking-wider flex items-center gap-1 ${
+                isCoastal ? 'text-[#3A6B88]' : 'text-[#709752]'
+              }`}>
+                <Sparkles className={`w-3.5 h-3.5 ${isCoastal ? 'fill-[#3A6B88]' : 'fill-[#709752]'}`} /> Habit Ranting Kata (5 English Articles Berlanjut)
               </div>
               <h2 className="text-2xl sm:text-3xl font-black text-[#2D2319] uppercase tracking-tight">
                 English Reading & Vocabulary Booster
@@ -552,14 +568,16 @@ export const EnglishArticleReader: React.FC<Props> = ({ onBack, onNavigateToDict
             </div>
 
             {/* View Mode Tabs */}
-            <div className="flex items-center bg-[#FDFBF7] p-1 rounded-xl border-2 border-[#2D2319] gap-1 flex-wrap">
+            <div className={`flex items-center p-1 rounded-xl border-2 gap-1 flex-wrap ${
+              isCoastal ? 'bg-[#F1F5F9] border-slate-700' : 'bg-[#FDFBF7] border-[#2D2319]'
+            }`}>
               <button
                 type="button"
                 onClick={() => setViewMode('daily')}
                 className={`px-3 py-1.5 rounded-lg text-xs font-black uppercase transition-all cursor-pointer ${
                   viewMode === 'daily'
-                    ? 'bg-rose-500 text-white shadow-xs'
-                    : 'text-[#574332] hover:text-[#2D2319]'
+                    ? isCoastal ? 'bg-[#3A6B88] text-white shadow-xs' : 'bg-[#709752] text-white shadow-xs'
+                    : isCoastal ? 'text-slate-600 hover:text-slate-900' : 'text-[#574332] hover:text-[#2D2319]'
                 }`}
               >
                 Daily 5-Pack (5/5)
@@ -569,12 +587,16 @@ export const EnglishArticleReader: React.FC<Props> = ({ onBack, onNavigateToDict
                 onClick={() => setViewMode('custom')}
                 className={`px-3 py-1.5 rounded-lg text-xs font-black uppercase transition-all cursor-pointer flex items-center gap-1 ${
                   viewMode === 'custom'
-                    ? 'bg-rose-500 text-white shadow-xs'
-                    : 'text-[#574332] hover:text-[#2D2319]'
+                    ? isCoastal ? 'bg-[#3A6B88] text-white shadow-xs' : 'bg-[#709752] text-white shadow-xs'
+                    : isCoastal ? 'text-slate-600 hover:text-slate-900' : 'text-[#574332] hover:text-[#2D2319]'
                 }`}
               >
                 <span>🍀 My Imports</span>
-                <span className={`px-1.5 py-0.2 rounded-full text-[10px] font-mono ${viewMode === 'custom' ? 'bg-white text-rose-800' : 'bg-rose-100 text-rose-800'}`}>
+                <span className={`px-1.5 py-0.2 rounded-full text-[10px] font-mono ${
+                  viewMode === 'custom'
+                    ? 'bg-white ' + (isCoastal ? 'text-[#3A6B88]' : 'text-[#709752]')
+                    : (isCoastal ? 'bg-[#DDE7F0] text-[#1E3A5F]' : 'bg-[#E9EDC9] text-[#283618]')
+                }`}>
                   {customEnglishArticles.length}
                 </span>
               </button>
@@ -583,8 +605,8 @@ export const EnglishArticleReader: React.FC<Props> = ({ onBack, onNavigateToDict
                 onClick={() => setViewMode('all')}
                 className={`px-3 py-1.5 rounded-lg text-xs font-black uppercase transition-all cursor-pointer ${
                   viewMode === 'all'
-                    ? 'bg-rose-500 text-white shadow-xs'
-                    : 'text-[#574332] hover:text-[#2D2319]'
+                    ? isCoastal ? 'bg-[#3A6B88] text-white shadow-xs' : 'bg-[#709752] text-white shadow-xs'
+                    : isCoastal ? 'text-slate-600 hover:text-slate-900' : 'text-[#574332] hover:text-[#2D2319]'
                 }`}
               >
                 All ({allEnglishArticles.length})
@@ -595,12 +617,18 @@ export const EnglishArticleReader: React.FC<Props> = ({ onBack, onNavigateToDict
           {/* Progress Bar */}
           <div className="space-y-1.5 pt-2">
             <div className="flex items-center justify-between text-xs font-black">
-              <span className="text-[#574332]">Daily Target: 5 English Articles per Day</span>
-              <span className="text-rose-700">{dailyEnglishProgress.completedCount} of 5 Completed ({Math.min(100, Math.round((dailyEnglishProgress.completedCount / 5) * 100))}%)</span>
+              <span className={isCoastal ? 'text-slate-600' : 'text-[#574332]'}>Daily Target: 5 English Articles per Day</span>
+              <span className={isCoastal ? 'text-[#3A6B88]' : 'text-[#709752]'}>
+                {dailyEnglishProgress.completedCount} of 5 Completed ({Math.min(100, Math.round((dailyEnglishProgress.completedCount / 5) * 100))}%)
+              </span>
             </div>
-            <div className="w-full bg-[#FDFBF7] h-3 rounded-full border-2 border-[#2D2319] overflow-hidden p-0.5">
+            <div className={`w-full h-3 rounded-full border-2 overflow-hidden p-0.5 ${
+              isCoastal ? 'bg-[#F1F5F9] border-slate-700' : 'bg-[#FDFBF7] border-[#2D2319]'
+            }`}>
               <div
-                className="bg-rose-500 h-full transition-all duration-500"
+                className={`h-full transition-all duration-500 rounded-full ${
+                  isCoastal ? 'bg-[#3A6B88]' : 'bg-[#709752]'
+                }`}
                 style={{ width: `${Math.min(100, (dailyEnglishProgress.completedCount / 5) * 100)}%` }}
               />
             </div>
@@ -610,7 +638,11 @@ export const EnglishArticleReader: React.FC<Props> = ({ onBack, onNavigateToDict
         {/* Empty State for Custom Articles */}
         {viewMode === 'custom' && customEnglishArticles.length === 0 ? (
           <div className="bg-white rounded-2xl p-10 border-2 border-[#2D2319] shadow-[4px_4px_0px_0px_#2D2319] text-center space-y-4 max-w-lg mx-auto">
-            <div className="w-16 h-16 bg-rose-50 border-2 border-[#2D2319] rounded-2xl flex items-center justify-center mx-auto shadow-[3px_3px_0px_0px_#2D2319] text-2xl">
+            <div className={`w-16 h-16 border-2 rounded-2xl flex items-center justify-center mx-auto text-2xl ${
+              isCoastal
+                ? 'bg-[#EBF1F5] border-slate-700 shadow-[3px_3px_0px_0px_rgba(51,65,85,1)]'
+                : 'bg-[#E9EDC9] border-[#2D2319] shadow-[3px_3px_0px_0px_#2D2319]'
+            }`}>
               📖
             </div>
             <div className="space-y-1.5">
@@ -621,7 +653,11 @@ export const EnglishArticleReader: React.FC<Props> = ({ onBack, onNavigateToDict
             </div>
             <button
               onClick={() => setIsImportOpen(true)}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-rose-500 hover:bg-rose-600 text-white font-black text-xs uppercase tracking-wider border-2 border-[#2D2319] shadow-[3px_3px_0px_0px_#2D2319] cursor-pointer active:translate-y-0.5 transition-all"
+              className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-white font-black text-xs uppercase tracking-wider border-2 cursor-pointer active:translate-y-0.5 transition-all ${
+                isCoastal
+                  ? 'bg-[#3A6B88] hover:bg-[#2C4A6F] border-slate-700 shadow-[3px_3px_0px_0px_rgba(51,65,85,1)]'
+                  : 'bg-[#709752] hover:bg-[#588157] border-[#2D2319] shadow-[3px_3px_0px_0px_#2D2319]'
+              }`}
             >
               <Upload className="w-4 h-4" />
               Import English Articles Now
@@ -655,7 +691,11 @@ export const EnglishArticleReader: React.FC<Props> = ({ onBack, onNavigateToDict
                         <span className="text-xs font-black bg-[#2D2319] text-white w-6 h-6 rounded-md flex items-center justify-center">
                           #{idx + 1}
                         </span>
-                        <span className="text-[10px] font-black uppercase px-2.5 py-0.5 rounded-md bg-rose-100 text-rose-900 border border-[#2D2319]">
+                        <span className={`text-[10px] font-black uppercase px-2.5 py-0.5 rounded-md border ${
+                          isCoastal
+                            ? 'bg-[#DDE7F0] text-[#1E3A5F] border-slate-700'
+                            : 'bg-[#E9EDC9] text-[#283618] border-[#2D2319]'
+                        }`}>
                           {art.category}
                         </span>
                         {isCustom && (
@@ -694,7 +734,9 @@ export const EnglishArticleReader: React.FC<Props> = ({ onBack, onNavigateToDict
                       </div>
                     </div>
 
-                    <h3 className="text-lg font-black text-[#2D2319] group-hover:text-rose-600 transition-colors leading-snug">
+                    <h3 className={`text-lg font-black text-[#2D2319] transition-colors leading-snug ${
+                      isCoastal ? 'group-hover:text-[#3A6B88]' : 'group-hover:text-[#709752]'
+                    }`}>
                       {art.title}
                     </h3>
 
@@ -758,8 +800,10 @@ export const EnglishArticleReader: React.FC<Props> = ({ onBack, onNavigateToDict
           </div>
 
           <div>
-            <div className="flex items-center gap-2 text-xs font-black text-rose-600 uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5 fill-rose-400" /> Terhubung dengan Kamus Inggris–Indonesia
+            <div className={`flex items-center gap-2 text-xs font-black uppercase tracking-wider ${
+              isCoastal ? 'text-[#3A6B88]' : 'text-[#709752]'
+            }`}>
+              <Sparkles className={`w-3.5 h-3.5 ${isCoastal ? 'fill-[#3A6B88]' : 'fill-[#709752]'}`} /> Terhubung dengan Kamus Inggris–Indonesia
             </div>
             <h2 className="text-xl sm:text-2xl font-black text-slate-900 uppercase tracking-tight mt-1">
               10 Vocabulary Kunci: {selectedArticle.title}
@@ -941,7 +985,9 @@ export const EnglishArticleReader: React.FC<Props> = ({ onBack, onNavigateToDict
                 setStep('reading');
                 handleStartReading();
               }}
-              className="w-full sm:w-auto bg-rose-500 hover:bg-rose-600 text-white font-black py-3 px-8 rounded-2xl border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-sm uppercase transition-all flex items-center justify-center gap-2 cursor-pointer active:translate-y-0.5"
+              className={`w-full sm:w-auto text-white font-black py-3 px-8 rounded-2xl border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-sm uppercase transition-all flex items-center justify-center gap-2 cursor-pointer active:translate-y-0.5 ${
+                isCoastal ? 'bg-[#3A6B88] hover:bg-[#2C4A6F]' : 'bg-[#709752] hover:bg-[#588157]'
+              }`}
             >
               Mulai Membaca Teks Lengkap
               <ArrowRight className="w-4 h-4 stroke-[3]" />
@@ -979,12 +1025,18 @@ export const EnglishArticleReader: React.FC<Props> = ({ onBack, onNavigateToDict
               ← Ganti Artikel
             </button>
 
-            <div className="flex items-center gap-2 bg-rose-100 border-2 border-slate-900 px-3.5 py-1.5 rounded-xl shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-              <Clock className={`w-4 h-4 text-rose-900 stroke-[2.5] ${isReadingActive ? 'animate-spin' : ''}`} />
+            <div className={`flex items-center gap-2 border-2 border-slate-900 px-3.5 py-1.5 rounded-xl shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] ${
+              isCoastal ? 'bg-[#DDE7F0] text-[#1E3A5F]' : 'bg-[#E9EDC9] text-[#283618]'
+            }`}>
+              <Clock className={`w-4 h-4 stroke-[2.5] ${
+                isCoastal ? 'text-[#1E3A5F]' : 'text-[#283618]'
+              } ${isReadingActive ? 'animate-spin' : ''}`} />
               <span className="font-mono font-black text-base text-slate-900">
                 {formatTime(readingSeconds)}
               </span>
-              <span className="text-[10px] uppercase font-black text-rose-900">
+              <span className={`text-[10px] uppercase font-black ${
+                isCoastal ? 'text-[#1E3A5F]' : 'text-[#283618]'
+              }`}>
                 {isReadingActive ? 'Reading' : 'Paused'}
               </span>
             </div>
@@ -1003,7 +1055,9 @@ export const EnglishArticleReader: React.FC<Props> = ({ onBack, onNavigateToDict
 
           <button
             onClick={handleFinishReading}
-            className="bg-rose-500 hover:bg-rose-600 text-white font-black px-6 py-2.5 rounded-xl border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] text-xs uppercase transition-all flex items-center gap-2 cursor-pointer active:translate-y-0.5"
+            className={`text-white font-black px-6 py-2.5 rounded-xl border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] text-xs uppercase transition-all flex items-center gap-2 cursor-pointer active:translate-y-0.5 ${
+              isCoastal ? 'bg-[#3A6B88] hover:bg-[#2C4A6F]' : 'bg-[#709752] hover:bg-[#588157]'
+            }`}
           >
             Selesai Baca & Lanjut Kuis (15 Soal)
             <ArrowRight className="w-4 h-4 stroke-[3]" />
@@ -1077,7 +1131,9 @@ export const EnglishArticleReader: React.FC<Props> = ({ onBack, onNavigateToDict
         <div className="bg-white rounded-2xl p-6 sm:p-10 border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] space-y-6">
           <div className="border-b-2 border-slate-900 pb-4 space-y-2">
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-xs font-black uppercase bg-rose-100 text-rose-900 px-3 py-1 rounded-md border border-slate-900">
+              <span className={`text-xs font-black uppercase px-3 py-1 rounded-md border border-slate-900 ${
+                isCoastal ? 'bg-[#DDE7F0] text-[#1E3A5F]' : 'bg-[#E9EDC9] text-[#283618]'
+              }`}>
                 {selectedArticle.category}
               </span>
               <span className="text-xs font-bold text-slate-500">
@@ -1103,7 +1159,9 @@ export const EnglishArticleReader: React.FC<Props> = ({ onBack, onNavigateToDict
             </span>
             <button
               onClick={handleFinishReading}
-              className="w-full sm:w-auto bg-rose-500 hover:bg-rose-600 text-white font-black px-8 py-3 rounded-2xl border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-sm uppercase transition-all flex items-center justify-center gap-2 cursor-pointer active:translate-y-0.5"
+              className={`w-full sm:w-auto text-white font-black px-8 py-3 rounded-2xl border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-sm uppercase transition-all flex items-center justify-center gap-2 cursor-pointer active:translate-y-0.5 ${
+                isCoastal ? 'bg-[#3A6B88] hover:bg-[#2C4A6F]' : 'bg-[#709752] hover:bg-[#588157]'
+              }`}
             >
               Selesai Membaca & Mulai Kuis (15 Soal)
               <ArrowRight className="w-4 h-4 stroke-[3]" />
@@ -1141,7 +1199,9 @@ export const EnglishArticleReader: React.FC<Props> = ({ onBack, onNavigateToDict
         {/* SECTION 1: 10 VOCABULARY QUESTIONS */}
         <div className="space-y-4">
           <div className="flex items-center gap-2 px-1">
-            <span className="w-7 h-7 rounded-lg bg-rose-500 text-white font-black text-xs flex items-center justify-center border border-slate-900">
+            <span className={`w-7 h-7 rounded-lg text-white font-black text-xs flex items-center justify-center border border-slate-900 ${
+              isCoastal ? 'bg-[#3A6B88]' : 'bg-[#709752]'
+            }`}>
               A
             </span>
             <h3 className="text-base sm:text-lg font-black text-slate-900 uppercase tracking-tight">
@@ -1152,7 +1212,9 @@ export const EnglishArticleReader: React.FC<Props> = ({ onBack, onNavigateToDict
           {selectedArticle.vocabQuiz.map((q, idx) => (
             <div key={q.id} className="bg-white rounded-2xl p-5 border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] space-y-3">
               <div className="flex items-start gap-3">
-                <span className="font-mono font-black text-slate-900 text-sm bg-rose-100 border border-slate-900 w-7 h-7 rounded-lg flex items-center justify-center shrink-0">
+                <span className={`font-mono font-black text-slate-900 text-sm border border-slate-900 w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${
+                  isCoastal ? 'bg-[#DDE7F0]' : 'bg-[#E9EDC9]'
+                }`}>
                   {idx + 1}
                 </span>
                 <p className="text-sm sm:text-base font-black text-slate-900">
@@ -1236,7 +1298,9 @@ export const EnglishArticleReader: React.FC<Props> = ({ onBack, onNavigateToDict
         <div className="pt-4">
           <button
             onClick={handleSubmitQuiz}
-            className="w-full bg-rose-500 hover:bg-rose-600 text-white font-black py-3.5 px-6 rounded-2xl border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-base uppercase transition-all flex items-center justify-center gap-2 cursor-pointer active:translate-y-0.5"
+            className={`w-full text-white font-black py-3.5 px-6 rounded-2xl border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-base uppercase transition-all flex items-center justify-center gap-2 cursor-pointer active:translate-y-0.5 ${
+              isCoastal ? 'bg-[#3A6B88] hover:bg-[#2C4A6F]' : 'bg-[#709752] hover:bg-[#588157]'
+            }`}
           >
             Kirim Jawaban & Evaluasi Hasil
             <Sparkles className="w-5 h-5 fill-white" />
@@ -1251,14 +1315,16 @@ export const EnglishArticleReader: React.FC<Props> = ({ onBack, onNavigateToDict
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-6 space-y-6">
-      <div className="bg-rose-500 text-white rounded-2xl p-6 sm:p-8 border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-center space-y-4">
+      <div className={`text-white rounded-2xl p-6 sm:p-8 border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-center space-y-4 ${
+        isCoastal ? 'bg-[#3A6B88]' : 'bg-[#709752]'
+      }`}>
         <div className="w-16 h-16 rounded-2xl bg-white border-2 border-slate-900 mx-auto flex items-center justify-center shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
           <Globe className="w-9 h-9 text-slate-900 stroke-[2.5]" />
         </div>
 
         <div>
           <div className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider bg-white text-slate-950 px-3 py-1 rounded-md border border-slate-900 shadow-sm">
-            <Sparkles className="w-3.5 h-3.5 text-rose-600" />
+            <Sparkles className={`w-3.5 h-3.5 ${isCoastal ? 'text-[#3A6B88]' : 'text-[#709752]'}`} />
             Progres Habit Harian: {dailyEnglishProgress.completedCount} / 5 English Articles Selesai
           </div>
           <h2 className="text-2xl sm:text-3xl font-black uppercase tracking-tight mt-2">
@@ -1275,12 +1341,16 @@ export const EnglishArticleReader: React.FC<Props> = ({ onBack, onNavigateToDict
         {nextDailyArticle && dailyEnglishProgress.completedCount < 5 && (
           <div className="bg-white/95 backdrop-blur-sm p-4 rounded-xl border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] text-slate-900 flex flex-col sm:flex-row items-center justify-between gap-3">
             <div className="text-left">
-              <div className="text-[10px] font-black uppercase text-rose-700">Next Article ({Math.min(5, dailyEnglishProgress.completedCount + 1)}/5):</div>
+              <div className={`text-[10px] font-black uppercase ${
+                isCoastal ? 'text-[#3A6B88]' : 'text-[#283618]'
+              }`}>Next Article ({Math.min(5, dailyEnglishProgress.completedCount + 1)}/5):</div>
               <div className="text-sm font-black line-clamp-1">{nextDailyArticle.title}</div>
             </div>
             <button
               onClick={() => startNextArticle(nextDailyArticle)}
-              className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-rose-500 hover:bg-rose-600 text-white text-xs sm:text-sm font-black uppercase border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center gap-1.5 shrink-0 active:translate-y-0.5"
+              className={`w-full sm:w-auto px-5 py-2.5 rounded-xl text-white text-xs sm:text-sm font-black uppercase border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center gap-1.5 shrink-0 active:translate-y-0.5 ${
+                isCoastal ? 'bg-[#3A6B88] hover:bg-[#2C4A6F]' : 'bg-[#709752] hover:bg-[#588157]'
+              }`}
             >
               Continue to Article {Math.min(5, dailyEnglishProgress.completedCount + 1)}/5 <ArrowRight className="w-4 h-4" />
             </button>
@@ -1296,7 +1366,9 @@ export const EnglishArticleReader: React.FC<Props> = ({ onBack, onNavigateToDict
 
           <div className="bg-white rounded-xl p-3 text-slate-900 border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
             <span className="text-[10px] font-black uppercase text-slate-500 block">KEM Score</span>
-            <span className="text-2xl font-black font-mono text-rose-600">{stats.kem}</span>
+            <span className={`text-2xl font-black font-mono ${
+              isCoastal ? 'text-[#3A6B88]' : 'text-[#709752]'
+            }`}>{stats.kem}</span>
             <span className="text-[10px] font-bold text-slate-600 block">Eff. Speed</span>
           </div>
 
@@ -1421,7 +1493,9 @@ export const EnglishArticleReader: React.FC<Props> = ({ onBack, onNavigateToDict
           {nextDailyArticle && dailyEnglishProgress.completedCount < 5 && (
             <button
               onClick={() => startNextArticle(nextDailyArticle)}
-              className="px-5 py-2.5 rounded-xl bg-rose-500 hover:bg-rose-600 text-white text-xs sm:text-sm font-black uppercase border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] flex items-center gap-1.5 cursor-pointer active:translate-y-0.5"
+              className={`px-5 py-2.5 rounded-xl text-white text-xs sm:text-sm font-black uppercase border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] flex items-center gap-1.5 cursor-pointer active:translate-y-0.5 ${
+                isCoastal ? 'bg-[#3A6B88] hover:bg-[#2C4A6F]' : 'bg-[#709752] hover:bg-[#588157]'
+              }`}
             >
               Next Article #{Math.min(5, dailyEnglishProgress.completedCount + 1)} <ArrowRight className="w-4 h-4" />
             </button>

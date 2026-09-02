@@ -10,10 +10,10 @@
 
 [data-theme="coastal"],
 .theme-coastal {
-  --bg-primary: #F7F5F0;
+  --bg-primary: #F2F5F8;
   --text-primary: #1E293B;
   --border-color: #1E293B;
-  --accent-color: #2563EB;
+  --accent-color: #3B6D8C;
   --card-bg: #FFFFFF;
 }
 

@@ -231,8 +231,8 @@ export const SinonimAntonimQuiz: React.FC<{ onBack?: () => void }> = () => {
               onClick={handleResetStats}
               className={`px-3 py-1.5 bg-white rounded-xl border-2 text-xs font-black cursor-pointer flex items-center gap-1 active:translate-y-0.5 transition-all ${
                 isCoastal
-                  ? 'border-slate-700 shadow-[2px_2px_0px_0px_rgba(51,65,85,1)] text-slate-800 hover:bg-rose-50'
-                  : 'border-[#283618] shadow-[2px_2px_0px_0px_#283618] text-[#283618] hover:bg-rose-100'
+                  ? 'border-slate-700 shadow-[2px_2px_0px_0px_rgba(51,65,85,1)] text-slate-800 hover:bg-slate-100'
+                  : 'border-[#283618] shadow-[2px_2px_0px_0px_#283618] text-[#283618] hover:bg-[#FAEDCD]'
               }`}
               title="Reset Statistik"
             >

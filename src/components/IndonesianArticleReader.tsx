@@ -203,7 +203,11 @@ export const IndonesianArticleReader: React.FC<Props> = ({ onBack }) => {
         <div className="flex items-center justify-between flex-wrap gap-3">
           <button
             onClick={onBack}
-            className="flex items-center gap-1.5 text-xs font-black uppercase text-[#2D2319] bg-white px-4 py-2 rounded-xl border-2 border-[#2D2319] shadow-[3px_3px_0px_0px_#2D2319] hover:bg-stone-50 active:translate-y-0.5 cursor-pointer"
+            className={`flex items-center gap-1.5 text-xs font-black uppercase ${
+              isCoastal
+                ? 'text-[#1E293B] bg-white border-[#1E293B] shadow-[3px_3px_0px_0px_#1E293B] hover:bg-slate-50'
+                : 'text-[#2D2319] bg-white border-[#2D2319] shadow-[3px_3px_0px_0px_#2D2319] hover:bg-stone-50'
+            } px-4 py-2 rounded-xl border-2 active:translate-y-0.5 cursor-pointer`}
           >
             <ArrowLeft className="w-4 h-4 stroke-[2.5]" /> Kembali ke Habit
           </button>
@@ -212,7 +216,11 @@ export const IndonesianArticleReader: React.FC<Props> = ({ onBack }) => {
             <button
               type="button"
               onClick={() => setIsImportOpen(true)}
-              className={`flex items-center gap-1.5 text-xs font-black uppercase ${isCoastal ? 'bg-[#D0E1F0] hover:bg-[#BFDBFE] text-[#1E40AF]' : 'bg-[#ECFDF5] hover:bg-emerald-100 text-[#047857]'} px-3.5 py-2 rounded-xl border-2 ${isCoastal ? 'border-[#1E293B] shadow-[2px_2px_0px_0px_#1E293B]' : 'border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319]'} cursor-pointer transition-all`}
+              className={`flex items-center gap-1.5 text-xs font-black uppercase ${
+                isCoastal
+                  ? 'bg-[#D0E1F0] hover:bg-[#BFDBFE] text-[#1E40AF] border-[#1E293B] shadow-[2px_2px_0px_0px_#1E293B]'
+                  : 'bg-[#ECFDF5] hover:bg-emerald-100 text-[#047857] border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319]'
+              } px-3.5 py-2 rounded-xl border-2 cursor-pointer transition-all`}
             >
               <Upload className="w-3.5 h-3.5" /> Impor Link / Naskah
             </button>
@@ -220,53 +228,65 @@ export const IndonesianArticleReader: React.FC<Props> = ({ onBack }) => {
             <button
               type="button"
               onClick={() => setIsExportOpen(true)}
-              className="flex items-center gap-1.5 text-xs font-black uppercase bg-[#FEF3C7] hover:bg-amber-200 text-[#2D2319] px-3.5 py-2 rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319] cursor-pointer"
+              className={`flex items-center gap-1.5 text-xs font-black uppercase ${
+                isCoastal
+                  ? 'bg-[#E0E7FF] hover:bg-[#C7D2FE] text-[#3730A3] border-[#1E293B] shadow-[2px_2px_0px_0px_#1E293B]'
+                  : 'bg-[#FEF3C7] hover:bg-amber-200 text-[#2D2319] border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319]'
+              } px-3.5 py-2 rounded-xl border-2 cursor-pointer`}
             >
               <Download className="w-3.5 h-3.5" /> Eksport PDF / Link
             </button>
 
-            <span className="text-xs font-black uppercase bg-emerald-100 text-[#065F46] px-3.5 py-2 rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319]">
-              Progres: {dailyIndonesianProgress.completedCount} / 8 Selesai
+            <span className={`text-xs font-black uppercase ${
+              isCoastal
+                ? 'bg-sky-100 text-[#0369A1] border-[#1E293B] shadow-[2px_2px_0px_0px_#1E293B]'
+                : 'bg-emerald-100 text-[#065F46] border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319]'
+            } px-3.5 py-2 rounded-xl border-2`}>
+              Progres: {dailyIndonesianProgress.completedCount} / 5 Selesai
             </span>
           </div>
         </div>
 
         {/* Bento header */}
-        <div className="bg-white rounded-2xl p-6 border-2 border-[#2D2319] shadow-[4px_4px_0px_0px_#2D2319] space-y-3">
+        <div className={`bg-white rounded-2xl p-6 border-2 ${isCoastal ? 'border-[#1E293B] shadow-[4px_4px_0px_0px_#1E293B]' : 'border-[#2D2319] shadow-[4px_4px_0px_0px_#2D2319]'} space-y-3`}>
           <div className="flex items-center justify-between flex-wrap gap-3">
             <div>
-              <div className="text-xs font-black text-emerald-700 uppercase tracking-wider flex items-center gap-1">
-                <Sparkles className="w-3.5 h-3.5 fill-emerald-500" /> Habit Getah Sanubari (8 Artikel Berlanjut)
+              <div className={`text-xs font-black ${isCoastal ? 'text-[#0284C7]' : 'text-emerald-700'} uppercase tracking-wider flex items-center gap-1`}>
+                <Sparkles className={`w-3.5 h-3.5 ${isCoastal ? 'fill-[#0284C7]' : 'fill-emerald-500'}`} /> Habit Getah Sanubari (5 Artikel Berlanjut)
               </div>
-              <h2 className="text-2xl sm:text-3xl font-black text-[#2D2319] uppercase tracking-tight">
+              <h2 className={`text-2xl sm:text-3xl font-black ${isCoastal ? 'text-[#1E293B]' : 'text-[#2D2319]'} uppercase tracking-tight`}>
                 Koleksi Artikel Bahasa Indonesia
               </h2>
             </div>
 
             {/* View Mode Tabs */}
-            <div className="flex items-center bg-[#FDFBF7] p-1 rounded-xl border-2 border-[#2D2319] gap-1 flex-wrap">
+            <div className={`flex items-center ${isCoastal ? 'bg-[#F8FAFC] border-[#1E293B]' : 'bg-[#FDFBF7] border-[#2D2319]'} p-1 rounded-xl border-2 gap-1 flex-wrap`}>
               <button
                 type="button"
                 onClick={() => setViewMode('daily')}
                 className={`px-3 py-1.5 rounded-lg text-xs font-black uppercase transition-all cursor-pointer ${
                   viewMode === 'daily'
-                    ? 'bg-[#10B981] text-white shadow-xs'
-                    : 'text-[#574332] hover:text-[#2D2319]'
+                    ? isCoastal ? 'bg-[#0284C7] text-white shadow-xs' : 'bg-[#10B981] text-white shadow-xs'
+                    : isCoastal ? 'text-slate-600 hover:text-[#1E293B]' : 'text-[#574332] hover:text-[#2D2319]'
                 }`}
               >
-                Paket Harian (8/8)
+                Paket Harian (5/5)
               </button>
               <button
                 type="button"
                 onClick={() => setViewMode('custom')}
                 className={`px-3 py-1.5 rounded-lg text-xs font-black uppercase transition-all cursor-pointer flex items-center gap-1 ${
                   viewMode === 'custom'
-                    ? 'bg-[#10B981] text-white shadow-xs'
-                    : 'text-[#574332] hover:text-[#2D2319]'
+                    ? isCoastal ? 'bg-[#0284C7] text-white shadow-xs' : 'bg-[#10B981] text-white shadow-xs'
+                    : isCoastal ? 'text-slate-600 hover:text-[#1E293B]' : 'text-[#574332] hover:text-[#2D2319]'
                 }`}
               >
                 <span>🍀 Impor Saya</span>
-                <span className={`px-1.5 py-0.2 rounded-full text-[10px] font-mono ${viewMode === 'custom' ? 'bg-white text-emerald-800' : 'bg-emerald-100 text-emerald-800'}`}>
+                <span className={`px-1.5 py-0.2 rounded-full text-[10px] font-mono ${
+                  viewMode === 'custom'
+                    ? isCoastal ? 'bg-white text-[#0284C7]' : 'bg-white text-emerald-800'
+                    : isCoastal ? 'bg-sky-100 text-[#0284C7]' : 'bg-emerald-100 text-emerald-800'
+                }`}>
                   {customIndonesianArticles.length}
                 </span>
               </button>
@@ -275,8 +295,8 @@ export const IndonesianArticleReader: React.FC<Props> = ({ onBack }) => {
                 onClick={() => setViewMode('all')}
                 className={`px-3 py-1.5 rounded-lg text-xs font-black uppercase transition-all cursor-pointer ${
                   viewMode === 'all'
-                    ? 'bg-[#10B981] text-white shadow-xs'
-                    : 'text-[#574332] hover:text-[#2D2319]'
+                    ? isCoastal ? 'bg-[#0284C7] text-white shadow-xs' : 'bg-[#10B981] text-white shadow-xs'
+                    : isCoastal ? 'text-slate-600 hover:text-[#1E293B]' : 'text-[#574332] hover:text-[#2D2319]'
                 }`}
               >
                 Semua ({allIndonesianArticles.length})
@@ -287,13 +307,15 @@ export const IndonesianArticleReader: React.FC<Props> = ({ onBack }) => {
           {/* Progress Bar */}
           <div className="space-y-1.5 pt-2">
             <div className="flex items-center justify-between text-xs font-black">
-              <span className="text-[#574332]">Target Harian: 8 Artikel per Hari</span>
-              <span className="text-emerald-700">{dailyIndonesianProgress.completedCount} dari 8 Selesai ({Math.min(100, Math.round((dailyIndonesianProgress.completedCount / 8) * 100))}%)</span>
+              <span className={isCoastal ? 'text-slate-600' : 'text-[#574332]'}>Target Harian: 5 Artikel per Hari</span>
+              <span className={isCoastal ? 'text-[#0284C7]' : 'text-emerald-700'}>
+                {dailyIndonesianProgress.completedCount} dari 5 Selesai ({Math.min(100, Math.round((dailyIndonesianProgress.completedCount / 5) * 100))}%)
+              </span>
             </div>
-            <div className="w-full bg-[#FDFBF7] h-3 rounded-full border-2 border-[#2D2319] overflow-hidden p-0.5">
+            <div className={`w-full ${isCoastal ? 'bg-slate-100 border-[#1E293B]' : 'bg-[#FDFBF7] border-[#2D2319]'} h-3 rounded-full border-2 overflow-hidden p-0.5`}>
               <div
-                className="bg-[#10B981] h-full rounded-full transition-all duration-500"
-                style={{ width: `${Math.min(100, (dailyIndonesianProgress.completedCount / 8) * 100)}%` }}
+                className={`${isCoastal ? 'bg-[#0284C7]' : 'bg-[#10B981]'} h-full rounded-full transition-all duration-500`}
+                style={{ width: `${Math.min(100, (dailyIndonesianProgress.completedCount / 5) * 100)}%` }}
               />
             </div>
           </div>
@@ -301,22 +323,24 @@ export const IndonesianArticleReader: React.FC<Props> = ({ onBack }) => {
 
         {/* Empty State for Custom Articles */}
         {viewMode === 'custom' && customIndonesianArticles.length === 0 ? (
-          <div className="bg-white rounded-2xl p-10 border-2 border-[#2D2319] shadow-[4px_4px_0px_0px_#2D2319] text-center space-y-4 max-w-lg mx-auto">
-            <div className="w-16 h-16 bg-[#ECFDF5] border-2 border-[#2D2319] rounded-2xl flex items-center justify-center mx-auto shadow-[3px_3px_0px_0px_#2D2319] text-2xl">
+          <div className={`bg-white rounded-2xl p-10 border-2 ${isCoastal ? 'border-[#1E293B] shadow-[4px_4px_0px_0px_#1E293B]' : 'border-[#2D2319] shadow-[4px_4px_0px_0px_#2D2319]'} text-center space-y-4 max-w-lg mx-auto`}>
+            <div className={`w-16 h-16 ${isCoastal ? 'bg-sky-50 border-[#1E293B] shadow-[3px_3px_0px_0px_#1E293B]' : 'bg-[#ECFDF5] border-[#2D2319] shadow-[3px_3px_0px_0px_#2D2319]'} border-2 rounded-2xl flex items-center justify-center mx-auto text-2xl`}>
               📂
             </div>
             <div className="space-y-1.5">
-              <h3 className="text-lg font-black text-[#2D2319]">Belum Ada Artikel Impor Bahasa Indonesia</h3>
-              <p className="text-xs text-[#574332] font-semibold">
+              <h3 className={`text-lg font-black ${isCoastal ? 'text-[#1E293B]' : 'text-[#2D2319]'}`}>Belum Ada Artikel Impor Bahasa Indonesia</h3>
+              <p className={`text-xs ${isCoastal ? 'text-slate-600' : 'text-[#574332]'} font-semibold`}>
                 Kamu dapat mengunggah file PDF modul, menempelkan link artikel web, atau menyalin naskah teks. AI Cloverait akan mengekstrak materi & membuatkan 10 kuis otomatis!
               </p>
             </div>
             <button
               onClick={() => setIsImportOpen(true)}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#10B981] hover:bg-[#059669] text-white font-black text-xs uppercase tracking-wider border-2 border-[#2D2319] shadow-[3px_3px_0px_0px_#2D2319] cursor-pointer active:translate-y-0.5 transition-all"
+              className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl ${
+                isCoastal ? 'bg-[#0284C7] hover:bg-[#0369A1] border-[#1E293B] shadow-[3px_3px_0px_0px_#1E293B]' : 'bg-[#10B981] hover:bg-[#059669] border-[#2D2319] shadow-[3px_3px_0px_0px_#2D2319]'
+              } text-white font-black text-xs uppercase tracking-wider border-2 cursor-pointer active:translate-y-0.5 transition-all`}
             >
               <Upload className="w-4 h-4" />
-              Impor PDF / Naskah Sekarang
+              Impor Link / Naskah Sekarang
             </button>
           </div>
         ) : (
@@ -338,21 +362,27 @@ export const IndonesianArticleReader: React.FC<Props> = ({ onBack }) => {
                     setTrueFalseAnswers({});
                     setSubmittedQuiz(false);
                   }}
-                  className={`bg-white rounded-2xl p-6 border-2 border-[#2D2319] shadow-[4px_4px_0px_0px_#2D2319] hover:shadow-[6px_6px_0px_0px_#2D2319] hover:-translate-y-0.5 transition-all cursor-pointer flex flex-col justify-between group space-y-4 ${
-                    isCompleted ? 'ring-2 ring-emerald-500 bg-emerald-50/40' : ''
+                  className={`bg-white rounded-2xl p-6 border-2 ${
+                    isCoastal ? 'border-[#1E293B] shadow-[4px_4px_0px_0px_#1E293B] hover:shadow-[6px_6px_0px_0px_#1E293B]' : 'border-[#2D2319] shadow-[4px_4px_0px_0px_#2D2319] hover:shadow-[6px_6px_0px_0px_#2D2319]'
+                  } hover:-translate-y-0.5 transition-all cursor-pointer flex flex-col justify-between group space-y-4 ${
+                    isCompleted ? (isCoastal ? 'ring-2 ring-[#0284C7] bg-sky-50/40' : 'ring-2 ring-emerald-500 bg-emerald-50/40') : ''
                   }`}
                 >
                   <div className="space-y-2.5">
                     <div className="flex items-center justify-between gap-2">
                       <div className="flex items-center gap-2">
-                        <span className="text-xs font-black bg-[#2D2319] text-white w-6 h-6 rounded-md flex items-center justify-center">
+                        <span className={`text-xs font-black ${isCoastal ? 'bg-[#1E293B]' : 'bg-[#2D2319]'} text-white w-6 h-6 rounded-md flex items-center justify-center`}>
                           #{idx + 1}
                         </span>
-                        <span className="text-[10px] font-black uppercase px-2.5 py-0.5 rounded-md bg-emerald-100 text-emerald-900 border border-[#2D2319]">
+                        <span className={`text-[10px] font-black uppercase px-2.5 py-0.5 rounded-md ${
+                          isCoastal ? 'bg-sky-100 text-sky-900 border-[#1E293B]' : 'bg-emerald-100 text-emerald-900 border-[#2D2319]'
+                        } border`}>
                           {art.category}
                         </span>
                         {isCustom && (
-                          <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-md bg-amber-100 text-amber-900 border border-[#2D2319] flex items-center gap-1">
+                          <span className={`text-[10px] font-black uppercase px-2 py-0.5 rounded-md ${
+                            isCoastal ? 'bg-blue-100 text-blue-900 border-[#1E293B]' : 'bg-amber-100 text-amber-900 border-[#2D2319]'
+                          } border flex items-center gap-1`}>
                             🍀 Impor Saya
                           </span>
                         )}
@@ -360,7 +390,9 @@ export const IndonesianArticleReader: React.FC<Props> = ({ onBack }) => {
 
                       <div className="flex items-center gap-1.5">
                         {isCompleted ? (
-                          <span className="text-xs font-black text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-md border border-emerald-600 flex items-center gap-1">
+                          <span className={`text-xs font-black ${
+                            isCoastal ? 'text-[#0284C7] bg-sky-100 border-[#0284C7]' : 'text-emerald-700 bg-emerald-100 border-emerald-600'
+                          } px-2 py-0.5 rounded-md border flex items-center gap-1`}>
                             <CheckCircle2 className="w-3.5 h-3.5" /> Selesai Hari Ini
                           </span>
                         ) : (
@@ -387,18 +419,22 @@ export const IndonesianArticleReader: React.FC<Props> = ({ onBack }) => {
                       </div>
                     </div>
 
-                    <h3 className="text-lg font-black text-[#2D2319] group-hover:text-emerald-700 transition-colors leading-snug">
+                    <h3 className={`text-lg font-black ${isCoastal ? 'text-[#1E293B] group-hover:text-[#0284C7]' : 'text-[#2D2319] group-hover:text-emerald-700'} transition-colors leading-snug`}>
                       {art.title}
                     </h3>
 
-                    <p className="text-xs font-medium text-[#574332] line-clamp-2 leading-relaxed">
+                    <p className={`text-xs font-medium ${isCoastal ? 'text-slate-600' : 'text-[#574332]'} line-clamp-2 leading-relaxed`}>
                       {art.content[0]}
                     </p>
                   </div>
 
                   <div className="flex items-center justify-between pt-3 border-t-2 border-slate-100 text-xs font-black">
                     <span className="text-slate-500 uppercase">{art.wordCount} Kata • 10 Soal</span>
-                    <span className="text-[#2D2319] bg-[#FEF3C7] px-3 py-1 rounded-lg border border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319] inline-flex items-center gap-1 group-hover:bg-[#FDE68A]">
+                    <span className={`${
+                      isCoastal
+                        ? 'text-[#1E293B] bg-[#E0F2FE] border-[#1E293B] shadow-[2px_2px_0px_0px_#1E293B] group-hover:bg-[#BAE6FD]'
+                        : 'text-[#2D2319] bg-[#FEF3C7] border-[#2D2319] shadow-[2px_2px_0px_0px_#2D2319] group-hover:bg-[#FDE68A]'
+                    } px-3 py-1 rounded-lg border inline-flex items-center gap-1`}>
                       {isCompleted ? 'Baca Ulang' : 'Mulai Baca'} <ArrowRight className="w-3.5 h-3.5 stroke-[3]" />
                     </span>
                   </div>
@@ -416,25 +452,33 @@ export const IndonesianArticleReader: React.FC<Props> = ({ onBack }) => {
     return (
       <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
         {/* Sticky Header with Timer & Action Buttons */}
-        <div className="sticky top-20 z-30 bg-white p-4 rounded-2xl border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-between gap-3 flex-wrap">
+        <div className={`sticky top-20 z-30 bg-white p-4 rounded-2xl border-2 ${
+          isCoastal ? 'border-[#1E293B] shadow-[4px_4px_0px_0px_#1E293B]' : 'border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]'
+        } flex items-center justify-between gap-3 flex-wrap`}>
           <div className="flex items-center gap-3">
             <button
               onClick={() => {
                 setIsReadingActive(false);
                 setStep('select');
               }}
-              className="text-xs font-black uppercase text-slate-900 bg-slate-100 hover:bg-slate-200 px-3.5 py-2 rounded-xl border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] cursor-pointer"
+              className={`text-xs font-black uppercase ${
+                isCoastal
+                  ? 'text-[#1E293B] bg-slate-100 hover:bg-slate-200 border-[#1E293B] shadow-[2px_2px_0px_0px_#1E293B]'
+                  : 'text-slate-900 bg-slate-100 hover:bg-slate-200 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
+              } px-3.5 py-2 rounded-xl border-2 cursor-pointer`}
             >
               ← Ganti Artikel
             </button>
 
             {/* Live Timer Display */}
-            <div className="flex items-center gap-2 bg-amber-100 border-2 border-slate-900 px-3.5 py-1.5 rounded-xl shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-              <Clock className={`w-4 h-4 text-amber-900 stroke-[2.5] ${isReadingActive ? 'animate-spin' : ''}`} />
-              <span className="font-mono font-black text-base text-slate-900">
+            <div className={`flex items-center gap-2 ${
+              isCoastal ? 'bg-[#D0E1F0] border-[#1E293B] shadow-[2px_2px_0px_0px_#1E293B]' : 'bg-amber-100 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
+            } border-2 px-3.5 py-1.5 rounded-xl`}>
+              <Clock className={`w-4 h-4 ${isCoastal ? 'text-[#1E40AF]' : 'text-amber-900'} stroke-[2.5] ${isReadingActive ? 'animate-spin' : ''}`} />
+              <span className={`font-mono font-black text-base ${isCoastal ? 'text-[#1E293B]' : 'text-slate-900'}`}>
                 {formatTime(readingSeconds)}
               </span>
-              <span className="text-[10px] uppercase font-black text-amber-900">
+              <span className={`text-[10px] uppercase font-black ${isCoastal ? 'text-[#1E40AF]' : 'text-amber-900'}`}>
                 {isReadingActive ? 'Membaca' : 'Timer Diam'}
               </span>
             </div>
@@ -445,9 +489,11 @@ export const IndonesianArticleReader: React.FC<Props> = ({ onBack }) => {
             <button
               onClick={() => setBionicReading(!bionicReading)}
               title="Bionic Reading (Bantu fokus baca cepat)"
-              className={`px-3 py-1.5 rounded-xl border-2 border-slate-900 flex items-center gap-1.5 transition-colors cursor-pointer shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] ${
+              className={`px-3 py-1.5 rounded-xl border-2 ${
+                isCoastal ? 'border-[#1E293B] shadow-[2px_2px_0px_0px_#1E293B]' : 'border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
+              } flex items-center gap-1.5 transition-colors cursor-pointer ${
                 bionicReading
-                  ? 'bg-amber-400 text-slate-950 font-black'
+                  ? (isCoastal ? 'bg-[#2563EB] text-white font-black' : 'bg-amber-400 text-slate-950 font-black')
                   : 'bg-white text-slate-700 hover:bg-slate-50'
               }`}
             >
@@ -456,7 +502,9 @@ export const IndonesianArticleReader: React.FC<Props> = ({ onBack }) => {
 
             <button
               onClick={() => setFontSize(fontSize === 'normal' ? 'large' : fontSize === 'large' ? 'xlarge' : 'normal')}
-              className="px-3 py-1.5 rounded-xl bg-white border-2 border-slate-900 text-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-slate-50 cursor-pointer"
+              className={`px-3 py-1.5 rounded-xl bg-white border-2 ${
+                isCoastal ? 'border-[#1E293B] text-[#1E293B] shadow-[2px_2px_0px_0px_#1E293B]' : 'border-slate-900 text-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
+              } hover:bg-slate-50 cursor-pointer`}
             >
               Aa {fontSize === 'normal' ? '1x' : fontSize === 'large' ? '1.2x' : '1.4x'}
             </button>
@@ -467,15 +515,23 @@ export const IndonesianArticleReader: React.FC<Props> = ({ onBack }) => {
             {!hasStartedReading ? (
               <button
                 onClick={handleStartReading}
-                className="bg-amber-400 hover:bg-amber-500 text-slate-950 px-5 py-2 rounded-xl text-xs sm:text-sm font-black border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] flex items-center gap-1.5 cursor-pointer uppercase active:translate-y-0.5"
+                className={`${
+                  isCoastal
+                    ? 'bg-[#2563EB] hover:bg-[#1D4ED8] text-white border-[#1E293B] shadow-[3px_3px_0px_0px_#1E293B]'
+                    : 'bg-amber-400 hover:bg-amber-500 text-slate-950 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]'
+                } px-5 py-2 rounded-xl text-xs sm:text-sm font-black border-2 flex items-center gap-1.5 cursor-pointer uppercase active:translate-y-0.5`}
               >
-                <Play className="w-4 h-4 fill-slate-950" />
+                <Play className={`w-4 h-4 ${isCoastal ? 'fill-white' : 'fill-slate-950'}`} />
                 Mulai Membaca
               </button>
             ) : (
               <button
                 onClick={handleFinishReading}
-                className="bg-emerald-400 hover:bg-emerald-500 text-slate-950 px-5 py-2 rounded-xl text-xs sm:text-sm font-black border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] flex items-center gap-1.5 cursor-pointer uppercase active:translate-y-0.5"
+                className={`${
+                  isCoastal
+                    ? 'bg-[#0284C7] hover:bg-[#0369A1] text-white border-[#1E293B] shadow-[3px_3px_0px_0px_#1E293B]'
+                    : 'bg-emerald-400 hover:bg-emerald-500 text-slate-950 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]'
+                } px-5 py-2 rounded-xl text-xs sm:text-sm font-black border-2 flex items-center gap-1.5 cursor-pointer uppercase active:translate-y-0.5`}
               >
                 <Check className="w-4 h-4 stroke-[3]" />
                 Selesai Membaca & Lanjut
@@ -485,19 +541,23 @@ export const IndonesianArticleReader: React.FC<Props> = ({ onBack }) => {
         </div>
 
         {/* Clean Article Container */}
-        <div className="bg-white rounded-2xl p-6 sm:p-10 border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] space-y-6">
+        <div className={`bg-white rounded-2xl p-6 sm:p-10 border-2 ${
+          isCoastal ? 'border-[#1E293B] shadow-[4px_4px_0px_0px_#1E293B]' : 'border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]'
+        } space-y-6`}>
           {/* Article Header */}
           <div className="space-y-3 pb-4 border-b-2 border-slate-100">
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="bg-blue-100 text-blue-950 font-black text-xs px-3 py-1 rounded-md border border-slate-900">
+              <span className={`${
+                isCoastal ? 'bg-sky-100 text-[#0369A1] border-[#1E293B]' : 'bg-blue-100 text-blue-950 border-slate-900'
+              } font-black text-xs px-3 py-1 rounded-md border`}>
                 {selectedArticle.category}
               </span>
-              <span className="text-xs text-slate-600 font-bold">
+              <span className={`text-xs ${isCoastal ? 'text-slate-600' : 'text-slate-600'} font-bold`}>
                 {selectedArticle.subTopic} • Sumber: {selectedArticle.source}
               </span>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-black text-slate-900 leading-tight">
+            <h1 className={`text-2xl sm:text-3xl font-black ${isCoastal ? 'text-[#1E293B]' : 'text-slate-900'} leading-tight`}>
               {selectedArticle.title}
             </h1>
 
@@ -510,9 +570,13 @@ export const IndonesianArticleReader: React.FC<Props> = ({ onBack }) => {
 
           {/* Reading Prompt Overlay if not started */}
           {!hasStartedReading && (
-            <div className="bg-amber-50 border-2 border-dashed border-slate-900 rounded-2xl p-5 text-center space-y-2">
-              <p className="text-xs sm:text-sm font-black text-slate-900 uppercase">
-                👉 Klik tombol <span className="bg-amber-400 text-slate-950 px-2 py-0.5 rounded border border-slate-900">Mulai Membaca</span> di atas untuk memulai timer WPM dan membuka fokus baca.
+            <div className={`${
+              isCoastal ? 'bg-sky-50 border-[#1E293B]' : 'bg-amber-50 border-slate-900'
+            } border-2 border-dashed rounded-2xl p-5 text-center space-y-2`}>
+              <p className={`text-xs sm:text-sm font-black ${isCoastal ? 'text-[#1E293B]' : 'text-slate-900'} uppercase`}>
+                👉 Klik tombol <span className={`${
+                  isCoastal ? 'bg-[#2563EB] text-white border-[#1E293B]' : 'bg-amber-400 text-slate-950 border-slate-900'
+                } px-2 py-0.5 rounded border`}>Mulai Membaca</span> di atas untuk memulai timer WPM dan membuka fokus baca.
               </p>
             </div>
           )}
@@ -541,7 +605,9 @@ export const IndonesianArticleReader: React.FC<Props> = ({ onBack }) => {
                 setIsReadingActive(false);
                 setStep('select');
               }}
-              className="bg-white hover:bg-slate-100 text-slate-900 border-2 border-slate-900 px-6 py-2.5 rounded-xl text-xs sm:text-sm font-black uppercase shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] cursor-pointer active:translate-y-0.5"
+              className={`bg-white hover:bg-slate-100 ${
+                isCoastal ? 'text-[#1E293B] border-[#1E293B] shadow-[2px_2px_0px_0px_#1E293B]' : 'text-slate-900 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
+              } border-2 px-6 py-2.5 rounded-xl text-xs sm:text-sm font-black uppercase cursor-pointer active:translate-y-0.5`}
             >
               Akhiri Sesi
             </button>
@@ -549,15 +615,23 @@ export const IndonesianArticleReader: React.FC<Props> = ({ onBack }) => {
             {!hasStartedReading ? (
               <button
                 onClick={handleStartReading}
-                className="bg-amber-400 hover:bg-amber-500 text-slate-950 px-8 py-2.5 rounded-xl text-xs sm:text-sm font-black uppercase border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] flex items-center gap-2 cursor-pointer active:translate-y-0.5"
+                className={`${
+                  isCoastal
+                    ? 'bg-[#2563EB] hover:bg-[#1D4ED8] text-white border-[#1E293B] shadow-[3px_3px_0px_0px_#1E293B]'
+                    : 'bg-amber-400 hover:bg-amber-500 text-slate-950 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]'
+                } px-8 py-2.5 rounded-xl text-xs sm:text-sm font-black uppercase border-2 flex items-center gap-2 cursor-pointer active:translate-y-0.5`}
               >
-                <Play className="w-4 h-4 fill-slate-950" />
+                <Play className={`w-4 h-4 ${isCoastal ? 'fill-white' : 'fill-slate-950'}`} />
                 Mulai Membaca
               </button>
             ) : (
               <button
                 onClick={handleFinishReading}
-                className="bg-amber-400 hover:bg-amber-500 text-slate-950 px-8 py-2.5 rounded-xl text-xs sm:text-sm font-black uppercase border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] flex items-center gap-2 cursor-pointer active:translate-y-0.5"
+                className={`${
+                  isCoastal
+                    ? 'bg-[#2563EB] hover:bg-[#1D4ED8] text-white border-[#1E293B] shadow-[3px_3px_0px_0px_#1E293B]'
+                    : 'bg-amber-400 hover:bg-amber-500 text-slate-950 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]'
+                } px-8 py-2.5 rounded-xl text-xs sm:text-sm font-black uppercase border-2 flex items-center gap-2 cursor-pointer active:translate-y-0.5`}
               >
                 Lanjut ke Quiz (10 Soal)
                 <ArrowRight className="w-4 h-4 stroke-[3]" />
@@ -574,9 +648,13 @@ export const IndonesianArticleReader: React.FC<Props> = ({ onBack }) => {
     return (
       <div className="max-w-3xl mx-auto px-4 py-6 space-y-6">
         {/* Quiz Header */}
-        <div className="bg-white rounded-2xl p-6 border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] space-y-2">
+        <div className={`bg-white rounded-2xl p-6 border-2 ${
+          isCoastal ? 'border-[#1E293B] shadow-[4px_4px_0px_0px_#1E293B]' : 'border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]'
+        } space-y-2`}>
           <div className="flex items-center justify-between flex-wrap gap-2">
-            <span className="bg-amber-300 text-slate-950 font-black text-xs px-3 py-1 rounded-md border border-slate-900 uppercase">
+            <span className={`${
+              isCoastal ? 'bg-[#D0E1F0] text-[#1E40AF] border-[#1E293B]' : 'bg-amber-300 text-slate-950 border-slate-900'
+            } font-black text-xs px-3 py-1 rounded-md border uppercase`}>
               Quiz Evaluasi Pemahaman & KEM
             </span>
             <span className="font-mono text-xs font-black text-slate-700 flex items-center gap-1">
@@ -584,7 +662,7 @@ export const IndonesianArticleReader: React.FC<Props> = ({ onBack }) => {
             </span>
           </div>
 
-          <h2 className="text-xl sm:text-2xl font-black text-slate-900">
+          <h2 className={`text-xl sm:text-2xl font-black ${isCoastal ? 'text-[#1E293B]' : 'text-slate-900'}`}>
             {selectedArticle.title}
           </h2>
           <p className="text-xs sm:text-sm text-slate-600 font-bold">
@@ -595,21 +673,27 @@ export const IndonesianArticleReader: React.FC<Props> = ({ onBack }) => {
         {/* SECTION A: 5 ISIAN SINGKAT */}
         <div className="space-y-4">
           <div className="flex items-center gap-2 px-1">
-            <span className="w-7 h-7 rounded-lg bg-blue-500 text-white font-black text-xs flex items-center justify-center border border-slate-900">
+            <span className={`w-7 h-7 rounded-lg ${
+              isCoastal ? 'bg-[#2563EB] text-white border-[#1E293B]' : 'bg-blue-500 text-white border-slate-900'
+            } font-black text-xs flex items-center justify-center border`}>
               A
             </span>
-            <h3 className="text-base sm:text-lg font-black text-slate-900 uppercase tracking-tight">
+            <h3 className={`text-base sm:text-lg font-black ${isCoastal ? 'text-[#1E293B]' : 'text-slate-900'} uppercase tracking-tight`}>
               Bagian 1: Soal Isian Singkat (5 Soal)
             </h3>
           </div>
 
           {selectedArticle.fillInQuestions.map((q, idx) => (
-            <div key={q.id} className="bg-white rounded-2xl p-5 border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] space-y-3">
+            <div key={q.id} className={`bg-white rounded-2xl p-5 border-2 ${
+              isCoastal ? 'border-[#1E293B] shadow-[3px_3px_0px_0px_#1E293B]' : 'border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]'
+            } space-y-3`}>
               <div className="flex items-start gap-3">
-                <span className="font-mono font-black text-slate-900 text-sm bg-blue-100 border border-slate-900 w-7 h-7 rounded-lg flex items-center justify-center shrink-0">
+                <span className={`font-mono font-black ${
+                  isCoastal ? 'text-[#1E293B] bg-sky-100 border-[#1E293B]' : 'text-slate-900 bg-blue-100 border-slate-900'
+                } text-sm border w-7 h-7 rounded-lg flex items-center justify-center shrink-0`}>
                   {idx + 1}
                 </span>
-                <p className="text-sm sm:text-base font-black text-slate-900">
+                <p className={`text-sm sm:text-base font-black ${isCoastal ? 'text-[#1E293B]' : 'text-slate-900'}`}>
                   {q.question}
                 </p>
               </div>
@@ -626,7 +710,9 @@ export const IndonesianArticleReader: React.FC<Props> = ({ onBack }) => {
                   placeholder="Ketik jawabanmu di sini..."
                   value={fillInAnswers[q.id] || ''}
                   onChange={e => handleFillInChange(q.id, e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl border-2 border-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-400 text-sm font-bold text-slate-900"
+                  className={`w-full px-4 py-2.5 rounded-xl border-2 ${
+                    isCoastal ? 'border-[#1E293B] focus:ring-[#2563EB] text-[#1E293B]' : 'border-slate-900 focus:ring-amber-400 text-slate-900'
+                  } focus:outline-none focus:ring-2 text-sm font-bold`}
                 />
               </div>
             </div>
@@ -636,21 +722,27 @@ export const IndonesianArticleReader: React.FC<Props> = ({ onBack }) => {
         {/* SECTION B: 5 FAKTA BENAR / SALAH */}
         <div className="space-y-4 pt-4">
           <div className="flex items-center gap-2 px-1">
-            <span className="w-7 h-7 rounded-lg bg-emerald-500 text-white font-black text-xs flex items-center justify-center border border-slate-900">
+            <span className={`w-7 h-7 rounded-lg ${
+              isCoastal ? 'bg-[#0284C7] text-white border-[#1E293B]' : 'bg-emerald-500 text-white border-slate-900'
+            } font-black text-xs flex items-center justify-center border`}>
               B
             </span>
-            <h3 className="text-base sm:text-lg font-black text-slate-900 uppercase tracking-tight">
+            <h3 className={`text-base sm:text-lg font-black ${isCoastal ? 'text-[#1E293B]' : 'text-slate-900'} uppercase tracking-tight`}>
               Bagian 2: Fakta Benar atau Salah (5 Soal)
             </h3>
           </div>
 
           {selectedArticle.trueFalseQuestions.map((q, idx) => (
-            <div key={q.id} className="bg-white rounded-2xl p-5 border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] space-y-3">
+            <div key={q.id} className={`bg-white rounded-2xl p-5 border-2 ${
+              isCoastal ? 'border-[#1E293B] shadow-[3px_3px_0px_0px_#1E293B]' : 'border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]'
+            } space-y-3`}>
               <div className="flex items-start gap-3">
-                <span className="font-mono font-black text-slate-900 text-sm bg-emerald-100 border border-slate-900 w-7 h-7 rounded-lg flex items-center justify-center shrink-0">
+                <span className={`font-mono font-black ${
+                  isCoastal ? 'text-[#1E293B] bg-sky-100 border-[#1E293B]' : 'text-slate-900 bg-emerald-100 border-slate-900'
+                } text-sm border w-7 h-7 rounded-lg flex items-center justify-center shrink-0`}>
                   {idx + 6}
                 </span>
-                <p className="text-sm sm:text-base font-black text-slate-900">
+                <p className={`text-sm sm:text-base font-black ${isCoastal ? 'text-[#1E293B]' : 'text-slate-900'}`}>
                   {q.statement}
                 </p>
               </div>
@@ -658,9 +750,13 @@ export const IndonesianArticleReader: React.FC<Props> = ({ onBack }) => {
               <div className="pl-10 flex items-center gap-3 pt-1">
                 <button
                   onClick={() => handleTrueFalseSelect(q.id, true)}
-                  className={`flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-black uppercase border-2 border-slate-900 transition-all cursor-pointer flex items-center justify-center gap-2 active:translate-y-0.5 ${
+                  className={`flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-black uppercase border-2 ${
+                    isCoastal ? 'border-[#1E293B]' : 'border-slate-900'
+                  } transition-all cursor-pointer flex items-center justify-center gap-2 active:translate-y-0.5 ${
                     trueFalseAnswers[q.id] === true
-                      ? 'bg-emerald-400 text-slate-950 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]'
+                      ? isCoastal
+                        ? 'bg-[#0284C7] text-white shadow-[3px_3px_0px_0px_#1E293B]'
+                        : 'bg-emerald-400 text-slate-950 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]'
                       : 'bg-slate-50 text-slate-700 hover:bg-slate-100'
                   }`}
                 >
@@ -669,9 +765,13 @@ export const IndonesianArticleReader: React.FC<Props> = ({ onBack }) => {
 
                 <button
                   onClick={() => handleTrueFalseSelect(q.id, false)}
-                  className={`flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-black uppercase border-2 border-slate-900 transition-all cursor-pointer flex items-center justify-center gap-2 active:translate-y-0.5 ${
+                  className={`flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-black uppercase border-2 ${
+                    isCoastal ? 'border-[#1E293B]' : 'border-slate-900'
+                  } transition-all cursor-pointer flex items-center justify-center gap-2 active:translate-y-0.5 ${
                     trueFalseAnswers[q.id] === false
-                      ? 'bg-rose-400 text-slate-950 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]'
+                      ? isCoastal
+                        ? 'bg-[#B91C1C] text-white shadow-[3px_3px_0px_0px_#1E293B]'
+                        : 'bg-[#B91C1C] text-white shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]'
                       : 'bg-slate-50 text-slate-700 hover:bg-slate-100'
                   }`}
                 >
@@ -686,10 +786,14 @@ export const IndonesianArticleReader: React.FC<Props> = ({ onBack }) => {
         <div className="pt-4">
           <button
             onClick={handleSubmitQuiz}
-            className="w-full bg-amber-400 hover:bg-amber-500 text-slate-950 font-black py-3.5 px-6 rounded-2xl border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-base uppercase transition-all flex items-center justify-center gap-2 cursor-pointer active:translate-y-0.5"
+            className={`w-full ${
+              isCoastal
+                ? 'bg-[#2563EB] hover:bg-[#1D4ED8] text-white border-[#1E293B] shadow-[4px_4px_0px_0px_#1E293B]'
+                : 'bg-amber-400 hover:bg-amber-500 text-slate-950 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]'
+            } font-black py-3.5 px-6 rounded-2xl border-2 text-base uppercase transition-all flex items-center justify-center gap-2 cursor-pointer active:translate-y-0.5`}
           >
             Kirim Jawaban & Lihat Skor KEM
-            <Sparkles className="w-5 h-5 fill-slate-950" />
+            <Sparkles className={`w-5 h-5 ${isCoastal ? 'fill-white' : 'fill-slate-950'}`} />
           </button>
         </div>
       </div>
@@ -702,19 +806,27 @@ export const IndonesianArticleReader: React.FC<Props> = ({ onBack }) => {
   return (
     <div className="max-w-3xl mx-auto px-4 py-6 space-y-6">
       {/* Celebration Header in Bento Box */}
-      <div className="bg-amber-400 text-slate-950 rounded-2xl p-6 sm:p-8 border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-center space-y-4">
-        <div className="w-16 h-16 rounded-2xl bg-white border-2 border-slate-900 mx-auto flex items-center justify-center shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
-          <Award className="w-9 h-9 text-slate-900 stroke-[2.5]" />
+      <div className={`${
+        isCoastal
+          ? 'bg-[#D0E1F0] text-[#1E293B] border-[#1E293B] shadow-[4px_4px_0px_0px_#1E293B]'
+          : 'bg-amber-400 text-slate-950 border-slate-900 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]'
+      } rounded-2xl p-6 sm:p-8 border-2 text-center space-y-4`}>
+        <div className={`w-16 h-16 rounded-2xl bg-white border-2 ${
+          isCoastal ? 'border-[#1E293B] shadow-[3px_3px_0px_0px_#1E293B]' : 'border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]'
+        } mx-auto flex items-center justify-center`}>
+          <Award className={`w-9 h-9 ${isCoastal ? 'text-[#1E40AF]' : 'text-slate-900'} stroke-[2.5]`} />
         </div>
 
         <div>
-          <div className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider bg-white px-3 py-1 rounded-md border border-slate-900 shadow-sm">
-            <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-            Progres Habit Harian: {dailyIndonesianProgress.completedCount} / 8 Artikel Selesai
+          <div className={`inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider bg-white px-3 py-1 rounded-md border ${
+            isCoastal ? 'border-[#1E293B] text-[#1E40AF]' : 'border-slate-900'
+          } shadow-sm`}>
+            <Sparkles className={`w-3.5 h-3.5 ${isCoastal ? 'text-[#2563EB]' : 'text-amber-600'}`} />
+            Progres Habit Harian: {dailyIndonesianProgress.completedCount} / 5 Artikel Selesai
           </div>
           <h2 className="text-2xl sm:text-3xl font-black uppercase tracking-tight mt-2">
-            {dailyIndonesianProgress.completedCount >= 8
-              ? '🎉 Sempurna! Habit Obat Fokus 8/8 Tuntas Hari Ini!'
+            {dailyIndonesianProgress.completedCount >= 5
+              ? '🎉 Sempurna! Habit Getah Sanubari 5/5 Tuntas Hari Ini!'
               : `Artikel #${currentDailyIndex >= 0 ? currentDailyIndex + 1 : 1} Selesai!`}
           </h2>
           <p className="text-xs sm:text-sm font-bold opacity-90">
@@ -723,44 +835,56 @@ export const IndonesianArticleReader: React.FC<Props> = ({ onBack }) => {
         </div>
 
         {/* Continuous Action CTA */}
-        {nextDailyArticle && dailyIndonesianProgress.completedCount < 8 && (
-          <div className="bg-white/95 backdrop-blur-sm p-4 rounded-xl border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] text-slate-900 flex flex-col sm:flex-row items-center justify-between gap-3">
+        {nextDailyArticle && dailyIndonesianProgress.completedCount < 5 && (
+          <div className={`bg-white/95 backdrop-blur-sm p-4 rounded-xl border-2 ${
+            isCoastal ? 'border-[#1E293B] shadow-[3px_3px_0px_0px_#1E293B]' : 'border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]'
+          } text-slate-900 flex flex-col sm:flex-row items-center justify-between gap-3`}>
             <div className="text-left">
-              <div className="text-[10px] font-black uppercase text-amber-700">Artikel Selanjutnya ({Math.min(8, dailyIndonesianProgress.completedCount + 1)}/8):</div>
+              <div className={`text-[10px] font-black uppercase ${isCoastal ? 'text-[#1E40AF]' : 'text-amber-700'}`}>Artikel Selanjutnya ({Math.min(5, dailyIndonesianProgress.completedCount + 1)}/5):</div>
               <div className="text-sm font-black line-clamp-1">{nextDailyArticle.title}</div>
             </div>
             <button
               onClick={() => startNextArticle(nextDailyArticle)}
-              className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs sm:text-sm font-black uppercase border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center gap-1.5 shrink-0 active:translate-y-0.5"
+              className={`w-full sm:w-auto px-5 py-2.5 rounded-xl ${
+                isCoastal ? 'bg-[#2563EB] hover:bg-[#1D4ED8] text-white border-[#1E293B] shadow-[2px_2px_0px_0px_#1E293B]' : 'bg-amber-400 hover:bg-amber-300 text-slate-950 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
+              } text-xs sm:text-sm font-black uppercase border-2 flex items-center justify-center gap-1.5 shrink-0 active:translate-y-0.5`}
             >
-              Lanjut Baca Artikel {Math.min(8, dailyIndonesianProgress.completedCount + 1)}/8 <ArrowRight className="w-4 h-4" />
+              Lanjut Baca Artikel {Math.min(5, dailyIndonesianProgress.completedCount + 1)}/5 <ArrowRight className="w-4 h-4" />
             </button>
           </div>
         )}
 
         {/* 4 Score Badges */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-          <div className="bg-white rounded-xl p-3 text-slate-900 border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+          <div className={`bg-white rounded-xl p-3 text-slate-900 border-2 ${
+            isCoastal ? 'border-[#1E293B] shadow-[2px_2px_0px_0px_#1E293B]' : 'border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
+          }`}>
             <span className="text-[10px] font-black uppercase text-slate-500 block">Kecepatan</span>
-            <span className="text-2xl font-black font-mono text-slate-900">{result.wpm}</span>
+            <span className={`text-2xl font-black font-mono ${isCoastal ? 'text-[#1E293B]' : 'text-slate-900'}`}>{result.wpm}</span>
             <span className="text-[10px] font-bold text-slate-600 block">WPM</span>
           </div>
 
-          <div className="bg-white rounded-xl p-3 text-slate-900 border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+          <div className={`bg-white rounded-xl p-3 text-slate-900 border-2 ${
+            isCoastal ? 'border-[#1E293B] shadow-[2px_2px_0px_0px_#1E293B]' : 'border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
+          }`}>
             <span className="text-[10px] font-black uppercase text-slate-500 block">Skor KEM</span>
-            <span className="text-2xl font-black font-mono text-blue-600">{result.kem}</span>
+            <span className={`text-2xl font-black font-mono ${isCoastal ? 'text-[#2563EB]' : 'text-blue-600'}`}>{result.kem}</span>
             <span className="text-[10px] font-bold text-slate-600 block">Kec. Efektif</span>
           </div>
 
-          <div className="bg-white rounded-xl p-3 text-slate-900 border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+          <div className={`bg-white rounded-xl p-3 text-slate-900 border-2 ${
+            isCoastal ? 'border-[#1E293B] shadow-[2px_2px_0px_0px_#1E293B]' : 'border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
+          }`}>
             <span className="text-[10px] font-black uppercase text-slate-500 block">Akurasi</span>
-            <span className="text-2xl font-black font-mono text-emerald-600">{result.accuracy}%</span>
+            <span className={`text-2xl font-black font-mono ${isCoastal ? 'text-[#0D9488]' : 'text-emerald-600'}`}>{result.accuracy}%</span>
             <span className="text-[10px] font-bold text-slate-600 block">{result.correctCount}/10 Benar</span>
           </div>
 
-          <div className="bg-white rounded-xl p-3 text-slate-900 border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+          <div className={`bg-white rounded-xl p-3 text-slate-900 border-2 ${
+            isCoastal ? 'border-[#1E293B] shadow-[2px_2px_0px_0px_#1E293B]' : 'border-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
+          }`}>
             <span className="text-[10px] font-black uppercase text-slate-500 block">Waktu Baca</span>
-            <span className="text-2xl font-black font-mono text-purple-600">{formatTime(readingSeconds)}</span>
+            <span className={`text-2xl font-black font-mono ${isCoastal ? 'text-[#4F46E5]' : 'text-purple-600'}`}>{formatTime(readingSeconds)}</span>
             <span className="text-[10px] font-bold text-slate-600 block">Durasi</span>
           </div>
         </div>
@@ -768,7 +892,7 @@ export const IndonesianArticleReader: React.FC<Props> = ({ onBack }) => {
 
       {/* DETAILED ANSWER KEY */}
       <div className="space-y-4">
-        <h3 className="text-lg font-black text-slate-900 px-1 uppercase tracking-tight">
+        <h3 className={`text-lg font-black ${isCoastal ? 'text-[#1E293B]' : 'text-slate-900'} px-1 uppercase tracking-tight`}>
           Kunci Jawaban & Pembahasan Lengkap:
         </h3>
 
@@ -787,20 +911,28 @@ export const IndonesianArticleReader: React.FC<Props> = ({ onBack }) => {
             });
 
             return (
-              <div key={q.id} className="bg-white rounded-2xl p-5 border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] space-y-2">
+              <div key={q.id} className={`bg-white rounded-2xl p-5 border-2 ${
+                isCoastal ? 'border-[#1E293B] shadow-[3px_3px_0px_0px_#1E293B]' : 'border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]'
+              } space-y-2`}>
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex items-start gap-2.5">
-                    <span className="font-black text-xs bg-slate-100 text-slate-900 border border-slate-900 w-6 h-6 rounded-md flex items-center justify-center shrink-0">
+                    <span className={`font-black text-xs ${
+                      isCoastal ? 'bg-slate-100 text-[#1E293B] border-[#1E293B]' : 'bg-slate-100 text-slate-900 border-slate-900'
+                    } border w-6 h-6 rounded-md flex items-center justify-center shrink-0`}>
                       {idx + 1}
                     </span>
-                    <p className="text-sm font-black text-slate-900">{q.question}</p>
+                    <p className={`text-sm font-black ${isCoastal ? 'text-[#1E293B]' : 'text-slate-900'}`}>{q.question}</p>
                   </div>
                   {isMatch ? (
-                    <span className="text-xs font-black text-emerald-950 bg-emerald-300 border border-slate-900 px-2.5 py-0.5 rounded-md flex items-center gap-1 shrink-0">
+                    <span className={`text-xs font-black ${
+                      isCoastal ? 'text-[#1E40AF] bg-[#DBEAFE] border-[#1E293B]' : 'text-emerald-950 bg-emerald-300 border-slate-900'
+                    } border px-2.5 py-0.5 rounded-md flex items-center gap-1 shrink-0`}>
                       <CheckCircle2 className="w-3.5 h-3.5" /> Benar
                     </span>
                   ) : (
-                    <span className="text-xs font-black text-rose-950 bg-rose-300 border border-slate-900 px-2.5 py-0.5 rounded-md flex items-center gap-1 shrink-0">
+                    <span className={`text-xs font-black ${
+                      isCoastal ? 'text-[#991B1B] bg-[#FEE2E2] border-[#1E293B]' : 'text-[#7F1D1D] bg-[#FEE2E2] border-slate-900'
+                    } border px-2.5 py-0.5 rounded-md flex items-center gap-1 shrink-0`}>
                       <XCircle className="w-3.5 h-3.5" /> Kurang Tepat
                     </span>
                   )}
@@ -808,9 +940,9 @@ export const IndonesianArticleReader: React.FC<Props> = ({ onBack }) => {
 
                 <div className="text-xs space-y-1.5 pl-8 font-medium">
                   <p className="text-slate-600">
-                    Jawabanmu: <span className="font-bold text-slate-900">{userAns || '(Tidak diisi)'}</span>
+                    Jawabanmu: <span className={`font-bold ${isCoastal ? 'text-[#1E293B]' : 'text-slate-900'}`}>{userAns || '(Tidak diisi)'}</span>
                   </p>
-                  <p className="text-emerald-700 font-bold">
+                  <p className={`${isCoastal ? 'text-[#1E40AF]' : 'text-emerald-700'} font-bold`}>
                     Kunci Jawaban: {q.correctAnswers[0]}
                   </p>
                   <p className="text-slate-600 text-[11px] bg-slate-50 p-2.5 rounded-xl border border-slate-200">
@@ -833,20 +965,28 @@ export const IndonesianArticleReader: React.FC<Props> = ({ onBack }) => {
             const isCorrect = userAns === q.isTrue;
 
             return (
-              <div key={q.id} className="bg-white rounded-2xl p-5 border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] space-y-2">
+              <div key={q.id} className={`bg-white rounded-2xl p-5 border-2 ${
+                isCoastal ? 'border-[#1E293B] shadow-[3px_3px_0px_0px_#1E293B]' : 'border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]'
+              } space-y-2`}>
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex items-start gap-2.5">
-                    <span className="font-black text-xs bg-slate-100 text-slate-900 border border-slate-900 w-6 h-6 rounded-md flex items-center justify-center shrink-0">
+                    <span className={`font-black text-xs ${
+                      isCoastal ? 'bg-slate-100 text-[#1E293B] border-[#1E293B]' : 'bg-slate-100 text-slate-900 border-slate-900'
+                    } border w-6 h-6 rounded-md flex items-center justify-center shrink-0`}>
                       {idx + 6}
                     </span>
-                    <p className="text-sm font-black text-slate-900">{q.statement}</p>
+                    <p className={`text-sm font-black ${isCoastal ? 'text-[#1E293B]' : 'text-slate-900'}`}>{q.statement}</p>
                   </div>
                   {isCorrect ? (
-                    <span className="text-xs font-black text-emerald-950 bg-emerald-300 border border-slate-900 px-2.5 py-0.5 rounded-md flex items-center gap-1 shrink-0">
+                    <span className={`text-xs font-black ${
+                      isCoastal ? 'text-[#1E40AF] bg-[#DBEAFE] border-[#1E293B]' : 'text-emerald-950 bg-emerald-300 border-slate-900'
+                    } border px-2.5 py-0.5 rounded-md flex items-center gap-1 shrink-0`}>
                       <CheckCircle2 className="w-3.5 h-3.5" /> Benar
                     </span>
                   ) : (
-                    <span className="text-xs font-black text-rose-950 bg-rose-300 border border-slate-900 px-2.5 py-0.5 rounded-md flex items-center gap-1 shrink-0">
+                    <span className={`text-xs font-black ${
+                      isCoastal ? 'text-[#991B1B] bg-[#FEE2E2] border-[#1E293B]' : 'text-[#7F1D1D] bg-[#FEE2E2] border-slate-900'
+                    } border px-2.5 py-0.5 rounded-md flex items-center gap-1 shrink-0`}>
                       <XCircle className="w-3.5 h-3.5" /> Salah
                     </span>
                   )}
@@ -854,9 +994,9 @@ export const IndonesianArticleReader: React.FC<Props> = ({ onBack }) => {
 
                 <div className="text-xs space-y-1.5 pl-8 font-medium">
                   <p className="text-slate-600">
-                    Pilihanmu: <span className="font-bold text-slate-900">{userAns === null || userAns === undefined ? '(Belum dijawab)' : userAns ? 'BENAR' : 'SALAH'}</span>
+                    Pilihanmu: <span className={`font-bold ${isCoastal ? 'text-[#1E293B]' : 'text-slate-900'}`}>{userAns === null || userAns === undefined ? '(Belum dijawab)' : userAns ? 'BENAR' : 'SALAH'}</span>
                     {' • '}
-                    Kunci Jawaban: <span className="font-bold text-emerald-700">{q.isTrue ? 'BENAR' : 'SALAH'}</span>
+                    Kunci Jawaban: <span className={`font-bold ${isCoastal ? 'text-[#1E40AF]' : 'text-emerald-700'}`}>{q.isTrue ? 'BENAR' : 'SALAH'}</span>
                   </p>
                   <p className="text-slate-600 text-[11px] bg-slate-50 p-2.5 rounded-xl border border-slate-200">
                     💡 <strong>Penjelasan:</strong> {q.explanation}
@@ -872,24 +1012,30 @@ export const IndonesianArticleReader: React.FC<Props> = ({ onBack }) => {
       <div className="pt-4 flex items-center justify-between gap-3 flex-wrap">
         <button
           onClick={() => setStep('select')}
-          className="px-5 py-2.5 rounded-xl bg-white border-2 border-slate-900 text-xs sm:text-sm font-black uppercase text-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-slate-50 cursor-pointer active:translate-y-0.5"
+          className={`px-5 py-2.5 rounded-xl bg-white border-2 ${
+            isCoastal ? 'border-[#1E293B] text-[#1E293B] shadow-[2px_2px_0px_0px_#1E293B]' : 'border-slate-900 text-slate-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
+          } text-xs sm:text-sm font-black uppercase hover:bg-slate-50 cursor-pointer active:translate-y-0.5`}
         >
-          Daftar 8 Artikel Hari Ini
+          Daftar 5 Artikel Hari Ini
         </button>
 
         <div className="flex items-center gap-2">
-          {nextDailyArticle && dailyIndonesianProgress.completedCount < 8 && (
+          {nextDailyArticle && dailyIndonesianProgress.completedCount < 5 && (
             <button
               onClick={() => startNextArticle(nextDailyArticle)}
-              className="px-5 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs sm:text-sm font-black uppercase border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] flex items-center gap-1.5 cursor-pointer active:translate-y-0.5"
+              className={`px-5 py-2.5 rounded-xl ${
+                isCoastal ? 'bg-[#2563EB] hover:bg-[#1D4ED8] text-white border-[#1E293B] shadow-[3px_3px_0px_0px_#1E293B]' : 'bg-amber-400 hover:bg-amber-300 text-slate-950 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]'
+              } text-xs sm:text-sm font-black uppercase border-2 flex items-center gap-1.5 cursor-pointer active:translate-y-0.5`}
             >
-              Lanjut Artikel #{Math.min(8, dailyIndonesianProgress.completedCount + 1)} <ArrowRight className="w-4 h-4" />
+              Lanjut Artikel #{Math.min(5, dailyIndonesianProgress.completedCount + 1)} <ArrowRight className="w-4 h-4" />
             </button>
           )}
 
           <button
             onClick={onBack}
-            className="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs sm:text-sm font-black uppercase border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] cursor-pointer active:translate-y-0.5"
+            className={`px-5 py-2.5 rounded-xl ${
+              isCoastal ? 'bg-[#1E293B] hover:bg-slate-800 border-[#1E293B] shadow-[3px_3px_0px_0px_#1E293B]' : 'bg-slate-900 hover:bg-slate-800 border-slate-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]'
+            } text-white text-xs sm:text-sm font-black uppercase border-2 cursor-pointer active:translate-y-0.5`}
           >
             Selesai & Dashboard
           </button>

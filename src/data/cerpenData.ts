@@ -1,4 +1,6 @@
 import { CerpenItem } from '../types';
+import { HORROR_CERPEN_INDO } from './horrorCerpenIndo';
+import { HORROR_CERPEN_ENG } from './horrorCerpenEng';
 
 export const CERPEN_COLLECTION: CerpenItem[] = [
   // ==================== INDONESIAN STORIES (13 STORIES) ====================
@@ -2035,5 +2037,7 @@ export const CERPEN_COLLECTION: CerpenItem[] = [
         explanation: 'Linh reflects that one’s light is meant to be shared outward to guide and comfort others.'
       }
     ]
-  }
+  },
+  ...HORROR_CERPEN_INDO,
+  ...HORROR_CERPEN_ENG
 ];

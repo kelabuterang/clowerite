@@ -1,4 +1,6 @@
 import { SentenceDrillItem } from '../types';
+import { ADDITIONAL_SENTENCE_DRILLS_50 } from './additionalSentenceDrills';
+import { ADDITIONAL_SENTENCE_DRILLS_50_PART2 } from './additionalSentenceDrillsPart2';
 
 export const SENTENCE_DRILL_LIST: SentenceDrillItem[] = [
   {
@@ -400,5 +402,7 @@ export const SENTENCE_DRILL_LIST: SentenceDrillItem[] = [
       { indonesian: 'Menghasilkan perubahan besar', english: 'Produce massive changes / create huge changes', type: 'Verb Phrase' },
       { indonesian: 'Dalam jangka panjang', english: 'In the long run / in the long term', type: 'Idiomatic Phrase' }
     ]
-  }
+  },
+  ...ADDITIONAL_SENTENCE_DRILLS_50,
+  ...ADDITIONAL_SENTENCE_DRILLS_50_PART2
 ];

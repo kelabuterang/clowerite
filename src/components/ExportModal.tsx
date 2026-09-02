@@ -3,6 +3,7 @@ import { Download, FileText, Link, Check, ExternalLink, X, BookOpen, Printer, Sp
 import { INDONESIAN_ARTICLES, getDailyIndonesianArticles } from '../data/indonesianArticles';
 import { ENGLISH_ARTICLES, getDailyEnglishArticles } from '../data/englishArticles';
 import { CERPEN_COLLECTION } from '../data/cerpenData';
+import { useHabit } from '../context/HabitContext';
 
 interface ExportModalProps {
   isOpen: boolean;
@@ -12,6 +13,9 @@ interface ExportModalProps {
 type ExportCategory = 'all-id' | 'daily-id-8' | 'all-en' | 'daily-en-5' | 'cerpen' | 'all-links';
 
 export const ExportModal: React.FC<ExportModalProps> = ({ isOpen, onClose }) => {
+  const { theme } = useHabit();
+  const isCoastal = theme === 'coastal';
+
   const [selectedCategory, setSelectedCategory] = useState<ExportCategory>('daily-id-8');
   const [copied, setCopied] = useState(false);
   const [includeQuiz, setIncludeQuiz] = useState(true);
@@ -425,8 +429,8 @@ export const ExportModal: React.FC<ExportModalProps> = ({ isOpen, onClose }) => 
                   <Sparkles className="w-4 h-4" />
                 </div>
                 <div>
-                  <div className="font-bold text-sm text-slate-900">8 Artikel Harian ID (Obat Fokus)</div>
-                  <div className="text-xs text-slate-500">Paket 8/8 hari ini dengan timer & kuis</div>
+                  <div className="font-bold text-sm text-slate-900">5 Artikel Harian ID (Getah Sanubari)</div>
+                  <div className="text-xs text-slate-500">Paket 5/5 hari ini dengan timer & kuis</div>
                 </div>
               </button>
 
@@ -507,11 +511,13 @@ export const ExportModal: React.FC<ExportModalProps> = ({ isOpen, onClose }) => 
                 onClick={() => setSelectedCategory('all-links')}
                 className={`p-3 text-left rounded-xl border-2 transition-all flex items-start gap-2.5 cursor-pointer ${
                   selectedCategory === 'all-links'
-                    ? 'border-rose-500 bg-rose-50 shadow-sm'
+                    ? isCoastal ? 'border-[#3A6B88] bg-[#EBF1F5] shadow-sm' : 'border-[#709752] bg-[#E9EDC9] shadow-sm'
                     : 'border-slate-200 hover:border-slate-300 bg-slate-50'
                 }`}
               >
-                <div className="p-1.5 rounded bg-rose-100 text-rose-700 mt-0.5">
+                <div className={`p-1.5 rounded mt-0.5 ${
+                  isCoastal ? 'bg-[#DDE7F0] text-[#2C4A6F]' : 'bg-[#CCD5AE] text-[#283618]'
+                }`}>
                   <Link className="w-4 h-4" />
                 </div>
                 <div>

@@ -3,7 +3,8 @@ import { Eraser, Play, Check, Clock, Sparkles, BookOpen, ExternalLink, RefreshCw
 import { useHabit } from '../context/HabitContext';
 
 export const CustomArticleCleaner: React.FC = () => {
-  const { recordSession } = useHabit();
+  const { recordSession, theme } = useHabit();
+  const isCoastal = theme === 'coastal';
 
   const [rawText, setRawText] = useState('');
   const [cleanedText, setCleanedText] = useState('');
@@ -158,47 +159,75 @@ Ketika deru mesin diesel tua itu akhirnya terdengar sayup dari balik rimbun baka
   return (
     <div className="max-w-5xl mx-auto px-4 py-6 space-y-6">
       {/* Header Banner */}
-      <div className="bg-[#CCD5AE] text-[#283618] rounded-2xl p-6 sm:p-8 border-2 border-[#283618] shadow-[4px_4px_0px_0px_#283618] space-y-3">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-white border border-[#283618] text-xs font-black tracking-widest uppercase text-[#3A5A40]">
-          <Search className="w-3.5 h-3.5 text-[#588157] stroke-[2.5]" />
+      <div className={`rounded-2xl p-6 sm:p-8 border-2 space-y-3 ${
+        isCoastal
+          ? 'bg-[#EBF1F5] text-slate-800 border-slate-700 shadow-[4px_4px_0px_0px_rgba(51,65,85,1)]'
+          : 'bg-[#CCD5AE] text-[#283618] border-[#283618] shadow-[4px_4px_0px_0px_#283618]'
+      }`}>
+        <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-white border text-xs font-black tracking-widest uppercase ${
+          isCoastal ? 'border-slate-700 text-[#2C4A6F]' : 'border-[#283618] text-[#3A5A40]'
+        }`}>
+          <Search className={`w-3.5 h-3.5 stroke-[2.5] ${isCoastal ? 'text-[#3A6B88]' : 'text-[#588157]'}`} />
           KAMUS REFERENSI & PEMBERSIH TEKS
         </div>
-        <h1 className="text-2xl sm:text-3xl font-black leading-snug uppercase tracking-tight text-[#283618]">
+        <h1 className={`text-2xl sm:text-3xl font-black leading-snug uppercase tracking-tight ${
+          isCoastal ? 'text-slate-800' : 'text-[#283618]'
+        }`}>
           Pusat Kamus & Pembersih Artikel
         </h1>
-        <p className="text-xs sm:text-sm text-[#3A5A40] font-bold leading-relaxed max-w-2xl">
+        <p className={`text-xs sm:text-sm font-bold leading-relaxed max-w-2xl ${
+          isCoastal ? 'text-slate-600' : 'text-[#3A5A40]'
+        }`}>
           Cari kosakata langsung di Bab.la, Cambridge Dictionary, atau KBBI Daring, serta bersihkan naskah dari iklan & elemen navigasi untuk pengalaman membaca fokus.
         </p>
       </div>
 
       {/* Dictionary Search Widget */}
-      <div className="bg-white rounded-2xl p-6 border-2 border-[#283618] shadow-[4px_4px_0px_0px_#283618] space-y-4">
+      <div className={`bg-white rounded-2xl p-6 border-2 space-y-4 ${
+        isCoastal ? 'border-slate-700 shadow-[4px_4px_0px_0px_rgba(51,65,85,1)]' : 'border-[#283618] shadow-[4px_4px_0px_0px_#283618]'
+      }`}>
         <div className="flex items-center justify-between flex-wrap gap-2">
-          <h3 className="text-sm sm:text-base font-black text-[#283618] uppercase tracking-tight flex items-center gap-2">
-            <BookOpen className="w-4 h-4 text-[#709752]" />
+          <h3 className={`text-sm sm:text-base font-black uppercase tracking-tight flex items-center gap-2 ${
+            isCoastal ? 'text-slate-800' : 'text-[#283618]'
+          }`}>
+            <BookOpen className={`w-4 h-4 ${isCoastal ? 'text-[#3A6B88]' : 'text-[#709752]'}`} />
             Cari Makna & Padanan Kata di Kamus Resmi:
           </h3>
           <div className="flex items-center gap-2">
-            <span className="text-[11px] font-bold text-[#574332]">Pilihan Kamus:</span>
-            <div className="flex bg-[#FAEDCD] p-1 rounded-lg border border-[#283618] text-xs font-black">
+            <span className={`text-[11px] font-bold ${isCoastal ? 'text-slate-600' : 'text-[#574332]'}`}>Pilihan Kamus:</span>
+            <div className={`flex p-1 rounded-lg border text-xs font-black ${
+              isCoastal ? 'bg-[#F1F5F9] border-slate-300' : 'bg-[#FAEDCD] border-[#283618]'
+            }`}>
               <button
                 type="button"
                 onClick={() => setDictSource('babla')}
-                className={`px-2.5 py-1 rounded ${dictSource === 'babla' ? 'bg-[#709752] text-white' : 'text-[#283618]'}`}
+                className={`px-2.5 py-1 rounded transition-colors ${
+                  dictSource === 'babla'
+                    ? isCoastal ? 'bg-[#3A6B88] text-white' : 'bg-[#709752] text-white'
+                    : isCoastal ? 'text-slate-700 hover:text-slate-900' : 'text-[#283618]'
+                }`}
               >
                 Bab.la
               </button>
               <button
                 type="button"
                 onClick={() => setDictSource('cambridge')}
-                className={`px-2.5 py-1 rounded ${dictSource === 'cambridge' ? 'bg-[#709752] text-white' : 'text-[#283618]'}`}
+                className={`px-2.5 py-1 rounded transition-colors ${
+                  dictSource === 'cambridge'
+                    ? isCoastal ? 'bg-[#3A6B88] text-white' : 'bg-[#709752] text-white'
+                    : isCoastal ? 'text-slate-700 hover:text-slate-900' : 'text-[#283618]'
+                }`}
               >
                 Cambridge
               </button>
               <button
                 type="button"
                 onClick={() => setDictSource('kbbi')}
-                className={`px-2.5 py-1 rounded ${dictSource === 'kbbi' ? 'bg-[#709752] text-white' : 'text-[#283618]'}`}
+                className={`px-2.5 py-1 rounded transition-colors ${
+                  dictSource === 'kbbi'
+                    ? isCoastal ? 'bg-[#3A6B88] text-white' : 'bg-[#709752] text-white'
+                    : isCoastal ? 'text-slate-700 hover:text-slate-900' : 'text-[#283618]'
+                }`}
               >
                 KBBI Daring
               </button>
@@ -214,25 +243,37 @@ Ketika deru mesin diesel tua itu akhirnya terdengar sayup dari balik rimbun baka
               value={dictSearchWord}
               onChange={e => setDictSearchWord(e.target.value)}
               placeholder="Ketik kata yang ingin dicari (contoh: perseverance, komprehensif, serendipity)..."
-              className="w-full pl-10 pr-4 py-3 rounded-xl border-2 border-[#283618] text-xs sm:text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#709752]"
+              className={`w-full pl-10 pr-4 py-3 rounded-xl border-2 text-xs sm:text-sm font-medium focus:outline-none ${
+                isCoastal
+                  ? 'border-slate-700 focus:ring-2 focus:ring-[#3A6B88]'
+                  : 'border-[#283618] focus:ring-2 focus:ring-[#709752]'
+              }`}
             />
           </div>
           <button
             type="submit"
-            className="bg-[#709752] hover:bg-[#588157] text-white font-black text-xs sm:text-sm px-6 py-3 rounded-xl border-2 border-[#283618] shadow-[2px_2px_0px_0px_#283618] uppercase flex items-center gap-1.5 cursor-pointer active:translate-y-0.5"
+            className={`font-black text-xs sm:text-sm px-6 py-3 rounded-xl border-2 uppercase flex items-center gap-1.5 cursor-pointer active:translate-y-0.5 text-white transition-all ${
+              isCoastal
+                ? 'bg-[#3A6B88] hover:bg-[#2C4A6F] border-slate-700 shadow-[2px_2px_0px_0px_rgba(51,65,85,1)]'
+                : 'bg-[#709752] hover:bg-[#588157] border-[#283618] shadow-[2px_2px_0px_0px_#283618]'
+            }`}
           >
             <span>Buka Kamus</span>
             <ExternalLink className="w-4 h-4" />
           </button>
         </form>
 
-        <div className="flex items-center gap-3 text-[11px] text-[#574332] font-semibold pt-1">
+        <div className={`flex items-center gap-3 text-[11px] font-semibold pt-1 ${
+          isCoastal ? 'text-slate-600' : 'text-[#574332]'
+        }`}>
           <span>Tautan Cepat:</span>
           <a
             href="https://www.babla.co.id/bahasa-inggris-bahasa-indonesia/"
             target="_blank"
             rel="noreferrer"
-            className="text-[#709752] underline font-bold hover:text-[#588157]"
+            className={`underline font-bold transition-colors ${
+              isCoastal ? 'text-[#3A6B88] hover:text-[#2C4A6F]' : 'text-[#709752] hover:text-[#588157]'
+            }`}
           >
             Bab.la (EN-ID)
           </a>
@@ -241,7 +282,9 @@ Ketika deru mesin diesel tua itu akhirnya terdengar sayup dari balik rimbun baka
             href="https://dictionary.cambridge.org/dictionary/english-indonesian/"
             target="_blank"
             rel="noreferrer"
-            className="text-[#709752] underline font-bold hover:text-[#588157]"
+            className={`underline font-bold transition-colors ${
+              isCoastal ? 'text-[#3A6B88] hover:text-[#2C4A6F]' : 'text-[#709752] hover:text-[#588157]'
+            }`}
           >
             Cambridge Dictionary
           </a>
@@ -250,7 +293,9 @@ Ketika deru mesin diesel tua itu akhirnya terdengar sayup dari balik rimbun baka
             href="https://kbbi.kemdikbud.go.id/"
             target="_blank"
             rel="noreferrer"
-            className="text-[#709752] underline font-bold hover:text-[#588157]"
+            className={`underline font-bold transition-colors ${
+              isCoastal ? 'text-[#3A6B88] hover:text-[#2C4A6F]' : 'text-[#709752] hover:text-[#588157]'
+            }`}
           >
             KBBI Kemdikbud
           </a>
@@ -259,24 +304,36 @@ Ketika deru mesin diesel tua itu akhirnya terdengar sayup dari balik rimbun baka
 
       {/* Article Cleaner & Reader */}
       {!isReadingMode ? (
-        <div className="bg-white rounded-2xl p-6 sm:p-8 border-2 border-[#283618] shadow-[4px_4px_0px_0px_#283618] space-y-6">
+        <div className={`bg-white rounded-2xl p-6 sm:p-8 border-2 space-y-6 ${
+          isCoastal ? 'border-slate-700 shadow-[4px_4px_0px_0px_rgba(51,65,85,1)]' : 'border-[#283618] shadow-[4px_4px_0px_0px_#283618]'
+        }`}>
           <div className="space-y-1">
-            <h3 className="text-base font-black text-[#283618] uppercase tracking-tight">
+            <h3 className={`text-base font-black uppercase tracking-tight ${
+              isCoastal ? 'text-slate-800' : 'text-[#283618]'
+            }`}>
               Pembersih Teks Artikel dari Iklan & Navigasi:
             </h3>
-            <p className="text-xs text-[#574332] font-medium">
+            <p className={`text-xs font-medium ${isCoastal ? 'text-slate-600' : 'text-[#574332]'}`}>
               Tempel teks mentah dari situs berita atau pilih contoh naskah di bawah untuk otomatis dibersihkan.
             </p>
           </div>
 
           {/* Presets */}
           <div className="flex flex-wrap gap-2">
-            <span className="text-xs font-black uppercase text-[#283618] self-center mr-1">Contoh Naskah:</span>
+            <span className={`text-xs font-black uppercase self-center mr-1 ${
+              isCoastal ? 'text-slate-800' : 'text-[#283618]'
+            }`}>
+              Contoh Naskah:
+            </span>
             {samplePresets.map((p, idx) => (
               <button
                 key={idx}
                 onClick={() => handleLoadPreset(p)}
-                className="text-xs font-bold bg-[#E9EDC9] hover:bg-[#CCD5AE] text-[#283618] px-3 py-1.5 rounded-lg border border-[#A3B18A] cursor-pointer"
+                className={`text-xs font-bold px-3 py-1.5 rounded-lg border cursor-pointer transition-colors ${
+                  isCoastal
+                    ? 'bg-[#EBF1F5] hover:bg-slate-200 text-slate-800 border-slate-300'
+                    : 'bg-[#E9EDC9] hover:bg-[#CCD5AE] text-[#283618] border-[#A3B18A]'
+                }`}
               >
                 {p.source}
               </button>
@@ -285,19 +342,27 @@ Ketika deru mesin diesel tua itu akhirnya terdengar sayup dari balik rimbun baka
 
           <div className="space-y-3">
             <div>
-              <label className="text-xs font-black text-[#283618] uppercase block mb-1">
+              <label className={`text-xs font-black uppercase block mb-1 ${
+                isCoastal ? 'text-slate-800' : 'text-[#283618]'
+              }`}>
                 Judul Artikel:
               </label>
               <input
                 type="text"
                 value={articleTitle}
                 onChange={e => setArticleTitle(e.target.value)}
-                className="w-full p-3 rounded-xl border-2 border-[#283618] text-xs font-medium focus:outline-none focus:ring-2 focus:ring-[#709752]"
+                className={`w-full p-3 rounded-xl border-2 text-xs font-medium focus:outline-none ${
+                  isCoastal
+                    ? 'border-slate-700 focus:ring-2 focus:ring-[#3A6B88]'
+                    : 'border-[#283618] focus:ring-2 focus:ring-[#709752]'
+                }`}
               />
             </div>
 
             <div>
-              <label className="text-xs font-black text-[#283618] uppercase block mb-1">
+              <label className={`text-xs font-black uppercase block mb-1 ${
+                isCoastal ? 'text-slate-800' : 'text-[#283618]'
+              }`}>
                 Teks Mentah (Paste dari web/jurnal):
               </label>
               <textarea
@@ -305,14 +370,22 @@ Ketika deru mesin diesel tua itu akhirnya terdengar sayup dari balik rimbun baka
                 value={rawText}
                 onChange={e => setRawText(e.target.value)}
                 placeholder="Tempel teks mentah di sini..."
-                className="w-full p-3 rounded-xl border-2 border-[#283618] text-xs font-mono focus:outline-none focus:ring-2 focus:ring-[#709752]"
+                className={`w-full p-3 rounded-xl border-2 text-xs font-mono focus:outline-none ${
+                  isCoastal
+                    ? 'border-slate-700 focus:ring-2 focus:ring-[#3A6B88]'
+                    : 'border-[#283618] focus:ring-2 focus:ring-[#709752]'
+                }`}
               />
             </div>
 
             <button
               onClick={handleCleanAndRead}
               disabled={!rawText.trim()}
-              className="w-full bg-[#709752] hover:bg-[#588157] text-white font-black py-4 rounded-xl border-2 border-[#283618] shadow-[4px_4px_0px_0px_#283618] uppercase text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer active:translate-y-0.5 transition-all disabled:opacity-50"
+              className={`w-full text-white font-black py-4 rounded-xl border-2 uppercase text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer active:translate-y-0.5 transition-all disabled:opacity-50 ${
+                isCoastal
+                  ? 'bg-[#3A6B88] hover:bg-[#2C4A6F] border-slate-700 shadow-[4px_4px_0px_0px_rgba(51,65,85,1)]'
+                  : 'bg-[#709752] hover:bg-[#588157] border-[#283618] shadow-[4px_4px_0px_0px_#283618]'
+              }`}
             >
               <Eraser className="w-4 h-4" />
               Bersihkan & Masuk Mode Baca Fokus
@@ -322,17 +395,25 @@ Ketika deru mesin diesel tua itu akhirnya terdengar sayup dari balik rimbun baka
       ) : (
         <div className="space-y-6">
           {/* Top Timer Bar */}
-          <div className="bg-white rounded-2xl p-4 border-2 border-[#283618] shadow-[4px_4px_0px_0px_#283618] flex items-center justify-between gap-4 sticky top-4 z-20">
+          <div className={`bg-white rounded-2xl p-4 border-2 flex items-center justify-between gap-4 sticky top-4 z-20 ${
+            isCoastal ? 'border-slate-700 shadow-[4px_4px_0px_0px_rgba(51,65,85,1)]' : 'border-[#283618] shadow-[4px_4px_0px_0px_#283618]'
+          }`}>
             <button
               onClick={() => setIsReadingMode(false)}
-              className="flex items-center gap-1.5 text-xs font-black uppercase text-[#283618] hover:text-[#588157] cursor-pointer"
+              className={`flex items-center gap-1.5 text-xs font-black uppercase cursor-pointer transition-colors ${
+                isCoastal ? 'text-slate-800 hover:text-[#3A6B88]' : 'text-[#283618] hover:text-[#588157]'
+              }`}
             >
               <ArrowLeft className="w-4 h-4" />
               Kembali Edit Teks
             </button>
 
             <div className="flex items-center gap-3">
-              <div className="flex items-center gap-1.5 bg-[#E9EDC9] text-[#3A5A40] px-3 py-1 rounded-lg border border-[#A3B18A] font-mono text-xs font-black">
+              <div className={`flex items-center gap-1.5 px-3 py-1 rounded-lg border font-mono text-xs font-black ${
+                isCoastal
+                  ? 'bg-[#EBF1F5] text-[#2C4A6F] border-slate-300'
+                  : 'bg-[#E9EDC9] text-[#3A5A40] border-[#A3B18A]'
+              }`}>
                 <Clock className="w-3.5 h-3.5" />
                 <span>{formatTime(readingSeconds)}</span>
               </div>
@@ -343,7 +424,11 @@ Ketika deru mesin diesel tua itu akhirnya terdengar sayup dari balik rimbun baka
                     setIsReadingActive(true);
                     setHasStarted(true);
                   }}
-                  className="bg-[#709752] hover:bg-[#588157] text-white font-black text-xs uppercase px-4 py-2 rounded-xl border-2 border-[#283618] shadow-[2px_2px_0px_0px_#283618] cursor-pointer active:translate-y-0.5 flex items-center gap-1.5"
+                  className={`text-white font-black text-xs uppercase px-4 py-2 rounded-xl border-2 cursor-pointer active:translate-y-0.5 flex items-center gap-1.5 transition-all ${
+                    isCoastal
+                      ? 'bg-[#3A6B88] hover:bg-[#2C4A6F] border-slate-700 shadow-[2px_2px_0px_0px_rgba(51,65,85,1)]'
+                      : 'bg-[#709752] hover:bg-[#588157] border-[#283618] shadow-[2px_2px_0px_0px_#283618]'
+                  }`}
                 >
                   <Play className="w-3.5 h-3.5 fill-white" />
                   Mulai Timer Baca
@@ -351,13 +436,21 @@ Ketika deru mesin diesel tua itu akhirnya terdengar sayup dari balik rimbun baka
               ) : !isFinished ? (
                 <button
                   onClick={handleFinishSession}
-                  className="bg-[#709752] hover:bg-[#588157] text-white font-black text-xs uppercase px-4 py-2 rounded-xl border-2 border-[#283618] shadow-[2px_2px_0px_0px_#283618] cursor-pointer active:translate-y-0.5 flex items-center gap-1.5"
+                  className={`text-white font-black text-xs uppercase px-4 py-2 rounded-xl border-2 cursor-pointer active:translate-y-0.5 flex items-center gap-1.5 transition-all ${
+                    isCoastal
+                      ? 'bg-[#3A6B88] hover:bg-[#2C4A6F] border-slate-700 shadow-[2px_2px_0px_0px_rgba(51,65,85,1)]'
+                      : 'bg-[#709752] hover:bg-[#588157] border-[#283618] shadow-[2px_2px_0px_0px_#283618]'
+                  }`}
                 >
                   <Check className="w-3.5 h-3.5 stroke-[3]" />
                   Selesai Membaca
                 </button>
               ) : (
-                <span className="text-xs font-black text-[#709752] bg-[#E9EDC9] px-3 py-1 rounded-lg border border-[#A3B18A]">
+                <span className={`text-xs font-black px-3 py-1 rounded-lg border ${
+                  isCoastal
+                    ? 'text-[#2C4A6F] bg-[#EBF1F5] border-slate-300'
+                    : 'text-[#709752] bg-[#E9EDC9] border-[#A3B18A]'
+                }`}>
                   ✓ Sesi Tersimpan
                 </span>
               )}
@@ -365,38 +458,62 @@ Ketika deru mesin diesel tua itu akhirnya terdengar sayup dari balik rimbun baka
           </div>
 
           {/* Cleaned Reader */}
-          <div className="bg-[#FAF6EE] rounded-3xl p-6 sm:p-10 border-2 border-[#283618] shadow-[6px_6px_0px_0px_#283618] space-y-6">
+          <div className={`rounded-3xl p-6 sm:p-10 border-2 space-y-6 ${
+            isCoastal
+              ? 'bg-[#F8FAFC] border-slate-700 shadow-[6px_6px_0px_0px_rgba(51,65,85,1)]'
+              : 'bg-[#FAF6EE] border-[#283618] shadow-[6px_6px_0px_0px_#283618]'
+          }`}>
             <div className="border-b-2 border-slate-200 pb-4 space-y-1">
-              <span className="text-[10px] font-black uppercase text-[#3A5A40] bg-[#E9EDC9] px-2.5 py-0.5 rounded-md border border-[#A3B18A]">
+              <span className={`text-[10px] font-black uppercase px-2.5 py-0.5 rounded-md border ${
+                isCoastal
+                  ? 'text-[#2C4A6F] bg-[#EBF1F5] border-slate-300'
+                  : 'text-[#3A5A40] bg-[#E9EDC9] border-[#A3B18A]'
+              }`}>
                 Mode Baca Bersih • {wordCount} Kata
               </span>
-              <h1 className="text-2xl sm:text-3xl font-black text-[#283618] pt-1">
+              <h1 className={`text-2xl sm:text-3xl font-black pt-1 ${
+                isCoastal ? 'text-slate-800' : 'text-[#283618]'
+              }`}>
                 {articleTitle}
               </h1>
             </div>
 
-            <div className="space-y-4 text-sm sm:text-base leading-relaxed text-[#283618] font-serif whitespace-pre-line text-justify">
+            <div className={`space-y-4 text-sm sm:text-base leading-relaxed font-serif whitespace-pre-line text-justify ${
+              isCoastal ? 'text-slate-800' : 'text-[#283618]'
+            }`}>
               {cleanedText}
             </div>
 
             {isFinished && (
-              <div className="bg-[#E9EDC9] p-4 rounded-2xl border-2 border-[#283618] space-y-2">
-                <div className="flex items-center gap-2 text-xs font-black uppercase text-[#3A5A40]">
-                  <CheckCircle2 className="w-4 h-4 text-[#709752]" />
+              <div className={`p-4 rounded-2xl border-2 space-y-2 ${
+                isCoastal
+                  ? 'bg-[#EBF1F5] border-slate-700'
+                  : 'bg-[#E9EDC9] border-[#283618]'
+              }`}>
+                <div className={`flex items-center gap-2 text-xs font-black uppercase ${
+                  isCoastal ? 'text-[#2C4A6F]' : 'text-[#3A5A40]'
+                }`}>
+                  <CheckCircle2 className={`w-4 h-4 ${isCoastal ? 'text-[#3A6B88]' : 'text-[#709752]'}`} />
                   Statistik Sesi Membaca:
                 </div>
                 <div className="grid grid-cols-3 gap-2 text-center">
-                  <div className="bg-white p-2.5 rounded-xl border border-[#283618]">
-                    <div className="text-[10px] font-bold text-[#574332]">Waktu</div>
-                    <div className="font-mono font-black text-sm text-[#283618]">{formatTime(readingSeconds)}</div>
+                  <div className={`bg-white p-2.5 rounded-xl border ${
+                    isCoastal ? 'border-slate-700' : 'border-[#283618]'
+                  }`}>
+                    <div className={`text-[10px] font-bold ${isCoastal ? 'text-slate-500' : 'text-[#574332]'}`}>Waktu</div>
+                    <div className={`font-mono font-black text-sm ${isCoastal ? 'text-slate-800' : 'text-[#283618]'}`}>{formatTime(readingSeconds)}</div>
                   </div>
-                  <div className="bg-white p-2.5 rounded-xl border border-[#283618]">
-                    <div className="text-[10px] font-bold text-[#574332]">Kata</div>
-                    <div className="font-mono font-black text-sm text-[#283618]">{wordCount}</div>
+                  <div className={`bg-white p-2.5 rounded-xl border ${
+                    isCoastal ? 'border-slate-700' : 'border-[#283618]'
+                  }`}>
+                    <div className={`text-[10px] font-bold ${isCoastal ? 'text-slate-500' : 'text-[#574332]'}`}>Kata</div>
+                    <div className={`font-mono font-black text-sm ${isCoastal ? 'text-slate-800' : 'text-[#283618]'}`}>{wordCount}</div>
                   </div>
-                  <div className="bg-white p-2.5 rounded-xl border border-[#283618]">
-                    <div className="text-[10px] font-bold text-[#574332]">Kecepatan (WPM)</div>
-                    <div className="font-mono font-black text-sm text-[#709752]">{wpm} WPM</div>
+                  <div className={`bg-white p-2.5 rounded-xl border ${
+                    isCoastal ? 'border-slate-700' : 'border-[#283618]'
+                  }`}>
+                    <div className={`text-[10px] font-bold ${isCoastal ? 'text-slate-500' : 'text-[#574332]'}`}>Kecepatan (WPM)</div>
+                    <div className={`font-mono font-black text-sm ${isCoastal ? 'text-[#3A6B88]' : 'text-[#709752]'}`}>{wpm} WPM</div>
                   </div>
                 </div>
               </div>

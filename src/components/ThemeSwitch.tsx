@@ -14,18 +14,18 @@ export const ThemeSwitch: React.FC<ThemeSwitchProps> = ({ compact = false, showL
   return (
     <div className="flex items-center gap-2">
       {showLabel && !compact && (
-        <span className="text-[11px] font-black uppercase text-[#2D2319] hidden lg:inline-block tracking-tight">
-          {isCoastal ? '🌊 Tema Pantai' : '🍀 Tema Hutan'}
+        <span className="text-[11px] font-black uppercase text-[#1E293B] hidden lg:inline-block tracking-tight">
+          {isCoastal ? '🌊 Tema Biru Laut' : '🍀 Tema Hutan'}
         </span>
       )}
 
       <button
         type="button"
         onClick={toggleTheme}
-        aria-label="Ganti Tema Warna Earth-Tone (Hutan / Pantai)"
-        title={isCoastal ? 'Ganti ke Tema Hutan (Forest)' : 'Ganti ke Tema Biru Pantai (Coastal)'}
+        aria-label="Ganti Tema Warna (Biru Laut / Hutan)"
+        title={isCoastal ? 'Ganti ke Tema Hutan (Forest)' : 'Ganti ke Tema Biru Laut (Ocean Coastal)'}
         className={`relative inline-flex items-center rounded-full border-2 border-[#1E293B] shadow-[2px_2px_0px_0px_#1E293B] cursor-pointer transition-all duration-300 focus:outline-none select-none active:translate-y-0.5 ${
-          isCoastal ? 'bg-[#3B82F6]/20 hover:bg-[#3B82F6]/30' : 'bg-[#E9EDC9] hover:bg-[#CCD5AE]'
+          isCoastal ? 'bg-[#3B6D8C]/20 hover:bg-[#3B6D8C]/30' : 'bg-[#E9EDC9] hover:bg-[#CCD5AE]'
         } ${compact ? 'w-14 h-7 p-0.5' : 'w-18 h-8 p-1'}`}
       >
         {/* Left icon: Forest */}
@@ -42,7 +42,7 @@ export const ThemeSwitch: React.FC<ThemeSwitchProps> = ({ compact = false, showL
         <div
           className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 border-[#1E293B] shadow-[1px_1px_0px_0px_#1E293B] flex items-center justify-center text-[10px] transform transition-transform duration-300 ease-out z-10 ${
             isCoastal
-              ? 'translate-x-7 sm:translate-x-9 bg-[#2563EB] text-white'
+              ? 'translate-x-7 sm:translate-x-9 bg-[#3B6D8C] text-white'
               : 'translate-x-0 bg-[#709752] text-white'
           }`}
         >
